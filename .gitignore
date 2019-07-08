@@ -1,0 +1,16 @@
+/target/
+/logs/
+.classpath
+
+#  idea
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# eclipse
+
+*.settings/
+*.classpath
+*.project
+/test/
