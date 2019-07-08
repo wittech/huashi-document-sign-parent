@@ -113,10 +113,10 @@
 			<version>${spring.boot.admin.version}</version>
 		</dependency>
 		<!--consul-->
-	    <dependency>
+	    <!--<dependency>
 	        <groupId>org.springframework.cloud</groupId>
 	        <artifactId>spring-cloud-starter-consul-discovery</artifactId>
-	    </dependency>
+	    </dependency>-->
 		<!-- huashi-document-sign-core -->
 		<dependency>
 			<groupId>com.louis</groupId>
@@ -126,7 +126,7 @@
 	</dependencies>
 	
 	<!--srping cloud-->
-	<dependencyManagement>
+	<!--<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
@@ -136,7 +136,7 @@
 				<scope>import</scope>
 			</dependency>
 		</dependencies>
-	</dependencyManagement>
+	</dependencyManagement>-->
 	
 	<build>
 		<!-- 打包时拷贝MyBatis的映射文件 -->
@@ -162,7 +162,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<!-- Docker maven plugin -->
-			<plugin>
+			<!--<plugin>
 				<groupId>com.spotify</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>1.0.0</version>
@@ -177,7 +177,7 @@
 						</resource>
 					</resources>
 				</configuration>
-			</plugin>
+			</plugin>-->
 		</plugins>
 	</build>
 </project>
