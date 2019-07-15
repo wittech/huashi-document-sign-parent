@@ -21,7 +21,7 @@
     delete from notice_announcement
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <insert id="insert" parameterType="com.louis.kitty.admin.model.SysDict">
+  <insert id="insert" parameterType="com.louis.kitty.admin.model.DocFileModel">
     insert into notice_announcement (id, title, content,create_by, create_time)
     values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
       #{createBy,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}

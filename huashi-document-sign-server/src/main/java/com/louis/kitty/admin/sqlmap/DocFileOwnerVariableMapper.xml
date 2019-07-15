@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.louis.kitty.admin.dao.DocFileOwnerVariableMapper">
+  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.DocFileOwnerVariableModel">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="product_id" jdbcType="BIGINT" property="productId" />
+    <result column="file_id" jdbcType="BIGINT" property="fileId" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="default_value" jdbcType="VARCHAR" property="defaultValue" />
+    <result column="sort" jdbcType="BIGINT" property="sort" />
+    <result column="is_required" jdbcType="BIGINT" property="isRequired" />
+    <result column="validate_rule" jdbcType="VARCHAR" property="validateRule" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="last_update_by" jdbcType="BIGINT" property="lastUpdateBy" />
+    <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, product_id,file_id, name,code,default_value,sort,is_required,validate_rule,last_update_by,last_update_time,create_by, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doc_file_owner_variable
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from doc_file_owner_variable
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.louis.kitty.admin.model.SysDict">
+    insert into doc_file_owner_variable (id, product_id,file_id, name,code,default_value,sort,is_required,validate_rule,create_by, create_time)
+    values (#{id,jdbcType=BIGINT}, #{productId,jdbcType=BIGINT},#{fileId,jdbcType=BIGINT}, #{name,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR}, #{defaultValue,jdbcType=VARCHAR},  
+       #{sort,jdbcType=BIGINT}, #{isRequired,jdbcType=BIGINT}
+      #{createBy,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.louis.kitty.admin.model.DocFileOwnerVariableModel">
+    insert into doc_file_owner_variable
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="productId != null">
+        product_id,
+      </if>
+       <if test="fileId != null">
+        file_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+       <if test="code != null">
+        code,
+      </if>
+       <if test="defaultValue != null">
+        default_value,
+      </if>
+       <if test="sort != null">
+        sort,
+      </if>
+       <if test="isRequired != null">
+        is_required,
+      </if>
+       <if test="validateRule != null">
+        validate_rule,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+       <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="productId != null">
+        #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="fileId != null">
+        #{fileId,jdbcType=BIGINT},
+      </if>
+       <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+       <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+       <if test="defaultValue != null">
+        #{defaultValue,jdbcType=VARCHAR},
+      </if>
+       <if test="sort != null">
+        #{sort,jdbcType=BIGINT},
+      </if>
+      <if test="isRequired != null">
+        #{isRequired,jdbcType=BIGINT},
+      </if>
+        <if test="validateRule != null">
+        #{validateRule,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.louis.kitty.admin.model.DocFileOwnerVariableModel">
+    update doc_file_owner_variable
+    <set>
+     <if test="productId != null">
+        product_id = #{productId,jdbcType=BIGINT},
+      </if>
+      <if test="fileId != null">
+        file_id = #{fileId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="defaultValue != null">
+        default_value = #{defaultValue,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        sort = #{sort,jdbcType=BIGINT},
+      </if>
+      <if test="isRequired != null">
+        is_required = #{isRequired,jdbcType=BIGINT},
+      </if>
+      <if test="validateRule != null">
+        validate_rule = #{validateRule,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by = #{lastUpdateBy,jdbcType=BIGINT},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.louis.kitty.admin.model.DocFileOwnerVariableModel">
+    update doc_file_owner_variable
+    set product_id = #{productId,jdbcType=BIGINT},
+     file_id = #{fileId,jdbcType=BIGINT},
+        name = #{name,jdbcType=VARCHAR},
+        code = #{code,jdbcType=VARCHAR},
+        default_value = #{defaultValue,jdbcType=VARCHAR},
+        sort = #{sort,jdbcType=BIGINT},
+        is_required = #{isRequired,jdbcType=BIGINT},
+        validate_rule = #{validateRule,jdbcType=VARCHAR},
+        last_update_by = #{lastUpdateBy,jdbcType=BIGINT},
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doc_file_owner_variable
+  </select>
+</mapper>
