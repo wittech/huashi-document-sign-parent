@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.louis.kitty.admin.dao.DocProductMapper">
+  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.DocProductModel">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="label" jdbcType="VARCHAR" property="label" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="status" jdbcType="BIGINT" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="approve_by" jdbcType="VARCHAR" property="approveBy" />
+    <result column="approve_time" jdbcType="TIMESTAMP" property="approveTime" />
+    <result column="approve_des" jdbcType="VARCHAR" property="approveDes" />
+    <result column="file_count" jdbcType="BIGINT" property="fileCount" />
+    <result column="is_deleted" jdbcType="BIGINT" property="isDeleted" />
+    <result column="create_by" jdbcType="BIGINT" property="createBy" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, label, name,status,remark,approve_by,approve_time,approve_des,file_count,is_deleted,, create_by, create_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doc_product
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from doc_product
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.louis.kitty.admin.model.SysDict">
+    insert into doc_product (id, label, name,status,remark,file_count,create_by, create_time)
+    values (#{id,jdbcType=BIGINT}, #{label,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},#{status,jdbcType=BIGINT}, #{remark,jdbcType=VARCHAR} 
+    ,#{fileCount,jdbcType=BIGINT},#{createBy,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.louis.kitty.admin.model.DocProductModel">
+    insert into doc_product
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="label != null">
+        label,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="fileCount != null">
+        file_count,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="label != null">
+        #{label,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="fileCount != null">
+        #{fileCount,jdbcType=BIGINT},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.louis.kitty.admin.model.DocProductModel">
+    update doc_product
+    <set>
+      <if test="label != null">
+        label=#{label,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name=#{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status=#{status,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        remark=#{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="fileCount != null">
+       file_count= #{fileCount,jdbcType=BIGINT},
+      </if>
+      <if test="approveBy != null">
+        approve_by=#{approveBy,jdbcType=BIGINT},
+      </if>
+       <if test="approveTime != null">
+        approve_time=#{approveTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="approveDes != null">
+        approve_des=#{approveDes,jdbcType=VARCHAR},
+      </if>
+       <if test="lastUpdateTime != null">
+        last_update_time=#{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="lastUpdateBy != null">
+        last_update_by=#{lastUpdateBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted=#{isDeleted,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.louis.kitty.admin.model.DocProductModel">
+    update doc_product
+     <set>
+    <if test="label != null">
+        label=#{label,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name=#{name,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status=#{status,jdbcType=BIGINT},
+      </if>
+      <if test="remark != null">
+        remark=#{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="fileCount != null">
+       file_count= #{fileCount,jdbcType=BIGINT},
+      </if>
+      <if test="approveBy != null">
+        approve_by=#{approveBy,jdbcType=BIGINT},
+      </if>
+       <if test="approveTime != null">
+        approve_time=#{approveTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="approveDes != null">
+        approve_des=#{approveDes,jdbcType=VARCHAR},
+      </if>
+       <if test="lastUpdateTime != null">
+        last_update_time=#{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+       <if test="lastUpdateBy != null">
+        last_update_by=#{lastUpdateBy,jdbcType=BIGINT},
+      </if>
+      <if test="isDeleted != null">
+        is_deleted=#{isDeleted,jdbcType=BIGINT},
+      </if>
+     </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <select id="findPage" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doc_product
+  </select>
+</mapper>
