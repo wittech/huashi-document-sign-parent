@@ -26,31 +26,31 @@ import com.louis.kitty.core.page.PageRequest;
  *
  */
 @RestController
-@RequestMapping("notice_announcement")
+@RequestMapping("noticeAnnouncement")
 public class NoticeAnnouncementController {
 
 	@Autowired
 	private NoticeAnnouncementService noticeAnnouncementService;
 
-	@PreAuthorize("hasAuthority('notice_announcement:add') AND hasAuthority('notice_announcement:edit')")
+	@PreAuthorize("hasAuthority('noticeAnnouncement:add') AND hasAuthority('noticeAnnouncement:edit')")
 	@PostMapping(value = "/save")
 	public HttpResult save(@RequestBody NoticeAnnouncementModel record) {
 		return HttpResult.ok(noticeAnnouncementService.save(record));
 	}
 
-	@PreAuthorize("hasAuthority('notice_announcement:delete')")
+	@PreAuthorize("hasAuthority('noticeAnnouncement:delete')")
 	@PostMapping(value = "/delete")
 	public HttpResult delete(@RequestBody List<NoticeAnnouncementModel> records) {
 		return HttpResult.ok(noticeAnnouncementService.delete(records));
 	}
 
-	@PreAuthorize("hasAuthority('notice_announcement:view')")
+	@PreAuthorize("hasAuthority('noticeAnnouncement:view')")
 	@PostMapping(value = "/findPage")
 	public HttpResult findPage(@RequestBody PageRequest pageRequest) {
 		return HttpResult.ok(noticeAnnouncementService.findPage(pageRequest));
 	}
 
-	@PreAuthorize("hasAuthority('notice_announcement:view')")
+	@PreAuthorize("hasAuthority('noticeAnnouncement:view')")
 	@GetMapping(value = "/findByTitle")
 	public HttpResult findByLable(@RequestParam String title) {
 		return HttpResult.ok(noticeAnnouncementService.findByTitle(title));

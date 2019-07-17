@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.louis.kitty.admin.sqlmap.dao.DocProductMapper">
+<mapper namespace="com.louis.kitty.admin.sqlmap.dao.OptDocProductMapper">
 
-  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.DocProduct">
+  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.OptDocProduct">
 	<id column="id" jdbcType="BIGINT" property="id" />
 	<result column="label" jdbcType="VARCHAR" property="label" />
 	<result column="name" jdbcType="VARCHAR" property="name" />
@@ -19,8 +19,8 @@
 	<result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
   </resultMap>
   
-  <insert id="add" parameterType="com.louis.kitty.admin.model.DocProduct">
-    insert into doc_product
+  <insert id="add" parameterType="com.louis.kitty.admin.model.OptDocProduct">
+    insert into opt_doc_product
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -112,12 +112,12 @@
   </insert>
 
   <delete id="delete" parameterType="java.lang.Long">
-    delete from doc_product
+    delete from opt_doc_product
     where id = #{id,jdbcType=BIGINT}
   </delete>
   
-  <update id="update" parameterType="com.louis.kitty.admin.model.DocProduct">
-    update doc_product
+  <update id="update" parameterType="com.louis.kitty.admin.model.OptDocProduct">
+    update opt_doc_product
     <set>
       <if test="id != null">
         id = #{id,jdbcType=BIGINT},
@@ -166,12 +166,12 @@
   </update>
 
   <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select * from doc_product
+    select * from opt_doc_product
     where id = #{id,jdbcType=BIGINT}
   </select>
   
   <select id="findPage" resultMap="BaseResultMap">
-    select * from doc_product
+    select * from opt_doc_product
   </select>
   
 </mapper>

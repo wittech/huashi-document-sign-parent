@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.louis.kitty.admin.sqlmap.dao.SysConfigurationMapper">
+
+  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.SysConfiguration">
+	<id column="id" jdbcType="INTEGER" property="id" />
+	<result column="type" jdbcType="VARCHAR" property="type" />
+	<result column="attr_name" jdbcType="VARCHAR" property="attrName" />
+	<result column="attr_key" jdbcType="VARCHAR" property="attrKey" />
+	<result column="attr_value" jdbcType="VARCHAR" property="attrValue" />
+	<result column="remark" jdbcType="VARCHAR" property="remark" />
+	<result column="read_flag" jdbcType="TINYINT" property="readFlag" />
+	<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+  </resultMap>
+  
+  <insert id="add" parameterType="com.louis.kitty.admin.model.SysConfiguration">
+    insert into sys_configuration
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="attrName != null">
+        attr_name,
+      </if>
+      <if test="attrKey != null">
+        attr_key,
+      </if>
+      <if test="attrValue != null">
+        attr_value,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="readFlag != null">
+        read_flag,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="attrName != null">
+        #{attrName,jdbcType=VARCHAR},
+      </if>
+      <if test="attrKey != null">
+        #{attrKey,jdbcType=VARCHAR},
+      </if>
+      <if test="attrValue != null">
+        #{attrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="readFlag != null">
+        #{readFlag,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from sys_configuration
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  
+  <update id="update" parameterType="com.louis.kitty.admin.model.SysConfiguration">
+    update sys_configuration
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="attrName != null">
+        attr_name = #{attrName,jdbcType=VARCHAR},
+      </if>
+      <if test="attrKey != null">
+        attr_key = #{attrKey,jdbcType=VARCHAR},
+      </if>
+      <if test="attrValue != null">
+        attr_value = #{attrValue,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="readFlag != null">
+        read_flag = #{readFlag,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select * from sys_configuration
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="findPage" resultMap="BaseResultMap">
+    select * from sys_configuration
+  </select>
+  
+</mapper>

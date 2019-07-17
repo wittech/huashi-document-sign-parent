@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.louis.kitty.admin.controller.file;
+package com.louis.kitty.admin.controller.doc_product;
 
 import java.util.List;
 
@@ -25,31 +25,31 @@ import com.louis.kitty.core.page.PageRequest;
  *
  */
 @RestController
-@RequestMapping("doc_product")
+@RequestMapping("docProduct")
 public class DocProductController {
 	
 	@Autowired
 	private NoticeAnnouncementService noticeAnnouncementService;
 
-	@PreAuthorize("hasAuthority('doc_product:add') AND hasAuthority('doc_product:edit')")
+	@PreAuthorize("hasAuthority('docProduct:add') AND hasAuthority('docProduct:edit')")
 	@PostMapping(value = "/save")
 	public HttpResult save(@RequestBody NoticeAnnouncementModel record) {
 		return HttpResult.ok(noticeAnnouncementService.save(record));
 	}
 
-	@PreAuthorize("hasAuthority('doc_product:delete')")
+	@PreAuthorize("hasAuthority('docProduct:delete')")
 	@PostMapping(value = "/delete")
 	public HttpResult delete(@RequestBody List<NoticeAnnouncementModel> records) {
 		return HttpResult.ok(noticeAnnouncementService.delete(records));
 	}
 
-	@PreAuthorize("hasAuthority('doc_product:view')")
+	@PreAuthorize("hasAuthority('docProduct:view')")
 	@PostMapping(value = "/findPage")
 	public HttpResult findPage(@RequestBody PageRequest pageRequest) {
 		return HttpResult.ok(noticeAnnouncementService.findPage(pageRequest));
 	}
 
-	@PreAuthorize("hasAuthority('doc_product:view')")
+	@PreAuthorize("hasAuthority('docProduct:view')")
 	@GetMapping(value = "/findByTitle")
 	public HttpResult findByLable(@RequestParam String title) {
 		return HttpResult.ok(noticeAnnouncementService.findByTitle(title));
