@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.louis.kitty.admin.sqlmap.dao.DocFileMapper">
+<mapper namespace="com.louis.kitty.admin.dao.DocFileMapper">
 
   <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.DocFile">
 	<id column="id" jdbcType="BIGINT" property="id" />
@@ -114,4 +114,28 @@
     select * from doc_file
   </select>
   
+   <select id="findPageByFileTemp" parameterType="com.louis.kitty.admin.model.DocFile" resultMap="BaseResultMap">
+    select * from doc_file where 1=1 
+   	  <if test="productId != null">
+        and product_id = #{productId,jdbcType=BIGINT}
+      </if>
+      <if test="name != null">
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="type != null">
+        and type = #{type,jdbcType=VARCHAR}
+      </if>
+      <if test="size != null">
+        and size = #{size,jdbcType=BIGINT}
+      </if>
+      <if test="path != null">
+        and path = #{path,jdbcType=VARCHAR}
+      </if>
+      <if test="startTime != null">
+       and create_time &lt;= #{startTime,jdbcType=VARCHAR}
+      </if>
+      <if test="endTime != null">
+      	 and create_time &gt;= #{endTime,jdbcType=VARCHAR}
+      </if>
+  </select>
 </mapper>

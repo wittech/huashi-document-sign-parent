@@ -1,18 +1,11 @@
 package com.louis.kitty.admin.model;
 
 /**
- * ---------------------------
- *  (DocFile)         
- * ---------------------------
- * 作者：  lz
- * 时间：  2019-07-17 21:38:51
- * 说明：  我是由代码生成器生生成的
- * ---------------------------
+ * --------------------------- (DocFile) --------------------------- 作者： lz 时间：
+ * 2019-07-17 21:38:51 说明： 我是由代码生成器生生成的 ---------------------------
  */
-public class DocFile {
+public class DocFile extends BaseModel {
 
-	/**  */
-	private Long id;
 	/** 产品ID */
 	private Long productId;
 	/** 文件名称 */
@@ -23,18 +16,9 @@ public class DocFile {
 	private Long size;
 	/** 存储路径 */
 	private String path;
-	/**  */
-	private java.util.Date createTime;
-	/**  */
-	private java.util.Date lastUpdateTime;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
+	private String startTime;
+	private String endTime;
 
 	public Long getProductId() {
 		return productId;
@@ -76,20 +60,20 @@ public class DocFile {
 		this.path = path;
 	}
 
-	public java.util.Date getCreateTime() {
-		return createTime;
+	public String getStartTime() {
+		return startTime;
 	}
 
-	public void setCreateTime(java.util.Date createTime) {
-		this.createTime = createTime;
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
 	}
 
-	public java.util.Date getLastUpdateTime() {
-		return lastUpdateTime;
+	public String getEndTime() {
+		return endTime;
 	}
 
-	public void setLastUpdateTime(java.util.Date lastUpdateTime) {
-		this.lastUpdateTime = lastUpdateTime;
+	public void setEndTime(String endTime) {
+		this.endTime = endTime;
 	}
 
 }

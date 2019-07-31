@@ -13,5 +13,4 @@ import com.louis.kitty.core.service.CurdService;
  * ---------------------------
  */
 public interface DocProductService extends CurdService<DocProduct> {
-
 }

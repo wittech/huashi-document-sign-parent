@@ -1,5 +1,7 @@
 package com.louis.kitty.admin.sevice;
 
+import java.util.List;
+
 import com.louis.kitty.admin.model.DocFile;
 import com.louis.kitty.core.service.CurdService;
 
@@ -13,5 +15,4 @@ import com.louis.kitty.core.service.CurdService;
  * ---------------------------
  */
 public interface DocFileService extends CurdService<DocFile> {
-
 }

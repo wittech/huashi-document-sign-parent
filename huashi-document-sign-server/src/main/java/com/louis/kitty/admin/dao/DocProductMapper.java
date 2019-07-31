@@ -2,6 +2,8 @@ package com.louis.kitty.admin.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.louis.kitty.admin.model.DocProduct;
 
 /**
@@ -49,5 +51,7 @@ public interface DocProductMapper {
      * @return
      */    
     List<DocProduct> findPage();
+    
+    List<DocProduct> findPageByName(@Param(value = "name") String name);
     
 }

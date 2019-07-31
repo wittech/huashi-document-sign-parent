@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.louis.kitty.admin.dao.DocProductMapper;
 import com.louis.kitty.admin.model.DocProduct;
 import com.louis.kitty.admin.sevice.DocProductService;
+import com.louis.kitty.core.page.ColumnFilter;
 import com.louis.kitty.core.page.MybatisPageHelper;
 import com.louis.kitty.core.page.PageRequest;
 import com.louis.kitty.core.page.PageResult;
@@ -55,6 +56,10 @@ public class DocProductServiceImpl implements DocProductService {
 
 	@Override
 	public PageResult findPage(PageRequest pageRequest) {
+		ColumnFilter columnFilter = pageRequest.getColumnFilter("name");
+		if(columnFilter != null) {
+			return MybatisPageHelper.findPage(pageRequest, docProductMapper, "findPageByName", columnFilter.getValue());
+		}
 		return MybatisPageHelper.findPage(pageRequest, docProductMapper);
 	}
 	

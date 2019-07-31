@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.louis.kitty.admin.sqlmap.dao.OptDocProductMapper">
+<mapper namespace="com.louis.kitty.admin.dao.OptDocProductMapper">
 
   <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.OptDocProduct">
 	<id column="id" jdbcType="BIGINT" property="id" />

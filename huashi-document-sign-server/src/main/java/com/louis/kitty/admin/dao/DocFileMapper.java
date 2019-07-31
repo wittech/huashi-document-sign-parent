@@ -50,4 +50,11 @@ public interface DocFileMapper {
      */    
     List<DocFile> findPage();
     
+    /**
+     * 基础分页查询
+     * @param d
+     * @return
+     */    
+    List<DocFile> findPageByFileTemp(DocFile d);
+    
 }

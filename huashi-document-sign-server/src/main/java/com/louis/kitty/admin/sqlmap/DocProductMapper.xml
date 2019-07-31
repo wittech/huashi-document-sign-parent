@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.louis.kitty.admin.sqlmap.dao.DocProductMapper">
+<mapper namespace="com.louis.kitty.admin.dao.DocProductMapper">
 
   <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.DocProduct">
 	<id column="id" jdbcType="BIGINT" property="id" />
@@ -18,7 +18,22 @@
 	<result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
 	<result column="is_deleted" jdbcType="INTEGER" property="isDeleted" />
   </resultMap>
-  
+   <sql id="Base_Column_List">
+      id,
+        label,
+        name,
+        status,
+        remark,
+        approve_by,
+        approve_time,
+        approve_des,
+        file_count,
+        create_time,
+        create_by,
+        last_update_time,
+        last_update_by,
+        is_deleted
+  </sql>
   <insert id="add" parameterType="com.louis.kitty.admin.model.DocProduct">
     insert into doc_product
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -172,6 +187,14 @@
   
   <select id="findPage" resultMap="BaseResultMap">
     select * from doc_product
+  </select>
+  
+   <select id="findPageByName" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	<bind name="pattern" value="'%' + _parameter.name + '%'" />
+  	select 
+       <include refid="Base_Column_List" />
+    from doc_product
+    where name like #{pattern}
   </select>
   
 </mapper>
