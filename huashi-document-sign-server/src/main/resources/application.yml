@@ -56,4 +56,10 @@ pagehelper:
     reasonable: true
     supportMethodsArguments: true
     params: count=countSql
-    
+
+storage:
+  model:
+    home: /Users/tenx/Documents/test/model/xml/
+    target: /Users/tenx/Documents/test/model/xml/target/
+  resource:
+    path: /Users/tenx/Documents/test/pic/

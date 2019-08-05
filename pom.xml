@@ -11,12 +11,11 @@
 	</parent>
 
 	<groupId>com.louis</groupId>
-	<artifactId>huashi-document-sign-pom</artifactId>
+	<artifactId>huashi-document-sign-parent</artifactId>
 	<version>${project.version}</version>
 	<packaging>pom</packaging>
 	
-	<name>huashi-document-sign-pom</name>
-	<description>huashi-document-sign-pom</description>
+	<name>huashi-document-sign-parent</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -37,8 +36,8 @@
 		</plugins>
 	</build>
 	<modules>
-		<module>../huashi-document-sign-server</module>
-		<module>../huashi-document-sign-common</module>
-		<module>../huashi-document-sign-core</module>
+		<module>huashi-document-sign-server</module>
+		<module>huashi-document-sign-common</module>
+		<module>huashi-document-sign-core</module>
 	</modules>
 </project>
