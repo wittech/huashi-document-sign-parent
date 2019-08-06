@@ -1071,3 +1071,371 @@ INSERT INTO `sys_user_token` VALUES ('1', '1', 'ee02ead2c1e3a113f82accafaf878b69
 INSERT INTO `sys_user_token` VALUES ('2', '17', '3d32077ccddb6eb2c4302feb93765cd0', '2018-09-24 05:11:17', null, null, null, '2018-09-23 17:11:17');
 INSERT INTO `sys_user_token` VALUES ('3', '18', 'a939ac41fd309ca785485b4135b8baad', '2018-09-24 05:10:36', null, null, null, '2018-09-23 17:10:36');
 INSERT INTO `sys_user_token` VALUES ('4', '33', '605dbcfa2277cbca3b2a124974816080', '2018-11-04 21:42:49', null, null, null, '2018-11-04 09:42:49');
+
+
+
+
+-- ----------------------------
+-- Table structure for loan_basis
+-- ----------------------------
+DROP TABLE IF EXISTS `loan_basis`;
+CREATE TABLE `loan_basis` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `guarantee_method` varchar(1000) DEFAULT NULL COMMENT '担保方式 逗号分隔 例如 保证,抵押,质押',
+  `loan_type` bigint(20) DEFAULT NULL COMMENT '贷款类型: 0新增 1续贷',
+  `application_matters` int(11) DEFAULT NULL COMMENT '申请事项：0 个人经营性贷款 1信用贷款 2 房屋按揭贷款 3个人消费类贷款',
+  `borrower` varchar(50) DEFAULT NULL COMMENT '借款人',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='借口人基础信息表';
+
+
+-- ----------------------------
+-- Table structure for related_personnel_information
+-- ----------------------------
+DROP TABLE IF EXISTS `related_personnel_information`;
+CREATE TABLE `related_personnel_information` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `name` varchar(50) DEFAULT NULL COMMENT '姓名',
+  `loan_basis_id` bigint(20) NOT NULL COMMENT '基础信息表id',
+  `type` int(11) DEFAULT NULL COMMENT '类型（1、结款人）（2、配偶）（3、抵押担保人）（3、抵押担保人） （4、保证担保人）（5、抵押担保人和保证担保人）',
+  `age` int(2) DEFAULT NULL COMMENT '年龄',
+  `sex` int(2) DEFAULT NULL COMMENT '性别 0男 1女',
+  `identity_number` varchar(500) DEFAULT NULL COMMENT '身份证号码',
+  `domicile` varchar(200) DEFAULT NULL COMMENT '户籍所在地',
+  `current_home_address` varchar(200) DEFAULT NULL COMMENT '现居住地址',
+  `contact_address` int(2) DEFAULT NULL COMMENT '常用通信地址 （0、现居住地址）（1、单位地址）（2、其他）',
+  `local_residence_time` datetime DEFAULT NULL COMMENT '本地居住时间',
+  `email` varchar(50) DEFAULT NULL COMMENT '电子邮箱',
+  `contact_number` varchar(40) DEFAULT NULL COMMENT '联系电话',
+  `qq` varchar(40) DEFAULT NULL COMMENT 'qq',
+  `wechat` varchar(40) DEFAULT NULL COMMENT '微信号',
+  `educational_level` int(2) DEFAULT NULL COMMENT '文化程度 （0、研究生及以上）（1、本科）（2、大专）（3、中专/高中）（4、初中）（5、其他）',
+  `educational_level_value` varchar(40) DEFAULT NULL COMMENT '文化程度（5、其他）内容',
+  `current_housing_source` int(2) DEFAULT NULL COMMENT '现住房来源（0、自有住房）（1、贷款自有）（2、单位宿舍）（3、与父母同住）（4、租赁）（5、其他）',
+  `current_housing_source_value` varchar(30) DEFAULT NULL COMMENT '现住房来源（5、其他）值',
+  `employer` varchar(30) DEFAULT NULL COMMENT '工作单位',
+  `position` varchar(30) DEFAULT NULL COMMENT '职务',
+  `unit_working_years` int(3) DEFAULT NULL COMMENT '单位工作年限',
+  `company_name` varchar(30) DEFAULT NULL COMMENT '所投资或经营企业名称',
+  `shareholding_ratio` varchar(30) DEFAULT NULL COMMENT '持股比例',
+  `years_operation` int(3) DEFAULT NULL COMMENT '本行业和相近行业经营年限',
+  `asset_situation` int(3) DEFAULT NULL COMMENT '资产情况（0、无）（1、有）',
+  `asset_type` int(3) DEFAULT NULL COMMENT '资产类型（1、房屋）（2、土地）（3、汽车）（4、有价证券）（5、其他）',
+  `marital_status` int(3) DEFAULT NULL COMMENT '婚姻状况（0、未婚）（1、已婚）（2、离异未婚）（3、丧偶未婚）（4、其他）',
+  `original_spouse_name` varchar(30) DEFAULT NULL COMMENT '原配偶姓名',
+  `divorce_method` int(2) DEFAULT NULL COMMENT '离婚方式 （1、协议离婚）（2、诉讼离婚）',
+  `divorce_time` datetime DEFAULT NULL COMMENT '时间',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='相关人员信息表';
+
+-- ----------------------------
+-- Table structure for household_income
+-- ----------------------------
+DROP TABLE IF EXISTS `household_income`;
+CREATE TABLE `household_income` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `name` varchar(50) DEFAULT NULL COMMENT '姓名',
+  `loan_basis_id` bigint(20) NOT NULL COMMENT '基础信息表id',
+  `total_assets` decimal(10,2) DEFAULT NULL COMMENT '总资产',
+  `total_revenue` decimal(10,2) DEFAULT NULL COMMENT '总收入',
+  `applicant_annual_income` decimal(10,2) DEFAULT NULL COMMENT '申请人年薪金收入',
+  `applicant_operating_income` decimal(10,2) DEFAULT NULL COMMENT '申请人年经营性收入',
+  `applicant_other_income` decimal(10,2) DEFAULT NULL COMMENT '申请人其他收入',
+  `spouse_annual_income` decimal(10,2) DEFAULT NULL COMMENT '申请人配偶年薪金收入',
+  `spouse_operating_income` decimal(10,2) DEFAULT NULL COMMENT '申请人配偶年经营性收入',
+  `spouse_other_income` decimal(10,2) DEFAULT NULL COMMENT '申请人配偶其他收入',
+  `total_annual_expenditure` decimal(10,2) DEFAULT NULL COMMENT '家庭年总支出',
+  `life_total_expenditure` decimal(10,2) DEFAULT NULL COMMENT '年日常生活总支出',
+  `basic_life_total_expenditure` decimal(10,2) DEFAULT NULL COMMENT '年日常基本生活支出',
+  `education_expenditure` decimal(10,2) DEFAULT NULL COMMENT '年子女教育支出',
+  `temporary_expenditure` decimal(10,2) DEFAULT NULL COMMENT '年其他临时性支出',
+  `debt_total_expenditure` decimal(10,2) DEFAULT NULL COMMENT '年债务性总支出',
+  `annual_loan_expenditure` decimal(10,2) DEFAULT NULL COMMENT '申请人年还贷支出',
+  `spouse_temporary_expenditure` decimal(10,2) DEFAULT NULL COMMENT '申请人配偶年还贷支出',
+  `support_population` int(2) DEFAULT NULL COMMENT '家庭供养人口',
+  `foreign_guarantee_lump_sum` decimal(10,2) DEFAULT NULL COMMENT '家庭对外担保总额',
+  `total_liability` decimal(10,2) DEFAULT NULL COMMENT '家庭对外担保总额',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='家庭收入信息表';
+
+
+-- ----------------------------
+-- Table structure asset_type_houses
+-- ----------------------------
+DROP TABLE IF EXISTS `asset_type_houses`;
+CREATE TABLE `asset_type_houses` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `property_certificate_number` varchar(50) DEFAULT NULL COMMENT '不动产权证号',
+  `rpi_id` bigint(20) NOT NULL COMMENT '相关人员信息表id',
+  `whether_ownership_certificates` int(2) DEFAULT NULL COMMENT '是否不动产权证（1、不动产权证）（2、非不动产权证）',
+  `deed` varchar(50) DEFAULT NULL COMMENT '房产证号',
+  `land_certificate` varchar(50) DEFAULT NULL COMMENT '土地证号',
+  `name` varchar(50) DEFAULT NULL COMMENT '名称',
+  `affiliation` varchar(50) DEFAULT NULL COMMENT '所属地',
+  `address` varchar(200) DEFAULT NULL COMMENT '地址',
+  `construction_area` varchar(20) DEFAULT NULL COMMENT '房屋建筑面积 单位㎡',
+  `value` varchar(40) DEFAULT NULL COMMENT '价值',
+  `financing_situation` int(2) DEFAULT NULL COMMENT '融资情况 （0、无抵押）（1、有抵押）',
+  `whether_co_owner` int(2) DEFAULT NULL COMMENT '是否有共有人（0、否）（1、是）',
+  `co_owner_name` varchar(40) DEFAULT NULL COMMENT '共有人姓名',
+  `whether_lease` int(2) DEFAULT NULL COMMENT '是否有租赁（0、否）（1、是）',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资产类型房屋信息表';
+
+
+-- ----------------------------
+-- Table structure asset_type_land
+-- ----------------------------
+DROP TABLE IF EXISTS `asset_type_land`;
+CREATE TABLE `asset_type_land` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `land_certificate` varchar(50) DEFAULT NULL COMMENT '土地证号',
+  `rpi_id` bigint(20) NOT NULL COMMENT '相关人员信息表id',
+  `affiliation` varchar(50) DEFAULT NULL COMMENT '所属地',
+  `address` varchar(200) DEFAULT NULL COMMENT '地址',
+  `construction_area` varchar(20) DEFAULT NULL COMMENT '房屋建筑面积 单位㎡',
+  `value` varchar(40) DEFAULT NULL COMMENT '价值',
+  `financing_situation` int(2) DEFAULT NULL COMMENT '融资情况 （0、无抵押）（1、有抵押）',
+  `whether_co_owner`  int(2) DEFAULT NULL COMMENT '是否有共有人（0、否）（1、是）',
+  `co_owner_name` varchar(50) DEFAULT NULL COMMENT '共有人姓名',
+  `whether_lease`  int(2) DEFAULT NULL COMMENT '是否有租赁（0、否）（1、是）',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资产类型土地信息表';
+
+-- ----------------------------
+-- Table structure asset_type_car
+-- ----------------------------
+DROP TABLE IF EXISTS `asset_type_car`;
+CREATE TABLE `asset_type_car` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `brand` varchar(50) DEFAULT NULL COMMENT '汽车品牌',
+  `rpi_id` bigint(20) NOT NULL COMMENT '相关人员信息表id',
+  `value` varchar(40) DEFAULT NULL COMMENT '价值',
+  `number_plate` varchar(50) DEFAULT NULL COMMENT '车牌号',
+  `driving_license_number` varchar(80) DEFAULT NULL COMMENT '行驶证号',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资产类型汽车信息表';
+
+
+-- ----------------------------
+-- Table structure asset_type_securities
+-- ----------------------------
+DROP TABLE IF EXISTS `asset_type_securities`;
+CREATE TABLE `asset_type_securities` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `type` int(2) DEFAULT NULL COMMENT '证券类型 （1、定期存单）（2、股权）（3、股金）',
+  `rpi_id` bigint(20) NOT NULL COMMENT '相关人员信息表id',
+  `value` varchar(40) DEFAULT NULL COMMENT '价值',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资产类型证券信息表';
+
+
+-- ----------------------------
+-- Table structure asset_type_other
+-- ----------------------------
+DROP TABLE IF EXISTS `asset_type_other`;
+CREATE TABLE `asset_type_other` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `asset_name` varchar(40) DEFAULT NULL COMMENT '资产名称',
+  `rpi_id` bigint(20) NOT NULL COMMENT '相关人员信息表id',
+  `value` varchar(40) DEFAULT NULL COMMENT '价值',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资产类型其他信息表';
+
+
+-- ----------------------------
+-- Table structure pawn
+-- ----------------------------
+DROP TABLE IF EXISTS `pawn`;
+CREATE TABLE `pawn` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `loan_basis_id` bigint(20) NOT NULL COMMENT '基础信息表id',
+  `mortgage_type` int(2) DEFAULT NULL COMMENT '抵押物类型 0房屋 1土地',
+  `whether_ownership_certificates` int(2) DEFAULT NULL COMMENT '0房屋：是否不动产权证 0不动产权证 1非不动产权证',
+  `property_certificate_number` varchar(50) DEFAULT NULL COMMENT '0房屋：不动产权证号',
+  `building_area` varchar(20) DEFAULT NULL COMMENT '0房屋：房屋建筑面积㎡',
+  `land_certificate_number` varchar(30) DEFAULT NULL COMMENT '1土地：土地证号',
+  `land_occupation_area` varchar(20) DEFAULT NULL COMMENT '1土地：土地占用面积㎡',
+  `land_nature` int(2) DEFAULT NULL COMMENT '土地性质 1出让 2划拨',
+  `collateral_name` varchar(30) DEFAULT NULL COMMENT '抵押物名称',
+  `affiliation` varchar(50) DEFAULT NULL COMMENT '抵押物所属地',
+  `collateral_deposit` varchar(40) DEFAULT NULL COMMENT '抵押物存放地',
+  `evaluation_corporation` varchar(30) DEFAULT NULL COMMENT '评估公司',
+  `value` varchar(40) DEFAULT NULL COMMENT '价值',
+  `whether_coowner` int(2) DEFAULT NULL COMMENT '是否有共有人 0否 1是',
+  `coowner_name` varchar(30) DEFAULT NULL COMMENT '共有人姓名',
+  `whether_lease` int(2) DEFAULT NULL COMMENT '是否有租赁 0否 1是',
+  `lease_contract_name` varchar(50) DEFAULT NULL COMMENT '租赁合同名称',
+  `lessee_name` varchar(50) DEFAULT NULL COMMENT '承租方姓名',
+  `lease_term_start_time` datetime DEFAULT NULL COMMENT '承租期限开始时间',
+  `lease_term_end_time` datetime DEFAULT NULL COMMENT '承租期限截止时间',
+  `rent_payment_method` int(2) DEFAULT NULL COMMENT '租金支付方式 1按月 2按季 3按半年 4按年',
+  `contract_signing_time` datetime DEFAULT NULL COMMENT '合同签署时间',
+  `name_assets_id` bigint(20) NOT NULL COMMENT '所属名下id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='抵押物信息表';
+
+
+-- ----------------------------
+-- Table structure name_assets
+-- ----------------------------
+DROP TABLE IF EXISTS `name_assets`;
+CREATE TABLE `name_assets` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `pawn_id` bigint(20) NOT NULL COMMENT '质押物信息表id',
+  `assets_id` int(2) DEFAULT NULL COMMENT '名下资产id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='所属名下资产信息表';
+
+-- ----------------------------
+-- Table structure loan_business_information
+-- ----------------------------
+DROP TABLE IF EXISTS `loan_business_information`;
+CREATE TABLE `loan_business_information` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `loan_basis_id` bigint(20) NOT NULL COMMENT '基础信息表id',
+  `borrower_account` varchar(50) DEFAULT NULL COMMENT '借款人账号',
+  `client_number` varchar(20) DEFAULT NULL COMMENT '客户号',
+  `counterparty_information_id` bigint(20) NOT NULL COMMENT '交易对手信息表id',
+  `application_amount` decimal(10,6) DEFAULT NULL COMMENT '申请金额',
+  `application_period` varchar(30) DEFAULT NULL COMMENT '申请期限 单位 年',
+  `cycle_quota` int(2) DEFAULT NULL COMMENT '是否申请循环额度 0否 1是',
+  `interest_rate` int(2) DEFAULT NULL COMMENT '利率 1浮动利率 2固定利率',
+  `adjustment_method` int(2) DEFAULT NULL COMMENT '利率调整方式 1立即生效 2次年一月一日起生效 3对月对日生效',
+  `interest_rate_rise` varchar(50) DEFAULT NULL COMMENT '利率上浮幅度%',
+  `application_rate` varchar(40) DEFAULT NULL COMMENT '申请利率%',
+  `margin_ratio` varchar(30) DEFAULT NULL COMMENT '保证金比例%',
+  `original_credit_balance` varchar(40) DEFAULT NULL COMMENT '原信贷业务余额 元',
+  `use` int(2) DEFAULT NULL COMMENT '用途 1经营 2自建房 3购房 4购车 5住房装修 6购买大额耐用消费品 7旅游消费 8留学 9子女教育 10其他',
+  `description` varchar(1000) DEFAULT NULL COMMENT '用途具体说明',
+  `repayment` int(2) DEFAULT NULL COMMENT '还款方式 1利随本清 2按月结息，到期一次性还本 3按月结息，分期还本 4按季结息，分期还本 5等额本金 6等额本息 7其他',
+  `value` varchar(50) DEFAULT NULL COMMENT '其他 值',
+  `repayment_period` int(2) DEFAULT NULL COMMENT '还款期数',
+  `whether_personal_home_loan` int(2) DEFAULT NULL COMMENT '是否申请个人购房贷款 0否 1是',
+  `whether_provident_fund_combination_loan` int(2) DEFAULT NULL COMMENT '是否公积金组合贷款 0否 1是',
+  `provident_fund_loan_amount` decimal(10,6) DEFAULT NULL COMMENT '公积金贷款金额',
+  `whether_exclusive_credit_client` int(2) DEFAULT NULL COMMENT '借款人是否为我行独家信贷客户 0否 1是',
+  `deposit_account` varchar(40) DEFAULT NULL COMMENT '前在我行开立一般存款账户',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='贷款业务信息表';
+
+
+-- ----------------------------
+-- Table structure counterparty_information
+-- ----------------------------
+DROP TABLE IF EXISTS `counterparty_information`;
+CREATE TABLE `counterparty_information` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `loan_business_information_id` bigint(20) NOT NULL COMMENT '贷款业务信息表id',
+  `name` varchar(50) DEFAULT NULL COMMENT '名称',
+  `account_number` varchar(20) DEFAULT NULL COMMENT '账号',
+  `bank` varchar(20) DEFAULT NULL COMMENT '开户行',
+  `amount` decimal(10,6) DEFAULT NULL COMMENT '金额',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='交易对手信息表';
+
+-- ----------------------------
+-- Table structure repayment_plan
+-- ----------------------------
+DROP TABLE IF EXISTS `repayment_plan`;
+CREATE TABLE `repayment_plan` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `loan_business_information_id` bigint(20) NOT NULL COMMENT '贷款业务信息表id',
+  `repayment_time` datetime DEFAULT NULL COMMENT '还款时间',
+  `amount` decimal(10,6) DEFAULT NULL COMMENT '金额',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='还款计划信息表';
+
+-- ----------------------------
+-- Table structure group_photo
+-- ----------------------------
+DROP TABLE IF EXISTS `group_photo`;
+CREATE TABLE `group_photo` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `loan_basis_id` bigint(20) NOT NULL COMMENT '基础信息表id',
+  `doc_meta_id` bigint(20) NOT NULL COMMENT '文件表id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='合影信息表';
+
+-- ----------------------------
+-- Table structure personal_loan_survey_report
+-- ----------------------------
+DROP TABLE IF EXISTS `personal_loan_survey_report`;
+CREATE TABLE `personal_loan_survey_report` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `loan_basis_id` bigint(20) NOT NULL COMMENT '基础信息表id',
+  `borrower_name` varchar(40) DEFAULT NULL COMMENT '借款人姓名',
+  `marital_status` int(2) DEFAULT NULL COMMENT '婚姻状况 1已婚 0未婚',
+  `spouse_name` varchar(40) DEFAULT NULL COMMENT '配偶姓名',
+  `whether_local_household_registration` int(2) DEFAULT NULL COMMENT '是否本地户籍 1是 0否',
+  `total_property` varchar(100) DEFAULT NULL COMMENT '家庭名下房产共计',
+  `total_area` varchar(40) DEFAULT NULL COMMENT '总计面积 ㎡',
+  `total_value` varchar(40) DEFAULT NULL COMMENT '总价值 万元',
+  `total_property_remark` varchar(1000) DEFAULT NULL COMMENT '描述',
+  `family_assets` varchar(40) DEFAULT NULL COMMENT '家庭资产 万元',
+  `household_debt` varchar(40) DEFAULT NULL COMMENT '家庭负债 万元',
+  `annual_household_income` varchar(40) DEFAULT NULL COMMENT '年家庭收入 万元',
+  `family_expense` varchar(40) DEFAULT NULL COMMENT '家庭支出 元',
+  `borrower_health_status` int(2) DEFAULT NULL COMMENT '借款人健康状况 1较差 2一般 3健康',
+  `other_survey_happening` varchar(40) DEFAULT NULL COMMENT '其他需调查反映的情况',
+  `borrower_whether_have_civil_action` int(2) DEFAULT NULL COMMENT '借款人是否具有完全民事行为能力 1是 0否',
+  `amount_loan` varchar(40) DEFAULT NULL COMMENT '申贷金额 万元',
+  `self_funding` varchar(40) DEFAULT NULL COMMENT '自筹资金 万元',
+  `borrowing_period` varchar(40) DEFAULT NULL COMMENT '借款期限 年',
+  `loan_amount_whether_reasonable` int(2) DEFAULT NULL COMMENT '申贷金额是否合理 1是 0否',
+  `loan_term_whether_reasonable` int(2) DEFAULT NULL COMMENT '申贷期限是否合理 1是 0否',
+  `use_loan` varchar(50) DEFAULT NULL COMMENT '借款用途',
+  `repayment_source_whether_sufficient` int(2) DEFAULT NULL COMMENT '第一还款来源是否充足 1是 0否',
+  `borrower_repay_ability_estimate` varchar(1000) DEFAULT NULL COMMENT '借款人偿还能力测算（公式）',
+  `whether_amount_match` int(2) DEFAULT NULL COMMENT '贷款偿还能力是否与申请贷款额度相符 1是 0否',
+  `without_debt_litigation` int(2) DEFAULT NULL COMMENT '有无债务诉讼 1有 0无',
+  `borrower_conduct` int(2) DEFAULT NULL COMMENT '借款人品行 1优良 2较好 3一般 4较差',
+  `borrower_credit` int(2) DEFAULT NULL COMMENT '借款人资信（含信用卡）情况 0无借款 1有借款，能按期还款无不良记录 2有逾期不良情况',
+  `continuous_overdue` varchar(40) DEFAULT NULL COMMENT '连续逾期 单位 期',
+  `cumulative_overdue` varchar(40) DEFAULT NULL COMMENT '累计逾期 单位 期',
+  `current_overdue_amount` varchar(40) DEFAULT NULL COMMENT '当前逾期金额 单位 万元',
+  `financial_mechanism_loan_balance` varchar(40) DEFAULT NULL COMMENT '金融机构借款余额 单位 万元',
+  `credit_card_lump_sum` varchar(40) DEFAULT NULL COMMENT '信用卡授信总额 单位 万元',
+  `used_quota` varchar(40) DEFAULT NULL COMMENT '已用额度 单位 万元',
+  `external_guarantee_balance` varchar(40) DEFAULT NULL COMMENT '对外担保余额 单位 万元',
+  `bad_loan_balance` varchar(40) DEFAULT NULL COMMENT '其中对外担保不良贷款余额 单位 万元',
+  `loan_method_guarantee` int(1) DEFAULT '0' COMMENT '贷款方式为保证担保',
+  `loan_method_guarantee_remark` text DEFAULT NULL COMMENT '贷款方式为保证担保描述',
+  `calculated` int(2) DEFAULT NULL COMMENT '经测算，该保证人是否具有担保能力 1是 0否',
+  `loan_method_pledge_guarantee` int(1) DEFAULT NULL COMMENT '贷款方式为抵（质）押担保',
+  `loan_method_pledge_guarantee_remark` text DEFAULT NULL COMMENT '贷款方式为抵（质）押担保描述',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='个人贷款调查报告信息表';
+
+
+-- ----------------------------
+-- Table structure contract_information
+-- ----------------------------
+DROP TABLE IF EXISTS `contract_information`;
+CREATE TABLE `contract_information` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `loan_basis_id` bigint(20) NOT NULL COMMENT '基础信息表id',
+  `personal_loan_contract_no` varchar(50) DEFAULT NULL COMMENT '个人借款合同编号',
+  `mortgage_guarantee_contract_no` varchar(50) DEFAULT NULL COMMENT '抵押担保 合同编号',
+  `pawn_contract_no` varchar(50) DEFAULT NULL COMMENT '抵押物清单合同编号',
+  `guarantee_guarantee_contract_no` varchar(50) DEFAULT NULL COMMENT '保证担保合同编号',
+  `contract_signing_date` datetime DEFAULT NULL COMMENT '合同签订日',
+  `borrowing_start_period` datetime DEFAULT NULL COMMENT '借款开始期限',
+  `borrowing_end_period` datetime DEFAULT NULL COMMENT '借款截止期限',
+  `loan_date` datetime DEFAULT NULL COMMENT '放款日期',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='合同信息表';
+
