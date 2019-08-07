@@ -45,7 +45,6 @@ public interface DocMetaMapper {
 
     /**
      * 基础分页查询
-     * @param record
      * @return
      */    
     List<DocMeta> findPage();

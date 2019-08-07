@@ -1,5 +1,7 @@
 package com.louis.kitty.admin.model;
 
+import lombok.Builder;
+
 /**
  * ---------------------------
  *  (DocMeta)         
@@ -9,6 +11,7 @@ package com.louis.kitty.admin.model;
  * 说明：  我是由代码生成器生生成的
  * ---------------------------
  */
+@Builder
 public class DocMeta {
 
 	/**  */

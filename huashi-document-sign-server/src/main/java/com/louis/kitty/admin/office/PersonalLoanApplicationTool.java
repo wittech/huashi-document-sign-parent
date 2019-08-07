@@ -30,7 +30,8 @@ public class PersonalLoanApplicationTool extends AbstractOfficeTool {
 
     /**
      * 设置担保情况---保证担保参数数据
-     * @param isChoose 保证担保是否勾选
+     *
+     * @param isChoose      保证担保是否勾选
      * @param guaranteeList 保证担保参数集合信息
      */
     private void setGuaranteeList(boolean isChoose, List<Map<String, Object>> guaranteeList) {
@@ -48,7 +49,8 @@ public class PersonalLoanApplicationTool extends AbstractOfficeTool {
 
     /**
      * 设置担保情况---抵押担保参数数据
-     * @param isChoose 抵押担保是否勾选
+     *
+     * @param isChoose     抵押担保是否勾选
      * @param mortgageList 抵押担保参数集合信息
      */
     private void setMortgageList(boolean isChoose, List<Map<String, Object>> mortgageList) {
@@ -203,7 +205,7 @@ public class PersonalLoanApplicationTool extends AbstractOfficeTool {
 
         return paymentMethodDes;
     }
-    
+
 
     @Override
     protected void fillVariable(Long basisLoanId) {
@@ -303,7 +305,7 @@ public class PersonalLoanApplicationTool extends AbstractOfficeTool {
         // 申请借款情况
         VARIABLES_IN_MODEL.put("applicationsAmount", "贰佰万");
         VARIABLES_IN_MODEL.put("applicationDeadline", "叁");
-        VARIABLES_IN_MODEL.put("isRound", setYesOption("是"));
+        VARIABLES_IN_MODEL.put("isRound", setYesOption(true));
 
         VARIABLES_IN_MODEL.put("usage", setUsage("其他"));
         VARIABLES_IN_MODEL.put("usageOther", "用于归还借款人罗永芳在广西桂林漓江农村合作银行合同编号为361102150060192、展期协议编号为：361126180056081合同项下所欠债务。");
@@ -311,7 +313,7 @@ public class PersonalLoanApplicationTool extends AbstractOfficeTool {
         VARIABLES_IN_MODEL.put("paymentMethod", setPaymentMethod("按月结息，分期还本"));
         VARIABLES_IN_MODEL.put("paymentMethodOther", "");
 
-        VARIABLES_IN_MODEL.put("isCombinedLoans", setYesOption(""));
+        VARIABLES_IN_MODEL.put("isCombinedLoans", setYesOption(true));
         VARIABLES_IN_MODEL.put("publicLoanCommitment", "");
 
         List<Map<String, Object>> guaranteeList = new ArrayList<>();
@@ -404,6 +406,11 @@ public class PersonalLoanApplicationTool extends AbstractOfficeTool {
     @Override
     protected DocConstants.DocType docType() {
         return DocConstants.DocType.WORD;
+    }
+
+    @Override
+    protected int sort() {
+        return 1_1_0;
     }
 
 }

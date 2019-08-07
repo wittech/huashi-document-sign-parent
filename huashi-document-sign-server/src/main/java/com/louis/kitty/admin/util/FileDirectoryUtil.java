@@ -1,5 +1,8 @@
 package com.louis.kitty.admin.util;
 
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
@@ -16,25 +19,39 @@ public class FileDirectoryUtil {
      * @param home 基础目录
      * @return 创建结果
      */
-    public static boolean createDir(String home) {
+    public static DirMeta createDir(String home) {
         if (StringUtils.isEmpty(home)) {
-            log.error("home dir is empty");
-            return false;
+            return DirMeta.builder().result(false).msg("home dir is empty").build();
         }
 
-        String dirName = home + File.separator + getDate();
+        String dirName = home + getDate();
         //如果不存在,创建文件夹
         File dir = new File(dirName);
         if (dir.exists()) {
-            return true;
+            return DirMeta.builder().result(true).msg("ignored cause by dir has exists").build();
         }
 
-        return dir.mkdirs();
+        boolean isOk = dir.mkdirs();
+        if(!isOk) {
+            return DirMeta.builder().result(false).msg("dir["+dirName+"] create failed").build();
+        }
+
+        return DirMeta.builder().result(true).path(dirName).build();
     }
 
 
     private static String getDate() {
         return new SimpleDateFormat("yyyyMMdd").format(new Date());
+    }
+
+    @Builder
+    @Getter
+    public static class DirMeta {
+
+        private boolean result;
+        private String msg;
+        private String path;
+
     }
 
 }

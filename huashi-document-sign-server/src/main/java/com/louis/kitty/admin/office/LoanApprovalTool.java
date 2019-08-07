@@ -137,4 +137,9 @@ public class LoanApprovalTool extends AbstractOfficeTool{
     protected DocConstants.DocType docType() {
         return DocConstants.DocType.EXCEL;
     }
+
+    @Override
+    protected int sort() {
+        return 1_0_0;
+    }
 }

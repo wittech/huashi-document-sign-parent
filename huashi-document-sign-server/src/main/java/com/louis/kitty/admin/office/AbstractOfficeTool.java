@@ -2,8 +2,13 @@ package com.louis.kitty.admin.office;
 
 import com.alibaba.druid.util.StringUtils;
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.model.LoanDoc;
+import com.louis.kitty.admin.sevice.LoanDocService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -13,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Future;
 
 @Slf4j
 public abstract class AbstractOfficeTool {
@@ -21,6 +27,9 @@ public abstract class AbstractOfficeTool {
     private String modelHome;
     @Value("${storage.model.target}")
     private String docTarget;
+
+    @Autowired
+    private LoanDocService loanDocService;
 
     /**
      * 生成文件分隔符
@@ -45,11 +54,15 @@ public abstract class AbstractOfficeTool {
     /**
      * 写入磁盘
      */
-    private void write2Disk(String storagePath, String data) throws IOException {
+    private long write2Disk(String storagePath, String data) throws IOException {
         // 创建目录
 //        FileDirectoryUtil.createDir();
 
-        Files.write(Paths.get(storagePath), data.getBytes(Charset.forName(DEFAULT_ENCODING)));
+        byte[] targetFileData = data.getBytes(Charset.forName(DEFAULT_ENCODING));
+
+        Files.write(Paths.get(storagePath), targetFileData);
+
+        return targetFileData.length;
     }
 
     /**
@@ -60,17 +73,41 @@ public abstract class AbstractOfficeTool {
     protected abstract String modelFileName();
 
     /**
+     * 文件排序，从1开始，正序
+     *
+     * @return 排序数值
+     */
+    protected abstract int sort();
+
+    /**
      * 设置落地文件类型
+     *
      * @return 文件类型
      */
     protected abstract DocConstants.DocType docType();
 
     /**
+     * 保存记录至库表
+     *
+     * @param basisLoanId 基础借贷ID
+     * @return 处理结果
+     */
+    private boolean save(Long basisLoanId, Long docSize) {
+        LoanDoc loanDoc = LoanDoc.builder().loanBasisId(basisLoanId).docName(modelFileName())
+                .docPath(targetDocFullName()).docSize(docSize).downloadTimes(0)
+                .printTimes(0).sort(sort()).createTime(new Date()).build();
+
+        return loanDocService.save(loanDoc) > 0;
+    }
+
+    /**
      * 处理
+     *
      * @param basisLoanId 借贷基础ID
      * @return 处理成功与否
      */
-    public boolean execute(Long basisLoanId) {
+    @Async
+    public Future<Boolean> execute(Long basisLoanId) {
         try {
             String xmlContent = readXml();
 
@@ -80,19 +117,20 @@ public abstract class AbstractOfficeTool {
             // 替换参数生成新的XML内容
             xmlContent = translate(xmlContent);
 
-            write2Disk(targetDocFullName(), xmlContent);
+            long docSize = write2Disk(targetDocFullName(), xmlContent);
 
-            return true;
+            return new AsyncResult<>(save(basisLoanId, docSize));
         } catch (Exception e) {
             log.error("Handler failed by basisLoanId[{}]", basisLoanId, e);
-            return false;
+            return new AsyncResult<>(false);
         }
     }
 
 
     /**
      * 替换变量
-      * @param modelContent XML模板内容
+     *
+     * @param modelContent XML模板内容
      * @return 替换变量后的模板内容
      */
     private String translate(String modelContent) {
@@ -126,13 +164,13 @@ public abstract class AbstractOfficeTool {
      * @param yes 是否选中
      * @return 最终标签
      */
-    protected String setYesOption(String yes) {
-        String yesDes = "";
-        if (StringUtils.isEmpty(yes)) {
+    protected String setYesOption(Boolean yes) {
+        String yesDes;
+        if (yes == null) {
             yesDes = "□是  □否";
-        } else if ("是".equals(yes)) {
+        } else if (yes) {
             yesDes = "☑是  □否";
-        } else if ("否".equals(yes)) {
+        } else {
             yesDes = "□是  ☑否";
         }
 
@@ -140,7 +178,7 @@ public abstract class AbstractOfficeTool {
     }
 
     private String targetDocFullName() {
-        return  docTarget + modelFileName() + DOC_FILE_SPLIT_CHAR + datetimeTitle() + docType().getSuffixName();
+        return docTarget + modelFileName() + DOC_FILE_SPLIT_CHAR + datetimeTitle() + docType().getSuffixName();
     }
 
     private static String datetimeTitle() {

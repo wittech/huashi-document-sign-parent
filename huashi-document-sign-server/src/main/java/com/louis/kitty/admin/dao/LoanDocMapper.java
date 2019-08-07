@@ -45,9 +45,23 @@ public interface LoanDocMapper {
 
     /**
      * 基础分页查询
-     * @param record
      * @return
      */    
     List<LoanDoc> findPage();
+
+    /**
+     * 根据基础ID查询所有的文档信息
+     */
+    List<LoanDoc> findByLoanBasisId(Long loanBasisId);
+
+    /**
+     * 下次次数+1
+     */
+    int addOneIfDownload(Long id);
+
+    /**
+     * 打印次数+1
+     */
+    int addOneIfPrint(Long id);
     
 }

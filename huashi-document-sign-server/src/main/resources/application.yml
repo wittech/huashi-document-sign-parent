@@ -63,3 +63,4 @@ storage:
     target: /Users/tenx/Documents/test/model/xml/target/
   resource:
     path: /Users/tenx/Documents/test/pic/
+    domain: http://localhost/resource/
