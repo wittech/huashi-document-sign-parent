@@ -4,6 +4,8 @@ import com.alibaba.druid.util.StringUtils;
 import com.louis.kitty.admin.constants.DocConstants;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
 public class MaritalStatusProofTool extends AbstractOfficeTool {
 
@@ -22,19 +24,20 @@ public class MaritalStatusProofTool extends AbstractOfficeTool {
 
     @Override
     protected void fillVariable(Long basisLoanId) {
-        VARIABLES_IN_MODEL.put("applyPersonName", "张三");
-        VARIABLES_IN_MODEL.put("applyPersonIdentityNumber", "1427331888xxxxxx");
-        VARIABLES_IN_MODEL.put("applyPersonMaritalText", "离异未再婚");
-        VARIABLES_IN_MODEL.put("threeChoicesOne", "2");
-        VARIABLES_IN_MODEL.put("originalSpouseName", "翠花");
-        VARIABLES_IN_MODEL.put("divorceYear", "2019");
-        VARIABLES_IN_MODEL.put("divorceMonth", "5");
-        VARIABLES_IN_MODEL.put("divorceDay", "6");
-        VARIABLES_IN_MODEL.put("divorceType", setDivorceTypes(""));
-        VARIABLES_IN_MODEL.put("originalSpouseName2", "翠花");
-        VARIABLES_IN_MODEL.put("divorceYear2", "2019");
-        VARIABLES_IN_MODEL.put("divorceMonth2", "5");
-        VARIABLES_IN_MODEL.put("divorceDay2", "6");
+        Map<String, Object> variables = newRound();
+        variables.put("applyPersonName", "张三");
+        variables.put("applyPersonIdentityNumber", "1427331888xxxxxx");
+        variables.put("applyPersonMaritalText", "离异未再婚");
+        variables.put("threeChoicesOne", "2");
+        variables.put("originalSpouseName", "翠花");
+        variables.put("divorceYear", "2019");
+        variables.put("divorceMonth", "5");
+        variables.put("divorceDay", "6");
+        variables.put("divorceType", setDivorceTypes(""));
+        variables.put("originalSpouseName2", "翠花");
+        variables.put("divorceYear2", "2019");
+        variables.put("divorceMonth2", "5");
+        variables.put("divorceDay2", "6");
     }
 
     @Override

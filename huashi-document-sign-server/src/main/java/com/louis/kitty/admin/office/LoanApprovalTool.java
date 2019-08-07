@@ -21,27 +21,28 @@ public class LoanApprovalTool extends AbstractOfficeTool{
 
     @Override
     protected void fillVariable(Long basisLoanId) {
-        VARIABLES_IN_MODEL.put("contractNo", System.currentTimeMillis() + "");
-        VARIABLES_IN_MODEL.put("applyTime", "2019年6月14日");
-        VARIABLES_IN_MODEL.put("bankBranchName", "广西桂林漓江农村合作银行城北支行");
-        VARIABLES_IN_MODEL.put("bankPhone", "0773-2624239");
-        VARIABLES_IN_MODEL.put("applyPersonName", "罗永芳");
-        VARIABLES_IN_MODEL.put("applyPersonNo", "10226292846");
-        VARIABLES_IN_MODEL.put("applySubject", "个人经营性贷款");
-        VARIABLES_IN_MODEL.put("applyMoney", "2000000");
-        VARIABLES_IN_MODEL.put("moneyUsage", "流动资金");
-        VARIABLES_IN_MODEL.put("deadlineMonth", "36");
-        VARIABLES_IN_MODEL.put("deadlineYear", "叁年");
-        VARIABLES_IN_MODEL.put("applyRate", "7.6%");
-        VARIABLES_IN_MODEL.put("marginRate", "0%");
-        VARIABLES_IN_MODEL.put("guarantee", "抵押");
-        VARIABLES_IN_MODEL.put("isNewer", "是");
-        VARIABLES_IN_MODEL.put("isNewerDes", VARIABLES_IN_MODEL.get("isNewer").toString().equals("是") ? "新增贷款" : "续贷");
+        Map<String, Object> variables = newRound();
+        variables.put("contractNo", System.currentTimeMillis() + "");
+        variables.put("applyTime", "2019年6月14日");
+        variables.put("bankBranchName", "广西桂林漓江农村合作银行城北支行");
+        variables.put("bankPhone", "0773-2624239");
+        variables.put("applyPersonName", "罗永芳");
+        variables.put("applyPersonNo", "10226292846");
+        variables.put("applySubject", "个人经营性贷款");
+        variables.put("applyMoney", "2000000");
+        variables.put("moneyUsage", "流动资金");
+        variables.put("deadlineMonth", "36");
+        variables.put("deadlineYear", "叁年");
+        variables.put("applyRate", "7.6%");
+        variables.put("marginRate", "0%");
+        variables.put("guarantee", "抵押");
+        variables.put("isNewer", "是");
+        variables.put("isNewerDes", variables.get("isNewer").toString().equals("是") ? "新增贷款" : "续贷");
 
-        VARIABLES_IN_MODEL.put("originBalance", "0");
-        VARIABLES_IN_MODEL.put("applyMoneyRMB", RmbUtil.number2CNMontrayUnit(new BigDecimal(VARIABLES_IN_MODEL.get("applyMoney").toString())));
-        VARIABLES_IN_MODEL.put("floatingRate", "70");
-        VARIABLES_IN_MODEL.put("payBackMethod", "协议还本");
+        variables.put("originBalance", "0");
+        variables.put("applyMoneyRMB", RmbUtil.number2CNMontrayUnit(new BigDecimal(variables.get("applyMoney").toString())));
+        variables.put("floatingRate", "70");
+        variables.put("payBackMethod", "协议还本");
 
         List<Map<String, Object>> collateralList = new ArrayList<>();
         for (int i = 0; i < 7; i++) {
@@ -54,7 +55,7 @@ public class LoanApprovalTool extends AbstractOfficeTool{
             collateralList.add(tempMap);
         }
 
-        setCollateralList(collateralList);
+        setCollateralList(collateralList, variables);
 
         List<Map<String, Object>> guarantorList = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
@@ -65,15 +66,15 @@ public class LoanApprovalTool extends AbstractOfficeTool{
             guarantorList.add(tempMap);
         }
 
-        setGuarantorList(guarantorList);
+        setGuarantorList(guarantorList, variables);
 
-        VARIABLES_IN_MODEL.put("applyPersonMerge", collateralList.size() + 5);
-        VARIABLES_IN_MODEL.put("collateralMerge", collateralList.size() + 1);
+        variables.put("applyPersonMerge", collateralList.size() + 5);
+        variables.put("collateralMerge", collateralList.size() + 1);
     }
 
-    private void setCollateralList(List<Map<String, Object>> collateralList) {
+    private void setCollateralList(List<Map<String, Object>> collateralList, Map<String, Object> variables) {
         if (CollectionUtils.isEmpty(collateralList)) {
-            VARIABLES_IN_MODEL.put("collateralList", "");
+            variables.put("collateralList", "");
             return;
         }
 
@@ -99,12 +100,12 @@ public class LoanApprovalTool extends AbstractOfficeTool{
                     .append("</Cell>")
                     .append("</Row>");
         }
-        VARIABLES_IN_MODEL.put("collateralList", data.toString());
+        variables.put("collateralList", data.toString());
     }
 
-    private void setGuarantorList(List<Map<String, Object>> guarantorList) {
+    private void setGuarantorList(List<Map<String, Object>> guarantorList, Map<String, Object> variables) {
         if (CollectionUtils.isEmpty(guarantorList)) {
-            VARIABLES_IN_MODEL.put("guarantorList", "");
+            variables.put("guarantorList", "");
             return;
         }
 
@@ -125,7 +126,7 @@ public class LoanApprovalTool extends AbstractOfficeTool{
                     .append("</Cell>")
                     .append("</Row>");
         }
-        VARIABLES_IN_MODEL.put("guarantorList", data.toString());
+        variables.put("guarantorList", data.toString());
     }
 
     @Override

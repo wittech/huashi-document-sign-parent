@@ -4,6 +4,7 @@ import com.alibaba.druid.util.StringUtils;
 import com.louis.kitty.admin.constants.DocConstants;
 import com.louis.kitty.admin.model.LoanDoc;
 import com.louis.kitty.admin.sevice.LoanDocService;
+import com.louis.kitty.admin.util.FileDirectoryUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,8 +17,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Future;
 
 @Slf4j
@@ -44,7 +47,7 @@ public abstract class AbstractOfficeTool {
     /**
      * 模板变量
      */
-    protected final Map<String, Object> VARIABLES_IN_MODEL = new ConcurrentHashMap<>();
+    protected final List<Map<String, Object>> VARIABLES_IN_MODEL = new CopyOnWriteArrayList<>();
 
     /**
      * 填充变量
@@ -55,14 +58,30 @@ public abstract class AbstractOfficeTool {
      * 写入磁盘
      */
     private long write2Disk(String storagePath, String data) throws IOException {
-        // 创建目录
-//        FileDirectoryUtil.createDir();
-
         byte[] targetFileData = data.getBytes(Charset.forName(DEFAULT_ENCODING));
 
         Files.write(Paths.get(storagePath), targetFileData);
 
         return targetFileData.length;
+    }
+
+    /**
+     * 文件拷贝
+     *
+     * @param sourcePath 原文件路径
+     * @param targetPath 拷贝后文件路径
+     * @return 文件大小
+     * @throws IOException IO
+     */
+    private long copyFile(String sourcePath, String targetPath) throws IOException {
+        byte[] data = Files.readAllBytes(Paths.get(sourcePath));
+        if (data.length == 0) {
+            throw new IOException("Path[" + sourcePath + "] data can not be '0'");
+        }
+
+        Files.copy(Paths.get(sourcePath), Paths.get(targetPath));
+
+        return data.length;
     }
 
     /**
@@ -87,17 +106,56 @@ public abstract class AbstractOfficeTool {
     protected abstract DocConstants.DocType docType();
 
     /**
+     * 是否仅拷贝文件（指有些文件指从模板地址拷贝到目标地址，不做任何参数转义情况）
+     *
+     * @return true/false（一般默认false, 提供子类重写）
+     */
+    protected boolean isOnlyCloneFile() {
+        return false;
+    }
+
+    protected Map<String, Object> newRound() {
+        Map<String, Object> variables = new HashMap<>();
+        VARIABLES_IN_MODEL.add(variables);
+        return variables;
+    }
+
+    /**
      * 保存记录至库表
      *
      * @param basisLoanId 基础借贷ID
      * @return 处理结果
      */
-    private boolean save(Long basisLoanId, Long docSize) {
+    private boolean save(Long basisLoanId, Long docSize, String targetDocFullName, int secondSort) {
         LoanDoc loanDoc = LoanDoc.builder().loanBasisId(basisLoanId).docName(modelFileName())
-                .docPath(targetDocFullName()).docSize(docSize).downloadTimes(0)
-                .printTimes(0).sort(sort()).createTime(new Date()).build();
+                .docPath(targetDocFullName).docSize(docSize).downloadTimes(0)
+                .printTimes(0).sort(sort() + secondSort)
+                .createTime(new Date()).build();
 
         return loanDocService.save(loanDoc) > 0;
+    }
+
+    private boolean save(Long basisLoanId, Long docSize, String targetDocFullName) {
+        return save(basisLoanId, docSize, targetDocFullName, 0);
+    }
+
+    /**
+     * 文件拷贝流程
+     * @param basisLoanId 基础借贷ID
+     * @return 处理结果
+     */
+    private Future<Boolean> clone(Long basisLoanId) {
+        try {
+            // 最终生成文件的全路径（包含文件名称）
+            String targetDocFullName = targetDocFullName("");
+
+            long docSize = copyFile(getModelFullPath(docType().getSuffixName()), targetDocFullName);
+
+            return new AsyncResult<>(save(basisLoanId, docSize, targetDocFullName));
+        } catch (Exception e) {
+            log.error("clone failed by basisLoanId[{}]", basisLoanId, e);
+            return new AsyncResult<>(false);
+        }
     }
 
     /**
@@ -108,24 +166,45 @@ public abstract class AbstractOfficeTool {
      */
     @Async
     public Future<Boolean> execute(Long basisLoanId) {
+        if (isOnlyCloneFile()) {
+            return clone(basisLoanId);
+        }
+
+        return generate(basisLoanId);
+    }
+
+    private boolean isSingle() {
+        return VARIABLES_IN_MODEL.size() == 1;
+    }
+
+    private Future<Boolean> generate(Long basisLoanId) {
         try {
             String xmlContent = readXml();
 
             // 组装替换变量
             fillVariable(basisLoanId);
 
-            // 替换参数生成新的XML内容
-            xmlContent = translate(xmlContent);
+            int index = 1;
+            for(Map<String, Object> variables : VARIABLES_IN_MODEL) {
+                // 替换参数生成新的XML内容
+                xmlContent = translate(xmlContent, variables);
 
-            long docSize = write2Disk(targetDocFullName(), xmlContent);
+                // 最终生成文件的全路径（包含文件名称）
+                String targetDocFullName = targetDocFullName(indexInMultiDocs(index));
 
-            return new AsyncResult<>(save(basisLoanId, docSize));
+                long docSize = write2Disk(targetDocFullName, xmlContent);
+
+                save(basisLoanId, docSize, targetDocFullName, index);
+
+                index ++;
+            }
+
+            return new AsyncResult<>(true);
         } catch (Exception e) {
             log.error("Handler failed by basisLoanId[{}]", basisLoanId, e);
             return new AsyncResult<>(false);
         }
     }
-
 
     /**
      * 替换变量
@@ -133,8 +212,8 @@ public abstract class AbstractOfficeTool {
      * @param modelContent XML模板内容
      * @return 替换变量后的模板内容
      */
-    private String translate(String modelContent) {
-        for (Map.Entry<String, Object> entry : VARIABLES_IN_MODEL.entrySet()) {
+    private String translate(String modelContent, Map<String, Object> variables) {
+        for (Map.Entry<String, Object> entry : variables.entrySet()) {
             modelContent = modelContent.replace("{{" + entry.getKey() + "}}", entry.getValue().toString());
         }
 
@@ -142,7 +221,11 @@ public abstract class AbstractOfficeTool {
     }
 
     private String getModelFullPath() {
-        return modelHome + modelFileName() + DocConstants.MODEL_SUFFIX_NAME;
+        return getModelFullPath(DocConstants.MODEL_SUFFIX_NAME);
+    }
+
+    private String getModelFullPath(String modelSuffixName) {
+        return modelHome + modelFileName() + modelSuffixName;
     }
 
     private String readXml() throws Exception {
@@ -177,8 +260,22 @@ public abstract class AbstractOfficeTool {
         return yesDes;
     }
 
-    private String targetDocFullName() {
-        return docTarget + modelFileName() + DOC_FILE_SPLIT_CHAR + datetimeTitle() + docType().getSuffixName();
+    private String indexInMultiDocs(int sort) {
+        if(isSingle()) {
+            return "";
+        }
+
+        return DOC_FILE_SPLIT_CHAR + sort;
+    }
+
+    private String targetDocFullName(String indexInMultiDocs) {
+        FileDirectoryUtil.DirMeta docMeta = FileDirectoryUtil.createDir(docTarget);
+        if (!docMeta.isResult()) {
+            throw new RuntimeException(docMeta.getMsg());
+        }
+
+        return docMeta.getPath() + modelFileName() + indexInMultiDocs + DOC_FILE_SPLIT_CHAR
+                + datetimeTitle() + docType().getSuffixName();
     }
 
     private static String datetimeTitle() {

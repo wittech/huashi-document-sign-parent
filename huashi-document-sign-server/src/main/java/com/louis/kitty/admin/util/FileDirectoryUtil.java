@@ -2,16 +2,22 @@ package com.louis.kitty.admin.util;
 
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 public class FileDirectoryUtil {
+
+    /**
+     * 当前日期20190807 文件夹存在则不创建文件夹，不存在则创建并通知下次不用在创建
+     */
+    private static volatile Map<String, DirMeta> CURRENT_DATE_DIR = new ConcurrentHashMap<>();
 
     /**
      * 创建目录
@@ -25,10 +31,17 @@ public class FileDirectoryUtil {
         }
 
         String dirName = home + getDate();
-        //如果不存在,创建文件夹
+
+        if(CURRENT_DATE_DIR.containsKey(dirName)) {
+            return CURRENT_DATE_DIR.get(dirName);
+        }
+
+        //如果不存在,创建文件
         File dir = new File(dirName);
+
         if (dir.exists()) {
-            return DirMeta.builder().result(true).msg("ignored cause by dir has exists").build();
+            CURRENT_DATE_DIR.put(dirName, DirMeta.builder().result(true).path(dirName).build());
+            return CURRENT_DATE_DIR.get(dirName);
         }
 
         boolean isOk = dir.mkdirs();
@@ -36,7 +49,8 @@ public class FileDirectoryUtil {
             return DirMeta.builder().result(false).msg("dir["+dirName+"] create failed").build();
         }
 
-        return DirMeta.builder().result(true).path(dirName).build();
+        CURRENT_DATE_DIR.put(dirName, DirMeta.builder().result(true).path(dirName).build());
+        return CURRENT_DATE_DIR.get(dirName);
     }
 
 
