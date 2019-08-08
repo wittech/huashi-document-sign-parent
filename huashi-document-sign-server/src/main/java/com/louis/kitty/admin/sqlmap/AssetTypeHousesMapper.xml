@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.louis.kitty.admin.dao.AssetTypeHousesMapper">
+
+  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.AssetTypeHouses">
+	<id column="id" jdbcType="BIGINT" property="id" />
+	<result column="property_certificate_number" jdbcType="VARCHAR" property="propertyCertificateNumber" />
+	<result column="rpi_id" jdbcType="BIGINT" property="rpiId" />
+	<result column="whether_ownership_certificates" jdbcType="INTEGER" property="whetherOwnershipCertificates" />
+	<result column="deed" jdbcType="VARCHAR" property="deed" />
+	<result column="land_certificate" jdbcType="VARCHAR" property="landCertificate" />
+	<result column="name" jdbcType="VARCHAR" property="name" />
+	<result column="affiliation" jdbcType="VARCHAR" property="affiliation" />
+	<result column="address" jdbcType="VARCHAR" property="address" />
+	<result column="construction_area" jdbcType="VARCHAR" property="constructionArea" />
+	<result column="value" jdbcType="VARCHAR" property="value" />
+	<result column="financing_situation" jdbcType="INTEGER" property="financingSituation" />
+	<result column="whether_co_owner" jdbcType="INTEGER" property="whetherCoOwner" />
+	<result column="co_owner_name" jdbcType="VARCHAR" property="coOwnerName" />
+	<result column="whether_lease" jdbcType="INTEGER" property="whetherLease" />
+	<result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  
+  <insert id="add" parameterType="com.louis.kitty.admin.model.AssetTypeHouses">
+    insert into asset_type_houses
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="propertyCertificateNumber != null">
+        property_certificate_number,
+      </if>
+      <if test="rpiId != null">
+        rpi_id,
+      </if>
+      <if test="whetherOwnershipCertificates != null">
+        whether_ownership_certificates,
+      </if>
+      <if test="deed != null">
+        deed,
+      </if>
+      <if test="landCertificate != null">
+        land_certificate,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="affiliation != null">
+        affiliation,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="constructionArea != null">
+        construction_area,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+      <if test="financingSituation != null">
+        financing_situation,
+      </if>
+      <if test="whetherCoOwner != null">
+        whether_co_owner,
+      </if>
+      <if test="coOwnerName != null">
+        co_owner_name,
+      </if>
+      <if test="whetherLease != null">
+        whether_lease,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="propertyCertificateNumber != null">
+        #{propertyCertificateNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="rpiId != null">
+        #{rpiId,jdbcType=BIGINT},
+      </if>
+      <if test="whetherOwnershipCertificates != null">
+        #{whetherOwnershipCertificates,jdbcType=INTEGER},
+      </if>
+      <if test="deed != null">
+        #{deed,jdbcType=VARCHAR},
+      </if>
+      <if test="landCertificate != null">
+        #{landCertificate,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="affiliation != null">
+        #{affiliation,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="constructionArea != null">
+        #{constructionArea,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="financingSituation != null">
+        #{financingSituation,jdbcType=INTEGER},
+      </if>
+      <if test="whetherCoOwner != null">
+        #{whetherCoOwner,jdbcType=INTEGER},
+      </if>
+      <if test="coOwnerName != null">
+        #{coOwnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="whetherLease != null">
+        #{whetherLease,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from asset_type_houses
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <update id="update" parameterType="com.louis.kitty.admin.model.AssetTypeHouses">
+    update asset_type_houses
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="propertyCertificateNumber != null">
+        property_certificate_number = #{propertyCertificateNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="rpiId != null">
+        rpi_id = #{rpiId,jdbcType=BIGINT},
+      </if>
+      <if test="whetherOwnershipCertificates != null">
+        whether_ownership_certificates = #{whetherOwnershipCertificates,jdbcType=INTEGER},
+      </if>
+      <if test="deed != null">
+        deed = #{deed,jdbcType=VARCHAR},
+      </if>
+      <if test="landCertificate != null">
+        land_certificate = #{landCertificate,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="affiliation != null">
+        affiliation = #{affiliation,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="constructionArea != null">
+        construction_area = #{constructionArea,jdbcType=VARCHAR},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="financingSituation != null">
+        financing_situation = #{financingSituation,jdbcType=INTEGER},
+      </if>
+      <if test="whetherCoOwner != null">
+        whether_co_owner = #{whetherCoOwner,jdbcType=INTEGER},
+      </if>
+      <if test="coOwnerName != null">
+        co_owner_name = #{coOwnerName,jdbcType=VARCHAR},
+      </if>
+      <if test="whetherLease != null">
+        whether_lease = #{whetherLease,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from asset_type_houses
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findPage" resultMap="BaseResultMap">
+    select * from asset_type_houses
+  </select>
+  
+</mapper>

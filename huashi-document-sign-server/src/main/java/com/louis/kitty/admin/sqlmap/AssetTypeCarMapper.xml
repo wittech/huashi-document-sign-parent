@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.louis.kitty.admin.dao.AssetTypeCarMapper">
+
+  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.AssetTypeCar">
+	<id column="id" jdbcType="BIGINT" property="id" />
+	<result column="brand" jdbcType="VARCHAR" property="brand" />
+	<result column="rpi_id" jdbcType="BIGINT" property="rpiId" />
+	<result column="value" jdbcType="VARCHAR" property="value" />
+	<result column="number_plate" jdbcType="VARCHAR" property="numberPlate" />
+	<result column="driving_license_number" jdbcType="VARCHAR" property="drivingLicenseNumber" />
+	<result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  
+  <insert id="add" parameterType="com.louis.kitty.admin.model.AssetTypeCar">
+    insert into asset_type_car
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
+      <if test="rpiId != null">
+        rpi_id,
+      </if>
+      <if test="value != null">
+        value,
+      </if>
+      <if test="numberPlate != null">
+        number_plate,
+      </if>
+      <if test="drivingLicenseNumber != null">
+        driving_license_number,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="rpiId != null">
+        #{rpiId,jdbcType=BIGINT},
+      </if>
+      <if test="value != null">
+        #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="numberPlate != null">
+        #{numberPlate,jdbcType=VARCHAR},
+      </if>
+      <if test="drivingLicenseNumber != null">
+        #{drivingLicenseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from asset_type_car
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <update id="update" parameterType="com.louis.kitty.admin.model.AssetTypeCar">
+    update asset_type_car
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="brand != null">
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="rpiId != null">
+        rpi_id = #{rpiId,jdbcType=BIGINT},
+      </if>
+      <if test="value != null">
+        value = #{value,jdbcType=VARCHAR},
+      </if>
+      <if test="numberPlate != null">
+        number_plate = #{numberPlate,jdbcType=VARCHAR},
+      </if>
+      <if test="drivingLicenseNumber != null">
+        driving_license_number = #{drivingLicenseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from asset_type_car
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findPage" resultMap="BaseResultMap">
+    select * from asset_type_car
+  </select>
+  
+</mapper>

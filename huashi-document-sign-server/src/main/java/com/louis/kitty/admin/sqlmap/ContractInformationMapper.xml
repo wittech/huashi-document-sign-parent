@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.louis.kitty.admin.dao.ContractInformationMapper">
+
+  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.ContractInformation">
+	<id column="id" jdbcType="BIGINT" property="id" />
+	<result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId" />
+	<result column="personal_loan_contract_no" jdbcType="VARCHAR" property="personalLoanContractNo" />
+	<result column="mortgage_guarantee_contract_no" jdbcType="VARCHAR" property="mortgageGuaranteeContractNo" />
+	<result column="pawn_contract_no" jdbcType="VARCHAR" property="pawnContractNo" />
+	<result column="guarantee_guarantee_contract_no" jdbcType="VARCHAR" property="guaranteeGuaranteeContractNo" />
+	<result column="contract_signing_date" jdbcType="TIMESTAMP" property="contractSigningDate" />
+	<result column="borrowing_start_period" jdbcType="TIMESTAMP" property="borrowingStartPeriod" />
+	<result column="borrowing_end_period" jdbcType="TIMESTAMP" property="borrowingEndPeriod" />
+	<result column="loan_date" jdbcType="TIMESTAMP" property="loanDate" />
+  </resultMap>
+  
+  <insert id="add" parameterType="com.louis.kitty.admin.model.ContractInformation">
+    insert into contract_information
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="loanBasisId != null">
+        loan_basis_id,
+      </if>
+      <if test="personalLoanContractNo != null">
+        personal_loan_contract_no,
+      </if>
+      <if test="mortgageGuaranteeContractNo != null">
+        mortgage_guarantee_contract_no,
+      </if>
+      <if test="pawnContractNo != null">
+        pawn_contract_no,
+      </if>
+      <if test="guaranteeGuaranteeContractNo != null">
+        guarantee_guarantee_contract_no,
+      </if>
+      <if test="contractSigningDate != null">
+        contract_signing_date,
+      </if>
+      <if test="borrowingStartPeriod != null">
+        borrowing_start_period,
+      </if>
+      <if test="borrowingEndPeriod != null">
+        borrowing_end_period,
+      </if>
+      <if test="loanDate != null">
+        loan_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="loanBasisId != null">
+        #{loanBasisId,jdbcType=BIGINT},
+      </if>
+      <if test="personalLoanContractNo != null">
+        #{personalLoanContractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mortgageGuaranteeContractNo != null">
+        #{mortgageGuaranteeContractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pawnContractNo != null">
+        #{pawnContractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeGuaranteeContractNo != null">
+        #{guaranteeGuaranteeContractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contractSigningDate != null">
+        #{contractSigningDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="borrowingStartPeriod != null">
+        #{borrowingStartPeriod,jdbcType=TIMESTAMP},
+      </if>
+      <if test="borrowingEndPeriod != null">
+        #{borrowingEndPeriod,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loanDate != null">
+        #{loanDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from contract_information
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <update id="update" parameterType="com.louis.kitty.admin.model.ContractInformation">
+    update contract_information
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="loanBasisId != null">
+        loan_basis_id = #{loanBasisId,jdbcType=BIGINT},
+      </if>
+      <if test="personalLoanContractNo != null">
+        personal_loan_contract_no = #{personalLoanContractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="mortgageGuaranteeContractNo != null">
+        mortgage_guarantee_contract_no = #{mortgageGuaranteeContractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="pawnContractNo != null">
+        pawn_contract_no = #{pawnContractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="guaranteeGuaranteeContractNo != null">
+        guarantee_guarantee_contract_no = #{guaranteeGuaranteeContractNo,jdbcType=VARCHAR},
+      </if>
+      <if test="contractSigningDate != null">
+        contract_signing_date = #{contractSigningDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="borrowingStartPeriod != null">
+        borrowing_start_period = #{borrowingStartPeriod,jdbcType=TIMESTAMP},
+      </if>
+      <if test="borrowingEndPeriod != null">
+        borrowing_end_period = #{borrowingEndPeriod,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loanDate != null">
+        loan_date = #{loanDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from contract_information
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findPage" resultMap="BaseResultMap">
+    select * from contract_information
+  </select>
+  
+</mapper>

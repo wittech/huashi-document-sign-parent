@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.louis.kitty.admin.dao.CounterpartyInformationMapper">
+
+  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.CounterpartyInformation">
+	<id column="id" jdbcType="BIGINT" property="id" />
+	<result column="loan_business_information_id" jdbcType="BIGINT" property="loanBusinessInformationId" />
+	<result column="name" jdbcType="VARCHAR" property="name" />
+	<result column="account_number" jdbcType="VARCHAR" property="accountNumber" />
+	<result column="bank" jdbcType="VARCHAR" property="bank" />
+	<result column="amount" jdbcType="DECIMAL" property="amount" />
+  </resultMap>
+  
+  <insert id="add" parameterType="com.louis.kitty.admin.model.CounterpartyInformation">
+    insert into counterparty_information
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="loanBusinessInformationId != null">
+        loan_business_information_id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="accountNumber != null">
+        account_number,
+      </if>
+      <if test="bank != null">
+        bank,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="loanBusinessInformationId != null">
+        #{loanBusinessInformationId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNumber != null">
+        #{accountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null">
+        #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from counterparty_information
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <update id="update" parameterType="com.louis.kitty.admin.model.CounterpartyInformation">
+    update counterparty_information
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="loanBusinessInformationId != null">
+        loan_business_information_id = #{loanBusinessInformationId,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="accountNumber != null">
+        account_number = #{accountNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bank != null">
+        bank = #{bank,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from counterparty_information
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findPage" resultMap="BaseResultMap">
+    select * from counterparty_information
+  </select>
+  
+</mapper>

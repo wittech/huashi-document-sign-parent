@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.louis.kitty.admin.dao.NameAssetsMapper">
+
+  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.NameAssets">
+	<id column="id" jdbcType="BIGINT" property="id" />
+	<result column="pawn_id" jdbcType="BIGINT" property="pawnId" />
+	<result column="assets_id" jdbcType="INTEGER" property="assetsId" />
+  </resultMap>
+  
+  <insert id="add" parameterType="com.louis.kitty.admin.model.NameAssets">
+    insert into name_assets
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="pawnId != null">
+        pawn_id,
+      </if>
+      <if test="assetsId != null">
+        assets_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="pawnId != null">
+        #{pawnId,jdbcType=BIGINT},
+      </if>
+      <if test="assetsId != null">
+        #{assetsId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from name_assets
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <update id="update" parameterType="com.louis.kitty.admin.model.NameAssets">
+    update name_assets
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="pawnId != null">
+        pawn_id = #{pawnId,jdbcType=BIGINT},
+      </if>
+      <if test="assetsId != null">
+        assets_id = #{assetsId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from name_assets
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findPage" resultMap="BaseResultMap">
+    select * from name_assets
+  </select>
+  
+</mapper>

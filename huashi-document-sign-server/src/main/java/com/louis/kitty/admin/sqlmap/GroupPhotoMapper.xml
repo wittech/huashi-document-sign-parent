@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.louis.kitty.admin.dao.GroupPhotoMapper">
+
+  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.GroupPhoto">
+	<id column="id" jdbcType="BIGINT" property="id" />
+	<result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId" />
+	<result column="doc_meta_id" jdbcType="BIGINT" property="docMetaId" />
+  </resultMap>
+  
+  <insert id="add" parameterType="com.louis.kitty.admin.model.GroupPhoto">
+    insert into group_photo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="loanBasisId != null">
+        loan_basis_id,
+      </if>
+      <if test="docMetaId != null">
+        doc_meta_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="loanBasisId != null">
+        #{loanBasisId,jdbcType=BIGINT},
+      </if>
+      <if test="docMetaId != null">
+        #{docMetaId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from group_photo
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <update id="update" parameterType="com.louis.kitty.admin.model.GroupPhoto">
+    update group_photo
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="loanBasisId != null">
+        loan_basis_id = #{loanBasisId,jdbcType=BIGINT},
+      </if>
+      <if test="docMetaId != null">
+        doc_meta_id = #{docMetaId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from group_photo
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findPage" resultMap="BaseResultMap">
+    select * from group_photo
+  </select>
+  
+</mapper>

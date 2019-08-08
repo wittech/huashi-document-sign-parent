@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.louis.kitty.admin.dao.RelatedPersonnelInformationMapper">
+
+  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.RelatedPersonnelInformation">
+	<id column="id" jdbcType="BIGINT" property="id" />
+	<result column="name" jdbcType="VARCHAR" property="name" />
+	<result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId" />
+	<result column="type" jdbcType="INTEGER" property="type" />
+	<result column="age" jdbcType="INTEGER" property="age" />
+	<result column="sex" jdbcType="INTEGER" property="sex" />
+	<result column="identity_number" jdbcType="VARCHAR" property="identityNumber" />
+	<result column="domicile" jdbcType="VARCHAR" property="domicile" />
+	<result column="current_home_address" jdbcType="VARCHAR" property="currentHomeAddress" />
+	<result column="contact_address" jdbcType="INTEGER" property="contactAddress" />
+	<result column="local_residence_time" jdbcType="TIMESTAMP" property="localResidenceTime" />
+	<result column="email" jdbcType="VARCHAR" property="email" />
+	<result column="contact_number" jdbcType="VARCHAR" property="contactNumber" />
+	<result column="qq" jdbcType="VARCHAR" property="qq" />
+	<result column="wechat" jdbcType="VARCHAR" property="wechat" />
+	<result column="educational_level" jdbcType="INTEGER" property="educationalLevel" />
+	<result column="educational_level_value" jdbcType="VARCHAR" property="educationalLevelValue" />
+	<result column="current_housing_source" jdbcType="INTEGER" property="currentHousingSource" />
+	<result column="current_housing_source_value" jdbcType="VARCHAR" property="currentHousingSourceValue" />
+	<result column="employer" jdbcType="VARCHAR" property="employer" />
+	<result column="position" jdbcType="VARCHAR" property="position" />
+	<result column="unit_working_years" jdbcType="INTEGER" property="unitWorkingYears" />
+	<result column="company_name" jdbcType="VARCHAR" property="companyName" />
+	<result column="shareholding_ratio" jdbcType="VARCHAR" property="shareholdingRatio" />
+	<result column="years_operation" jdbcType="INTEGER" property="yearsOperation" />
+	<result column="asset_situation" jdbcType="INTEGER" property="assetSituation" />
+	<result column="asset_type" jdbcType="INTEGER" property="assetType" />
+	<result column="marital_status" jdbcType="INTEGER" property="maritalStatus" />
+	<result column="original_spouse_name" jdbcType="VARCHAR" property="originalSpouseName" />
+	<result column="divorce_method" jdbcType="INTEGER" property="divorceMethod" />
+	<result column="divorce_time" jdbcType="TIMESTAMP" property="divorceTime" />
+	<result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  
+  <insert id="add" parameterType="com.louis.kitty.admin.model.RelatedPersonnelInformation">
+    insert into related_personnel_information
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="loanBasisId != null">
+        loan_basis_id,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="age != null">
+        age,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="identityNumber != null">
+        identity_number,
+      </if>
+      <if test="domicile != null">
+        domicile,
+      </if>
+      <if test="currentHomeAddress != null">
+        current_home_address,
+      </if>
+      <if test="contactAddress != null">
+        contact_address,
+      </if>
+      <if test="localResidenceTime != null">
+        local_residence_time,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="contactNumber != null">
+        contact_number,
+      </if>
+      <if test="qq != null">
+        qq,
+      </if>
+      <if test="wechat != null">
+        wechat,
+      </if>
+      <if test="educationalLevel != null">
+        educational_level,
+      </if>
+      <if test="educationalLevelValue != null">
+        educational_level_value,
+      </if>
+      <if test="currentHousingSource != null">
+        current_housing_source,
+      </if>
+      <if test="currentHousingSourceValue != null">
+        current_housing_source_value,
+      </if>
+      <if test="employer != null">
+        employer,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+      <if test="unitWorkingYears != null">
+        unit_working_years,
+      </if>
+      <if test="companyName != null">
+        company_name,
+      </if>
+      <if test="shareholdingRatio != null">
+        shareholding_ratio,
+      </if>
+      <if test="yearsOperation != null">
+        years_operation,
+      </if>
+      <if test="assetSituation != null">
+        asset_situation,
+      </if>
+      <if test="assetType != null">
+        asset_type,
+      </if>
+      <if test="maritalStatus != null">
+        marital_status,
+      </if>
+      <if test="originalSpouseName != null">
+        original_spouse_name,
+      </if>
+      <if test="divorceMethod != null">
+        divorce_method,
+      </if>
+      <if test="divorceTime != null">
+        divorce_time,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="loanBasisId != null">
+        #{loanBasisId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="age != null">
+        #{age,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="identityNumber != null">
+        #{identityNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="domicile != null">
+        #{domicile,jdbcType=VARCHAR},
+      </if>
+      <if test="currentHomeAddress != null">
+        #{currentHomeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddress != null">
+        #{contactAddress,jdbcType=INTEGER},
+      </if>
+      <if test="localResidenceTime != null">
+        #{localResidenceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="contactNumber != null">
+        #{contactNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+        #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalLevel != null">
+        #{educationalLevel,jdbcType=INTEGER},
+      </if>
+      <if test="educationalLevelValue != null">
+        #{educationalLevelValue,jdbcType=VARCHAR},
+      </if>
+      <if test="currentHousingSource != null">
+        #{currentHousingSource,jdbcType=INTEGER},
+      </if>
+      <if test="currentHousingSourceValue != null">
+        #{currentHousingSourceValue,jdbcType=VARCHAR},
+      </if>
+      <if test="employer != null">
+        #{employer,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="unitWorkingYears != null">
+        #{unitWorkingYears,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null">
+        #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="shareholdingRatio != null">
+        #{shareholdingRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="yearsOperation != null">
+        #{yearsOperation,jdbcType=INTEGER},
+      </if>
+      <if test="assetSituation != null">
+        #{assetSituation,jdbcType=INTEGER},
+      </if>
+      <if test="assetType != null">
+        #{assetType,jdbcType=INTEGER},
+      </if>
+      <if test="maritalStatus != null">
+        #{maritalStatus,jdbcType=INTEGER},
+      </if>
+      <if test="originalSpouseName != null">
+        #{originalSpouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="divorceMethod != null">
+        #{divorceMethod,jdbcType=INTEGER},
+      </if>
+      <if test="divorceTime != null">
+        #{divorceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from related_personnel_information
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <update id="update" parameterType="com.louis.kitty.admin.model.RelatedPersonnelInformation">
+    update related_personnel_information
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="loanBasisId != null">
+        loan_basis_id = #{loanBasisId,jdbcType=BIGINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="age != null">
+        age = #{age,jdbcType=INTEGER},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=INTEGER},
+      </if>
+      <if test="identityNumber != null">
+        identity_number = #{identityNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="domicile != null">
+        domicile = #{domicile,jdbcType=VARCHAR},
+      </if>
+      <if test="currentHomeAddress != null">
+        current_home_address = #{currentHomeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="contactAddress != null">
+        contact_address = #{contactAddress,jdbcType=INTEGER},
+      </if>
+      <if test="localResidenceTime != null">
+        local_residence_time = #{localResidenceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="contactNumber != null">
+        contact_number = #{contactNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="qq != null">
+        qq = #{qq,jdbcType=VARCHAR},
+      </if>
+      <if test="wechat != null">
+        wechat = #{wechat,jdbcType=VARCHAR},
+      </if>
+      <if test="educationalLevel != null">
+        educational_level = #{educationalLevel,jdbcType=INTEGER},
+      </if>
+      <if test="educationalLevelValue != null">
+        educational_level_value = #{educationalLevelValue,jdbcType=VARCHAR},
+      </if>
+      <if test="currentHousingSource != null">
+        current_housing_source = #{currentHousingSource,jdbcType=INTEGER},
+      </if>
+      <if test="currentHousingSourceValue != null">
+        current_housing_source_value = #{currentHousingSourceValue,jdbcType=VARCHAR},
+      </if>
+      <if test="employer != null">
+        employer = #{employer,jdbcType=VARCHAR},
+      </if>
+      <if test="position != null">
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="unitWorkingYears != null">
+        unit_working_years = #{unitWorkingYears,jdbcType=INTEGER},
+      </if>
+      <if test="companyName != null">
+        company_name = #{companyName,jdbcType=VARCHAR},
+      </if>
+      <if test="shareholdingRatio != null">
+        shareholding_ratio = #{shareholdingRatio,jdbcType=VARCHAR},
+      </if>
+      <if test="yearsOperation != null">
+        years_operation = #{yearsOperation,jdbcType=INTEGER},
+      </if>
+      <if test="assetSituation != null">
+        asset_situation = #{assetSituation,jdbcType=INTEGER},
+      </if>
+      <if test="assetType != null">
+        asset_type = #{assetType,jdbcType=INTEGER},
+      </if>
+      <if test="maritalStatus != null">
+        marital_status = #{maritalStatus,jdbcType=INTEGER},
+      </if>
+      <if test="originalSpouseName != null">
+        original_spouse_name = #{originalSpouseName,jdbcType=VARCHAR},
+      </if>
+      <if test="divorceMethod != null">
+        divorce_method = #{divorceMethod,jdbcType=INTEGER},
+      </if>
+      <if test="divorceTime != null">
+        divorce_time = #{divorceTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from related_personnel_information
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findPage" resultMap="BaseResultMap">
+    select * from related_personnel_information
+  </select>
+  
+</mapper>
