@@ -1439,3 +1439,77 @@ CREATE TABLE `contract_information` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='合同信息表';
 
+
+-- ----------------------------
+-- Table structure post_loan_check
+-- ----------------------------
+DROP TABLE IF EXISTS `post_loan_check`;
+CREATE TABLE `post_loan_check` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `loan_basis_id` bigint(20) NOT NULL COMMENT '基础信息表id',
+  `check_time` datetime DEFAULT NULL COMMENT '检查时间',
+  `borrower` varchar(50) DEFAULT NULL COMMENT '借款人',
+  `loan_start_and_stop_date` varchar(200) DEFAULT NULL COMMENT '贷款起止日期',
+  `loan_variety` varchar(50) DEFAULT NULL COMMENT '贷款品种',
+  `loan_use` varchar(50) DEFAULT NULL COMMENT '借款用途',
+  `loan_amount` decimal(10,6) DEFAULT NULL COMMENT '贷款金额 万元',
+  `loan_balance` decimal(10,6) DEFAULT NULL COMMENT '贷款余额 万元',
+  `guarantee_method` varchar(50) DEFAULT NULL COMMENT '担保方式',
+  `payment_method_withdrawal` int DEFAULT NULL COMMENT '是否按约定的采取委托支付或自主支付方式提款 0否 1是',
+  `contractual_agreement` int DEFAULT NULL COMMENT '资金支付交易对手是否符合合同约定 0否 1是',
+  `intended_use` int DEFAULT NULL COMMENT ' 资金使用是否符合约定用途 0否 1是',
+  `is_complete` int DEFAULT NULL COMMENT '贷款资料是否完整 0否 1是',
+  `complete` int DEFAULT NULL COMMENT '抵（质押）登记或担保手续是否完备 0否 1是',
+  `has_implemented` int DEFAULT NULL COMMENT '对照风险评价报告及审批意见书，审批（咨询）部门提出的限制性条款以及贷后管理要求是否已落实  0否 1是',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='贷后检查信息表';
+
+-- ----------------------------
+-- Table structure collection_notice
+-- ----------------------------
+DROP TABLE IF EXISTS `collection_notice`;
+CREATE TABLE `collection_notice` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `loan_basis_id` bigint(20) NOT NULL COMMENT '基础信息表id',
+  `check_time` datetime DEFAULT NULL COMMENT '检查时间',
+  `borrower` varchar(50) DEFAULT NULL COMMENT '借款人',
+  `personal_loan_contract_number` varchar(200) DEFAULT NULL COMMENT '个人借款合同编号',
+  `borrowing_period` int(3) DEFAULT NULL COMMENT '借款期限 年',
+  `loan_start_and_stop_date` varchar(200) DEFAULT NULL COMMENT '贷款起止日期',
+  `owe_principal` decimal(10,6) DEFAULT NULL COMMENT '所欠本金元',
+  `owe_interest` decimal(10,6) DEFAULT NULL COMMENT '所欠利息元',
+  `fill_date` datetime DEFAULT NULL COMMENT '填写日期',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='贷款到期（逾期）催收通知书信息表';
+
+-- ----------------------------
+-- Table structure litigation_information
+-- ----------------------------
+DROP TABLE IF EXISTS `litigation_information`;
+CREATE TABLE `litigation_information` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `loan_basis_id` bigint(20) NOT NULL COMMENT '基础信息表id',
+  `check_time` datetime DEFAULT NULL COMMENT '检查时间',
+  `borrower` varchar(50) DEFAULT NULL COMMENT '借款人',
+  `personal_loan_contract_number` varchar(200) DEFAULT NULL COMMENT '个人借款合同编号',
+  `borrowing_period` int(3) DEFAULT NULL COMMENT '借款期限 年',
+  `loan_start_and_stop_date` varchar(200) DEFAULT NULL COMMENT '贷款起止日期',
+  `loan_balance` decimal(10,6) DEFAULT NULL COMMENT '贷款余额元',
+  `owe_interest` decimal(10,6) DEFAULT NULL COMMENT '所欠利息元',
+  `litigation_time` datetime DEFAULT NULL COMMENT '诉讼时间',
+  `litigation_type` int(1) DEFAULT NULL COMMENT '诉讼类型 0未到期 1已到期',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '修改人',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='诉讼信息表';
+
