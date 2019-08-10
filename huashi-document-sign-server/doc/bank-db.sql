@@ -1469,6 +1469,20 @@ CREATE TABLE `post_loan_check` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='贷后检查信息表';
 
 -- ----------------------------
+-- Table structure implement_information
+-- ----------------------------
+DROP TABLE IF EXISTS `implement_information`;
+CREATE TABLE `implement_information` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `post_loan_check_id` bigint(20) NOT NULL COMMENT '贷后检查信息表id',
+  `check_time` datetime DEFAULT NULL COMMENT '检查时间',
+  `unimplemented` varchar(80) DEFAULT NULL COMMENT '未落实',
+  `reason` varchar(2000) DEFAULT NULL COMMENT '原因',
+  `proposed_measures` varchar(200) DEFAULT NULL COMMENT '拟采取措施',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='落实信息表';
+
+-- ----------------------------
 -- Table structure collection_notice
 -- ----------------------------
 DROP TABLE IF EXISTS `collection_notice`;
@@ -1512,4 +1526,6 @@ CREATE TABLE `litigation_information` (
   `last_update_by` varchar(50) DEFAULT NULL COMMENT '修改人',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='诉讼信息表';
+
+
 
