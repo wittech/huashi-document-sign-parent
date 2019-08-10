@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.louis.kitty.admin.dao.LitigationInformationMapper">
+
+  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.LitigationInformation">
+	<id column="id" jdbcType="BIGINT" property="id" />
+	<result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId" />
+	<result column="check_time" jdbcType="TIMESTAMP" property="checkTime" />
+	<result column="borrower" jdbcType="VARCHAR" property="borrower" />
+	<result column="personal_loan_contract_number" jdbcType="VARCHAR" property="personalLoanContractNumber" />
+	<result column="borrowing_period" jdbcType="INTEGER" property="borrowingPeriod" />
+	<result column="loan_start_and_stop_date" jdbcType="VARCHAR" property="loanStartAndStopDate" />
+	<result column="loan_balance" jdbcType="DECIMAL" property="loanBalance" />
+	<result column="owe_interest" jdbcType="DECIMAL" property="oweInterest" />
+	<result column="litigation_time" jdbcType="TIMESTAMP" property="litigationTime" />
+	<result column="litigation_type" jdbcType="INTEGER" property="litigationType" />
+	<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	<result column="create_by" jdbcType="VARCHAR" property="createBy" />
+	<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+	<result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+  </resultMap>
+  
+  <insert id="add" parameterType="com.louis.kitty.admin.model.LitigationInformation">
+    insert into litigation_information
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="loanBasisId != null">
+        loan_basis_id,
+      </if>
+      <if test="checkTime != null">
+        check_time,
+      </if>
+      <if test="borrower != null">
+        borrower,
+      </if>
+      <if test="personalLoanContractNumber != null">
+        personal_loan_contract_number,
+      </if>
+      <if test="borrowingPeriod != null">
+        borrowing_period,
+      </if>
+      <if test="loanStartAndStopDate != null">
+        loan_start_and_stop_date,
+      </if>
+      <if test="loanBalance != null">
+        loan_balance,
+      </if>
+      <if test="oweInterest != null">
+        owe_interest,
+      </if>
+      <if test="litigationTime != null">
+        litigation_time,
+      </if>
+      <if test="litigationType != null">
+        litigation_type,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="loanBasisId != null">
+        #{loanBasisId,jdbcType=BIGINT},
+      </if>
+      <if test="checkTime != null">
+        #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="borrower != null">
+        #{borrower,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLoanContractNumber != null">
+        #{personalLoanContractNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowingPeriod != null">
+        #{borrowingPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="loanStartAndStopDate != null">
+        #{loanStartAndStopDate,jdbcType=VARCHAR},
+      </if>
+      <if test="loanBalance != null">
+        #{loanBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="oweInterest != null">
+        #{oweInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="litigationTime != null">
+        #{litigationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="litigationType != null">
+        #{litigationType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from litigation_information
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <update id="update" parameterType="com.louis.kitty.admin.model.LitigationInformation">
+    update litigation_information
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="loanBasisId != null">
+        loan_basis_id = #{loanBasisId,jdbcType=BIGINT},
+      </if>
+      <if test="checkTime != null">
+        check_time = #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="borrower != null">
+        borrower = #{borrower,jdbcType=VARCHAR},
+      </if>
+      <if test="personalLoanContractNumber != null">
+        personal_loan_contract_number = #{personalLoanContractNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="borrowingPeriod != null">
+        borrowing_period = #{borrowingPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="loanStartAndStopDate != null">
+        loan_start_and_stop_date = #{loanStartAndStopDate,jdbcType=VARCHAR},
+      </if>
+      <if test="loanBalance != null">
+        loan_balance = #{loanBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="oweInterest != null">
+        owe_interest = #{oweInterest,jdbcType=DECIMAL},
+      </if>
+      <if test="litigationTime != null">
+        litigation_time = #{litigationTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="litigationType != null">
+        litigation_type = #{litigationType,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from litigation_information
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findPage" resultMap="BaseResultMap">
+    select * from litigation_information
+  </select>
+  
+</mapper>
