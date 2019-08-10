@@ -9,7 +9,7 @@ import com.louis.kitty.admin.model.LoanBusinessInformation;
  * 贷款业务信息表 (LoanBusinessInformationMapper)         
  * ---------------------------
  * 作者：  lz
- * 时间：  2019-08-08 11:53:18
+ * 时间：  2019-08-10 22:28:24
  * 说明：  我是由代码生成器生生成的
  * ---------------------------
  */

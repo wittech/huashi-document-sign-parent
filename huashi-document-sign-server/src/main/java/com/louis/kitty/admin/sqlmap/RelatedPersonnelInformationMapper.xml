@@ -35,6 +35,7 @@
 	<result column="divorce_method" jdbcType="INTEGER" property="divorceMethod" />
 	<result column="divorce_time" jdbcType="TIMESTAMP" property="divorceTime" />
 	<result column="remark" jdbcType="VARCHAR" property="remark" />
+	<result column="couple_id" jdbcType="BIGINT" property="coupleId" />
   </resultMap>
   
   <insert id="add" parameterType="com.louis.kitty.admin.model.RelatedPersonnelInformation">
@@ -136,6 +137,9 @@
       <if test="remark != null">
         remark,
       </if>
+      <if test="coupleId != null">
+        couple_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -233,6 +237,9 @@
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="coupleId != null">
+        #{coupleId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -340,6 +347,9 @@
       </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="coupleId != null">
+        couple_id = #{coupleId,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

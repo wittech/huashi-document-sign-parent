@@ -5,7 +5,7 @@ package com.louis.kitty.admin.model;
  * 抵押物信息表 (Pawn)         
  * ---------------------------
  * 作者：  lz
- * 时间：  2019-08-08 11:53:18
+ * 时间：  2019-08-10 22:28:24
  * 说明：  我是由代码生成器生生成的
  * ---------------------------
  */
@@ -57,8 +57,6 @@ public class Pawn {
 	private Integer rentPaymentMethod;
 	/** 合同签署时间 */
 	private java.util.Date contractSigningTime;
-	/** 所属名下id */
-	private Long nameAssetsId;
 
 	public Long getId() {
 		return id;
@@ -242,14 +240,6 @@ public class Pawn {
 
 	public void setContractSigningTime(java.util.Date contractSigningTime) {
 		this.contractSigningTime = contractSigningTime;
-	}
-
-	public Long getNameAssetsId() {
-		return nameAssetsId;
-	}
-
-	public void setNameAssetsId(Long nameAssetsId) {
-		this.nameAssetsId = nameAssetsId;
 	}
 
 }

@@ -26,7 +26,6 @@
 	<result column="lease_term_end_time" jdbcType="TIMESTAMP" property="leaseTermEndTime" />
 	<result column="rent_payment_method" jdbcType="INTEGER" property="rentPaymentMethod" />
 	<result column="contract_signing_time" jdbcType="TIMESTAMP" property="contractSigningTime" />
-	<result column="name_assets_id" jdbcType="BIGINT" property="nameAssetsId" />
   </resultMap>
   
   <insert id="add" parameterType="com.louis.kitty.admin.model.Pawn">
@@ -101,9 +100,6 @@
       <if test="contractSigningTime != null">
         contract_signing_time,
       </if>
-      <if test="nameAssetsId != null">
-        name_assets_id,
-      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -174,9 +170,6 @@
       </if>
       <if test="contractSigningTime != null">
         #{contractSigningTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="nameAssetsId != null">
-        #{nameAssetsId,jdbcType=BIGINT},
       </if>
     </trim>
   </insert>
@@ -257,9 +250,6 @@
       </if>
       <if test="contractSigningTime != null">
         contract_signing_time = #{contractSigningTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="nameAssetsId != null">
-        name_assets_id = #{nameAssetsId,jdbcType=BIGINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

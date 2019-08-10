@@ -2,52 +2,52 @@ package com.louis.kitty.admin.dao;
 
 import java.util.List;
 
-import com.louis.kitty.admin.model.RelatedPersonnelInformation;
+import com.louis.kitty.admin.model.PostLoanNotImplemented;
 
 /**
  * ---------------------------
- * 相关人员信息表 (RelatedPersonnelInformationMapper)         
+ *  (PostLoanNotImplementedMapper)         
  * ---------------------------
  * 作者：  lz
  * 时间：  2019-08-10 22:28:24
  * 说明：  我是由代码生成器生生成的
  * ---------------------------
  */
-public interface RelatedPersonnelInformationMapper {
+public interface PostLoanNotImplementedMapper {
 
 	/**
-	 * 添加相关人员信息表
+	 * 添加
 	 * @param record
 	 * @return
 	 */
-    int add(RelatedPersonnelInformation record);
+    int add(PostLoanNotImplemented record);
 
     /**
-     * 删除相关人员信息表
+     * 删除
      * @param id
      * @return
      */
     int delete(Long id);
     
     /**
-     * 修改相关人员信息表
+     * 修改
      * @param record
      * @return
      */
-    int update(RelatedPersonnelInformation record);
+    int update(PostLoanNotImplemented record);
     
     /**
      * 根据主键查询
      * @param id
      * @return
      */    
-    RelatedPersonnelInformation findById(Long id);
+    PostLoanNotImplemented findById(Long id);
 
     /**
      * 基础分页查询
      * @param record
      * @return
      */    
-    List<RelatedPersonnelInformation> findPage();
+    List<PostLoanNotImplemented> findPage();
     
 }

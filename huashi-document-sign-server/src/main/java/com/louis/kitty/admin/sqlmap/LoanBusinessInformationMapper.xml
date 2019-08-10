@@ -26,7 +26,9 @@
 	<result column="whether_provident_fund_combination_loan" jdbcType="INTEGER" property="whetherProvidentFundCombinationLoan" />
 	<result column="provident_fund_loan_amount" jdbcType="DECIMAL" property="providentFundLoanAmount" />
 	<result column="whether_exclusive_credit_client" jdbcType="INTEGER" property="whetherExclusiveCreditClient" />
-	<result column="deposit_account" jdbcType="VARCHAR" property="depositAccount" />
+	<result column="deposit_account" jdbcType="DATE" property="depositAccount" />
+	<result column="deduction_account_name" jdbcType="VARCHAR" property="deductionAccountName" />
+	<result column="deduction_account" jdbcType="VARCHAR" property="deductionAccount" />
   </resultMap>
   
   <insert id="add" parameterType="com.louis.kitty.admin.model.LoanBusinessInformation">
@@ -104,6 +106,12 @@
       <if test="depositAccount != null">
         deposit_account,
       </if>
+      <if test="deductionAccountName != null">
+        deduction_account_name,
+      </if>
+      <if test="deductionAccount != null">
+        deduction_account,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -176,7 +184,13 @@
         #{whetherExclusiveCreditClient,jdbcType=INTEGER},
       </if>
       <if test="depositAccount != null">
-        #{depositAccount,jdbcType=VARCHAR},
+        #{depositAccount,jdbcType=DATE},
+      </if>
+      <if test="deductionAccountName != null">
+        #{deductionAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="deductionAccount != null">
+        #{deductionAccount,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -259,7 +273,13 @@
         whether_exclusive_credit_client = #{whetherExclusiveCreditClient,jdbcType=INTEGER},
       </if>
       <if test="depositAccount != null">
-        deposit_account = #{depositAccount,jdbcType=VARCHAR},
+        deposit_account = #{depositAccount,jdbcType=DATE},
+      </if>
+      <if test="deductionAccountName != null">
+        deduction_account_name = #{deductionAccountName,jdbcType=VARCHAR},
+      </if>
+      <if test="deductionAccount != null">
+        deduction_account = #{deductionAccount,jdbcType=VARCHAR},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

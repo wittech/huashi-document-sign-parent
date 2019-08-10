@@ -48,7 +48,7 @@ public class SysConfigurationController {
      * @param records
      * @return
      */
-	@PreAuthorize("hasAuthority('configuration:save')")
+	@PreAuthorize("hasAuthority('configuration:add')")
 	@PostMapping(value="/delete")
 	public HttpResult delete(@RequestBody List<SysConfiguration> records) {
 		return HttpResult.ok(sysConfigurationService.delete(records));
@@ -59,7 +59,7 @@ public class SysConfigurationController {
      * @param pageRequest
      * @return
      */    
-	@PreAuthorize("hasAuthority('configuration:save')")
+	@PreAuthorize("hasAuthority('configuration:view')")
 	@PostMapping(value="/findPage")
 	public HttpResult findPage(@RequestBody PageRequest pageRequest) {
 		return HttpResult.ok(sysConfigurationService.findPage(pageRequest));
@@ -70,7 +70,7 @@ public class SysConfigurationController {
      * @param id
      * @return
      */ 	
-	@PreAuthorize("hasAuthority('configuration:save')")
+	@PreAuthorize("hasAuthority('configuration:add')")
 	@GetMapping(value="/findById")
 	public HttpResult findById(@RequestParam Long id) {
 		return HttpResult.ok(sysConfigurationService.findById(id));

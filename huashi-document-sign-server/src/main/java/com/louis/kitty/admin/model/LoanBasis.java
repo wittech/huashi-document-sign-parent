@@ -9,7 +9,7 @@ package com.louis.kitty.admin.model;
  * 说明：  我是由代码生成器生生成的
  * ---------------------------
  */
-public class LoanBasis {
+public class LoanBasis{
 
 	/** 编号 */
 	private Long id;

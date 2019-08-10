@@ -5,7 +5,7 @@ package com.louis.kitty.admin.model;
  * 相关人员信息表 (RelatedPersonnelInformation)         
  * ---------------------------
  * 作者：  lz
- * 时间：  2019-08-08 11:53:18
+ * 时间：  2019-08-10 22:28:24
  * 说明：  我是由代码生成器生生成的
  * ---------------------------
  */
@@ -17,7 +17,7 @@ public class RelatedPersonnelInformation {
 	private String name;
 	/** 基础信息表id */
 	private Long loanBasisId;
-	/** 类型（1、结款人）（2、配偶）（3、抵押担保人）（3、抵押担保人） （4、保证担保人）（5、抵押担保人和保证担保人） */
+	/** 类型（1、借款人本人）（2、借款人配偶）（3、抵押担保人） （4、保证担保人）（5、抵押担保人、保证担保人） */
 	private Integer type;
 	/** 年龄 */
 	private Integer age;
@@ -75,6 +75,8 @@ public class RelatedPersonnelInformation {
 	private java.util.Date divorceTime;
 	/** 备注 */
 	private String remark;
+	/** 配偶ID， 主加人 为0， 附加配偶 存储主加人ID */
+	private Long coupleId;
 
 	public Long getId() {
 		return id;
@@ -330,6 +332,14 @@ public class RelatedPersonnelInformation {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public Long getCoupleId() {
+		return coupleId;
+	}
+
+	public void setCoupleId(Long coupleId) {
+		this.coupleId = coupleId;
 	}
 
 }
