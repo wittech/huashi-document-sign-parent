@@ -35,7 +35,7 @@
 	<result column="financing_situation" jdbcType="INTEGER" property="financingSituation" />
   </resultMap>
   
-  <insert id="add" parameterType="com.louis.kitty.admin.model.Pawn">
+  <insert id="add" parameterType="com.louis.kitty.admin.model.Pawn" useGeneratedKeys="true" keyProperty="id">
     insert into pawn
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

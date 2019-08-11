@@ -1,5 +1,7 @@
 package com.louis.kitty.admin.model;
 
+import java.util.List;
+
 /**
  * ---------------------------
  * 贷款业务信息表 (LoanBusinessInformation)         
@@ -67,6 +69,24 @@ public class LoanBusinessInformation {
 	private java.util.Date lastUpdateTime;
 	/** 是否删除  -1：已删除  0：正常 */
 	private Integer delFlag;
+	private List<CounterpartyInformation> counterpartyInformation;
+	private List<RepaymentPlan> repaymentPlan;
+
+	public List<CounterpartyInformation> getCounterpartyInformation() {
+		return counterpartyInformation;
+	}
+
+	public void setCounterpartyInformation(List<CounterpartyInformation> counterpartyInformation) {
+		this.counterpartyInformation = counterpartyInformation;
+	}
+
+	public List<RepaymentPlan> getRepaymentPlan() {
+		return repaymentPlan;
+	}
+
+	public void setRepaymentPlan(List<RepaymentPlan> repaymentPlan) {
+		this.repaymentPlan = repaymentPlan;
+	}
 
 	public Long getId() {
 		return id;

@@ -1,5 +1,6 @@
 package com.louis.kitty.admin.sevice.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import com.louis.kitty.core.page.PageRequest;
 import com.louis.kitty.core.page.PageResult;
 
 import com.louis.kitty.admin.model.Pawn;
+import com.louis.kitty.admin.model.PawnPersonnelMapping;
 import com.louis.kitty.admin.dao.PawnMapper;
+import com.louis.kitty.admin.dao.PawnPersonnelMappingMapper;
 import com.louis.kitty.admin.sevice.PawnService;
 
 /**
@@ -27,11 +30,29 @@ public class PawnServiceImpl implements PawnService {
 
 	@Autowired
 	private PawnMapper pawnMapper;
+	@Autowired
+	private PawnPersonnelMappingMapper pawnPersonnelMappingMapper;
 
 	@Override
 	public int save(Pawn record) {
 		if(record.getId() == null || record.getId() == 0) {
-			return pawnMapper.add(record);
+			List<Pawn> list =  record.getPawn();
+			if(list !=null){
+				for(Pawn md : list){
+					md.setCreateTime(new Date());
+					pawnMapper.add(md);
+					Long id = md.getId();
+					if(id>0){
+						if(md.getPawnPersonnelMapping() !=null){
+							for(PawnPersonnelMapping m : md.getPawnPersonnelMapping()){
+								m.setPawnId(id);
+								pawnPersonnelMappingMapper.add(m);
+							}
+						}
+					}
+				}
+			}
+			return 1;
 		}
 		return pawnMapper.update(record);
 	}

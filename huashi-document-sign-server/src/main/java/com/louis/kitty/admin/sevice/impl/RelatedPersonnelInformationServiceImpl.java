@@ -187,5 +187,10 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 	public PageResult findPage(PageRequest pageRequest) {
 		return MybatisPageHelper.findPage(pageRequest, relatedPersonnelInformationMapper);
 	}
+
+	@Override
+	public List<RelatedPersonnelInformation> findByBaseIdList(int loanBasisId) {
+		return relatedPersonnelInformationMapper.findByBaseIdList(loanBasisId);
+	}
 	
 }

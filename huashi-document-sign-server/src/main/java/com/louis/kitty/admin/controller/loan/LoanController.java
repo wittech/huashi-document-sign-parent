@@ -5,19 +5,31 @@ package com.louis.kitty.admin.controller.loan;
 
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.louis.kitty.admin.model.ContractInformation;
 import com.louis.kitty.admin.model.LoanBasis;
+import com.louis.kitty.admin.model.LoanBusinessInformation;
 import com.louis.kitty.admin.model.OterPersonnel;
+import com.louis.kitty.admin.model.Pawn;
+import com.louis.kitty.admin.model.PersonalLoanSurveyReport;
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
+import com.louis.kitty.admin.sevice.ContractInformationService;
 import com.louis.kitty.admin.sevice.LoanBasisService;
+import com.louis.kitty.admin.sevice.LoanBusinessInformationService;
+import com.louis.kitty.admin.sevice.PawnService;
+import com.louis.kitty.admin.sevice.PersonalLoanSurveyReportService;
 import com.louis.kitty.admin.sevice.RelatedPersonnelInformationService;
 import com.louis.kitty.core.http.HttpResult;
+import com.louis.kitty.core.page.PageRequest;
 
 /**
  * 贷款管理
@@ -33,6 +45,14 @@ public class LoanController {
 	//相关人员信息表
 	@Autowired
 	private RelatedPersonnelInformationService relatedPersonnelInformationService;
+	@Autowired
+	private PawnService pawnService;
+	@Autowired
+	private LoanBusinessInformationService loanBusinessInformationService;
+	@Autowired
+	private PersonalLoanSurveyReportService personalLoanSurveyReportService;
+	@Autowired
+	private ContractInformationService contractInformationService;
 	
 	/**
 	 *1、保存基础信息 
@@ -54,6 +74,7 @@ public class LoanController {
 	 */
 	@PostMapping(value="/saveBorrower")
 	public HttpResult saveBorrower(@RequestBody RelatedPersonnelInformation record) {
+		record.setCreateTime(new Date());
 		return HttpResult.ok(relatedPersonnelInformationService.save(record));
 	}
 	
@@ -72,6 +93,83 @@ public class LoanController {
 		}
 		return HttpResult.ok(1);
 	}
+	
+	/**
+	 * 4、保存抵押物
+	 * @param record
+	 * @return
+	 */
+	@PostMapping(value="/savePawn")
+	public HttpResult savePawn(@RequestBody Pawn record) {
+		return HttpResult.ok(pawnService.save(record));
+	}
+	
+	/**
+	 * 根据基础id获取相关人员信息
+	 * @param loanBasisId
+	 * @return
+	 */
+	@GetMapping(value="/findByBaseIdList")
+	public HttpResult findByBaseIdList(@RequestParam String loanBasisId) {
+		int loanBasisIdInt = 0;
+		if(StringUtils.isNotEmpty(loanBasisId)){
+			loanBasisIdInt = Integer.parseInt(loanBasisId);
+		}
+		return HttpResult.ok(relatedPersonnelInformationService.findByBaseIdList(loanBasisIdInt));
+	}
+	
+	/**
+	 * 5、保存贷款业务信息
+	 * @param record
+	 * @return
+	 */
+	@PostMapping(value="/saveLoanBusiness")
+	public HttpResult saveLoanBusiness(@RequestBody LoanBusinessInformation record) {
+		return HttpResult.ok(loanBusinessInformationService.save(record));
+	}
+	
+	/**
+	 * 7、保存个人报告信息
+	 * @param record
+	 * @return
+	 */
+	@PostMapping(value="/savePersonalLoanSurvey")
+	public HttpResult savePersonalLoanSurvey(@RequestBody PersonalLoanSurveyReport record) {
+		record.setCreateTime(new Date());
+		return HttpResult.ok(personalLoanSurveyReportService.save(record));
+	}
+	
+	/**
+	 * 8、保存合同信息
+	 * @param record
+	 * @return
+	 */
+	@PostMapping(value="/saveContractInformation")
+	public HttpResult saveContractInformation(@RequestBody ContractInformation record) {
+		record.setCreateTime(new Date());
+		return HttpResult.ok(contractInformationService.save(record));
+	}
+	
+	 /**
+     * 基础分页查询
+     * @param pageRequest
+     * @return
+     */    
+	@PostMapping(value="/findPage")
+	public HttpResult findPage(@RequestBody PageRequest pageRequest) {
+		return HttpResult.ok(loanBasisService.findPage(pageRequest));
+	}
+	
+	/**
+	 * 根据id获取对象信息
+	 * @param id
+	 * @return
+	 */
+	@GetMapping(value="/getById")
+	public HttpResult get(@RequestParam Long id) {
+		return HttpResult.ok(loanBasisService.findById(id));
+	}
+	
 	
 	
 }

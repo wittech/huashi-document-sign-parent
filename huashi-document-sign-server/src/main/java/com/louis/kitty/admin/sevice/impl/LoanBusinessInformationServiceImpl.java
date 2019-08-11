@@ -1,5 +1,6 @@
 package com.louis.kitty.admin.sevice.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,12 @@ import org.springframework.stereotype.Service;
 import com.louis.kitty.core.page.MybatisPageHelper;
 import com.louis.kitty.core.page.PageRequest;
 import com.louis.kitty.core.page.PageResult;
-
+import com.louis.kitty.admin.model.CounterpartyInformation;
 import com.louis.kitty.admin.model.LoanBusinessInformation;
+import com.louis.kitty.admin.model.RepaymentPlan;
+import com.louis.kitty.admin.dao.CounterpartyInformationMapper;
 import com.louis.kitty.admin.dao.LoanBusinessInformationMapper;
+import com.louis.kitty.admin.dao.RepaymentPlanMapper;
 import com.louis.kitty.admin.sevice.LoanBusinessInformationService;
 
 /**
@@ -27,11 +31,34 @@ public class LoanBusinessInformationServiceImpl implements LoanBusinessInformati
 
 	@Autowired
 	private LoanBusinessInformationMapper loanBusinessInformationMapper;
+	@Autowired
+	private CounterpartyInformationMapper counterpartyInformationMapper;
+	@Autowired
+	private RepaymentPlanMapper repaymentPlanMapper;
 
 	@Override
 	public int save(LoanBusinessInformation record) {
 		if(record.getId() == null || record.getId() == 0) {
-			return loanBusinessInformationMapper.add(record);
+			record.setCreateTime(new Date());
+			int i = loanBusinessInformationMapper.add(record);
+			Long id = record.getId();
+			if(id >0){
+				if(record.getCounterpartyInformation() !=null){
+					for(CounterpartyInformation c : record.getCounterpartyInformation()){
+						c.setCreateTime(new Date());
+						c.setCreateBy(record.getCreateBy());
+						c.setLoanBusinessInformationId(id);
+						counterpartyInformationMapper.add(c);
+					}
+				}
+				if(record.getRepaymentPlan() !=null){
+					for(RepaymentPlan r : record.getRepaymentPlan()){
+						r.setLoanBusinessInformationId(id);
+						repaymentPlanMapper.add(r);
+					}
+				}
+			}
+			return i;
 		}
 		return loanBusinessInformationMapper.update(record);
 	}

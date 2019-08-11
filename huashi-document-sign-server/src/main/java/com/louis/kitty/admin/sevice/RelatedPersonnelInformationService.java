@@ -1,5 +1,7 @@
 package com.louis.kitty.admin.sevice;
 
+import java.util.List;
+
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
 import com.louis.kitty.core.service.CurdService;
 
@@ -13,5 +15,11 @@ import com.louis.kitty.core.service.CurdService;
  * ---------------------------
  */
 public interface RelatedPersonnelInformationService extends CurdService<RelatedPersonnelInformation> {
-
+	
+	/**
+	 * 根据基础id获取 相关人列表
+	 * @param loanBasisId
+	 * @return
+	 */
+	List<RelatedPersonnelInformation> findByBaseIdList(int loanBasisId);
 }

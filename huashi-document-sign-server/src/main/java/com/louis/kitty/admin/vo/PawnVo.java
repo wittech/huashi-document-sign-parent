@@ -1,17 +1,13 @@
-package com.louis.kitty.admin.model;
-
-import java.util.List;
+/**
+ * 
+ */
+package com.louis.kitty.admin.vo;
 
 /**
- * ---------------------------
- * 抵押物信息表 (Pawn)         
- * ---------------------------
- * 作者：  lz
- * 时间：  2019-08-11 14:52:24
- * 说明：  我是由代码生成器生生成的
- * ---------------------------
+ * @author 15858
+ *
  */
-public class Pawn {
+public class PawnVo {
 
 	/** 编号 */
 	private Long id;
@@ -73,18 +69,6 @@ public class Pawn {
 	private Integer delFlag;
 	/** 融资情况 0无抵押 1有抵押 */
 	private Integer financingSituation;
-	//组
-	private List<PawnPersonnelMapping> pawnPersonnelMapping;
-	
-	private List<Pawn> pawn;
-	
-	public List<Pawn> getPawn() {
-		return pawn;
-	}
-
-	public void setPawn(List<Pawn> pawn) {
-		this.pawn = pawn;
-	}
 
 	public Long getId() {
 		return id;
@@ -325,13 +309,4 @@ public class Pawn {
 	public void setFinancingSituation(Integer financingSituation) {
 		this.financingSituation = financingSituation;
 	}
-
-	public List<PawnPersonnelMapping> getPawnPersonnelMapping() {
-		return pawnPersonnelMapping;
-	}
-
-	public void setPawnPersonnelMapping(List<PawnPersonnelMapping> pawnPersonnelMapping) {
-		this.pawnPersonnelMapping = pawnPersonnelMapping;
-	}
-
 }

@@ -414,4 +414,10 @@
     select * from related_personnel_information
   </select>
   
+  <select id="findByBaseIdList" parameterType="java.lang.Integer"  resultMap="BaseResultMap">
+    	select * from related_personnel_information where loan_basis_id = #{loanBasisId,jdbcType=BIGINT},
+  </select>
+  
+  
+  
 </mapper>

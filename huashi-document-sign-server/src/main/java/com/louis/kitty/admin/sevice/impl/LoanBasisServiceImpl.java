@@ -5,13 +5,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.louis.kitty.admin.dao.LoanBasisMapper;
+import com.louis.kitty.admin.model.LoanBasis;
+import com.louis.kitty.admin.sevice.LoanBasisService;
+import com.louis.kitty.core.page.ColumnFilter;
 import com.louis.kitty.core.page.MybatisPageHelper;
 import com.louis.kitty.core.page.PageRequest;
 import com.louis.kitty.core.page.PageResult;
-
-import com.louis.kitty.admin.model.LoanBasis;
-import com.louis.kitty.admin.dao.LoanBasisMapper;
-import com.louis.kitty.admin.sevice.LoanBasisService;
 
 /**
  * ---------------------------
@@ -56,7 +56,24 @@ public class LoanBasisServiceImpl implements LoanBasisService {
 
 	@Override
 	public PageResult findPage(PageRequest pageRequest) {
-		return MybatisPageHelper.findPage(pageRequest, loanBasisMapper);
+		String name = getColumnFilterValue(pageRequest, "name");
+		LoanBasis record = new LoanBasis();
+		record.setBorrower(name);
+		return MybatisPageHelper.findPage(pageRequest, loanBasisMapper, "findPageByBorrowerAndStatus", record);
+	}
+	
+	/**
+	 * 获取过滤字段的值
+	 * @param filterName
+	 * @return
+	 */
+	public String getColumnFilterValue(PageRequest pageRequest, String filterName) {
+		String value = null;
+		ColumnFilter columnFilter = pageRequest.getColumnFilter(filterName);
+		if(columnFilter != null) {
+			value = columnFilter.getValue();
+		}
+		return value;
 	}
 	
 }
