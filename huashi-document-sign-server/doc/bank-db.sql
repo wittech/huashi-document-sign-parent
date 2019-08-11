@@ -1103,7 +1103,7 @@ CREATE TABLE `related_personnel_information` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `name` varchar(50) DEFAULT NULL COMMENT '姓名',
   `loan_basis_id` bigint(20) NOT NULL COMMENT '基础信息表id',
-  `type` int(11) DEFAULT NULL COMMENT '类型（1、结款人）（2、配偶）（3、抵押担保人）（3、抵押担保人） （4、保证担保人）（5、抵押担保人和保证担保人）',
+  `type` int(11) DEFAULT NULL COMMENT '类型（1、结款人）（2、抵押担保人）（3、抵押担保人） （4、保证担保人）（5、抵押担保人和保证担保人）',
   `age` int(2) DEFAULT NULL COMMENT '年龄',
   `sex` int(2) DEFAULT NULL COMMENT '性别 0男 1女',
   `identity_number` varchar(500) DEFAULT NULL COMMENT '身份证号码',
@@ -1132,6 +1132,12 @@ CREATE TABLE `related_personnel_information` (
   `divorce_method` int(2) DEFAULT NULL COMMENT '离婚方式 （1、协议离婚）（2、诉讼离婚）',
   `divorce_time` datetime DEFAULT NULL COMMENT '时间',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `couple_id` bigint(11) NOT NULL DEFAULT '0' COMMENT '配偶ID， 主加人 为0， 附加配偶 存储主加人ID',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='相关人员信息表';
 
@@ -1143,6 +1149,7 @@ CREATE TABLE `household_income` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '编号',
   `name` varchar(50) DEFAULT NULL COMMENT '姓名',
   `loan_basis_id` bigint(20) NOT NULL COMMENT '基础信息表id',
+  `rpi_id` bigint(11) NOT NULL COMMENT '相关人表ID',
   `total_assets` decimal(10,2) DEFAULT NULL COMMENT '总资产',
   `total_revenue` decimal(10,2) DEFAULT NULL COMMENT '总收入',
   `applicant_annual_income` decimal(10,2) DEFAULT NULL COMMENT '申请人年薪金收入',
@@ -1163,6 +1170,11 @@ CREATE TABLE `household_income` (
   `foreign_guarantee_lump_sum` decimal(10,2) DEFAULT NULL COMMENT '家庭对外担保总额',
   `total_liability` decimal(10,2) DEFAULT NULL COMMENT '家庭对外担保总额',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='家庭收入信息表';
 
@@ -1188,6 +1200,11 @@ CREATE TABLE `asset_type_houses` (
   `co_owner_name` varchar(40) DEFAULT NULL COMMENT '共有人姓名',
   `whether_lease` int(2) DEFAULT NULL COMMENT '是否有租赁（0、否）（1、是）',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资产类型房屋信息表';
 
@@ -1209,6 +1226,11 @@ CREATE TABLE `asset_type_land` (
   `co_owner_name` varchar(50) DEFAULT NULL COMMENT '共有人姓名',
   `whether_lease`  int(2) DEFAULT NULL COMMENT '是否有租赁（0、否）（1、是）',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资产类型土地信息表';
 
@@ -1224,6 +1246,11 @@ CREATE TABLE `asset_type_car` (
   `number_plate` varchar(50) DEFAULT NULL COMMENT '车牌号',
   `driving_license_number` varchar(80) DEFAULT NULL COMMENT '行驶证号',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资产类型汽车信息表';
 
@@ -1238,6 +1265,11 @@ CREATE TABLE `asset_type_securities` (
   `rpi_id` bigint(20) NOT NULL COMMENT '相关人员信息表id',
   `value` varchar(40) DEFAULT NULL COMMENT '价值',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+   `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资产类型证券信息表';
 
@@ -1252,6 +1284,11 @@ CREATE TABLE `asset_type_other` (
   `rpi_id` bigint(20) NOT NULL COMMENT '相关人员信息表id',
   `value` varchar(40) DEFAULT NULL COMMENT '价值',
   `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+   `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='资产类型其他信息表';
 
@@ -1285,6 +1322,11 @@ CREATE TABLE `pawn` (
   `rent_payment_method` int(2) DEFAULT NULL COMMENT '租金支付方式 1按月 2按季 3按半年 4按年',
   `contract_signing_time` datetime DEFAULT NULL COMMENT '合同签署时间',
   `name_assets_id` bigint(20) NOT NULL COMMENT '所属名下id',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='抵押物信息表';
 
@@ -1309,7 +1351,6 @@ CREATE TABLE `loan_business_information` (
   `loan_basis_id` bigint(20) NOT NULL COMMENT '基础信息表id',
   `borrower_account` varchar(50) DEFAULT NULL COMMENT '借款人账号',
   `client_number` varchar(20) DEFAULT NULL COMMENT '客户号',
-  `counterparty_information_id` bigint(20) NOT NULL COMMENT '交易对手信息表id',
   `application_amount` decimal(10,6) DEFAULT NULL COMMENT '申请金额',
   `application_period` varchar(30) DEFAULT NULL COMMENT '申请期限 单位 年',
   `cycle_quota` int(2) DEFAULT NULL COMMENT '是否申请循环额度 0否 1是',
@@ -1329,6 +1370,11 @@ CREATE TABLE `loan_business_information` (
   `provident_fund_loan_amount` decimal(10,6) DEFAULT NULL COMMENT '公积金贷款金额',
   `whether_exclusive_credit_client` int(2) DEFAULT NULL COMMENT '借款人是否为我行独家信贷客户 0否 1是',
   `deposit_account` varchar(40) DEFAULT NULL COMMENT '前在我行开立一般存款账户',
+   `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='贷款业务信息表';
 
@@ -1344,6 +1390,11 @@ CREATE TABLE `counterparty_information` (
   `account_number` varchar(20) DEFAULT NULL COMMENT '账号',
   `bank` varchar(20) DEFAULT NULL COMMENT '开户行',
   `amount` decimal(10,6) DEFAULT NULL COMMENT '金额',
+    `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='交易对手信息表';
 
@@ -1417,6 +1468,11 @@ CREATE TABLE `personal_loan_survey_report` (
   `calculated` int(2) DEFAULT NULL COMMENT '经测算，该保证人是否具有担保能力 1是 0否',
   `loan_method_pledge_guarantee` int(1) DEFAULT NULL COMMENT '贷款方式为抵（质）押担保',
   `loan_method_pledge_guarantee_remark` text DEFAULT NULL COMMENT '贷款方式为抵（质）押担保描述',
+   `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='个人贷款调查报告信息表';
 
@@ -1436,6 +1492,11 @@ CREATE TABLE `contract_information` (
   `borrowing_start_period` datetime DEFAULT NULL COMMENT '借款开始期限',
   `borrowing_end_period` datetime DEFAULT NULL COMMENT '借款截止期限',
   `loan_date` datetime DEFAULT NULL COMMENT '放款日期',
+    `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '更新人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='合同信息表';
 
@@ -1465,6 +1526,7 @@ CREATE TABLE `post_loan_check` (
   `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
   `last_update_time` datetime DEFAULT NULL COMMENT '修改时间',
   `last_update_by` varchar(50) DEFAULT NULL COMMENT '修改人',
+   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='贷后检查信息表';
 
@@ -1479,6 +1541,11 @@ CREATE TABLE `implement_information` (
   `unimplemented` varchar(80) DEFAULT NULL COMMENT '未落实',
   `reason` varchar(2000) DEFAULT NULL COMMENT '原因',
   `proposed_measures` varchar(200) DEFAULT NULL COMMENT '拟采取措施',
+   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
+  `last_update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  `last_update_by` varchar(50) DEFAULT NULL COMMENT '修改人',
+   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='落实信息表';
 
@@ -1501,6 +1568,7 @@ CREATE TABLE `collection_notice` (
   `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
   `last_update_time` datetime DEFAULT NULL COMMENT '修改时间',
   `last_update_by` varchar(50) DEFAULT NULL COMMENT '修改人',
+   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='贷款到期（逾期）催收通知书信息表';
 
@@ -1524,6 +1592,7 @@ CREATE TABLE `litigation_information` (
   `create_by` varchar(50) DEFAULT NULL COMMENT '创建人',
   `last_update_time` datetime DEFAULT NULL COMMENT '修改时间',
   `last_update_by` varchar(50) DEFAULT NULL COMMENT '修改人',
+   `del_flag` tinyint(4) DEFAULT '0' COMMENT '是否删除  -1：已删除  0：正常',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='诉讼信息表';
 
