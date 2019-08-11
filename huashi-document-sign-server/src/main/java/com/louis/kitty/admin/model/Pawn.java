@@ -5,7 +5,7 @@ package com.louis.kitty.admin.model;
  * 抵押物信息表 (Pawn)         
  * ---------------------------
  * 作者：  lz
- * 时间：  2019-08-11 11:52:37
+ * 时间：  2019-08-11 14:52:24
  * 说明：  我是由代码生成器生生成的
  * ---------------------------
  */
@@ -69,6 +69,8 @@ public class Pawn {
 	private java.util.Date lastUpdateTime;
 	/** 是否删除  -1：已删除  0：正常 */
 	private Integer delFlag;
+	/** 融资情况 0无抵押 1有抵押 */
+	private Integer financingSituation;
 
 	public Long getId() {
 		return id;
@@ -300,6 +302,14 @@ public class Pawn {
 
 	public void setDelFlag(Integer delFlag) {
 		this.delFlag = delFlag;
+	}
+
+	public Integer getFinancingSituation() {
+		return financingSituation;
+	}
+
+	public void setFinancingSituation(Integer financingSituation) {
+		this.financingSituation = financingSituation;
 	}
 
 }

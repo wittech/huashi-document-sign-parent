@@ -97,7 +97,7 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 				//保存家庭收支情况
 				if(record.getHouseholdIncomeForm() !=null){
 					record.getHouseholdIncomeForm().setLoanBasisId(record.getLoanBasisId());
-					record.setCoupleId(id);
+					record.getHouseholdIncomeForm().setRpiId(id);
 					householdIncomeMapper.add(record.getHouseholdIncomeForm());
 				}
 			}
@@ -158,7 +158,7 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 				//保存家庭收支情况
 				if(record.getHouseholdIncomeForm() !=null){
 					record.getHouseholdIncomeForm().setLoanBasisId(record.getLoanBasisId());
-					record.setCoupleId(id);
+					record.getHouseholdIncomeForm().setRpiId(id);
 					householdIncomeMapper.add(record.getHouseholdIncomeForm());
 				}
 			}
