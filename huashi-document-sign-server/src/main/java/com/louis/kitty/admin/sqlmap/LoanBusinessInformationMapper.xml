@@ -16,7 +16,7 @@
         <result column="application_rate" jdbcType="VARCHAR" property="applicationRate"/>
         <result column="margin_ratio" jdbcType="VARCHAR" property="marginRatio"/>
         <result column="original_credit_balance" jdbcType="VARCHAR" property="originalCreditBalance"/>
-        <result column="use" jdbcType="INTEGER" property="use"/>
+        <result column="use_info" jdbcType="INTEGER" property="useInfo"/>
         <result column="description" jdbcType="VARCHAR" property="description"/>
         <result column="repayment" jdbcType="INTEGER" property="repayment"/>
         <result column="value" jdbcType="VARCHAR" property="value"/>
@@ -77,8 +77,8 @@
             <if test="originalCreditBalance != null">
                 original_credit_balance,
             </if>
-            <if test="use != null">
-                use,
+            <if test="useInfo != null">
+                use_info,
             </if>
             <if test="description != null">
                 description,
@@ -163,8 +163,8 @@
             <if test="originalCreditBalance != null">
                 #{originalCreditBalance,jdbcType=VARCHAR},
             </if>
-            <if test="use != null">
-                #{use,jdbcType=INTEGER},
+            <if test="useInfo != null">
+                #{useInfo,jdbcType=INTEGER},
             </if>
             <if test="description != null">
                 #{description,jdbcType=VARCHAR},
@@ -259,8 +259,8 @@
             <if test="originalCreditBalance != null">
                 original_credit_balance = #{originalCreditBalance,jdbcType=VARCHAR},
             </if>
-            <if test="use != null">
-                use = #{use,jdbcType=INTEGER},
+            <if test="useInfo != null">
+                use_info = #{useInfo,jdbcType=INTEGER},
             </if>
             <if test="description != null">
                 description = #{description,jdbcType=VARCHAR},
