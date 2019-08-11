@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.louis.kitty.admin.model.LoanBasis;
+import com.louis.kitty.admin.model.OterPersonnel;
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
 import com.louis.kitty.admin.sevice.LoanBasisService;
 import com.louis.kitty.admin.sevice.RelatedPersonnelInformationService;
@@ -55,4 +56,22 @@ public class LoanController {
 	public HttpResult saveBorrower(@RequestBody RelatedPersonnelInformation record) {
 		return HttpResult.ok(relatedPersonnelInformationService.save(record));
 	}
+	
+	/**
+	 * 3、保存其他相关人
+	 * @param record
+	 * @return
+	 */
+	@PostMapping(value="/saveOterBorrower")
+	public HttpResult saveOterBorrower(@RequestBody OterPersonnel record) {
+		if(record.getRelatedPersonnelInformation() !=null){
+			for(RelatedPersonnelInformation red : record.getRelatedPersonnelInformation()){
+				red.setLoanBasisId(Long.valueOf(record.getLoanBasisId()));
+				relatedPersonnelInformationService.save(red);
+			}
+		}
+		return HttpResult.ok(1);
+	}
+	
+	
 }

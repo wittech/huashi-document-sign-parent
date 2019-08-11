@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.louis.kitty.admin.dao.ImplementInformationMapper">
+
+  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.ImplementInformation">
+	<id column="id" jdbcType="BIGINT" property="id" />
+	<result column="post_loan_check_id" jdbcType="BIGINT" property="postLoanCheckId" />
+	<result column="check_time" jdbcType="TIMESTAMP" property="checkTime" />
+	<result column="unimplemented" jdbcType="VARCHAR" property="unimplemented" />
+	<result column="reason" jdbcType="VARCHAR" property="reason" />
+	<result column="proposed_measures" jdbcType="VARCHAR" property="proposedMeasures" />
+	<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	<result column="create_by" jdbcType="VARCHAR" property="createBy" />
+	<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+	<result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+	<result column="del_flag" jdbcType="TINYINT" property="delFlag" />
+  </resultMap>
+  
+  <insert id="add" parameterType="com.louis.kitty.admin.model.ImplementInformation">
+    insert into implement_information
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="postLoanCheckId != null">
+        post_loan_check_id,
+      </if>
+      <if test="checkTime != null">
+        check_time,
+      </if>
+      <if test="unimplemented != null">
+        unimplemented,
+      </if>
+      <if test="reason != null">
+        reason,
+      </if>
+      <if test="proposedMeasures != null">
+        proposed_measures,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="postLoanCheckId != null">
+        #{postLoanCheckId,jdbcType=BIGINT},
+      </if>
+      <if test="checkTime != null">
+        #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unimplemented != null">
+        #{unimplemented,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="proposedMeasures != null">
+        #{proposedMeasures,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
+      </if>
+    </trim>
+  </insert>
+
+  <delete id="delete" parameterType="java.lang.Long">
+    delete from implement_information
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  
+  <update id="update" parameterType="com.louis.kitty.admin.model.ImplementInformation">
+    update implement_information
+    <set>
+      <if test="id != null">
+        id = #{id,jdbcType=BIGINT},
+      </if>
+      <if test="postLoanCheckId != null">
+        post_loan_check_id = #{postLoanCheckId,jdbcType=BIGINT},
+      </if>
+      <if test="checkTime != null">
+        check_time = #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unimplemented != null">
+        unimplemented = #{unimplemented,jdbcType=VARCHAR},
+      </if>
+      <if test="reason != null">
+        reason = #{reason,jdbcType=VARCHAR},
+      </if>
+      <if test="proposedMeasures != null">
+        proposed_measures = #{proposedMeasures,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=TINYINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select * from implement_information
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  
+  <select id="findPage" resultMap="BaseResultMap">
+    select * from implement_information
+  </select>
+  
+</mapper>

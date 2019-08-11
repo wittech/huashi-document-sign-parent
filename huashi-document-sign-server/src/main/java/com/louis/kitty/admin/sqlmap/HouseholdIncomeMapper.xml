@@ -6,6 +6,7 @@
 	<id column="id" jdbcType="BIGINT" property="id" />
 	<result column="name" jdbcType="VARCHAR" property="name" />
 	<result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId" />
+	<result column="rpi_id" jdbcType="BIGINT" property="rpiId" />
 	<result column="total_assets" jdbcType="DECIMAL" property="totalAssets" />
 	<result column="total_revenue" jdbcType="DECIMAL" property="totalRevenue" />
 	<result column="applicant_annual_income" jdbcType="DECIMAL" property="applicantAnnualIncome" />
@@ -26,6 +27,11 @@
 	<result column="foreign_guarantee_lump_sum" jdbcType="DECIMAL" property="foreignGuaranteeLumpSum" />
 	<result column="total_liability" jdbcType="DECIMAL" property="totalLiability" />
 	<result column="remark" jdbcType="VARCHAR" property="remark" />
+	<result column="create_by" jdbcType="VARCHAR" property="createBy" />
+	<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	<result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+	<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+	<result column="del_flag" jdbcType="TINYINT" property="delFlag" />
   </resultMap>
   
   <insert id="add" parameterType="com.louis.kitty.admin.model.HouseholdIncome">
@@ -39,6 +45,9 @@
       </if>
       <if test="loanBasisId != null">
         loan_basis_id,
+      </if>
+      <if test="rpiId != null">
+        rpi_id,
       </if>
       <if test="totalAssets != null">
         total_assets,
@@ -100,6 +109,21 @@
       <if test="remark != null">
         remark,
       </if>
+      <if test="createBy != null">
+        create_by,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -110,6 +134,9 @@
       </if>
       <if test="loanBasisId != null">
         #{loanBasisId,jdbcType=BIGINT},
+      </if>
+      <if test="rpiId != null">
+        #{rpiId,jdbcType=BIGINT},
       </if>
       <if test="totalAssets != null">
         #{totalAssets,jdbcType=DECIMAL},
@@ -171,6 +198,21 @@
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
       </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
+      </if>
     </trim>
   </insert>
 
@@ -190,6 +232,9 @@
       </if>
       <if test="loanBasisId != null">
         loan_basis_id = #{loanBasisId,jdbcType=BIGINT},
+      </if>
+      <if test="rpiId != null">
+        rpi_id = #{rpiId,jdbcType=BIGINT},
       </if>
       <if test="totalAssets != null">
         total_assets = #{totalAssets,jdbcType=DECIMAL},
@@ -250,6 +295,21 @@
       </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

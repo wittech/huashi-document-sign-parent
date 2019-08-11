@@ -1,5 +1,7 @@
 package com.louis.kitty.admin.model;
 
+import java.util.List;
+
 /**
  * ---------------------------
  * 相关人员信息表 (RelatedPersonnelInformation)         
@@ -77,6 +79,30 @@ public class RelatedPersonnelInformation {
 	private String remark;
 	/** 配偶ID， 主加人 为0， 附加配偶 存储主加人ID */
 	private Long coupleId;
+	/** 创建人 */
+	private String createBy;
+	/** 创建时间 */
+	private java.util.Date createTime;
+	/** 更新人 */
+	private String lastUpdateBy;
+	/** 更新时间 */
+	private java.util.Date lastUpdateTime;
+	/** 是否删除  -1：已删除  0：正常 */
+	private Integer delFlag;
+	//房屋
+	private List<AssetTypeHouses> assetTypeHouses;
+	//土地
+	private List<AssetTypeLand> assetTypeLand;
+	//汽车
+	private List<AssetTypeCar> assetTypeCar;
+	//证券
+	private List<AssetTypeSecurities> assetTypeSecurities;
+	//其他
+	private List<AssetTypeOther> assetTypeOther;
+	//配偶信息
+	private RelatedPersonnelInformation spouseInfo;
+	/** 家庭收支情况 */
+	private HouseholdIncome householdIncomeForm;
 
 	public Long getId() {
 		return id;
@@ -340,6 +366,102 @@ public class RelatedPersonnelInformation {
 
 	public void setCoupleId(Long coupleId) {
 		this.coupleId = coupleId;
+	}
+
+	public List<AssetTypeHouses> getAssetTypeHouses() {
+		return assetTypeHouses;
+	}
+
+	public void setAssetTypeHouses(List<AssetTypeHouses> assetTypeHouses) {
+		this.assetTypeHouses = assetTypeHouses;
+	}
+
+	public List<AssetTypeLand> getAssetTypeLand() {
+		return assetTypeLand;
+	}
+
+	public void setAssetTypeLand(List<AssetTypeLand> assetTypeLand) {
+		this.assetTypeLand = assetTypeLand;
+	}
+
+	public List<AssetTypeCar> getAssetTypeCar() {
+		return assetTypeCar;
+	}
+
+	public void setAssetTypeCar(List<AssetTypeCar> assetTypeCar) {
+		this.assetTypeCar = assetTypeCar;
+	}
+
+	public List<AssetTypeSecurities> getAssetTypeSecurities() {
+		return assetTypeSecurities;
+	}
+
+	public void setAssetTypeSecurities(List<AssetTypeSecurities> assetTypeSecurities) {
+		this.assetTypeSecurities = assetTypeSecurities;
+	}
+
+	public List<AssetTypeOther> getAssetTypeOther() {
+		return assetTypeOther;
+	}
+
+	public void setAssetTypeOther(List<AssetTypeOther> assetTypeOther) {
+		this.assetTypeOther = assetTypeOther;
+	}
+
+	public HouseholdIncome getHouseholdIncomeForm() {
+		return householdIncomeForm;
+	}
+
+	public void setHouseholdIncomeForm(HouseholdIncome householdIncomeForm) {
+		this.householdIncomeForm = householdIncomeForm;
+	}
+
+	public RelatedPersonnelInformation getSpouseInfo() {
+		return spouseInfo;
+	}
+
+	public void setSpouseInfo(RelatedPersonnelInformation spouseInfo) {
+		this.spouseInfo = spouseInfo;
+	}
+
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
+	}
+
+	public java.util.Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(java.util.Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getLastUpdateBy() {
+		return lastUpdateBy;
+	}
+
+	public void setLastUpdateBy(String lastUpdateBy) {
+		this.lastUpdateBy = lastUpdateBy;
+	}
+
+	public java.util.Date getLastUpdateTime() {
+		return lastUpdateTime;
+	}
+
+	public void setLastUpdateTime(java.util.Date lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
+	}
+
+	public Integer getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(Integer delFlag) {
+		this.delFlag = delFlag;
 	}
 
 }

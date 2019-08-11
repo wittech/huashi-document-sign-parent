@@ -5,7 +5,7 @@ package com.louis.kitty.admin.model;
  * 诉讼信息表 (LitigationInformation)         
  * ---------------------------
  * 作者：  lz
- * 时间：  2019-08-10 10:03:25
+ * 时间：  2019-08-11 11:52:37
  * 说明：  我是由代码生成器生生成的
  * ---------------------------
  */
@@ -41,6 +41,8 @@ public class LitigationInformation {
 	private java.util.Date lastUpdateTime;
 	/** 修改人 */
 	private String lastUpdateBy;
+	/** 是否删除  -1：已删除  0：正常 */
+	private Integer delFlag;
 
 	public Long getId() {
 		return id;
@@ -160,6 +162,14 @@ public class LitigationInformation {
 
 	public void setLastUpdateBy(String lastUpdateBy) {
 		this.lastUpdateBy = lastUpdateBy;
+	}
+
+	public Integer getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(Integer delFlag) {
+		this.delFlag = delFlag;
 	}
 
 }

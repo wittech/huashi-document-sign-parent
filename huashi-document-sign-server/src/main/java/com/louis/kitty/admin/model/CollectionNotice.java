@@ -5,7 +5,7 @@ package com.louis.kitty.admin.model;
  * 贷款到期（逾期）催收通知书信息表 (CollectionNotice)         
  * ---------------------------
  * 作者：  lz
- * 时间：  2019-08-10 10:03:25
+ * 时间：  2019-08-11 11:52:37
  * 说明：  我是由代码生成器生生成的
  * ---------------------------
  */
@@ -39,6 +39,8 @@ public class CollectionNotice {
 	private java.util.Date lastUpdateTime;
 	/** 修改人 */
 	private String lastUpdateBy;
+	/** 是否删除  -1：已删除  0：正常 */
+	private Integer delFlag;
 
 	public Long getId() {
 		return id;
@@ -150,6 +152,14 @@ public class CollectionNotice {
 
 	public void setLastUpdateBy(String lastUpdateBy) {
 		this.lastUpdateBy = lastUpdateBy;
+	}
+
+	public Integer getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(Integer delFlag) {
+		this.delFlag = delFlag;
 	}
 
 }

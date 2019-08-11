@@ -7,7 +7,6 @@
 	<result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId" />
 	<result column="borrower_account" jdbcType="VARCHAR" property="borrowerAccount" />
 	<result column="client_number" jdbcType="VARCHAR" property="clientNumber" />
-	<result column="counterparty_information_id" jdbcType="BIGINT" property="counterpartyInformationId" />
 	<result column="application_amount" jdbcType="DECIMAL" property="applicationAmount" />
 	<result column="application_period" jdbcType="VARCHAR" property="applicationPeriod" />
 	<result column="cycle_quota" jdbcType="INTEGER" property="cycleQuota" />
@@ -26,9 +25,12 @@
 	<result column="whether_provident_fund_combination_loan" jdbcType="INTEGER" property="whetherProvidentFundCombinationLoan" />
 	<result column="provident_fund_loan_amount" jdbcType="DECIMAL" property="providentFundLoanAmount" />
 	<result column="whether_exclusive_credit_client" jdbcType="INTEGER" property="whetherExclusiveCreditClient" />
-	<result column="deposit_account" jdbcType="DATE" property="depositAccount" />
-	<result column="deduction_account_name" jdbcType="VARCHAR" property="deductionAccountName" />
-	<result column="deduction_account" jdbcType="VARCHAR" property="deductionAccount" />
+	<result column="deposit_account" jdbcType="VARCHAR" property="depositAccount" />
+	<result column="create_by" jdbcType="VARCHAR" property="createBy" />
+	<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+	<result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
+	<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
+	<result column="del_flag" jdbcType="TINYINT" property="delFlag" />
   </resultMap>
   
   <insert id="add" parameterType="com.louis.kitty.admin.model.LoanBusinessInformation">
@@ -45,9 +47,6 @@
       </if>
       <if test="clientNumber != null">
         client_number,
-      </if>
-      <if test="counterpartyInformationId != null">
-        counterparty_information_id,
       </if>
       <if test="applicationAmount != null">
         application_amount,
@@ -106,11 +105,20 @@
       <if test="depositAccount != null">
         deposit_account,
       </if>
-      <if test="deductionAccountName != null">
-        deduction_account_name,
+      <if test="createBy != null">
+        create_by,
       </if>
-      <if test="deductionAccount != null">
-        deduction_account,
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by,
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time,
+      </if>
+      <if test="delFlag != null">
+        del_flag,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -125,9 +133,6 @@
       </if>
       <if test="clientNumber != null">
         #{clientNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="counterpartyInformationId != null">
-        #{counterpartyInformationId,jdbcType=BIGINT},
       </if>
       <if test="applicationAmount != null">
         #{applicationAmount,jdbcType=DECIMAL},
@@ -184,13 +189,22 @@
         #{whetherExclusiveCreditClient,jdbcType=INTEGER},
       </if>
       <if test="depositAccount != null">
-        #{depositAccount,jdbcType=DATE},
+        #{depositAccount,jdbcType=VARCHAR},
       </if>
-      <if test="deductionAccountName != null">
-        #{deductionAccountName,jdbcType=VARCHAR},
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
       </if>
-      <if test="deductionAccount != null">
-        #{deductionAccount,jdbcType=VARCHAR},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
@@ -214,9 +228,6 @@
       </if>
       <if test="clientNumber != null">
         client_number = #{clientNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="counterpartyInformationId != null">
-        counterparty_information_id = #{counterpartyInformationId,jdbcType=BIGINT},
       </if>
       <if test="applicationAmount != null">
         application_amount = #{applicationAmount,jdbcType=DECIMAL},
@@ -273,13 +284,22 @@
         whether_exclusive_credit_client = #{whetherExclusiveCreditClient,jdbcType=INTEGER},
       </if>
       <if test="depositAccount != null">
-        deposit_account = #{depositAccount,jdbcType=DATE},
+        deposit_account = #{depositAccount,jdbcType=VARCHAR},
       </if>
-      <if test="deductionAccountName != null">
-        deduction_account_name = #{deductionAccountName,jdbcType=VARCHAR},
+      <if test="createBy != null">
+        create_by = #{createBy,jdbcType=VARCHAR},
       </if>
-      <if test="deductionAccount != null">
-        deduction_account = #{deductionAccount,jdbcType=VARCHAR},
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateTime != null">
+        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="delFlag != null">
+        del_flag = #{delFlag,jdbcType=TINYINT},
       </if>
     </set>
     where id = #{id,jdbcType=BIGINT}

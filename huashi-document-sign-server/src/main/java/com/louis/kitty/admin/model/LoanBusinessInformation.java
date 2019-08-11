@@ -5,7 +5,7 @@ package com.louis.kitty.admin.model;
  * 贷款业务信息表 (LoanBusinessInformation)         
  * ---------------------------
  * 作者：  lz
- * 时间：  2019-08-10 22:28:24
+ * 时间：  2019-08-11 11:52:37
  * 说明：  我是由代码生成器生生成的
  * ---------------------------
  */
@@ -19,8 +19,6 @@ public class LoanBusinessInformation {
 	private String borrowerAccount;
 	/** 客户号 */
 	private String clientNumber;
-	/** 交易对手信息表id */
-	private Long counterpartyInformationId;
 	/** 申请金额 */
 	private Double applicationAmount;
 	/** 申请期限 单位 年 */
@@ -58,11 +56,17 @@ public class LoanBusinessInformation {
 	/** 借款人是否为我行独家信贷客户 0否 1是 */
 	private Integer whetherExclusiveCreditClient;
 	/** 前在我行开立一般存款账户 */
-	private java.util.Date depositAccount;
-	/** 扣款账户名 */
-	private String deductionAccountName;
-	/** 扣款账号 */
-	private String deductionAccount;
+	private String depositAccount;
+	/** 创建人 */
+	private String createBy;
+	/** 创建时间 */
+	private java.util.Date createTime;
+	/** 更新人 */
+	private String lastUpdateBy;
+	/** 更新时间 */
+	private java.util.Date lastUpdateTime;
+	/** 是否删除  -1：已删除  0：正常 */
+	private Integer delFlag;
 
 	public Long getId() {
 		return id;
@@ -94,14 +98,6 @@ public class LoanBusinessInformation {
 
 	public void setClientNumber(String clientNumber) {
 		this.clientNumber = clientNumber;
-	}
-
-	public Long getCounterpartyInformationId() {
-		return counterpartyInformationId;
-	}
-
-	public void setCounterpartyInformationId(Long counterpartyInformationId) {
-		this.counterpartyInformationId = counterpartyInformationId;
 	}
 
 	public Double getApplicationAmount() {
@@ -248,28 +244,52 @@ public class LoanBusinessInformation {
 		this.whetherExclusiveCreditClient = whetherExclusiveCreditClient;
 	}
 
-	public java.util.Date getDepositAccount() {
+	public String getDepositAccount() {
 		return depositAccount;
 	}
 
-	public void setDepositAccount(java.util.Date depositAccount) {
+	public void setDepositAccount(String depositAccount) {
 		this.depositAccount = depositAccount;
 	}
 
-	public String getDeductionAccountName() {
-		return deductionAccountName;
+	public String getCreateBy() {
+		return createBy;
 	}
 
-	public void setDeductionAccountName(String deductionAccountName) {
-		this.deductionAccountName = deductionAccountName;
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
 	}
 
-	public String getDeductionAccount() {
-		return deductionAccount;
+	public java.util.Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setDeductionAccount(String deductionAccount) {
-		this.deductionAccount = deductionAccount;
+	public void setCreateTime(java.util.Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getLastUpdateBy() {
+		return lastUpdateBy;
+	}
+
+	public void setLastUpdateBy(String lastUpdateBy) {
+		this.lastUpdateBy = lastUpdateBy;
+	}
+
+	public java.util.Date getLastUpdateTime() {
+		return lastUpdateTime;
+	}
+
+	public void setLastUpdateTime(java.util.Date lastUpdateTime) {
+		this.lastUpdateTime = lastUpdateTime;
+	}
+
+	public Integer getDelFlag() {
+		return delFlag;
+	}
+
+	public void setDelFlag(Integer delFlag) {
+		this.delFlag = delFlag;
 	}
 
 }
