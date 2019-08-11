@@ -370,7 +370,7 @@ public class PersonalLoanApplicationTool extends AbstractOfficeTool {
             variables.put("applicationDeadline", docCommonModel.getLoanBusinessInformation().getApplicationPeriod());
             variables.put("isRound", setYesOption(docCommonModel.getLoanBusinessInformation().getCycleQuota()));
 
-            variables.put("usage", setUsage(docCommonModel.getLoanBusinessInformation().getUse()));
+            variables.put("usage", setUsage(docCommonModel.getLoanBusinessInformation().getUseInfo()));
             variables.put("usageOther", docCommonModel.getLoanBusinessInformation().getDescription());
 
             variables.put("paymentMethod", setPaymentMethod(docCommonModel.getLoanBusinessInformation().getRepayment()));

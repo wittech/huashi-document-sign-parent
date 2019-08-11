@@ -40,7 +40,7 @@ public class LoanBusinessInformation {
 	/** 原信贷业务余额 元 */
 	private String originalCreditBalance;
 	/** 用途 1经营 2自建房 3购房 4购车 5住房装修 6购买大额耐用消费品 7旅游消费 8留学 9子女教育 10其他 */
-	private String useInfo;
+	private Integer useInfo;
 	/** 用途具体说明 */
 	private String description;
 	/** 还款方式 1利随本清 2按月结息，到期一次性还本 3按月结息，分期还本 4按季结息，分期还本 5等额本金 6等额本息 7其他 */
@@ -192,11 +192,11 @@ public class LoanBusinessInformation {
 		this.originalCreditBalance = originalCreditBalance;
 	}
 
-	public String getUseInfo() {
+	public Integer getUseInfo() {
 		return useInfo;
 	}
 
-	public void setUseInfo(String useInfo) {
+	public void setUseInfo(Integer useInfo) {
 		this.useInfo = useInfo;
 	}
 
