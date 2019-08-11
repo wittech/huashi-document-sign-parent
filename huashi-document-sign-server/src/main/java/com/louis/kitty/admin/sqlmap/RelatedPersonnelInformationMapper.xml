@@ -43,7 +43,7 @@
 	<result column="del_flag" jdbcType="TINYINT" property="delFlag" />
   </resultMap>
   
-  <insert id="add" parameterType="com.louis.kitty.admin.model.RelatedPersonnelInformation">
+  <insert id="add" parameterType="com.louis.kitty.admin.model.RelatedPersonnelInformation" useGeneratedKeys="true" keyProperty="id">
     insert into related_personnel_information
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

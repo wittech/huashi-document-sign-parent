@@ -19,7 +19,7 @@ public class RelatedPersonnelInformation {
 	private String name;
 	/** 基础信息表id */
 	private Long loanBasisId;
-	/** 类型（1、借款人本人）（2、借款人配偶）（3、抵押担保人） （4、保证担保人）（5、抵押担保人、保证担保人） */
+	/** 类型（1、结款人）（2、抵押担保人）（3、抵押担保人） （4、保证担保人）（5、抵押担保人和保证担保人） */
 	private Integer type;
 	/** 年龄 */
 	private Integer age;

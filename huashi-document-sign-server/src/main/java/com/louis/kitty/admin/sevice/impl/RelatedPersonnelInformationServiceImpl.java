@@ -54,6 +54,7 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 	@Override
 	public int save(RelatedPersonnelInformation record) {
 		if(record.getId() == null || record.getId() == 0) {
+			record.setCoupleId(0L);
 			int i = relatedPersonnelInformationMapper.add(record);
 			//获取相关人id
 			Long id = record.getId();
@@ -96,11 +97,12 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 				//保存家庭收支情况
 				if(record.getHouseholdIncomeForm() !=null){
 					record.getHouseholdIncomeForm().setLoanBasisId(record.getLoanBasisId());
+					record.setCoupleId(id);
 					householdIncomeMapper.add(record.getHouseholdIncomeForm());
 				}
 			}
 			//保存配偶数据
-			saveSpouseInfo(record,0);
+			saveSpouseInfo(record,id);
 			return i;
 		}
 		return relatedPersonnelInformationMapper.update(record);
@@ -110,9 +112,10 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 	 * 保存配偶数据
 	 * @param record
 	 */
-	private void saveSpouseInfo(RelatedPersonnelInformation r,int parentId){
-		/*if(r.getSpouseInfo() !=null){
+	private void saveSpouseInfo(RelatedPersonnelInformation r,Long parentId){
+		if(r.getSpouseInfo() !=null){
 			RelatedPersonnelInformation record = r.getSpouseInfo();
+			record.setCoupleId(parentId);
 			relatedPersonnelInformationMapper.add(record);
 			//获取相关人id
 			Long id = record.getId();
@@ -152,8 +155,14 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 						assetTypeOtherMapper.add(other);
 					}
 				}
+				//保存家庭收支情况
+				if(record.getHouseholdIncomeForm() !=null){
+					record.getHouseholdIncomeForm().setLoanBasisId(record.getLoanBasisId());
+					record.setCoupleId(id);
+					householdIncomeMapper.add(record.getHouseholdIncomeForm());
+				}
 			}
-		}*/
+		}
 	}
 
 	@Override
