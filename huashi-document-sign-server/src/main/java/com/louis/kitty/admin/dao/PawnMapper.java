@@ -49,5 +49,7 @@ public interface PawnMapper {
      * @return
      */    
     List<Pawn> findPage();
+
+    List<Pawn> findByLoanBasisId(Long loanBasisId);
     
 }

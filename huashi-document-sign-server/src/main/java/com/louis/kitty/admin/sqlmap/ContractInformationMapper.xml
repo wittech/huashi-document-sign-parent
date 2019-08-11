@@ -183,5 +183,9 @@
   <select id="findPage" resultMap="BaseResultMap">
     select * from contract_information
   </select>
+
+  <select id="findByLoanBasisId" resultMap="BaseResultMap">
+    select * from contract_information where loan_basis_id = #{loanBasisId,jdbcType=BIGINT}
+  </select>
   
 </mapper>

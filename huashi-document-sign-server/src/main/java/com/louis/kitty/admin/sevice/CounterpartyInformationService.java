@@ -3,6 +3,8 @@ package com.louis.kitty.admin.sevice;
 import com.louis.kitty.admin.model.CounterpartyInformation;
 import com.louis.kitty.core.service.CurdService;
 
+import java.util.List;
+
 /**
  * ---------------------------
  * 交易对手信息表 (CounterpartyInformationService)         
@@ -14,4 +16,5 @@ import com.louis.kitty.core.service.CurdService;
  */
 public interface CounterpartyInformationService extends CurdService<CounterpartyInformation> {
 
+    List<CounterpartyInformation> findByIoanBusinessInformationId(Long loanBusinessInformationId);
 }

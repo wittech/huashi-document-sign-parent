@@ -58,5 +58,9 @@ public class RepaymentPlanServiceImpl implements RepaymentPlanService {
 	public PageResult findPage(PageRequest pageRequest) {
 		return MybatisPageHelper.findPage(pageRequest, repaymentPlanMapper);
 	}
-	
+
+	@Override
+	public List<RepaymentPlan> findByIoanBusinessInformationId(Long loanBusinessInformationId) {
+		return repaymentPlanMapper.findByloanBusinessInformationId(loanBusinessInformationId);
+	}
 }

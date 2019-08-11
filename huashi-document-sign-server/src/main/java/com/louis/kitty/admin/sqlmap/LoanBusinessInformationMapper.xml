@@ -2,316 +2,328 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.louis.kitty.admin.dao.LoanBusinessInformationMapper">
 
-  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.LoanBusinessInformation">
-	<id column="id" jdbcType="BIGINT" property="id" />
-	<result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId" />
-	<result column="borrower_account" jdbcType="VARCHAR" property="borrowerAccount" />
-	<result column="client_number" jdbcType="VARCHAR" property="clientNumber" />
-	<result column="application_amount" jdbcType="DECIMAL" property="applicationAmount" />
-	<result column="application_period" jdbcType="VARCHAR" property="applicationPeriod" />
-	<result column="cycle_quota" jdbcType="INTEGER" property="cycleQuota" />
-	<result column="interest_rate" jdbcType="INTEGER" property="interestRate" />
-	<result column="adjustment_method" jdbcType="INTEGER" property="adjustmentMethod" />
-	<result column="interest_rate_rise" jdbcType="VARCHAR" property="interestRateRise" />
-	<result column="application_rate" jdbcType="VARCHAR" property="applicationRate" />
-	<result column="margin_ratio" jdbcType="VARCHAR" property="marginRatio" />
-	<result column="original_credit_balance" jdbcType="VARCHAR" property="originalCreditBalance" />
-	<result column="use" jdbcType="INTEGER" property="use" />
-	<result column="description" jdbcType="VARCHAR" property="description" />
-	<result column="repayment" jdbcType="INTEGER" property="repayment" />
-	<result column="value" jdbcType="VARCHAR" property="value" />
-	<result column="repayment_period" jdbcType="INTEGER" property="repaymentPeriod" />
-	<result column="whether_personal_home_loan" jdbcType="INTEGER" property="whetherPersonalHomeLoan" />
-	<result column="whether_provident_fund_combination_loan" jdbcType="INTEGER" property="whetherProvidentFundCombinationLoan" />
-	<result column="provident_fund_loan_amount" jdbcType="DECIMAL" property="providentFundLoanAmount" />
-	<result column="whether_exclusive_credit_client" jdbcType="INTEGER" property="whetherExclusiveCreditClient" />
-	<result column="deposit_account" jdbcType="VARCHAR" property="depositAccount" />
-	<result column="create_by" jdbcType="VARCHAR" property="createBy" />
-	<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-	<result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
-	<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
-	<result column="del_flag" jdbcType="TINYINT" property="delFlag" />
-  </resultMap>
-  
-  <insert id="add" parameterType="com.louis.kitty.admin.model.LoanBusinessInformation" useGeneratedKeys="true" keyProperty="id">
-    insert into loan_business_information
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="loanBasisId != null">
-        loan_basis_id,
-      </if>
-      <if test="borrowerAccount != null">
-        borrower_account,
-      </if>
-      <if test="clientNumber != null">
-        client_number,
-      </if>
-      <if test="applicationAmount != null">
-        application_amount,
-      </if>
-      <if test="applicationPeriod != null">
-        application_period,
-      </if>
-      <if test="cycleQuota != null">
-        cycle_quota,
-      </if>
-      <if test="interestRate != null">
-        interest_rate,
-      </if>
-      <if test="adjustmentMethod != null">
-        adjustment_method,
-      </if>
-      <if test="interestRateRise != null">
-        interest_rate_rise,
-      </if>
-      <if test="applicationRate != null">
-        application_rate,
-      </if>
-      <if test="marginRatio != null">
-        margin_ratio,
-      </if>
-      <if test="originalCreditBalance != null">
-        original_credit_balance,
-      </if>
-      <if test="use != null">
-        use,
-      </if>
-      <if test="description != null">
-        description,
-      </if>
-      <if test="repayment != null">
-        repayment,
-      </if>
-      <if test="value != null">
-        value,
-      </if>
-      <if test="repaymentPeriod != null">
-        repayment_period,
-      </if>
-      <if test="whetherPersonalHomeLoan != null">
-        whether_personal_home_loan,
-      </if>
-      <if test="whetherProvidentFundCombinationLoan != null">
-        whether_provident_fund_combination_loan,
-      </if>
-      <if test="providentFundLoanAmount != null">
-        provident_fund_loan_amount,
-      </if>
-      <if test="whetherExclusiveCreditClient != null">
-        whether_exclusive_credit_client,
-      </if>
-      <if test="depositAccount != null">
-        deposit_account,
-      </if>
-      <if test="createBy != null">
-        create_by,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="lastUpdateBy != null">
-        last_update_by,
-      </if>
-      <if test="lastUpdateTime != null">
-        last_update_time,
-      </if>
-      <if test="delFlag != null">
-        del_flag,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="loanBasisId != null">
-        #{loanBasisId,jdbcType=BIGINT},
-      </if>
-      <if test="borrowerAccount != null">
-        #{borrowerAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="clientNumber != null">
-        #{clientNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="applicationAmount != null">
-        #{applicationAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="applicationPeriod != null">
-        #{applicationPeriod,jdbcType=VARCHAR},
-      </if>
-      <if test="cycleQuota != null">
-        #{cycleQuota,jdbcType=INTEGER},
-      </if>
-      <if test="interestRate != null">
-        #{interestRate,jdbcType=INTEGER},
-      </if>
-      <if test="adjustmentMethod != null">
-        #{adjustmentMethod,jdbcType=INTEGER},
-      </if>
-      <if test="interestRateRise != null">
-        #{interestRateRise,jdbcType=VARCHAR},
-      </if>
-      <if test="applicationRate != null">
-        #{applicationRate,jdbcType=VARCHAR},
-      </if>
-      <if test="marginRatio != null">
-        #{marginRatio,jdbcType=VARCHAR},
-      </if>
-      <if test="originalCreditBalance != null">
-        #{originalCreditBalance,jdbcType=VARCHAR},
-      </if>
-      <if test="use != null">
-        #{use,jdbcType=INTEGER},
-      </if>
-      <if test="description != null">
-        #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="repayment != null">
-        #{repayment,jdbcType=INTEGER},
-      </if>
-      <if test="value != null">
-        #{value,jdbcType=VARCHAR},
-      </if>
-      <if test="repaymentPeriod != null">
-        #{repaymentPeriod,jdbcType=INTEGER},
-      </if>
-      <if test="whetherPersonalHomeLoan != null">
-        #{whetherPersonalHomeLoan,jdbcType=INTEGER},
-      </if>
-      <if test="whetherProvidentFundCombinationLoan != null">
-        #{whetherProvidentFundCombinationLoan,jdbcType=INTEGER},
-      </if>
-      <if test="providentFundLoanAmount != null">
-        #{providentFundLoanAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="whetherExclusiveCreditClient != null">
-        #{whetherExclusiveCreditClient,jdbcType=INTEGER},
-      </if>
-      <if test="depositAccount != null">
-        #{depositAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="createBy != null">
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdateBy != null">
-        #{lastUpdateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="lastUpdateTime != null">
-        #{lastUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="delFlag != null">
-        #{delFlag,jdbcType=TINYINT},
-      </if>
-    </trim>
-  </insert>
+    <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.LoanBusinessInformation">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId"/>
+        <result column="borrower_account" jdbcType="VARCHAR" property="borrowerAccount"/>
+        <result column="client_number" jdbcType="VARCHAR" property="clientNumber"/>
+        <result column="application_amount" jdbcType="DECIMAL" property="applicationAmount"/>
+        <result column="application_period" jdbcType="VARCHAR" property="applicationPeriod"/>
+        <result column="cycle_quota" jdbcType="INTEGER" property="cycleQuota"/>
+        <result column="interest_rate" jdbcType="INTEGER" property="interestRate"/>
+        <result column="adjustment_method" jdbcType="INTEGER" property="adjustmentMethod"/>
+        <result column="interest_rate_rise" jdbcType="VARCHAR" property="interestRateRise"/>
+        <result column="application_rate" jdbcType="VARCHAR" property="applicationRate"/>
+        <result column="margin_ratio" jdbcType="VARCHAR" property="marginRatio"/>
+        <result column="original_credit_balance" jdbcType="VARCHAR" property="originalCreditBalance"/>
+        <result column="use" jdbcType="INTEGER" property="use"/>
+        <result column="description" jdbcType="VARCHAR" property="description"/>
+        <result column="repayment" jdbcType="INTEGER" property="repayment"/>
+        <result column="value" jdbcType="VARCHAR" property="value"/>
+        <result column="repayment_period" jdbcType="INTEGER" property="repaymentPeriod"/>
+        <result column="whether_personal_home_loan" jdbcType="INTEGER" property="whetherPersonalHomeLoan"/>
+        <result column="whether_provident_fund_combination_loan" jdbcType="INTEGER"
+                property="whetherProvidentFundCombinationLoan"/>
+        <result column="provident_fund_loan_amount" jdbcType="DECIMAL" property="providentFundLoanAmount"/>
+        <result column="whether_exclusive_credit_client" jdbcType="INTEGER" property="whetherExclusiveCreditClient"/>
+        <result column="deposit_account" jdbcType="VARCHAR" property="depositAccount"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+        <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
+    </resultMap>
 
-  <delete id="delete" parameterType="java.lang.Long">
-    delete from loan_business_information
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  
-  <update id="update" parameterType="com.louis.kitty.admin.model.LoanBusinessInformation">
-    update loan_business_information
-    <set>
-      <if test="id != null">
-        id = #{id,jdbcType=BIGINT},
-      </if>
-      <if test="loanBasisId != null">
-        loan_basis_id = #{loanBasisId,jdbcType=BIGINT},
-      </if>
-      <if test="borrowerAccount != null">
-        borrower_account = #{borrowerAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="clientNumber != null">
-        client_number = #{clientNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="applicationAmount != null">
-        application_amount = #{applicationAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="applicationPeriod != null">
-        application_period = #{applicationPeriod,jdbcType=VARCHAR},
-      </if>
-      <if test="cycleQuota != null">
-        cycle_quota = #{cycleQuota,jdbcType=INTEGER},
-      </if>
-      <if test="interestRate != null">
-        interest_rate = #{interestRate,jdbcType=INTEGER},
-      </if>
-      <if test="adjustmentMethod != null">
-        adjustment_method = #{adjustmentMethod,jdbcType=INTEGER},
-      </if>
-      <if test="interestRateRise != null">
-        interest_rate_rise = #{interestRateRise,jdbcType=VARCHAR},
-      </if>
-      <if test="applicationRate != null">
-        application_rate = #{applicationRate,jdbcType=VARCHAR},
-      </if>
-      <if test="marginRatio != null">
-        margin_ratio = #{marginRatio,jdbcType=VARCHAR},
-      </if>
-      <if test="originalCreditBalance != null">
-        original_credit_balance = #{originalCreditBalance,jdbcType=VARCHAR},
-      </if>
-      <if test="use != null">
-        use = #{use,jdbcType=INTEGER},
-      </if>
-      <if test="description != null">
-        description = #{description,jdbcType=VARCHAR},
-      </if>
-      <if test="repayment != null">
-        repayment = #{repayment,jdbcType=INTEGER},
-      </if>
-      <if test="value != null">
-        value = #{value,jdbcType=VARCHAR},
-      </if>
-      <if test="repaymentPeriod != null">
-        repayment_period = #{repaymentPeriod,jdbcType=INTEGER},
-      </if>
-      <if test="whetherPersonalHomeLoan != null">
-        whether_personal_home_loan = #{whetherPersonalHomeLoan,jdbcType=INTEGER},
-      </if>
-      <if test="whetherProvidentFundCombinationLoan != null">
-        whether_provident_fund_combination_loan = #{whetherProvidentFundCombinationLoan,jdbcType=INTEGER},
-      </if>
-      <if test="providentFundLoanAmount != null">
-        provident_fund_loan_amount = #{providentFundLoanAmount,jdbcType=DECIMAL},
-      </if>
-      <if test="whetherExclusiveCreditClient != null">
-        whether_exclusive_credit_client = #{whetherExclusiveCreditClient,jdbcType=INTEGER},
-      </if>
-      <if test="depositAccount != null">
-        deposit_account = #{depositAccount,jdbcType=VARCHAR},
-      </if>
-      <if test="createBy != null">
-        create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdateBy != null">
-        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="lastUpdateTime != null">
-        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="delFlag != null">
-        del_flag = #{delFlag,jdbcType=TINYINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <insert id="add" parameterType="com.louis.kitty.admin.model.LoanBusinessInformation" useGeneratedKeys="true"
+            keyProperty="id">
+        insert into loan_business_information
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="loanBasisId != null">
+                loan_basis_id,
+            </if>
+            <if test="borrowerAccount != null">
+                borrower_account,
+            </if>
+            <if test="clientNumber != null">
+                client_number,
+            </if>
+            <if test="applicationAmount != null">
+                application_amount,
+            </if>
+            <if test="applicationPeriod != null">
+                application_period,
+            </if>
+            <if test="cycleQuota != null">
+                cycle_quota,
+            </if>
+            <if test="interestRate != null">
+                interest_rate,
+            </if>
+            <if test="adjustmentMethod != null">
+                adjustment_method,
+            </if>
+            <if test="interestRateRise != null">
+                interest_rate_rise,
+            </if>
+            <if test="applicationRate != null">
+                application_rate,
+            </if>
+            <if test="marginRatio != null">
+                margin_ratio,
+            </if>
+            <if test="originalCreditBalance != null">
+                original_credit_balance,
+            </if>
+            <if test="use != null">
+                use,
+            </if>
+            <if test="description != null">
+                description,
+            </if>
+            <if test="repayment != null">
+                repayment,
+            </if>
+            <if test="value != null">
+                value,
+            </if>
+            <if test="repaymentPeriod != null">
+                repayment_period,
+            </if>
+            <if test="whetherPersonalHomeLoan != null">
+                whether_personal_home_loan,
+            </if>
+            <if test="whetherProvidentFundCombinationLoan != null">
+                whether_provident_fund_combination_loan,
+            </if>
+            <if test="providentFundLoanAmount != null">
+                provident_fund_loan_amount,
+            </if>
+            <if test="whetherExclusiveCreditClient != null">
+                whether_exclusive_credit_client,
+            </if>
+            <if test="depositAccount != null">
+                deposit_account,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdateBy != null">
+                last_update_by,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="loanBasisId != null">
+                #{loanBasisId,jdbcType=BIGINT},
+            </if>
+            <if test="borrowerAccount != null">
+                #{borrowerAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="clientNumber != null">
+                #{clientNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="applicationAmount != null">
+                #{applicationAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="applicationPeriod != null">
+                #{applicationPeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="cycleQuota != null">
+                #{cycleQuota,jdbcType=INTEGER},
+            </if>
+            <if test="interestRate != null">
+                #{interestRate,jdbcType=INTEGER},
+            </if>
+            <if test="adjustmentMethod != null">
+                #{adjustmentMethod,jdbcType=INTEGER},
+            </if>
+            <if test="interestRateRise != null">
+                #{interestRateRise,jdbcType=VARCHAR},
+            </if>
+            <if test="applicationRate != null">
+                #{applicationRate,jdbcType=VARCHAR},
+            </if>
+            <if test="marginRatio != null">
+                #{marginRatio,jdbcType=VARCHAR},
+            </if>
+            <if test="originalCreditBalance != null">
+                #{originalCreditBalance,jdbcType=VARCHAR},
+            </if>
+            <if test="use != null">
+                #{use,jdbcType=INTEGER},
+            </if>
+            <if test="description != null">
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="repayment != null">
+                #{repayment,jdbcType=INTEGER},
+            </if>
+            <if test="value != null">
+                #{value,jdbcType=VARCHAR},
+            </if>
+            <if test="repaymentPeriod != null">
+                #{repaymentPeriod,jdbcType=INTEGER},
+            </if>
+            <if test="whetherPersonalHomeLoan != null">
+                #{whetherPersonalHomeLoan,jdbcType=INTEGER},
+            </if>
+            <if test="whetherProvidentFundCombinationLoan != null">
+                #{whetherProvidentFundCombinationLoan,jdbcType=INTEGER},
+            </if>
+            <if test="providentFundLoanAmount != null">
+                #{providentFundLoanAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="whetherExclusiveCreditClient != null">
+                #{whetherExclusiveCreditClient,jdbcType=INTEGER},
+            </if>
+            <if test="depositAccount != null">
+                #{depositAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateBy != null">
+                #{lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
 
-  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select * from loan_business_information
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  
-  <select id="findPage" resultMap="BaseResultMap">
-    select * from loan_business_information
-  </select>
-  
+    <delete id="delete" parameterType="java.lang.Long">
+        delete
+        from loan_business_information
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <update id="update" parameterType="com.louis.kitty.admin.model.LoanBusinessInformation">
+        update loan_business_information
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=BIGINT},
+            </if>
+            <if test="loanBasisId != null">
+                loan_basis_id = #{loanBasisId,jdbcType=BIGINT},
+            </if>
+            <if test="borrowerAccount != null">
+                borrower_account = #{borrowerAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="clientNumber != null">
+                client_number = #{clientNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="applicationAmount != null">
+                application_amount = #{applicationAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="applicationPeriod != null">
+                application_period = #{applicationPeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="cycleQuota != null">
+                cycle_quota = #{cycleQuota,jdbcType=INTEGER},
+            </if>
+            <if test="interestRate != null">
+                interest_rate = #{interestRate,jdbcType=INTEGER},
+            </if>
+            <if test="adjustmentMethod != null">
+                adjustment_method = #{adjustmentMethod,jdbcType=INTEGER},
+            </if>
+            <if test="interestRateRise != null">
+                interest_rate_rise = #{interestRateRise,jdbcType=VARCHAR},
+            </if>
+            <if test="applicationRate != null">
+                application_rate = #{applicationRate,jdbcType=VARCHAR},
+            </if>
+            <if test="marginRatio != null">
+                margin_ratio = #{marginRatio,jdbcType=VARCHAR},
+            </if>
+            <if test="originalCreditBalance != null">
+                original_credit_balance = #{originalCreditBalance,jdbcType=VARCHAR},
+            </if>
+            <if test="use != null">
+                use = #{use,jdbcType=INTEGER},
+            </if>
+            <if test="description != null">
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="repayment != null">
+                repayment = #{repayment,jdbcType=INTEGER},
+            </if>
+            <if test="value != null">
+                value = #{value,jdbcType=VARCHAR},
+            </if>
+            <if test="repaymentPeriod != null">
+                repayment_period = #{repaymentPeriod,jdbcType=INTEGER},
+            </if>
+            <if test="whetherPersonalHomeLoan != null">
+                whether_personal_home_loan = #{whetherPersonalHomeLoan,jdbcType=INTEGER},
+            </if>
+            <if test="whetherProvidentFundCombinationLoan != null">
+                whether_provident_fund_combination_loan = #{whetherProvidentFundCombinationLoan,jdbcType=INTEGER},
+            </if>
+            <if test="providentFundLoanAmount != null">
+                provident_fund_loan_amount = #{providentFundLoanAmount,jdbcType=DECIMAL},
+            </if>
+            <if test="whetherExclusiveCreditClient != null">
+                whether_exclusive_credit_client = #{whetherExclusiveCreditClient,jdbcType=INTEGER},
+            </if>
+            <if test="depositAccount != null">
+                deposit_account = #{depositAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateBy != null">
+                last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from loan_business_information
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPage" resultMap="BaseResultMap">
+        select *
+        from loan_business_information
+    </select>
+
+    <select id="findByLoanBasisId" resultMap="BaseResultMap">
+        select *
+        from loan_business_information
+        where loan_basis_id = #{LoanBasicId,jdbcType=BIGINT}
+    </select>
+
+
 </mapper>

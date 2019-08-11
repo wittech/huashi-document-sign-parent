@@ -85,5 +85,9 @@ public class LoanBusinessInformationServiceImpl implements LoanBusinessInformati
 	public PageResult findPage(PageRequest pageRequest) {
 		return MybatisPageHelper.findPage(pageRequest, loanBusinessInformationMapper);
 	}
-	
+
+	@Override
+	public LoanBusinessInformation findByBasisId(Long loanBasicId) {
+		return loanBusinessInformationMapper.findByLoanBasisId(loanBasicId);
+	}
 }

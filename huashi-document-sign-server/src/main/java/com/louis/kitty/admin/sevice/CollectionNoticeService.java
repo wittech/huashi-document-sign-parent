@@ -14,4 +14,5 @@ import com.louis.kitty.core.service.CurdService;
  */
 public interface CollectionNoticeService extends CurdService<CollectionNotice> {
 
+    CollectionNotice findByLoanBasisId(Long loanBasisId);
 }

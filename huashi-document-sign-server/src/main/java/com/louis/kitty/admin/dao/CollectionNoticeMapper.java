@@ -45,9 +45,10 @@ public interface CollectionNoticeMapper {
 
     /**
      * 基础分页查询
-     * @param record
      * @return
      */    
     List<CollectionNotice> findPage();
-    
+
+    CollectionNotice findByLoanBasisId(Long loanBasisId);
+
 }

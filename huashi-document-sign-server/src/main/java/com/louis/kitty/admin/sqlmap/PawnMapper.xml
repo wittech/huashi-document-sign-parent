@@ -2,336 +2,346 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.louis.kitty.admin.dao.PawnMapper">
 
-  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.Pawn">
-	<id column="id" jdbcType="BIGINT" property="id" />
-	<result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId" />
-	<result column="mortgage_type" jdbcType="INTEGER" property="mortgageType" />
-	<result column="whether_ownership_certificates" jdbcType="INTEGER" property="whetherOwnershipCertificates" />
-	<result column="property_certificate_number" jdbcType="VARCHAR" property="propertyCertificateNumber" />
-	<result column="building_area" jdbcType="VARCHAR" property="buildingArea" />
-	<result column="land_certificate_number" jdbcType="VARCHAR" property="landCertificateNumber" />
-	<result column="land_occupation_area" jdbcType="VARCHAR" property="landOccupationArea" />
-	<result column="land_nature" jdbcType="INTEGER" property="landNature" />
-	<result column="collateral_name" jdbcType="VARCHAR" property="collateralName" />
-	<result column="affiliation" jdbcType="VARCHAR" property="affiliation" />
-	<result column="collateral_deposit" jdbcType="VARCHAR" property="collateralDeposit" />
-	<result column="evaluation_corporation" jdbcType="VARCHAR" property="evaluationCorporation" />
-	<result column="value" jdbcType="VARCHAR" property="value" />
-	<result column="whether_coowner" jdbcType="INTEGER" property="whetherCoowner" />
-	<result column="coowner_name" jdbcType="VARCHAR" property="coownerName" />
-	<result column="whether_lease" jdbcType="INTEGER" property="whetherLease" />
-	<result column="lease_contract_name" jdbcType="VARCHAR" property="leaseContractName" />
-	<result column="lessee_name" jdbcType="VARCHAR" property="lesseeName" />
-	<result column="lease_term_start_time" jdbcType="TIMESTAMP" property="leaseTermStartTime" />
-	<result column="lease_term_end_time" jdbcType="TIMESTAMP" property="leaseTermEndTime" />
-	<result column="rent_payment_method" jdbcType="INTEGER" property="rentPaymentMethod" />
-	<result column="contract_signing_time" jdbcType="TIMESTAMP" property="contractSigningTime" />
-	<result column="name_assets_id" jdbcType="BIGINT" property="nameAssetsId" />
-	<result column="create_by" jdbcType="VARCHAR" property="createBy" />
-	<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-	<result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
-	<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
-	<result column="del_flag" jdbcType="TINYINT" property="delFlag" />
-	<result column="financing_situation" jdbcType="INTEGER" property="financingSituation" />
-  </resultMap>
-  
-  <insert id="add" parameterType="com.louis.kitty.admin.model.Pawn" useGeneratedKeys="true" keyProperty="id">
-    insert into pawn
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="loanBasisId != null">
-        loan_basis_id,
-      </if>
-      <if test="mortgageType != null">
-        mortgage_type,
-      </if>
-      <if test="whetherOwnershipCertificates != null">
-        whether_ownership_certificates,
-      </if>
-      <if test="propertyCertificateNumber != null">
-        property_certificate_number,
-      </if>
-      <if test="buildingArea != null">
-        building_area,
-      </if>
-      <if test="landCertificateNumber != null">
-        land_certificate_number,
-      </if>
-      <if test="landOccupationArea != null">
-        land_occupation_area,
-      </if>
-      <if test="landNature != null">
-        land_nature,
-      </if>
-      <if test="collateralName != null">
-        collateral_name,
-      </if>
-      <if test="affiliation != null">
-        affiliation,
-      </if>
-      <if test="collateralDeposit != null">
-        collateral_deposit,
-      </if>
-      <if test="evaluationCorporation != null">
-        evaluation_corporation,
-      </if>
-      <if test="value != null">
-        value,
-      </if>
-      <if test="whetherCoowner != null">
-        whether_coowner,
-      </if>
-      <if test="coownerName != null">
-        coowner_name,
-      </if>
-      <if test="whetherLease != null">
-        whether_lease,
-      </if>
-      <if test="leaseContractName != null">
-        lease_contract_name,
-      </if>
-      <if test="lesseeName != null">
-        lessee_name,
-      </if>
-      <if test="leaseTermStartTime != null">
-        lease_term_start_time,
-      </if>
-      <if test="leaseTermEndTime != null">
-        lease_term_end_time,
-      </if>
-      <if test="rentPaymentMethod != null">
-        rent_payment_method,
-      </if>
-      <if test="contractSigningTime != null">
-        contract_signing_time,
-      </if>
-      <if test="nameAssetsId != null">
-        name_assets_id,
-      </if>
-      <if test="createBy != null">
-        create_by,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="lastUpdateBy != null">
-        last_update_by,
-      </if>
-      <if test="lastUpdateTime != null">
-        last_update_time,
-      </if>
-      <if test="delFlag != null">
-        del_flag,
-      </if>
-      <if test="financingSituation != null">
-        financing_situation,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="loanBasisId != null">
-        #{loanBasisId,jdbcType=BIGINT},
-      </if>
-      <if test="mortgageType != null">
-        #{mortgageType,jdbcType=INTEGER},
-      </if>
-      <if test="whetherOwnershipCertificates != null">
-        #{whetherOwnershipCertificates,jdbcType=INTEGER},
-      </if>
-      <if test="propertyCertificateNumber != null">
-        #{propertyCertificateNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="buildingArea != null">
-        #{buildingArea,jdbcType=VARCHAR},
-      </if>
-      <if test="landCertificateNumber != null">
-        #{landCertificateNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="landOccupationArea != null">
-        #{landOccupationArea,jdbcType=VARCHAR},
-      </if>
-      <if test="landNature != null">
-        #{landNature,jdbcType=INTEGER},
-      </if>
-      <if test="collateralName != null">
-        #{collateralName,jdbcType=VARCHAR},
-      </if>
-      <if test="affiliation != null">
-        #{affiliation,jdbcType=VARCHAR},
-      </if>
-      <if test="collateralDeposit != null">
-        #{collateralDeposit,jdbcType=VARCHAR},
-      </if>
-      <if test="evaluationCorporation != null">
-        #{evaluationCorporation,jdbcType=VARCHAR},
-      </if>
-      <if test="value != null">
-        #{value,jdbcType=VARCHAR},
-      </if>
-      <if test="whetherCoowner != null">
-        #{whetherCoowner,jdbcType=INTEGER},
-      </if>
-      <if test="coownerName != null">
-        #{coownerName,jdbcType=VARCHAR},
-      </if>
-      <if test="whetherLease != null">
-        #{whetherLease,jdbcType=INTEGER},
-      </if>
-      <if test="leaseContractName != null">
-        #{leaseContractName,jdbcType=VARCHAR},
-      </if>
-      <if test="lesseeName != null">
-        #{lesseeName,jdbcType=VARCHAR},
-      </if>
-      <if test="leaseTermStartTime != null">
-        #{leaseTermStartTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="leaseTermEndTime != null">
-        #{leaseTermEndTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="rentPaymentMethod != null">
-        #{rentPaymentMethod,jdbcType=INTEGER},
-      </if>
-      <if test="contractSigningTime != null">
-        #{contractSigningTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="nameAssetsId != null">
-        #{nameAssetsId,jdbcType=BIGINT},
-      </if>
-      <if test="createBy != null">
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdateBy != null">
-        #{lastUpdateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="lastUpdateTime != null">
-        #{lastUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="delFlag != null">
-        #{delFlag,jdbcType=TINYINT},
-      </if>
-      <if test="financingSituation != null">
-        #{financingSituation,jdbcType=INTEGER},
-      </if>
-    </trim>
-  </insert>
+    <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.Pawn">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId"/>
+        <result column="mortgage_type" jdbcType="INTEGER" property="mortgageType"/>
+        <result column="whether_ownership_certificates" jdbcType="INTEGER" property="whetherOwnershipCertificates"/>
+        <result column="property_certificate_number" jdbcType="VARCHAR" property="propertyCertificateNumber"/>
+        <result column="building_area" jdbcType="VARCHAR" property="buildingArea"/>
+        <result column="land_certificate_number" jdbcType="VARCHAR" property="landCertificateNumber"/>
+        <result column="land_occupation_area" jdbcType="VARCHAR" property="landOccupationArea"/>
+        <result column="land_nature" jdbcType="INTEGER" property="landNature"/>
+        <result column="collateral_name" jdbcType="VARCHAR" property="collateralName"/>
+        <result column="affiliation" jdbcType="VARCHAR" property="affiliation"/>
+        <result column="collateral_deposit" jdbcType="VARCHAR" property="collateralDeposit"/>
+        <result column="evaluation_corporation" jdbcType="VARCHAR" property="evaluationCorporation"/>
+        <result column="value" jdbcType="VARCHAR" property="value"/>
+        <result column="whether_coowner" jdbcType="INTEGER" property="whetherCoowner"/>
+        <result column="coowner_name" jdbcType="VARCHAR" property="coownerName"/>
+        <result column="whether_lease" jdbcType="INTEGER" property="whetherLease"/>
+        <result column="lease_contract_name" jdbcType="VARCHAR" property="leaseContractName"/>
+        <result column="lessee_name" jdbcType="VARCHAR" property="lesseeName"/>
+        <result column="lease_term_start_time" jdbcType="TIMESTAMP" property="leaseTermStartTime"/>
+        <result column="lease_term_end_time" jdbcType="TIMESTAMP" property="leaseTermEndTime"/>
+        <result column="rent_payment_method" jdbcType="INTEGER" property="rentPaymentMethod"/>
+        <result column="contract_signing_time" jdbcType="TIMESTAMP" property="contractSigningTime"/>
+        <result column="name_assets_id" jdbcType="BIGINT" property="nameAssetsId"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+        <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
+        <result column="financing_situation" jdbcType="INTEGER" property="financingSituation"/>
+    </resultMap>
 
-  <delete id="delete" parameterType="java.lang.Long">
-    delete from pawn
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  
-  <update id="update" parameterType="com.louis.kitty.admin.model.Pawn">
-    update pawn
-    <set>
-      <if test="id != null">
-        id = #{id,jdbcType=BIGINT},
-      </if>
-      <if test="loanBasisId != null">
-        loan_basis_id = #{loanBasisId,jdbcType=BIGINT},
-      </if>
-      <if test="mortgageType != null">
-        mortgage_type = #{mortgageType,jdbcType=INTEGER},
-      </if>
-      <if test="whetherOwnershipCertificates != null">
-        whether_ownership_certificates = #{whetherOwnershipCertificates,jdbcType=INTEGER},
-      </if>
-      <if test="propertyCertificateNumber != null">
-        property_certificate_number = #{propertyCertificateNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="buildingArea != null">
-        building_area = #{buildingArea,jdbcType=VARCHAR},
-      </if>
-      <if test="landCertificateNumber != null">
-        land_certificate_number = #{landCertificateNumber,jdbcType=VARCHAR},
-      </if>
-      <if test="landOccupationArea != null">
-        land_occupation_area = #{landOccupationArea,jdbcType=VARCHAR},
-      </if>
-      <if test="landNature != null">
-        land_nature = #{landNature,jdbcType=INTEGER},
-      </if>
-      <if test="collateralName != null">
-        collateral_name = #{collateralName,jdbcType=VARCHAR},
-      </if>
-      <if test="affiliation != null">
-        affiliation = #{affiliation,jdbcType=VARCHAR},
-      </if>
-      <if test="collateralDeposit != null">
-        collateral_deposit = #{collateralDeposit,jdbcType=VARCHAR},
-      </if>
-      <if test="evaluationCorporation != null">
-        evaluation_corporation = #{evaluationCorporation,jdbcType=VARCHAR},
-      </if>
-      <if test="value != null">
-        value = #{value,jdbcType=VARCHAR},
-      </if>
-      <if test="whetherCoowner != null">
-        whether_coowner = #{whetherCoowner,jdbcType=INTEGER},
-      </if>
-      <if test="coownerName != null">
-        coowner_name = #{coownerName,jdbcType=VARCHAR},
-      </if>
-      <if test="whetherLease != null">
-        whether_lease = #{whetherLease,jdbcType=INTEGER},
-      </if>
-      <if test="leaseContractName != null">
-        lease_contract_name = #{leaseContractName,jdbcType=VARCHAR},
-      </if>
-      <if test="lesseeName != null">
-        lessee_name = #{lesseeName,jdbcType=VARCHAR},
-      </if>
-      <if test="leaseTermStartTime != null">
-        lease_term_start_time = #{leaseTermStartTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="leaseTermEndTime != null">
-        lease_term_end_time = #{leaseTermEndTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="rentPaymentMethod != null">
-        rent_payment_method = #{rentPaymentMethod,jdbcType=INTEGER},
-      </if>
-      <if test="contractSigningTime != null">
-        contract_signing_time = #{contractSigningTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="nameAssetsId != null">
-        name_assets_id = #{nameAssetsId,jdbcType=BIGINT},
-      </if>
-      <if test="createBy != null">
-        create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdateBy != null">
-        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="lastUpdateTime != null">
-        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="delFlag != null">
-        del_flag = #{delFlag,jdbcType=TINYINT},
-      </if>
-      <if test="financingSituation != null">
-        financing_situation = #{financingSituation,jdbcType=INTEGER},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <insert id="add" parameterType="com.louis.kitty.admin.model.Pawn" useGeneratedKeys="true" keyProperty="id">
+        insert into pawn
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="loanBasisId != null">
+                loan_basis_id,
+            </if>
+            <if test="mortgageType != null">
+                mortgage_type,
+            </if>
+            <if test="whetherOwnershipCertificates != null">
+                whether_ownership_certificates,
+            </if>
+            <if test="propertyCertificateNumber != null">
+                property_certificate_number,
+            </if>
+            <if test="buildingArea != null">
+                building_area,
+            </if>
+            <if test="landCertificateNumber != null">
+                land_certificate_number,
+            </if>
+            <if test="landOccupationArea != null">
+                land_occupation_area,
+            </if>
+            <if test="landNature != null">
+                land_nature,
+            </if>
+            <if test="collateralName != null">
+                collateral_name,
+            </if>
+            <if test="affiliation != null">
+                affiliation,
+            </if>
+            <if test="collateralDeposit != null">
+                collateral_deposit,
+            </if>
+            <if test="evaluationCorporation != null">
+                evaluation_corporation,
+            </if>
+            <if test="value != null">
+                value,
+            </if>
+            <if test="whetherCoowner != null">
+                whether_coowner,
+            </if>
+            <if test="coownerName != null">
+                coowner_name,
+            </if>
+            <if test="whetherLease != null">
+                whether_lease,
+            </if>
+            <if test="leaseContractName != null">
+                lease_contract_name,
+            </if>
+            <if test="lesseeName != null">
+                lessee_name,
+            </if>
+            <if test="leaseTermStartTime != null">
+                lease_term_start_time,
+            </if>
+            <if test="leaseTermEndTime != null">
+                lease_term_end_time,
+            </if>
+            <if test="rentPaymentMethod != null">
+                rent_payment_method,
+            </if>
+            <if test="contractSigningTime != null">
+                contract_signing_time,
+            </if>
+            <if test="nameAssetsId != null">
+                name_assets_id,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdateBy != null">
+                last_update_by,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+            <if test="financingSituation != null">
+                financing_situation,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="loanBasisId != null">
+                #{loanBasisId,jdbcType=BIGINT},
+            </if>
+            <if test="mortgageType != null">
+                #{mortgageType,jdbcType=INTEGER},
+            </if>
+            <if test="whetherOwnershipCertificates != null">
+                #{whetherOwnershipCertificates,jdbcType=INTEGER},
+            </if>
+            <if test="propertyCertificateNumber != null">
+                #{propertyCertificateNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="buildingArea != null">
+                #{buildingArea,jdbcType=VARCHAR},
+            </if>
+            <if test="landCertificateNumber != null">
+                #{landCertificateNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="landOccupationArea != null">
+                #{landOccupationArea,jdbcType=VARCHAR},
+            </if>
+            <if test="landNature != null">
+                #{landNature,jdbcType=INTEGER},
+            </if>
+            <if test="collateralName != null">
+                #{collateralName,jdbcType=VARCHAR},
+            </if>
+            <if test="affiliation != null">
+                #{affiliation,jdbcType=VARCHAR},
+            </if>
+            <if test="collateralDeposit != null">
+                #{collateralDeposit,jdbcType=VARCHAR},
+            </if>
+            <if test="evaluationCorporation != null">
+                #{evaluationCorporation,jdbcType=VARCHAR},
+            </if>
+            <if test="value != null">
+                #{value,jdbcType=VARCHAR},
+            </if>
+            <if test="whetherCoowner != null">
+                #{whetherCoowner,jdbcType=INTEGER},
+            </if>
+            <if test="coownerName != null">
+                #{coownerName,jdbcType=VARCHAR},
+            </if>
+            <if test="whetherLease != null">
+                #{whetherLease,jdbcType=INTEGER},
+            </if>
+            <if test="leaseContractName != null">
+                #{leaseContractName,jdbcType=VARCHAR},
+            </if>
+            <if test="lesseeName != null">
+                #{lesseeName,jdbcType=VARCHAR},
+            </if>
+            <if test="leaseTermStartTime != null">
+                #{leaseTermStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="leaseTermEndTime != null">
+                #{leaseTermEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="rentPaymentMethod != null">
+                #{rentPaymentMethod,jdbcType=INTEGER},
+            </if>
+            <if test="contractSigningTime != null">
+                #{contractSigningTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nameAssetsId != null">
+                #{nameAssetsId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateBy != null">
+                #{lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=TINYINT},
+            </if>
+            <if test="financingSituation != null">
+                #{financingSituation,jdbcType=INTEGER},
+            </if>
+        </trim>
+    </insert>
 
-  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select * from pawn
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  
-  <select id="findPage" resultMap="BaseResultMap">
-    select * from pawn
-  </select>
-  
+    <delete id="delete" parameterType="java.lang.Long">
+        delete
+        from pawn
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <update id="update" parameterType="com.louis.kitty.admin.model.Pawn">
+        update pawn
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=BIGINT},
+            </if>
+            <if test="loanBasisId != null">
+                loan_basis_id = #{loanBasisId,jdbcType=BIGINT},
+            </if>
+            <if test="mortgageType != null">
+                mortgage_type = #{mortgageType,jdbcType=INTEGER},
+            </if>
+            <if test="whetherOwnershipCertificates != null">
+                whether_ownership_certificates = #{whetherOwnershipCertificates,jdbcType=INTEGER},
+            </if>
+            <if test="propertyCertificateNumber != null">
+                property_certificate_number = #{propertyCertificateNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="buildingArea != null">
+                building_area = #{buildingArea,jdbcType=VARCHAR},
+            </if>
+            <if test="landCertificateNumber != null">
+                land_certificate_number = #{landCertificateNumber,jdbcType=VARCHAR},
+            </if>
+            <if test="landOccupationArea != null">
+                land_occupation_area = #{landOccupationArea,jdbcType=VARCHAR},
+            </if>
+            <if test="landNature != null">
+                land_nature = #{landNature,jdbcType=INTEGER},
+            </if>
+            <if test="collateralName != null">
+                collateral_name = #{collateralName,jdbcType=VARCHAR},
+            </if>
+            <if test="affiliation != null">
+                affiliation = #{affiliation,jdbcType=VARCHAR},
+            </if>
+            <if test="collateralDeposit != null">
+                collateral_deposit = #{collateralDeposit,jdbcType=VARCHAR},
+            </if>
+            <if test="evaluationCorporation != null">
+                evaluation_corporation = #{evaluationCorporation,jdbcType=VARCHAR},
+            </if>
+            <if test="value != null">
+                value = #{value,jdbcType=VARCHAR},
+            </if>
+            <if test="whetherCoowner != null">
+                whether_coowner = #{whetherCoowner,jdbcType=INTEGER},
+            </if>
+            <if test="coownerName != null">
+                coowner_name = #{coownerName,jdbcType=VARCHAR},
+            </if>
+            <if test="whetherLease != null">
+                whether_lease = #{whetherLease,jdbcType=INTEGER},
+            </if>
+            <if test="leaseContractName != null">
+                lease_contract_name = #{leaseContractName,jdbcType=VARCHAR},
+            </if>
+            <if test="lesseeName != null">
+                lessee_name = #{lesseeName,jdbcType=VARCHAR},
+            </if>
+            <if test="leaseTermStartTime != null">
+                lease_term_start_time = #{leaseTermStartTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="leaseTermEndTime != null">
+                lease_term_end_time = #{leaseTermEndTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="rentPaymentMethod != null">
+                rent_payment_method = #{rentPaymentMethod,jdbcType=INTEGER},
+            </if>
+            <if test="contractSigningTime != null">
+                contract_signing_time = #{contractSigningTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="nameAssetsId != null">
+                name_assets_id = #{nameAssetsId,jdbcType=BIGINT},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateBy != null">
+                last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=TINYINT},
+            </if>
+            <if test="financingSituation != null">
+                financing_situation = #{financingSituation,jdbcType=INTEGER},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from pawn
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPage" resultMap="BaseResultMap">
+        select *
+        from pawn
+    </select>
+
+    <select id="findByLoanBasisId" resultMap="BaseResultMap">
+        select *
+        from pawn
+        where loan_basis_id = #{loanBasisId,jdbcType=BIGINT}
+    </select>
+
+
 </mapper>

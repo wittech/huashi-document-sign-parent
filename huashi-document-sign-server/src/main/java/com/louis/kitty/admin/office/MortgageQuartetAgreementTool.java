@@ -1,8 +1,14 @@
 package com.louis.kitty.admin.office;
 
+import com.louis.kitty.admin.constants.BankConstants;
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.model.DocCommonModel;
+import com.louis.kitty.admin.model.Pawn;
+import com.louis.kitty.admin.util.RmbUtil;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+import java.util.Calendar;
 import java.util.Map;
 
 @Component
@@ -34,9 +40,9 @@ public class MortgageQuartetAgreementTool extends AbstractOfficeTool {
      */
     private void setLeaseInfo(String applyFamilyPersonName, String bankBranchName, String tripartiteName, String quartetName,
                               String applyMoneyRMB, String goodsAddress, String goodsArea,
-                              String startYear, String startMonth, String startDay, String endYear,
-                              String endMonth, String endDay, String secondStartYear, String secondStartMonth,
-                              String secondStartDay, String secondEndYear, String secondEndMonth, String secondEndDay,
+                              int startYear, int startMonth, int startDay, int endYear,
+                              int endMonth, int endDay, int secondStartYear, int secondStartMonth,
+                              int secondStartDay, int secondEndYear, int secondEndMonth, int secondEndDay,
                               String secondMoneyRMB, String secondMoney,
                               Map<String, Object> variables) {
         StringBuilder data = new StringBuilder();
@@ -499,18 +505,43 @@ public class MortgageQuartetAgreementTool extends AbstractOfficeTool {
     }
 
     @Override
-    protected void fillVariable(Long basisLoanId) {
-        Map<String, Object> variables = newRound();
-        variables.put("bankBranchName", "城北支行");
-        variables.put("applyFamilyPersonName", "罗永芳、唐建国");
+    protected void fillVariable(DocCommonModel docCommonModel) {
+        for (Pawn pawn : docCommonModel.getPawnList()) {
+            if (pawn.getWhetherCoowner() != 1) {
+                continue;
+            }
 
-        setLeaseInfo("唐建国、罗永芳", "城北支行", "张三、翠花", "路建凤",
-                "贰佰玖拾万", "滨江路10号1-2-1房、1-3号铺面", "300", "2019", "4",
-                "25", "2022", "4", "25", "2016", "8", "16",
-                "2021", "8", "31", "壹万捌仟", "18000.00", variables);
+            Map<String, Object> variables = newRound();
+            variables.put("bankBranchName", BankConstants.BANK_BRANCH_NAME);
+            variables.put("applyFamilyPersonName", docCommonModel.getApplyFamilyName());
 
+            // 转换年月日
+            Calendar ca = Calendar.getInstance();
+            ca.setTime(docCommonModel.getContractInformation().getBorrowingStartPeriod());
 
-        // 可添加多条记录
+            // 转换年月日
+            Calendar ca1 = Calendar.getInstance();
+            ca1.setTime(docCommonModel.getContractInformation().getBorrowingEndPeriod());
+
+            // 转换年月日
+            Calendar ca2 = Calendar.getInstance();
+            ca2.setTime(pawn.getLeaseTermStartTime());
+
+            // 转换年月日
+            Calendar ca3 = Calendar.getInstance();
+            ca3.setTime(pawn.getLeaseTermEndTime());
+
+            setLeaseInfo(docCommonModel.getApplyFamilyName(), BankConstants.BANK_BRANCH_NAME,
+                    pawn.getOwners(), pawn.getLesseeName(),
+                    docCommonModel.getApplyMoneyRMB(), pawn.getCollateralDeposit(),
+                    (pawn.getMortgageType() == 0 ? pawn.getBuildingArea() : pawn.getLandOccupationArea()),
+                    ca.get(Calendar.YEAR), ca.get(Calendar.MONTH), ca.get(Calendar.DAY_OF_MONTH),
+                    ca1.get(Calendar.YEAR), ca1.get(Calendar.MONTH), ca1.get(Calendar.DAY_OF_MONTH),
+                    ca2.get(Calendar.YEAR), ca2.get(Calendar.MONTH), ca2.get(Calendar.DAY_OF_MONTH),
+                    ca3.get(Calendar.YEAR), ca3.get(Calendar.MONTH), ca3.get(Calendar.DAY_OF_MONTH),
+                    RmbUtil.number2CNMontrayUnit(new BigDecimal(pawn.getRent())), pawn.getRent(), variables);
+        }
+
     }
 
     @Override
@@ -520,7 +551,7 @@ public class MortgageQuartetAgreementTool extends AbstractOfficeTool {
 
     @Override
     protected int sort() {
-        return 2_0_0;
+        return 2_0_00;
     }
 
     @Override

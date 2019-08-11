@@ -1,7 +1,10 @@
 package com.louis.kitty.admin.sevice;
 
+import com.louis.kitty.admin.model.LoanBusinessInformation;
 import com.louis.kitty.admin.model.Pawn;
 import com.louis.kitty.core.service.CurdService;
+
+import java.util.List;
 
 /**
  * ---------------------------
@@ -13,5 +16,9 @@ import com.louis.kitty.core.service.CurdService;
  * ---------------------------
  */
 public interface PawnService extends CurdService<Pawn> {
+
+    List<Pawn> findByLoanBasisId(Long loanBasisId);
+
+    LoanBusinessInformation findByBasisId(Long loanBasicId);
 
 }

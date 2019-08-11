@@ -189,8 +189,8 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 	}
 
 	@Override
-	public List<RelatedPersonnelInformation> findByBaseIdList(int loanBasisId) {
+	public List<RelatedPersonnelInformation> findByBaseIdList(Long loanBasisId) {
 		return relatedPersonnelInformationMapper.findByBaseIdList(loanBasisId);
 	}
-	
+
 }

@@ -34,7 +34,7 @@ public class RelatedPersonnelInformation {
 	/** 常用通信地址 （0、现居住地址）（1、单位地址）（2、其他） */
 	private Integer contactAddress;
 	/** 本地居住时间 */
-	private java.util.Date localResidenceTime;
+	private String localResidenceTime;
 	/** 电子邮箱 */
 	private String email;
 	/** 联系电话 */
@@ -184,11 +184,11 @@ public class RelatedPersonnelInformation {
 		this.contactAddress = contactAddress;
 	}
 
-	public java.util.Date getLocalResidenceTime() {
+	public String getLocalResidenceTime() {
 		return localResidenceTime;
 	}
 
-	public void setLocalResidenceTime(java.util.Date localResidenceTime) {
+	public void setLocalResidenceTime(String localResidenceTime) {
 		this.localResidenceTime = localResidenceTime;
 	}
 

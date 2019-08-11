@@ -2,6 +2,7 @@ package com.louis.kitty.admin.dao;
 
 import java.util.List;
 
+import com.louis.kitty.admin.model.Pawn;
 import com.louis.kitty.admin.model.PawnPersonnelMapping;
 
 /**
@@ -49,5 +50,9 @@ public interface PawnPersonnelMappingMapper {
      * @return
      */    
     List<PawnPersonnelMapping> findPage();
+
+    List<PawnPersonnelMapping> findByPawnList(Long pawnId);
+
+    List<PawnPersonnelMapping> findByRpiId(Long rpiId);
     
 }

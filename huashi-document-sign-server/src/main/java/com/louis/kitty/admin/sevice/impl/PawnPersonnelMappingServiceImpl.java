@@ -1,7 +1,13 @@
 package com.louis.kitty.admin.sevice.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.louis.kitty.admin.model.Pawn;
+import com.louis.kitty.admin.model.RelatedPersonnelInformation;
+import com.louis.kitty.admin.sevice.PawnService;
+import com.louis.kitty.admin.sevice.RelatedPersonnelInformationService;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +33,10 @@ public class PawnPersonnelMappingServiceImpl implements PawnPersonnelMappingServ
 
 	@Autowired
 	private PawnPersonnelMappingMapper pawnPersonnelMappingMapper;
+	@Autowired
+	private RelatedPersonnelInformationService relatedPersonnelInformationService;
+	@Autowired
+	private PawnService pawnService;
 
 	@Override
 	public int save(PawnPersonnelMapping record) {
@@ -58,5 +68,44 @@ public class PawnPersonnelMappingServiceImpl implements PawnPersonnelMappingServ
 	public PageResult findPage(PageRequest pageRequest) {
 		return MybatisPageHelper.findPage(pageRequest, pawnPersonnelMappingMapper);
 	}
-	
+
+	@Override
+	public List<RelatedPersonnelInformation> findByPawnId(Long pawnId) {
+		List<PawnPersonnelMapping> mappings = pawnPersonnelMappingMapper.findByPawnList(pawnId);
+		if(CollectionUtils.isEmpty(mappings)) {
+			return null;
+		}
+
+		List<RelatedPersonnelInformation> list = new ArrayList<>();
+		for(PawnPersonnelMapping mapping : mappings) {
+			RelatedPersonnelInformation relatedPersonnelInformation = relatedPersonnelInformationService.findById(mapping.getRpiId());
+			if(relatedPersonnelInformation == null) {
+				continue;
+			}
+
+			list.add(relatedPersonnelInformation);
+		}
+
+		return list;
+	}
+
+	@Override
+	public List<Pawn> findByRpiId(Long rpiId) {
+		List<PawnPersonnelMapping> mappings = pawnPersonnelMappingMapper.findByRpiId(rpiId);
+		if(CollectionUtils.isEmpty(mappings)) {
+			return null;
+		}
+
+		List<Pawn> list = new ArrayList<>();
+		for(PawnPersonnelMapping mapping : mappings) {
+			Pawn pawn = pawnService.findById(mapping.getPawnId());
+			if(pawn == null) {
+				continue;
+			}
+
+			list.add(pawn);
+		}
+
+		return list;
+	}
 }

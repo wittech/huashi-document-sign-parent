@@ -11,6 +11,14 @@ import java.util.List;
 public interface LoanDocService extends CurdService<LoanDoc> {
 
     /**
+     * 生成文件（落地）
+     *
+     * @param loanBasisId 借贷基础ID
+     * @return 返回生成文件数
+     */
+    int born(Long loanBasisId) throws Exception;
+
+    /**
      * 下载基础文件ID
      *
      * @param loanDocId 借贷文档ID
@@ -36,6 +44,7 @@ public interface LoanDocService extends CurdService<LoanDoc> {
 
     /**
      * 下载次数+1
+     *
      * @param loanDocId 文档ID
      * @return 处理结果
      */
@@ -43,6 +52,7 @@ public interface LoanDocService extends CurdService<LoanDoc> {
 
     /**
      * 打印次数+1
+     *
      * @param loanDocId 文档ID
      * @return 处理结果
      */

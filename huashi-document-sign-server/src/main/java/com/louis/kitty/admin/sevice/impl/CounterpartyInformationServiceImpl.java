@@ -58,5 +58,9 @@ public class CounterpartyInformationServiceImpl implements CounterpartyInformati
 	public PageResult findPage(PageRequest pageRequest) {
 		return MybatisPageHelper.findPage(pageRequest, counterpartyInformationMapper);
 	}
-	
+
+	@Override
+	public List<CounterpartyInformation> findByIoanBusinessInformationId(Long loanBusinessInformationId) {
+		return counterpartyInformationMapper.findByIoanBusinessInformationId(loanBusinessInformationId);
+	}
 }

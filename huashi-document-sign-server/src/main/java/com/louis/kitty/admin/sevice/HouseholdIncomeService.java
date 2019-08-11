@@ -14,4 +14,5 @@ import com.louis.kitty.core.service.CurdService;
  */
 public interface HouseholdIncomeService extends CurdService<HouseholdIncome> {
 
+    HouseholdIncome findByRpiId(Long rpiId);
 }

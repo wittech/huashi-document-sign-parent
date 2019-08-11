@@ -5,7 +5,7 @@ import com.louis.kitty.core.service.CurdService;
 
 /**
  * ---------------------------
- * 合同信息表 (ContractInformationService)         
+ * 合同信息表 (ContractInformationService)
  * ---------------------------
  * 作者：  lz
  * 时间：  2019-08-08 11:53:18
@@ -14,4 +14,5 @@ import com.louis.kitty.core.service.CurdService;
  */
 public interface ContractInformationService extends CurdService<ContractInformation> {
 
+    ContractInformation findByLoanBasisId(Long loanBasisId);
 }

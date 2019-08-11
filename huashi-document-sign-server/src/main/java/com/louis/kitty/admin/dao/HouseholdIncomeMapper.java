@@ -45,9 +45,10 @@ public interface HouseholdIncomeMapper {
 
     /**
      * 基础分页查询
-     * @param record
      * @return
      */    
     List<HouseholdIncome> findPage();
+
+    HouseholdIncome findByRpiId(Long rpiId);
     
 }

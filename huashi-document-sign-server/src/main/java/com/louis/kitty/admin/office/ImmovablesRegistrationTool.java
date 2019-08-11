@@ -5,7 +5,7 @@ import com.louis.kitty.admin.model.DocCommonModel;
 import org.springframework.stereotype.Component;
 
 @Component
-public class HonestyNotificationTool extends AbstractOfficeTool {
+public class ImmovablesRegistrationTool extends AbstractOfficeTool {
 
     @Override
     protected void fillVariable(DocCommonModel docCommonModel) {
@@ -13,17 +13,17 @@ public class HonestyNotificationTool extends AbstractOfficeTool {
 
     @Override
     protected String modelFileName() {
-        return "廉洁办贷告知书";
+        return "不动产登记申请表";
     }
 
     @Override
     protected int sort() {
-        return 1_4_00;
+        return 2_9_00;
     }
 
     @Override
     protected DocConstants.DocType docType() {
-        return DocConstants.DocType.WORD_07;
+        return DocConstants.DocType.WORD;
     }
 
     @Override

@@ -3,6 +3,8 @@ package com.louis.kitty.admin.sevice;
 import com.louis.kitty.admin.model.RepaymentPlan;
 import com.louis.kitty.core.service.CurdService;
 
+import java.util.List;
+
 /**
  * ---------------------------
  * 还款计划信息表 (RepaymentPlanService)         
@@ -14,4 +16,5 @@ import com.louis.kitty.core.service.CurdService;
  */
 public interface RepaymentPlanService extends CurdService<RepaymentPlan> {
 
+    List<RepaymentPlan> findByIoanBusinessInformationId(Long loanBusinessInformationId);
 }

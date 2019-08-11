@@ -1,6 +1,11 @@
 package com.louis.kitty.admin.office;
 
+import com.alibaba.druid.util.StringUtils;
+import com.louis.kitty.admin.constants.BankConstants;
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.model.DocCommonModel;
+import com.louis.kitty.admin.model.Pawn;
+import com.louis.kitty.admin.model.RelatedPersonnelInformation;
 import com.louis.kitty.admin.util.RmbUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
@@ -18,75 +23,182 @@ import java.util.Map;
 @Component
 public class LoanApprovalTool extends AbstractOfficeTool{
 
-
     @Override
-    protected void fillVariable(Long basisLoanId) {
+    protected void fillVariable(DocCommonModel docCommonModel) {
         Map<String, Object> variables = newRound();
-        variables.put("contractNo", System.currentTimeMillis() + "");
-        variables.put("applyTime", "2019年6月14日");
-        variables.put("bankBranchName", "广西桂林漓江农村合作银行城北支行");
-        variables.put("bankPhone", "0773-2624239");
-        variables.put("applyPersonName", "罗永芳");
-        variables.put("applyPersonNo", "10226292846");
-        variables.put("applySubject", "个人经营性贷款");
-        variables.put("applyMoney", "2000000");
-        variables.put("moneyUsage", "流动资金");
-        variables.put("deadlineMonth", "36");
-        variables.put("deadlineYear", "叁年");
-        variables.put("applyRate", "7.6%");
-        variables.put("marginRate", "0%");
-        variables.put("guarantee", "抵押");
-        variables.put("isNewer", "是");
-        variables.put("isNewerDes", variables.get("isNewer").toString().equals("是") ? "新增贷款" : "续贷");
+        variables.put("contractNo", "");
+        variables.put("bankBranchName", BankConstants.BANK_FULL_NAME);
+        variables.put("bankPhone", BankConstants.BANK_PHONE);
 
-        variables.put("originBalance", "0");
-        variables.put("applyMoneyRMB", RmbUtil.number2CNMontrayUnit(new BigDecimal(variables.get("applyMoney").toString())));
-        variables.put("floatingRate", "70");
-        variables.put("payBackMethod", "协议还本");
+        // related_personnel_information
+        variables.put("applyPersonName", docCommonModel.getBorrower().getName());
 
-        List<Map<String, Object>> collateralList = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
-            Map<String, Object> tempMap = new HashMap<>();
-            tempMap.put("no", i + 1);
-            tempMap.put("name", "秀峰区中山中路38号智能办公大厦五层503号、504号办公用房" + i);
-            tempMap.put("personName", "王" + i);
-            tempMap.put("unit", "320.55㎡");
-            tempMap.put("money", "3093300");
-            collateralList.add(tempMap);
-        }
+        // .11. loan_business_information贷款业务信息表  client_number客户号
+        variables.put("applyPersonNo", docCommonModel.getLoanBusinessInformation().getClientNumber());
 
-        setCollateralList(collateralList, variables);
+        // application_amount
+        variables.put("applyMoney", docCommonModel.getLoanBusinessInformation().getApplicationAmount());
 
-        List<Map<String, Object>> guarantorList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            Map<String, Object> tempMap = new HashMap<>();
-            tempMap.put("no", i + 1);
-            tempMap.put("personName", "王" + i);
-            tempMap.put("personCustomerNo", System.currentTimeMillis() + "_" + (i + 1));
-            guarantorList.add(tempMap);
-        }
+        // description
+        variables.put("moneyUsage", docCommonModel.getLoanBusinessInformation().getDescription());
 
-        setGuarantorList(guarantorList, variables);
+        variables.put("deadlineMonth", docCommonModel.getLoanBusinessInformation().getApplicationPeriod());
+        variables.put("applyRate", docCommonModel.getLoanBusinessInformation().getApplicationRate() + "%");
+        variables.put("marginRate",  docCommonModel.getLoanBusinessInformation().getMarginRatio()+"%");
+        variables.put("originBalance", docCommonModel.getLoanBusinessInformation().getOriginalCreditBalance());
+        variables.put("applyMoneyRMB",
+                RmbUtil.number2CNMontrayUnit(new BigDecimal(variables.get("applyMoney").toString())));
+        variables.put("floatingRate", docCommonModel.getLoanBusinessInformation().getInterestRateRise());
+        // repayment 转义中文显示，如果为7 则 取 value字段值
+        variables.put("payBackMethod", getRepayment(docCommonModel.getLoanBusinessInformation().getRepayment()));
 
-        variables.put("applyPersonMerge", collateralList.size() + 5);
-        variables.put("collateralMerge", collateralList.size() + 1);
+        // 1.1. loan_basis借口人基础信息表  application_matters
+        // 申请事项：0 个人经营性贷款 1信用贷款 2 房屋按揭贷款 3个人消费类贷款
+        variables.put("applySubject", getApplicationMatters(docCommonModel.getLoanBasis().getApplicationMatters()));
+
+        // guarantee_method
+        variables.put("guarantee", docCommonModel.getLoanBasis().getGuaranteeMethod());
+        // loan_type  贷款类型: 0新增 1续贷
+        variables.put("isNewer", docCommonModel.getLoanBasis().getLoanType() == 0 ? "是" : "否");
+        variables.put("isNewerDes", docCommonModel.getLoanBasis().getLoanType() == 0 ? "新增贷款" : "续贷");
+
+        // 抵押物信息
+        setPawnList(docCommonModel, variables);
+
+        // 担保人信息（抵押和保证都有）
+        setGuarantorList(docCommonModel, variables);
+
+
     }
 
-    private void setCollateralList(List<Map<String, Object>> collateralList, Map<String, Object> variables) {
+    private Map<String, Object> guarantor(String name) {
+        Map<String, Object> tempMap = new HashMap<>();
+        tempMap.put("personName", name);
+        return tempMap;
+    }
+
+    private void setGuarantorList(DocCommonModel model, Map<String, Object> variables) {
+        // related_personnel_information  type 3和4,5
+        List<Map<String, Object>> guarantorList = new ArrayList<>();
+        if(CollectionUtils.isEmpty(model.getMortgageGuarantorList()) &&
+                CollectionUtils.isEmpty(model.getGuarantorList())) {
+            guarantorList.add(guarantor(""));
+        } else {
+            for (RelatedPersonnelInformation relatedPersonnelInformation : model.getMortgageGuarantorList()) {
+                guarantorList.add(guarantor(relatedPersonnelInformation.getName()));
+            }
+
+            for (RelatedPersonnelInformation relatedPersonnelInformation : model.getGuarantorList()) {
+                guarantorList.add(guarantor(relatedPersonnelInformation.getName()));
+            }
+        }
+
+        setGuarantorListText(guarantorList, variables);
+    }
+
+    private Map<String, Object> mortgage(String address, String name,String collateralArea,
+                                         String collateralFee) {
+        Map<String, Object> tempMap1 = new HashMap<>();
+        tempMap1.put("address", address);
+        tempMap1.put("personName", name);
+        tempMap1.put("unit", collateralArea + "㎡");
+        tempMap1.put("money", collateralFee);
+        return tempMap1;
+    }
+
+    private void setPawnList(DocCommonModel docCommonModel, Map<String, Object> variables) {
+        List<Map<String, Object>> pawnList = new ArrayList<>();
+        if (!docCommonModel.isContainsMortgage() || CollectionUtils.isEmpty(docCommonModel.getPawnList())) {
+            // 如果没有数据，需要初始化空数据进去，为了客户可以自己填充数据，保障表格样式统一
+            pawnList.add(mortgage("", "", "", ""));
+
+        } else {
+            for (Pawn pawn : docCommonModel.getPawnList()) {
+                String name = "";
+
+                for (RelatedPersonnelInformation relatedPersonnelInformation : pawn.getRelatedPersonnelInformationList()) {
+                    name += StringUtils.isEmpty(name) ? relatedPersonnelInformation.getName() :
+                            "、" + relatedPersonnelInformation.getName();
+                }
+
+                // 抵押物类型 0房屋 1土地
+                String collateralAmount;
+                if(pawn.getMortgageType() == 1) {
+                    collateralAmount = pawn.getLandOccupationArea();
+                } else {
+                    collateralAmount = pawn.getBuildingArea();
+                }
+
+                pawnList.add(mortgage(pawn.getCollateralDeposit(), name, collateralAmount,pawn.getValue()));
+            }
+        }
+
+        setCollateralListText(pawnList, variables);
+
+        variables.put("applyPersonMerge", pawnList.size() + 5);
+        variables.put("collateralMerge", pawnList.size() + 1);
+    }
+
+    /**
+     * 还款方式 1利随本清 2按月结息，到期一次性还本 3按月结息，分期还本 4按季结息，分期还本 5等额本金 6等额本息 7其他
+     */
+    private String getRepayment(int repayment) {
+        String repaymentText = "";
+        if(repayment == 1) {
+            repaymentText = "利随本清";
+        } else if(repayment == 2) {
+            repaymentText = "按月结息，到期一次性还本";
+        } else if(repayment == 3) {
+            repaymentText = "按月结息，分期还本";
+        } else if(repayment == 4) {
+            repaymentText = "按季结息，分期还本";
+        } else if(repayment == 5) {
+            repaymentText = "等额本金";
+        }else if(repayment == 6) {
+            repaymentText = "等额本息";
+        }else if(repayment == 7) {
+            repaymentText = "其他";
+        }
+
+        return repaymentText;
+    }
+
+    /**
+     * 0 个人经营性贷款 1信用贷款 2 房屋按揭贷款 3个人消费类贷款
+     */
+    private String getApplicationMatters(int applicationMatters) {
+        String applicationMattersText = "";
+        if(applicationMatters == 0) {
+            applicationMattersText = "个人经营性贷款";
+        } else if(applicationMatters == 1) {
+            applicationMattersText = "信用贷款";
+        } else if(applicationMatters == 2) {
+            applicationMattersText = "房屋按揭贷款";
+        } else if(applicationMatters == 3) {
+            applicationMattersText = "个人消费类贷款";
+        }
+
+        return applicationMattersText;
+    }
+
+
+
+    private void setCollateralListText(List<Map<String, Object>> collateralList, Map<String, Object> variables) {
         if (CollectionUtils.isEmpty(collateralList)) {
             variables.put("collateralList", "");
             return;
         }
 
+        int index = 0;
         StringBuilder data = new StringBuilder();
         for (Map<String, Object> map : collateralList) {
-
+            index ++;
             data.append("<Row ss:Height=\"44\">")
                     .append("<Cell ss:Index=\"3\" ss:StyleID=\"s63\">")
-                    .append("<Data ss:Type=\"Number\">").append(map.get("no")).append("</Data>")
+                    .append("<Data ss:Type=\"Number\">").append(index).append("</Data>")
                     .append("</Cell>")
                     .append("<Cell ss:StyleID=\"s115\" ss:MergeAcross=\"2\">")
-                    .append("<Data ss:Type=\"String\">").append(map.get("name")).append("</Data>")
+                    .append("<Data ss:Type=\"String\">").append(map.get("address")).append("</Data>")
                     .append("</Cell>")
                     .append("<Cell ss:StyleID=\"s116\" ss:MergeAcross=\"3\">")
                     .append("<Data ss:Type=\"String\">").append(map.get("personName")).append("</Data>")
@@ -103,26 +215,28 @@ public class LoanApprovalTool extends AbstractOfficeTool{
         variables.put("collateralList", data.toString());
     }
 
-    private void setGuarantorList(List<Map<String, Object>> guarantorList, Map<String, Object> variables) {
+    private void setGuarantorListText(List<Map<String, Object>> guarantorList, Map<String, Object> variables) {
         if (CollectionUtils.isEmpty(guarantorList)) {
             variables.put("guarantorList", "");
             return;
         }
 
         StringBuilder data = new StringBuilder();
+        int index = 0;
         for (Map<String, Object> map : guarantorList) {
 
+            index ++;
             data.append("<Row ss:Height=\"16\">")
                     .append("<Cell ss:StyleID=\"s55\"/>")
                     .append("<Cell ss:StyleID=\"s66\"/>")
                     .append("<Cell ss:StyleID=\"s63\">")
-                    .append("<Data ss:Type=\"Number\">").append(map.get("no")).append("</Data>")
+                    .append("<Data ss:Type=\"Number\">").append(index).append("</Data>")
                     .append("</Cell>")
                     .append("<Cell ss:StyleID=\"s121\" ss:MergeAcross=\"6\">")
                     .append("<Data ss:Type=\"String\">").append(map.get("personName")).append("</Data>")
                     .append("</Cell>")
                     .append("<Cell ss:StyleID=\"s122\" ss:MergeAcross=\"6\">")
-                    .append("<Data ss:Type=\"String\">").append(map.get("personCustomerNo")).append("</Data>")
+                    .append("<Data ss:Type=\"String\"></Data>")
                     .append("</Cell>")
                     .append("</Row>");
         }
@@ -141,6 +255,6 @@ public class LoanApprovalTool extends AbstractOfficeTool{
 
     @Override
     protected int sort() {
-        return 1_0_0;
+        return 1_2_00;
     }
 }

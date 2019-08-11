@@ -1,33 +1,33 @@
 package com.louis.kitty.admin.office;
 
+import com.louis.kitty.admin.constants.BankConstants;
 import com.louis.kitty.admin.constants.DocConstants;
 import com.louis.kitty.admin.model.DocCommonModel;
 import org.springframework.stereotype.Component;
 
+import java.util.Map;
+
 @Component
-public class HonestyNotificationTool extends AbstractOfficeTool {
+public class AuthenticityCommitmentTool extends AbstractOfficeTool {
 
     @Override
     protected void fillVariable(DocCommonModel docCommonModel) {
+        Map<String, Object> variables = newRound();
+        variables.put("bankBranchName", BankConstants.BANK_BRANCH_NAME);
     }
 
     @Override
     protected String modelFileName() {
-        return "廉洁办贷告知书";
+        return "真实性承诺书";
     }
 
     @Override
     protected int sort() {
-        return 1_4_00;
+        return 2_6_00;
     }
 
     @Override
     protected DocConstants.DocType docType() {
-        return DocConstants.DocType.WORD_07;
-    }
-
-    @Override
-    protected boolean isOnlyCloneFile() {
-        return true;
+        return DocConstants.DocType.WORD;
     }
 }

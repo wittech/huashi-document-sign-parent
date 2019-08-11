@@ -14,4 +14,5 @@ import com.louis.kitty.core.service.CurdService;
  */
 public interface LoanBusinessInformationService extends CurdService<LoanBusinessInformation> {
 
+    LoanBusinessInformation findByBasisId(Long loanBasicId);
 }

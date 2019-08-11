@@ -323,5 +323,10 @@
   <select id="findPage" resultMap="BaseResultMap">
     select * from household_income
   </select>
-  
+
+  <select id="findByRpiId" resultMap="BaseResultMap">
+    select * from household_income where rpi_id = #{rpiId,jdbcType=BIGINT} limit 1
+  </select>
+
+
 </mapper>

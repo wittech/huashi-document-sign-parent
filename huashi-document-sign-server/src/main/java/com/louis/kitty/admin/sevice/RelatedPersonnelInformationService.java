@@ -7,7 +7,7 @@ import com.louis.kitty.core.service.CurdService;
 
 /**
  * ---------------------------
- * 相关人员信息表 (RelatedPersonnelInformationService)         
+ * 相关人员信息表 (RelatedPersonnelInformationService)
  * ---------------------------
  * 作者：  lz
  * 时间：  2019-08-08 11:53:18
@@ -15,11 +15,13 @@ import com.louis.kitty.core.service.CurdService;
  * ---------------------------
  */
 public interface RelatedPersonnelInformationService extends CurdService<RelatedPersonnelInformation> {
-	
-	/**
-	 * 根据基础id获取 相关人列表
-	 * @param loanBasisId
-	 * @return
-	 */
-	List<RelatedPersonnelInformation> findByBaseIdList(int loanBasisId);
+
+    /**
+     * 根据基础id获取 相关人列表
+     *
+     * @param loanBasisId
+     * @return
+     */
+    List<RelatedPersonnelInformation> findByBaseIdList(Long loanBasisId);
+
 }

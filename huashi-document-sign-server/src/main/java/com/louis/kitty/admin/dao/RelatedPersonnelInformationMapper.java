@@ -57,6 +57,6 @@ public interface RelatedPersonnelInformationMapper {
      * @param loanBasisId
      * @return
      */
-    List<RelatedPersonnelInformation> findByBaseIdList(@Param(value = "loanBasisId") int loanBasisId);
-    
+    List<RelatedPersonnelInformation> findByBaseIdList(@Param(value = "loanBasisId") Long loanBasisId);
+
 }

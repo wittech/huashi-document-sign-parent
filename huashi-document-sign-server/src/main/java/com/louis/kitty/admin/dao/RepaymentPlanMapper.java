@@ -49,5 +49,6 @@ public interface RepaymentPlanMapper {
      * @return
      */    
     List<RepaymentPlan> findPage();
-    
+
+    List<RepaymentPlan> findByloanBusinessInformationId(Long loanBusinessInformationId);
 }

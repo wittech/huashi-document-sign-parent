@@ -49,5 +49,6 @@ public interface CounterpartyInformationMapper {
      * @return
      */    
     List<CounterpartyInformation> findPage();
-    
+
+    List<CounterpartyInformation> findByIoanBusinessInformationId(Long loanBusinessInformationId);
 }

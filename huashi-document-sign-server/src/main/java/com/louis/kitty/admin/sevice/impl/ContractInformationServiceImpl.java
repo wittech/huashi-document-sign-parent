@@ -58,5 +58,9 @@ public class ContractInformationServiceImpl implements ContractInformationServic
 	public PageResult findPage(PageRequest pageRequest) {
 		return MybatisPageHelper.findPage(pageRequest, contractInformationMapper);
 	}
-	
+
+	@Override
+	public ContractInformation findByLoanBasisId(Long loanBasisId) {
+		return contractInformationMapper.findByLoanBasisId(loanBasisId);
+	}
 }

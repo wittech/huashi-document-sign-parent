@@ -1,7 +1,12 @@
 package com.louis.kitty.admin.office;
 
+import com.louis.kitty.admin.constants.BankConstants;
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.model.DocCommonModel;
+import com.louis.kitty.admin.model.RelatedPersonnelInformation;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.util.Map;
 
@@ -9,12 +14,33 @@ import java.util.Map;
 public class FaceToFaceConversationTool extends AbstractOfficeTool {
 
     @Override
-    protected void fillVariable(Long basisLoanId) {
+    protected void fillVariable(DocCommonModel docCommonModel) {
         Map<String, Object> variables = newRound();
-        variables.put("bankBranchName", "城北支行");
-        variables.put("applyFamilyPersonName", "罗永芳、唐建国");
-        variables.put("guaranteeNames", "'罗永芳、唐建国");
-        variables.put("moneyUsage", "'贷款经营池塘");
+        variables.put("bankBranchName", BankConstants.BANK_BRANCH_NAME);
+        variables.put("applyFamilyPersonName", docCommonModel.getApplyFamilyName());
+
+        // 1.11
+        variables.put("moneyUsage", docCommonModel.getLoanBusinessInformation().getDescription());
+
+        setGuaranteeNames(docCommonModel, variables);
+    }
+
+    private void setGuaranteeNames(DocCommonModel docCommonModel, Map<String, Object> variables) {
+        String names = "";
+
+        if (CollectionUtils.isNotEmpty(docCommonModel.getGuarantorList())) {
+            for (RelatedPersonnelInformation relatedPersonnelInformation : docCommonModel.getGuarantorList()) {
+                names += relatedPersonnelInformation.getName() + "、";
+            }
+        }
+
+        if (CollectionUtils.isNotEmpty(docCommonModel.getMortgageGuarantorList())) {
+            for (RelatedPersonnelInformation relatedPersonnelInformation : docCommonModel.getMortgageGuarantorList()) {
+                names += relatedPersonnelInformation.getName() + "、";
+            }
+        }
+
+        variables.put("guaranteeNames", StringUtils.isEmpty(names) ? "" : names.substring(0, names.length() - 1));
     }
 
     @Override
@@ -24,7 +50,7 @@ public class FaceToFaceConversationTool extends AbstractOfficeTool {
 
     @Override
     protected int sort() {
-        return 1_9_0;
+        return 1_9_00;
     }
 
     @Override

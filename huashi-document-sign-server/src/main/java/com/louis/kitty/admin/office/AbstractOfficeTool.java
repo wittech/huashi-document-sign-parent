@@ -2,10 +2,12 @@ package com.louis.kitty.admin.office;
 
 import com.alibaba.druid.util.StringUtils;
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.LoanDoc;
 import com.louis.kitty.admin.sevice.LoanDocService;
 import com.louis.kitty.admin.util.FileDirectoryUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
@@ -52,7 +54,7 @@ public abstract class AbstractOfficeTool {
     /**
      * 填充变量
      */
-    protected abstract void fillVariable(Long basisLoanId);
+    protected abstract void fillVariable(DocCommonModel docCommonModel);
 
     /**
      * 写入磁盘
@@ -141,19 +143,18 @@ public abstract class AbstractOfficeTool {
 
     /**
      * 文件拷贝流程
-     * @param basisLoanId 基础借贷ID
      * @return 处理结果
      */
-    private Future<Boolean> clone(Long basisLoanId) {
+    private Future<Boolean> clone(DocCommonModel docCommonModel) {
         try {
             // 最终生成文件的全路径（包含文件名称）
             String targetDocFullName = targetDocFullName("");
 
             long docSize = copyFile(getModelFullPath(docType().getSuffixName()), targetDocFullName);
 
-            return new AsyncResult<>(save(basisLoanId, docSize, targetDocFullName));
+            return new AsyncResult<>(save(docCommonModel.getLoanBasis().getId(), docSize, targetDocFullName));
         } catch (Exception e) {
-            log.error("clone failed by basisLoanId[{}]", basisLoanId, e);
+            log.error("clone failed by basisLoanId[{}]", docCommonModel.getLoanBasis().getId(), e);
             return new AsyncResult<>(false);
         }
     }
@@ -161,28 +162,28 @@ public abstract class AbstractOfficeTool {
     /**
      * 处理
      *
-     * @param basisLoanId 借贷基础ID
+     * @param docCommonModel 借贷基础信息表
      * @return 处理成功与否
      */
     @Async
-    public Future<Boolean> execute(Long basisLoanId) {
+    public Future<Boolean> execute(DocCommonModel docCommonModel) {
         if (isOnlyCloneFile()) {
-            return clone(basisLoanId);
+            return clone(docCommonModel);
         }
 
-        return generate(basisLoanId);
+        return generate(docCommonModel);
     }
 
     private boolean isSingle() {
         return VARIABLES_IN_MODEL.size() == 1;
     }
 
-    private Future<Boolean> generate(Long basisLoanId) {
+    private Future<Boolean> generate(DocCommonModel docCommonModel) {
         try {
             String xmlContent = readXml();
 
             // 组装替换变量
-            fillVariable(basisLoanId);
+            fillVariable(docCommonModel);
 
             int index = 1;
             for(Map<String, Object> variables : VARIABLES_IN_MODEL) {
@@ -194,14 +195,14 @@ public abstract class AbstractOfficeTool {
 
                 long docSize = write2Disk(targetDocFullName, xmlContent);
 
-                save(basisLoanId, docSize, targetDocFullName, index);
+                save(docCommonModel.getLoanBasis().getId(), docSize, targetDocFullName, index);
 
                 index ++;
             }
 
             return new AsyncResult<>(true);
         } catch (Exception e) {
-            log.error("Handler failed by basisLoanId[{}]", basisLoanId, e);
+            log.error("Handler failed by basisLoanId[{}]", docCommonModel.getLoanBasis().getId(), e);
             return new AsyncResult<>(false);
         }
     }
@@ -247,11 +248,11 @@ public abstract class AbstractOfficeTool {
      * @param yes 是否选中
      * @return 最终标签
      */
-    protected String setYesOption(Boolean yes) {
+    protected String setYesOption(Integer yes) {
         String yesDes;
         if (yes == null) {
             yesDes = "□是  □否";
-        } else if (yes) {
+        } else if (yes == 1) {
             yesDes = "☑是  □否";
         } else {
             yesDes = "□是  ☑否";
@@ -280,6 +281,15 @@ public abstract class AbstractOfficeTool {
 
     private static String datetimeTitle() {
         return new SimpleDateFormat("yyyyMMddHHmmSS").format(new Date());
+    }
+
+    protected String getValue(List<Map<String, Object>> list, int index, String key) {
+        // 如果集合无数据，或者当前索引值 大于等于集合大小则返回空，因为前三行必须显示，顾以空填充
+        if (CollectionUtils.isEmpty(list) || index >= list.size()) {
+            return "";
+        }
+
+        return list.get(index).getOrDefault(key, "").toString();
     }
 
 }

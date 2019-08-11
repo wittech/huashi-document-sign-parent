@@ -111,11 +111,11 @@ public class LoanController {
 	 */
 	@GetMapping(value="/findByBaseIdList")
 	public HttpResult findByBaseIdList(@RequestParam String loanBasisId) {
-		int loanBasisIdInt = 0;
+		Long loanBasisIdLong = 0L;
 		if(StringUtils.isNotEmpty(loanBasisId)){
-			loanBasisIdInt = Integer.parseInt(loanBasisId);
+			loanBasisIdLong = Long.parseLong(loanBasisId);
 		}
-		return HttpResult.ok(relatedPersonnelInformationService.findByBaseIdList(loanBasisIdInt));
+		return HttpResult.ok(relatedPersonnelInformationService.findByBaseIdList(loanBasisIdLong));
 	}
 	
 	/**

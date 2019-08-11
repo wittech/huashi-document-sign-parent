@@ -49,5 +49,7 @@ public interface ContractInformationMapper {
      * @return
      */    
     List<ContractInformation> findPage();
+
+    ContractInformation findByLoanBasisId(Long loanBasisId);
     
 }

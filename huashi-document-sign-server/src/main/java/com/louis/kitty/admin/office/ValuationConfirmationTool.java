@@ -1,23 +1,28 @@
 package com.louis.kitty.admin.office;
 
+import com.louis.kitty.admin.constants.BankConstants;
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.model.DocCommonModel;
+import com.louis.kitty.admin.model.Pawn;
+import com.louis.kitty.admin.util.RmbUtil;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 @Component
 public class ValuationConfirmationTool extends AbstractOfficeTool {
 
     /**
-     * @param collateralType    抵押物类型（房产/土地）
-     * @param evaluationEnterprise   评估机构名称
-     * @param goodsOwner 抵（质）押人
-     * @param collateralAddress 抵押物地址
+     * @param collateralType       抵押物类型（房产/土地）
+     * @param evaluationEnterprise 评估机构名称
+     * @param goodsOwner           抵（质）押人
+     * @param collateralAddress    抵押物地址
      * @param outsideMoneyRMB      外部评估价值（大写）
-     * @param outsieMoney      评估价值
-     * @param innerMoneyRMB      外部评估价值（大写）
-     * @param innerConfirmDate    内部确认日期
-     * @param variables         变量信息
+     * @param outsieMoney          评估价值
+     * @param innerMoneyRMB        外部评估价值（大写）
+     * @param innerConfirmDate     内部确认日期
+     * @param variables            变量信息
      */
     private void setNoLeaseInfo(String collateralType, String evaluationEnterprise, String goodsOwner, String collateralAddress,
                                 String outsideMoneyRMB, String outsieMoney, String innerMoneyRMB, String innerConfirmDate,
@@ -88,7 +93,7 @@ public class ValuationConfirmationTool extends AbstractOfficeTool {
                 "\t\t  <w:sz w:val=\"24\"/>\n" +
                 "\t\t  <w:lang w:eastAsia=\"zh-CN\"/>\n" +
                 "\t\t</w:rPr>\n" +
-                "\t\t<w:t>"+collateralType+"</w:t>\n" +
+                "\t\t<w:t>" + collateralType + "</w:t>\n" +
                 "\t  </w:r>\n" +
                 "\t</w:p>\n" +
                 "  </w:tc>\n" +
@@ -136,7 +141,7 @@ public class ValuationConfirmationTool extends AbstractOfficeTool {
                 "\t\t  <w:szCs w:val=\"21\"/>\n" +
                 "\t\t  <w:lang w:eastAsia=\"zh-CN\"/>\n" +
                 "\t\t</w:rPr>\n" +
-                "\t\t<w:t>"+evaluationEnterprise+"</w:t>\n" +
+                "\t\t<w:t>" + evaluationEnterprise + "</w:t>\n" +
                 "\t  </w:r>\n" +
                 "\t</w:p>\n" +
                 "  </w:tc>\n" +
@@ -205,7 +210,7 @@ public class ValuationConfirmationTool extends AbstractOfficeTool {
                 "\t\t  <w:rFonts w:hint=\"eastAsia\" w:ascii=\"仿宋_GB2312\" w:eastAsia=\"仿宋_GB2312\"/>\n" +
                 "\t\t  <w:sz w:val=\"24\"/>\n" +
                 "\t\t</w:rPr>\n" +
-                "\t\t<w:t>"+goodsOwner+"</w:t>\n" +
+                "\t\t<w:t>" + goodsOwner + "</w:t>\n" +
                 "\t  </w:r>\n" +
                 "\t</w:p>\n" +
                 "  </w:tc>\n" +
@@ -251,7 +256,7 @@ public class ValuationConfirmationTool extends AbstractOfficeTool {
                 "\t\t  <w:rFonts w:hint=\"eastAsia\"/>\n" +
                 "\t\t  <w:szCs w:val=\"21\"/>\n" +
                 "\t\t</w:rPr>\n" +
-                "\t\t<w:t>"+collateralAddress+"</w:t>\n" +
+                "\t\t<w:t>" + collateralAddress + "</w:t>\n" +
                 "\t  </w:r>\n" +
                 "\t</w:p>\n" +
                 "  </w:tc>\n" +
@@ -309,7 +314,7 @@ public class ValuationConfirmationTool extends AbstractOfficeTool {
                 "\t\t  <w:u w:val=\"single\"/>\n" +
                 "\t\t  <w:lang w:eastAsia=\"zh-CN\"/>\n" +
                 "\t\t</w:rPr>\n" +
-                "\t\t<w:t>"+outsideMoneyRMB+"</w:t>\n" +
+                "\t\t<w:t>" + outsideMoneyRMB + "</w:t>\n" +
                 "\t  </w:r>\n" +
                 "\t</w:p>\n" +
                 "  </w:tc>\n" +
@@ -358,7 +363,7 @@ public class ValuationConfirmationTool extends AbstractOfficeTool {
                 "\t\t  <w:b/>\n" +
                 "\t\t  <w:sz w:val=\"24\"/>\n" +
                 "\t\t</w:rPr>\n" +
-                "\t\t<w:t>¥"+outsieMoney+"</w:t>\n" +
+                "\t\t<w:t>¥" + outsieMoney + "</w:t>\n" +
                 "\t  </w:r>\n" +
                 "\t</w:p>\n" +
                 "  </w:tc>\n" +
@@ -415,7 +420,7 @@ public class ValuationConfirmationTool extends AbstractOfficeTool {
                 "\t\t  <w:u w:val=\"single\"/>\n" +
                 "\t\t  <w:lang w:eastAsia=\"zh-CN\"/>\n" +
                 "\t\t</w:rPr>\n" +
-                "\t\t<w:t>"+innerMoneyRMB+"</w:t>\n" +
+                "\t\t<w:t>" + innerMoneyRMB + "</w:t>\n" +
                 "\t  </w:r>\n" +
                 "\t</w:p>\n" +
                 "  </w:tc>\n" +
@@ -467,7 +472,7 @@ public class ValuationConfirmationTool extends AbstractOfficeTool {
                 "\t\t  <w:sz w:val=\"24\"/>\n" +
                 "\t\t  <w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\"/>\n" +
                 "\t\t</w:rPr>\n" +
-                "\t\t<w:t>"+innerConfirmDate+"</w:t>\n" +
+                "\t\t<w:t>" + innerConfirmDate + "</w:t>\n" +
                 "\t  </w:r>\n" +
                 "\t</w:p>\n" +
                 "  </w:tc>\n" +
@@ -477,25 +482,26 @@ public class ValuationConfirmationTool extends AbstractOfficeTool {
     }
 
     @Override
-    protected void fillVariable(Long basisLoanId) {
-        Map<String, Object> variables = newRound();
-        variables.put("bankBranchName", "城北支行");
-
-        setNoLeaseInfo("房产", "广西国泰房地产土地评估有限公司", "罗永芳、唐建国",
-                "秀峰区中山中路38号智能办公大厦五层503、504号办公用房 ", "叁佰零玖万叁仟叁佰元整", "3093300.00",
-                "叁佰零玖万叁仟叁佰元整", "2019 年 6 月 14 日", variables);
+    protected void fillVariable(DocCommonModel docCommonModel) {
 
 
-        // 多份，只要有相关信息就生成几份
-//        Map<String, Object> variables1 = newRound();
-//        variables1.put("applyFamilyPersonName", "罗永芳、唐建国");
-//        variables1.put("applyMoney", "2000000.00");
-//        variables1.put("applyMoneyRMB", RmbUtil.number2CNMontrayUnit(new BigDecimal(variables.get("applyMoney").toString())));
-//
-//
-//        setNoLeaseInfo("罗永芳", "510102196901118483", "唐建国",
-//                "45030519540601001X ", "秀峰区中山中路38号智能办公大厦五层503号办公用房", "房产",
-//                "房产证号为：桂林市房权证秀峰区字第30417489号、土地证号为：桂国用（2014）第301694号", variables1);
+        for (Pawn pawn : docCommonModel.getPawnList()) {
+            if (pawn.getWhetherLease() != 0) {
+                continue;
+            }
+
+            Map<String, Object> variables = newRound();
+            variables.put("bankBranchName", BankConstants.BANK_BRANCH_NAME);
+
+            // pawn
+            setNoLeaseInfo(pawn.getMortgageType() == 0 ? "房屋" : "土地", pawn.getEvaluationCorporation(),
+                    pawn.getOwners(), pawn.getCollateralDeposit(),
+                    RmbUtil.number2CNMontrayUnit(new BigDecimal(pawn.getValue())), pawn.getValue(),
+                    RmbUtil.number2CNMontrayUnit(new BigDecimal(pawn.getValue())), "      年    月    日", variables);
+
+        }
+
+
     }
 
     @Override
@@ -505,7 +511,7 @@ public class ValuationConfirmationTool extends AbstractOfficeTool {
 
     @Override
     protected int sort() {
-        return 1_8_0;
+        return 1_8_00;
     }
 
     @Override

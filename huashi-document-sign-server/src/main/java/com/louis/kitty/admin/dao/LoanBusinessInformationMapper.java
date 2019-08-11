@@ -49,5 +49,7 @@ public interface LoanBusinessInformationMapper {
      * @return
      */    
     List<LoanBusinessInformation> findPage();
+
+    LoanBusinessInformation findByLoanBasisId(Long LoanBasicId);
     
 }

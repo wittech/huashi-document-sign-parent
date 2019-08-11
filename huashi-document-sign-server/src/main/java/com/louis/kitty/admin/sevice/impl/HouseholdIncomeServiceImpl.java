@@ -58,5 +58,9 @@ public class HouseholdIncomeServiceImpl implements HouseholdIncomeService {
 	public PageResult findPage(PageRequest pageRequest) {
 		return MybatisPageHelper.findPage(pageRequest, householdIncomeMapper);
 	}
-	
+
+	@Override
+	public HouseholdIncome findByRpiId(Long rpiId) {
+		return householdIncomeMapper.findByRpiId(rpiId);
+	}
 }

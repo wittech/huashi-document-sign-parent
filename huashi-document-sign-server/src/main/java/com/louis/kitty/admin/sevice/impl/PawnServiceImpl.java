@@ -3,6 +3,8 @@ package com.louis.kitty.admin.sevice.impl;
 import java.util.Date;
 import java.util.List;
 
+import com.louis.kitty.admin.dao.LoanBusinessInformationMapper;
+import com.louis.kitty.admin.model.LoanBusinessInformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,6 +34,8 @@ public class PawnServiceImpl implements PawnService {
 	private PawnMapper pawnMapper;
 	@Autowired
 	private PawnPersonnelMappingMapper pawnPersonnelMappingMapper;
+	@Autowired
+	private LoanBusinessInformationMapper loanBusinessInformationMapper;
 
 	@Override
 	public int save(Pawn record) {
@@ -78,6 +82,16 @@ public class PawnServiceImpl implements PawnService {
 	@Override
 	public PageResult findPage(PageRequest pageRequest) {
 		return MybatisPageHelper.findPage(pageRequest, pawnMapper);
+	}
+
+	@Override
+	public List<Pawn> findByLoanBasisId(Long loanBasisId) {
+		return pawnMapper.findByLoanBasisId(loanBasisId);
+	}
+
+	@Override
+	public LoanBusinessInformation findByBasisId(Long loanBasicId) {
+		return loanBusinessInformationMapper.findByLoanBasisId(loanBasicId);
 	}
 	
 }

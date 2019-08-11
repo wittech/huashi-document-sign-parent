@@ -1,8 +1,13 @@
 package com.louis.kitty.admin.office;
 
+import com.louis.kitty.admin.constants.BankConstants;
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.model.DocCommonModel;
+import com.louis.kitty.admin.model.Pawn;
+import com.louis.kitty.admin.util.RmbUtil;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.Map;
 
 @Component
@@ -137,15 +142,18 @@ public class LoanMortgagePledgeTool extends AbstractOfficeTool {
     }
 
     @Override
-    protected void fillVariable(Long basisLoanId) {
-        Map<String, Object> variables = newRound();
-        variables.put("bankBranchName", "城北支行");
-        variables.put("goodsAddress", "秀峰区中山中路38号智能办公大厦五层503、504号办公用房");
-        variables.put("goodsValuationRMB", "叁佰零玖万叁仟叁佰元整");
+    protected void fillVariable(DocCommonModel docCommonModel) {
+        for (Pawn pawn : docCommonModel.getPawnList()) {
+            Map<String, Object> variables = newRound();
+            variables.put("bankBranchName", BankConstants.BANK_BRANCH_NAME);
+            variables.put("goodsValuationRMB", RmbUtil.number2CNMontrayUnit(new BigDecimal(pawn.getValue())));
 
+            variables.put("goodsAddress", pawn.getCollateralDeposit());
+            setMortgageGoodsInfo(docCommonModel.getApplyFamilyName(), docCommonModel.getApplyMoneyRMB(),
+                    pawn.getOwners(), pawn.getMortgageType() == 1 ? "土地" : "房产", variables);
 
-        setMortgageGoodsInfo("罗永芳、唐建国", "贰佰万元",
-                "罗永芳、唐建国", "房产、商铺", variables);
+        }
+
     }
 
     @Override
@@ -155,7 +163,7 @@ public class LoanMortgagePledgeTool extends AbstractOfficeTool {
 
     @Override
     protected int sort() {
-        return 2_1_0;
+        return 2_1_00;
     }
 
     @Override

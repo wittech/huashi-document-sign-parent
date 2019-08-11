@@ -2,66 +2,81 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.louis.kitty.admin.dao.PawnPersonnelMappingMapper">
 
-  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.PawnPersonnelMapping">
-	<id column="id" jdbcType="BIGINT" property="id" />
-	<result column="pawn_id" jdbcType="BIGINT" property="pawnId" />
-	<result column="rpi_id" jdbcType="BIGINT" property="rpiId" />
-  </resultMap>
-  
-  <insert id="add" parameterType="com.louis.kitty.admin.model.PawnPersonnelMapping">
-    insert into pawn_personnel_mapping
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="pawnId != null">
-        pawn_id,
-      </if>
-      <if test="rpiId != null">
-        rpi_id,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="pawnId != null">
-        #{pawnId,jdbcType=BIGINT},
-      </if>
-      <if test="rpiId != null">
-        #{rpiId,jdbcType=BIGINT},
-      </if>
-    </trim>
-  </insert>
+    <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.PawnPersonnelMapping">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="pawn_id" jdbcType="BIGINT" property="pawnId"/>
+        <result column="rpi_id" jdbcType="BIGINT" property="rpiId"/>
+    </resultMap>
 
-  <delete id="delete" parameterType="java.lang.Long">
-    delete from pawn_personnel_mapping
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  
-  <update id="update" parameterType="com.louis.kitty.admin.model.PawnPersonnelMapping">
-    update pawn_personnel_mapping
-    <set>
-      <if test="id != null">
-        id = #{id,jdbcType=BIGINT},
-      </if>
-      <if test="pawnId != null">
-        pawn_id = #{pawnId,jdbcType=BIGINT},
-      </if>
-      <if test="rpiId != null">
-        rpi_id = #{rpiId,jdbcType=BIGINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <insert id="add" parameterType="com.louis.kitty.admin.model.PawnPersonnelMapping">
+        insert into pawn_personnel_mapping
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="pawnId != null">
+                pawn_id,
+            </if>
+            <if test="rpiId != null">
+                rpi_id,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="pawnId != null">
+                #{pawnId,jdbcType=BIGINT},
+            </if>
+            <if test="rpiId != null">
+                #{rpiId,jdbcType=BIGINT},
+            </if>
+        </trim>
+    </insert>
 
-  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select * from pawn_personnel_mapping
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  
-  <select id="findPage" resultMap="BaseResultMap">
-    select * from pawn_personnel_mapping
-  </select>
-  
+    <delete id="delete" parameterType="java.lang.Long">
+        delete
+        from pawn_personnel_mapping
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <update id="update" parameterType="com.louis.kitty.admin.model.PawnPersonnelMapping">
+        update pawn_personnel_mapping
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=BIGINT},
+            </if>
+            <if test="pawnId != null">
+                pawn_id = #{pawnId,jdbcType=BIGINT},
+            </if>
+            <if test="rpiId != null">
+                rpi_id = #{rpiId,jdbcType=BIGINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from pawn_personnel_mapping
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPage" resultMap="BaseResultMap">
+        select *
+        from pawn_personnel_mapping
+    </select>
+
+    <select id="findByPawnList" resultMap="BaseResultMap">
+        select *
+        from pawn_personnel_mapping
+        where pawn_id = #{pawnId,jdbcType=BIGINT}
+    </select>
+
+    <select id="findByRpiId" resultMap="BaseResultMap">
+        select *
+        from pawn_personnel_mapping
+        where rpi_id = #{rpiId,jdbcType=BIGINT}
+    </select>
+
 </mapper>

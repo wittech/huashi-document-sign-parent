@@ -1,5 +1,10 @@
 package com.louis.kitty.admin.model;
 
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -73,8 +78,14 @@ public class Pawn {
 	private Integer delFlag;
 	/** 融资情况 0无抵押 1有抵押 */
 	private Integer financingSituation;
+	/**
+	 * 租金
+	 */
+	private String rent;
 	//组
 	private List<PawnPersonnelMapping> pawnPersonnelMapping;
+
+	private List<RelatedPersonnelInformation> relatedPersonnelInformationList = new ArrayList<>();
 	
 	private List<Pawn> pawn;
 	
@@ -334,4 +345,70 @@ public class Pawn {
 		this.pawnPersonnelMapping = pawnPersonnelMapping;
 	}
 
+	public String getRent() {
+		return rent;
+	}
+
+	public void setRent(String rent) {
+		this.rent = rent;
+	}
+
+	public List<RelatedPersonnelInformation> getRelatedPersonnelInformationList() {
+		return relatedPersonnelInformationList;
+	}
+
+	public String getCertificateNumberDes() {
+		// 1为土地
+		if (mortgageType == 1) {
+			return "土地证号：" + landCertificateNumber;
+		}
+
+		if (whetherOwnershipCertificates == 0) {
+			return "不动产权证号：" + propertyCertificateNumber;
+		}
+
+		return "房产证号：" + propertyCertificateNumber + "、" + "土地证号：" + landCertificateNumber;
+	}
+
+	public String getOwners() {
+		if (CollectionUtils.isEmpty(relatedPersonnelInformationList)) {
+			return "";
+		}
+
+		List<String> owners = new ArrayList<>();
+		for (RelatedPersonnelInformation relatedPersonnelInformation : relatedPersonnelInformationList) {
+			if (relatedPersonnelInformation == null) {
+				continue;
+			}
+
+			owners.add(relatedPersonnelInformation.getName());
+		}
+
+		Collections.sort(owners);
+
+		return StringUtils.join(owners, "、");
+	}
+
+	public String getOwnerIds() {
+		if (CollectionUtils.isEmpty(relatedPersonnelInformationList)) {
+			return null;
+		}
+
+		List<Long> ownersIds = new ArrayList<>();
+		for (RelatedPersonnelInformation relatedPersonnelInformation : relatedPersonnelInformationList) {
+			if (relatedPersonnelInformation == null) {
+				continue;
+			}
+
+			if (ownersIds.contains(relatedPersonnelInformation.getId())) {
+				continue;
+			}
+
+			ownersIds.add(relatedPersonnelInformation.getId());
+		}
+
+		Collections.sort(ownersIds);
+
+		return StringUtils.join(ownersIds, ",");
+	}
 }

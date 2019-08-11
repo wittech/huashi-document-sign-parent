@@ -58,5 +58,11 @@ public class CollectionNoticeServiceImpl implements CollectionNoticeService {
 	public PageResult findPage(PageRequest pageRequest) {
 		return MybatisPageHelper.findPage(pageRequest, collectionNoticeMapper);
 	}
-	
+
+    @Override
+    public CollectionNotice findByLoanBasisId(Long loanBasisId) {
+		return collectionNoticeMapper.findByLoanBasisId(loanBasisId);
+    }
+
+
 }
