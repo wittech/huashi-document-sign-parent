@@ -5,7 +5,6 @@ package com.louis.kitty.admin.controller.loan;
 
 import java.util.Date;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -113,12 +112,8 @@ public class LoanController {
 	 * @return
 	 */
 	@GetMapping(value="/findByBaseIdList")
-	public HttpResult findByBaseIdList(@RequestParam String loanBasisId) {
-		Long loanBasisIdLong = 0L;
-		if(StringUtils.isNotEmpty(loanBasisId)){
-			loanBasisIdLong = Long.parseLong(loanBasisId);
-		}
-		return HttpResult.ok(relatedPersonnelInformationService.findByBaseIdList(loanBasisIdLong));
+	public HttpResult findByBaseIdList(@RequestParam Long loanBasisId) {
+		return HttpResult.ok(relatedPersonnelInformationService.findByBaseIdList(loanBasisId));
 	}
 	
 	/**

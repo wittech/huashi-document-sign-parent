@@ -19,6 +19,8 @@ public class LoanPageDto {
 	private Date loanDate;
 	private String applicationAmount;
 	private int status;
+	private Date createTime;
+	private String applicationPeriod;
 
 	public int getId() {
 		return id;
@@ -74,6 +76,22 @@ public class LoanPageDto {
 
 	public void setStatus(int status) {
 		this.status = status;
+	}
+
+	public Date getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
+	}
+
+	public String getApplicationPeriod() {
+		return applicationPeriod;
+	}
+
+	public void setApplicationPeriod(String applicationPeriod) {
+		this.applicationPeriod = applicationPeriod;
 	}
 
 }
