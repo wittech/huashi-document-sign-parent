@@ -55,6 +55,12 @@ public interface LoanDocMapper {
     List<LoanDoc> findByLoanBasisId(Long loanBasisId);
 
     /**
+     * 根据IDS查询集合
+     * @param ids ID集合
+     */
+    List<LoanDoc> findByIds(List<String> ids);
+
+    /**
      * 下次次数+1
      */
     int addOneIfDownload(Long id);
@@ -63,5 +69,14 @@ public interface LoanDocMapper {
      * 打印次数+1
      */
     int addOneIfPrint(Long id);
+
+    /**
+     * 根据基础借贷信息删除
+     * @param loanBasisId
+     * @return
+     */
+    int deleteByLoanBasisId(Long loanBasisId);
+
+
     
 }

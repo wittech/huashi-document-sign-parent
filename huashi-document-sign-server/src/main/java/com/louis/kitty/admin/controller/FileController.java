@@ -32,8 +32,8 @@ public class FileController {
 
     @RequestMapping(value = "/download", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
     @ApiOperation(value = "下载借贷文件", httpMethod = "GET", produces = "application/json;charset=UTF-8")
-    public Object download(Long loanDocId) {
-        return loanDocService.download(loanDocId);
+    public Object download(String loanDocIds) {
+        return loanDocService.download(loanDocIds);
     }
     
     @GetMapping(value="/getByLoanBasisId")

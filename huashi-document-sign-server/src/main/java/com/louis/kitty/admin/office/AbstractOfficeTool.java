@@ -2,17 +2,19 @@ package com.louis.kitty.admin.office;
 
 import com.alibaba.druid.util.StringUtils;
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.dao.LoanDocMapper;
 import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.LoanDoc;
-import com.louis.kitty.admin.sevice.LoanDocService;
 import com.louis.kitty.admin.util.FileDirectoryUtil;
+import com.louis.kitty.admin.util.OfficeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -33,8 +35,8 @@ public abstract class AbstractOfficeTool {
     @Value("${storage.model.target}")
     private String docTarget;
 
-    @Autowired
-    private LoanDocService loanDocService;
+    @Resource
+    private LoanDocMapper loanDocMapper;
 
     /**
      * 生成文件分隔符
@@ -59,12 +61,11 @@ public abstract class AbstractOfficeTool {
     /**
      * 写入磁盘
      */
-    private long write2Disk(String storagePath, String data) throws IOException {
+    private void write2Disk(String storagePath, String data) throws IOException {
+        storagePath = storagePath + docType().getSuffixName();
         byte[] targetFileData = data.getBytes(Charset.forName(DEFAULT_ENCODING));
 
         Files.write(Paths.get(storagePath), targetFileData);
-
-        return targetFileData.length;
     }
 
     /**
@@ -75,13 +76,18 @@ public abstract class AbstractOfficeTool {
      * @return 文件大小
      * @throws IOException IO
      */
-    private long copyFile(String sourcePath, String targetPath) throws IOException {
-        byte[] data = Files.readAllBytes(Paths.get(sourcePath));
+    private long transformPdf(String sourcePath, String targetPath) throws Exception {
+        if (docType() == DocConstants.DocType.WORD || docType() == DocConstants.DocType.WORD_07) {
+            OfficeUtil.word2Pdf(sourcePath, targetPath);
+        } else if (docType() == DocConstants.DocType.EXCEL || docType() == DocConstants.DocType.EXCEL_07) {
+            OfficeUtil.excel2Pdf(sourcePath, targetPath);
+        }
+
+        byte[] data = Files.readAllBytes(Paths.get(targetPath));
         if (data.length == 0) {
             throw new IOException("Path[" + sourcePath + "] data can not be '0'");
         }
-
-        Files.copy(Paths.get(sourcePath), Paths.get(targetPath));
+//        Files.copy(Paths.get(sourcePath), Paths.get(targetPath));
 
         return data.length;
     }
@@ -122,37 +128,56 @@ public abstract class AbstractOfficeTool {
         return variables;
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    public boolean persistence(Long basisLoanId, Long docSize, String targetDocFullName, int secondSort) {
+        int rows = delete(basisLoanId, null);
+        log.info("pre-delete loan doc rows are '{}' by loanBasisId[{}]", rows, basisLoanId);
+
+        return save(basisLoanId, docSize, targetDocFullName, secondSort);
+    }
+
     /**
      * 保存记录至库表
      *
      * @param basisLoanId 基础借贷ID
      * @return 处理结果
      */
+
     private boolean save(Long basisLoanId, Long docSize, String targetDocFullName, int secondSort) {
         LoanDoc loanDoc = LoanDoc.builder().loanBasisId(basisLoanId).docName(modelFileName())
                 .docPath(targetDocFullName).docSize(docSize).downloadTimes(0)
                 .printTimes(0).sort(sort() + secondSort)
                 .createTime(new Date()).build();
 
-        return loanDocService.save(loanDoc) > 0;
+        return loanDocMapper.add(loanDoc) > 0;
     }
 
-    private boolean save(Long basisLoanId, Long docSize, String targetDocFullName) {
-        return save(basisLoanId, docSize, targetDocFullName, 0);
+    /**
+     * 保存记录至库表
+     *
+     * @param loanBasisId 基础借贷ID
+     * @param type        类型
+     * @return 处理结果
+     */
+    private int delete(Long loanBasisId, Integer type) {
+        return loanDocMapper.deleteByLoanBasisId(loanBasisId);
     }
 
     /**
      * 文件拷贝流程
+     *
      * @return 处理结果
      */
     private Future<Boolean> clone(DocCommonModel docCommonModel) {
         try {
             // 最终生成文件的全路径（包含文件名称）
-            String targetDocFullName = targetDocFullName("");
+            String targetDocFullName = targetDocFullNameWithoutTail("")
+                    + DocConstants.DocType.PDF.getSuffixName();
 
-            long docSize = copyFile(getModelFullPath(docType().getSuffixName()), targetDocFullName);
+            long docSize = transformPdf(getModelFullPath(docType().getSuffixName()), targetDocFullName);
 
-            return new AsyncResult<>(save(docCommonModel.getLoanBasis().getId(), docSize, targetDocFullName));
+            return new AsyncResult<>(persistence(docCommonModel.getLoanBasis().getId(), docSize,
+                    targetDocFullName, 0));
         } catch (Exception e) {
             log.error("clone failed by basisLoanId[{}]", docCommonModel.getLoanBasis().getId(), e);
             return new AsyncResult<>(false);
@@ -186,18 +211,25 @@ public abstract class AbstractOfficeTool {
             fillVariable(docCommonModel);
 
             int index = 1;
-            for(Map<String, Object> variables : VARIABLES_IN_MODEL) {
+            for (Map<String, Object> variables : VARIABLES_IN_MODEL) {
                 // 替换参数生成新的XML内容
                 xmlContent = translate(xmlContent, variables);
 
                 // 最终生成文件的全路径（包含文件名称）
-                String targetDocFullName = targetDocFullName(indexInMultiDocs(index));
+                String targetDocFullName = targetDocFullNameWithoutTail(indexInMultiDocs(index));
 
-                long docSize = write2Disk(targetDocFullName, xmlContent);
+                // 生成模板替换后的文件
+                write2Disk(targetDocFullName, xmlContent);
 
-                save(docCommonModel.getLoanBasis().getId(), docSize, targetDocFullName, index);
+                // 将office文件转换为PDF文件
+                long docSize = transformPdf(targetDocFullName + docType().getSuffixName(),
+                        targetDocFullName + DocConstants.DocType.PDF.getSuffixName());
 
-                index ++;
+                persistence(docCommonModel.getLoanBasis().getId(), docSize,
+                        targetDocFullName + DocConstants.DocType.PDF.getSuffixName(),
+                        index);
+
+                index++;
             }
 
             return new AsyncResult<>(true);
@@ -217,6 +249,8 @@ public abstract class AbstractOfficeTool {
         for (Map.Entry<String, Object> entry : variables.entrySet()) {
             modelContent = modelContent.replace("{{" + entry.getKey() + "}}", entry.getValue().toString());
         }
+
+        // 替换未设置的变量  为空值
 
         return modelContent;
     }
@@ -262,21 +296,27 @@ public abstract class AbstractOfficeTool {
     }
 
     private String indexInMultiDocs(int sort) {
-        if(isSingle()) {
+        if (isSingle()) {
             return "";
         }
 
         return DOC_FILE_SPLIT_CHAR + sort;
     }
 
-    private String targetDocFullName(String indexInMultiDocs) {
+    /**
+     * 最终文件名称（不包含扩展名，后面自行拼接）
+     *
+     * @param indexInMultiDocs 多级文档索引
+     * @return 没有扩展名的绝对路径名称
+     */
+    private String targetDocFullNameWithoutTail(String indexInMultiDocs) {
         FileDirectoryUtil.DirMeta docMeta = FileDirectoryUtil.createDir(docTarget);
         if (!docMeta.isResult()) {
             throw new RuntimeException(docMeta.getMsg());
         }
 
         return docMeta.getPath() + modelFileName() + indexInMultiDocs + DOC_FILE_SPLIT_CHAR
-                + datetimeTitle() + docType().getSuffixName();
+                + datetimeTitle();
     }
 
     private static String datetimeTitle() {

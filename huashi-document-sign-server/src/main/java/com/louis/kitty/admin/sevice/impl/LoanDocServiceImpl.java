@@ -1,11 +1,14 @@
 package com.louis.kitty.admin.sevice.impl;
 
+import com.alibaba.druid.util.StringUtils;
+import com.alibaba.fastjson.JSON;
 import com.louis.kitty.admin.constants.LoanConstants;
 import com.louis.kitty.admin.dao.LoanDocMapper;
 import com.louis.kitty.admin.model.*;
 import com.louis.kitty.admin.office.*;
 import com.louis.kitty.admin.sevice.*;
 import com.louis.kitty.admin.util.FileDownloadUtil;
+import com.louis.kitty.admin.util.ZipUtil;
 import com.louis.kitty.core.page.ColumnFilter;
 import com.louis.kitty.core.page.MybatisPageHelper;
 import com.louis.kitty.core.page.PageRequest;
@@ -13,17 +16,24 @@ import com.louis.kitty.core.page.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 @Slf4j
 @Service
 public class LoanDocServiceImpl implements LoanDocService {
+
+    @Value("${storage.model.target}")
+    private String docTarget;
 
     @Resource
     private LoanDocMapper loanDocMapper;
@@ -221,54 +231,133 @@ public class LoanDocServiceImpl implements LoanDocService {
 
         DocCommonModel model = pickupModel(loanBasisId);
         if (model == null) {
+            log.warn("pickupModel by loanBasisId[{}] null", loanBasisId);
             return 0;
         }
 
-        Future<Boolean> result = authenticityCommitmentTool.execute(model);
-        result = authorizationLetterTool.execute(model);
-        result = businessCooperationAgreementTool.execute(model);
-        result = collateralNotRentGuaranteeTool.execute(model);
-        result = contractReceiptTool.execute(model);
-        result = coupleJointDebtCommitmentTool.execute(model);
-        result = debtConfirmationTool.execute(model);
-        result = debtGuaranteeTool.execute(model);
-        result = faceToFaceConversationTool.execute(model);
-        result = honestyNotificationTool.execute(model);
-        result = immovablesRegistrationTool.execute(model);
-        result = lenderRelationshipTool.execute(model);
-        result = loanApprovalTool.execute(model);
-        result = loanMortgagePledgeTool.execute(model);
-        result = maritalStatusProofTool.execute(model);
-        result = mortgageGuaranteeContractTool.execute(model);
-        result = mortgageListTool.execute(model);
-        result = mortgageQuartetAgreementTool.execute(model);
-        result = overdueBorrowerNoticeTool.execute(model);
-        result = overdueGuarantorNoticeTool.execute(model);
-        result = personalLoanApplicationTool.execute(model);
-        result = personalLoansChecklistTool.execute(model);
-        result = suretyBondsContractTool.execute(model);
-        result = valuationConfirmationTool.execute(model);
-        result = withdrawalCertificateTool.execute(model);
+        long startTime = System.currentTimeMillis();
+        try {
+            List<Future<Boolean>> futureList = asyncExecute(model);
 
-        return 1;
+            return getResult(futureList);
+        } finally {
+            log.info("build doc process cost {} ms", (System.currentTimeMillis() - startTime));
+        }
+    }
+
+    private int getResult(List<Future<Boolean>> futureList) {
+        if (CollectionUtils.isEmpty(futureList)) {
+            return 0;
+        }
+
+        int result;
+        while (true) {
+            result = 0;
+            int doneCount = 0;
+            for (Future<Boolean> future : futureList) {
+                if (!future.isDone()) {
+                    break;
+                }
+
+                try {
+                    if (future.get()) {
+                        result += 1;
+                    }
+                } catch (InterruptedException | ExecutionException e) {
+                    log.warn("ignored by msg [{}]", e.getMessage());
+                }
+
+                doneCount++;
+            }
+
+            if (doneCount == futureList.size()) {
+                break;
+            }
+
+            log.info("total count is '{}', finish count is '{}'", futureList.size(), doneCount);
+
+            try {
+                Thread.sleep(300);
+            } catch (InterruptedException e) {
+            }
+        }
+
+        return result;
+    }
+
+    private List<Future<Boolean>> asyncExecute(DocCommonModel model) {
+        List<Future<Boolean>> futureList = new ArrayList<>();
+        try {
+            log.info("async building docs start...");
+            futureList.add(authenticityCommitmentTool.execute(model));
+            futureList.add(authorizationLetterTool.execute(model));
+            futureList.add(businessCooperationAgreementTool.execute(model));
+            futureList.add(collateralNotRentGuaranteeTool.execute(model));
+            futureList.add(contractReceiptTool.execute(model));
+            futureList.add(coupleJointDebtCommitmentTool.execute(model));
+            futureList.add(debtConfirmationTool.execute(model));
+            futureList.add(debtGuaranteeTool.execute(model));
+            futureList.add(faceToFaceConversationTool.execute(model));
+            futureList.add(honestyNotificationTool.execute(model));
+            futureList.add(immovablesRegistrationTool.execute(model));
+            futureList.add(lenderRelationshipTool.execute(model));
+            futureList.add(loanApprovalTool.execute(model));
+            futureList.add(loanMortgagePledgeTool.execute(model));
+            futureList.add(maritalStatusProofTool.execute(model));
+            futureList.add(mortgageGuaranteeContractTool.execute(model));
+            futureList.add(mortgageListTool.execute(model));
+            futureList.add(mortgageQuartetAgreementTool.execute(model));
+            futureList.add(overdueBorrowerNoticeTool.execute(model));
+            futureList.add(overdueGuarantorNoticeTool.execute(model));
+            futureList.add(personalLoanApplicationTool.execute(model));
+            futureList.add(personalLoanContractTool.execute(model));
+            futureList.add(personalLoansChecklistTool.execute(model));
+            futureList.add(suretyBondsContractTool.execute(model));
+            futureList.add(valuationConfirmationTool.execute(model));
+            futureList.add(withdrawalCertificateTool.execute(model));
+        } catch (Exception e) {
+            log.error("async execute doc build failed by model[{}]", JSON.toJSONString(model), e);
+        }
+
+        log.info("async building docs end...");
+        return futureList;
     }
 
     @Override
-    public ResponseEntity<InputStreamResource> download(Long loanDocId) {
-        LoanDoc loanDoc = findById(loanDocId);
-        if (loanDoc == null) {
-            log.error("loanDocId[{}] can not find any data", loanDocId);
+    public ResponseEntity<InputStreamResource> download(String loanDocIds) {
+        if (StringUtils.isEmpty(loanDocIds)) {
+            log.error("loanDocIds[{}] is empty", loanDocIds);
             return null;
         }
 
-        ResponseEntity<InputStreamResource> response = FileDownloadUtil.download(loanDoc.getDocPath(), loanDoc.getDocName());
-        if (response == null) {
-            log.warn("loanDocId[{}] download resource is null");
-        } else {
-            addOneIfDownload(loanDocId);
+        String[] loanDocIdArray = loanDocIds.split(",");
+        List<LoanDoc> loanDocList = loanDocMapper.findByIds(Arrays.asList(loanDocIdArray));
+
+        List<String> zipFileNames = new ArrayList<>();
+        for (LoanDoc loanDoc : loanDocList) {
+            if (loanDoc == null) {
+                continue;
+            }
+
+            zipFileNames.add(loanDoc.getDocPath());
         }
 
-        return response;
+        String targetFileName = System.currentTimeMillis() + ".zip";
+        String targetFileFullName = docTarget + targetFileName;
+
+        boolean isZipOk = ZipUtil.zip(zipFileNames.toArray(new String[]{}), targetFileFullName);
+        if (!isZipOk) {
+            log.error("loanDocIds[{}] zip failed", loanDocIds);
+            return null;
+        }
+
+
+        return FileDownloadUtil.download(targetFileFullName, targetFileName);
+    }
+
+    @Override
+    public String print(String loanDocIds) {
+        return null;
     }
 
     @Override

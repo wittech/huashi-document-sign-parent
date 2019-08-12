@@ -1,6 +1,5 @@
 package com.louis.kitty.admin.sevice;
 
-import com.louis.kitty.admin.model.DocProduct;
 import com.louis.kitty.admin.model.LoanDoc;
 import com.louis.kitty.core.service.CurdService;
 import org.springframework.core.io.InputStreamResource;
@@ -21,10 +20,18 @@ public interface LoanDocService extends CurdService<LoanDoc> {
     /**
      * 下载基础文件ID
      *
-     * @param loanDocId 借贷文档ID
+     * @param loanDocIds 借贷文档IDS
      * @return 下载内容
      */
-    ResponseEntity<InputStreamResource> download(Long loanDocId);
+    ResponseEntity<InputStreamResource> download(String loanDocIds);
+
+    /**
+     * 打印
+     *
+     * @param loanDocIds 借贷文档IDS
+     * @return 打印PDF的URL信息
+     */
+    String print(String loanDocIds);
 
     /**
      * 根据借贷基础ID批量下载文件

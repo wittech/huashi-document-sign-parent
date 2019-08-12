@@ -178,5 +178,19 @@
         where id = #{id,jdbcType=BIGINT}
     </update>
 
+    <delete id="deleteByLoanBasisId" parameterType="java.lang.Long">
+        delete
+        from loan_doc
+        where loan_basis_id = #{loanBasisId,jdbcType=BIGINT}
+    </delete>
+
+    <select id="findByIds" resultMap="BaseResultMap">
+        SELECT *
+        from loan_doc
+        WHERE id IN
+        <foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
 
 </mapper>
