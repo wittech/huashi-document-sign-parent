@@ -510,19 +510,16 @@ public class MortgageGuaranteeContractTool extends AbstractOfficeTool {
             variables.put("applyMoney", docCommonModel.getLoanBusinessInformation().getApplicationAmount());
             variables.put("deadlineMonth", docCommonModel.getLoanBusinessInformation().getApplicationPeriod());
 
-            // 转换年月日
-            Calendar ca = Calendar.getInstance();
-            ca.setTime(docCommonModel.getContractInformation().getBorrowingStartPeriod());
+            Map<Integer, String> calendar = getCalendar(docCommonModel.getContractInformation().getBorrowingStartPeriod());
 
-            Calendar ca1 = Calendar.getInstance();
-            ca.setTime(docCommonModel.getContractInformation().getBorrowingEndPeriod());
+            Map<Integer, String> calendar1 = getCalendar(docCommonModel.getContractInformation().getBorrowingEndPeriod());
 
-            variables.put("borrowingStartPeriodYear", ca.get(Calendar.YEAR));
-            variables.put("borrowingStartPeriodMonth", ca.get(Calendar.MONTH));
-            variables.put("borrowingStartPeriodDay", ca.get(Calendar.DAY_OF_MONTH));
-            variables.put("borrowingEndPeriodYear", ca1.get(Calendar.YEAR));
-            variables.put("borrowingEndPeriodMonth", ca1.get(Calendar.MONTH));
-            variables.put("borrowingEndPeriodDay", ca1.get(Calendar.DAY_OF_MONTH));
+            variables.put("borrowingStartPeriodYear", calendar.get(Calendar.YEAR));
+            variables.put("borrowingStartPeriodMonth", calendar.get(Calendar.MONTH));
+            variables.put("borrowingStartPeriodDay", calendar.get(Calendar.DAY_OF_MONTH));
+            variables.put("borrowingEndPeriodYear", calendar1.get(Calendar.YEAR));
+            variables.put("borrowingEndPeriodMonth", calendar1.get(Calendar.MONTH));
+            variables.put("borrowingEndPeriodDay", calendar1.get(Calendar.DAY_OF_MONTH));
 
 
             List<Map<String, Object>> mortgageCoownerList = new ArrayList<>();

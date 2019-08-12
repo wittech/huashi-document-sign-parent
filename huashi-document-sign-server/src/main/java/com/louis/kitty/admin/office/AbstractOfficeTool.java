@@ -20,10 +20,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Future;
 
@@ -146,10 +143,15 @@ public abstract class AbstractOfficeTool {
      */
 
     private boolean save(Long basisLoanId, Long docSize, String targetDocFullName, int secondSort) {
-        LoanDoc loanDoc = LoanDoc.builder().loanBasisId(basisLoanId).docName(modelFileName())
-                .docPath(targetDocFullName).docSize(docSize).downloadTimes(0)
-                .printTimes(0).sort(sort() + secondSort)
-                .createTime(new Date()).build();
+        LoanDoc loanDoc = new LoanDoc();
+        loanDoc.setLoanBasisId(basisLoanId);
+        loanDoc.setDocName(modelFileName());
+        loanDoc.setDocPath(targetDocFullName);
+        loanDoc.setDocSize(docSize);
+        loanDoc.setDownloadTimes(0);
+        loanDoc.setPrintTimes(0);
+        loanDoc.setSort(sort() + secondSort);
+        loanDoc.setCreateTime(new Date());
 
         return loanDocMapper.add(loanDoc) > 0;
     }
@@ -344,4 +346,22 @@ public abstract class AbstractOfficeTool {
         return list.get(index).getOrDefault(key, "").toString();
     }
 
+    protected Map<Integer, String> getCalendar(Date date) {
+        Map<Integer, String> calandarMap = new HashMap<>();
+        if (date == null) {
+            calandarMap.put(Calendar.YEAR, "    ");
+            calandarMap.put(Calendar.MONTH, "  ");
+            calandarMap.put(Calendar.DAY_OF_MONTH, "  ");
+            return calandarMap;
+        }
+
+        // 转换年月日
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(date);
+
+        calandarMap.put(Calendar.YEAR, ca.get(Calendar.YEAR) + "");
+        calandarMap.put(Calendar.MONTH, ca.get(Calendar.MONTH) + "");
+        calandarMap.put(Calendar.DAY_OF_MONTH, ca.get(Calendar.DAY_OF_MONTH) + "");
+        return calandarMap;
+    }
 }
