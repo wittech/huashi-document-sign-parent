@@ -25,6 +25,7 @@ import com.louis.kitty.admin.model.RelatedPersonnelInformation;
 import com.louis.kitty.admin.sevice.ContractInformationService;
 import com.louis.kitty.admin.sevice.LoanBasisService;
 import com.louis.kitty.admin.sevice.LoanBusinessInformationService;
+import com.louis.kitty.admin.sevice.LoanDocService;
 import com.louis.kitty.admin.sevice.PawnService;
 import com.louis.kitty.admin.sevice.PersonalLoanSurveyReportService;
 import com.louis.kitty.admin.sevice.RelatedPersonnelInformationService;
@@ -53,6 +54,8 @@ public class LoanController {
 	private PersonalLoanSurveyReportService personalLoanSurveyReportService;
 	@Autowired
 	private ContractInformationService contractInformationService;
+	@Autowired
+	private LoanDocService loanDocService;
 	
 	/**
 	 *1、保存基础信息 
@@ -166,10 +169,33 @@ public class LoanController {
 	 * @return
 	 */
 	@GetMapping(value="/getById")
-	public HttpResult get(@RequestParam Long id) {
+	public HttpResult getById(@RequestParam Long id) {
 		return HttpResult.ok(loanBasisService.findById(id));
 	}
 	
+	/**
+	 * 根据基础信息表id 查询所有 借贷文档信息
+	 * @param loanBasisId
+	 * @return
+	 */
+	@GetMapping(value="/queryByLoanBasisId")
+    public HttpResult queryByLoanBasisId(@RequestParam Long loanBasisId) {
+		return HttpResult.ok(loanDocService.queryByLoanBasisId(loanBasisId));
+    }
 	
+	/**
+	 * 根据基础信息id 生成文档
+	 * @param loanBasisId
+	 * @return
+	 */
+	@GetMapping(value="/born")
+    public HttpResult born(@RequestParam Long loanBasisId) {
+		try {
+			return HttpResult.ok(loanDocService.born(loanBasisId));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return HttpResult.ok(0);
+    }
 	
 }
