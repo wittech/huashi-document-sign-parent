@@ -12,9 +12,6 @@ import lombok.NoArgsConstructor;
  * 说明：  我是由代码生成器生生成的
  * ---------------------------
  */
-
-@Builder
-@NoArgsConstructor
 public class LoanDoc {
 
     /**

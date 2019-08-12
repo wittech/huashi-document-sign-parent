@@ -11,7 +11,6 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.io.File;
@@ -20,10 +19,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.Future;
 
@@ -130,14 +126,6 @@ public abstract class AbstractOfficeTool {
         return variables;
     }
 
-    @Transactional(rollbackFor = Exception.class)
-    public boolean persistence(Long basisLoanId, Long docSize, String targetDocFullName, int secondSort) {
-        int rows = delete(basisLoanId, null);
-        log.info("pre-delete loan doc rows are '{}' by loanBasisId[{}]", rows, basisLoanId);
-
-        return save(basisLoanId, docSize, targetDocFullName, secondSort);
-    }
-
     /**
      * 保存记录至库表
      *
@@ -146,10 +134,15 @@ public abstract class AbstractOfficeTool {
      */
 
     private boolean save(Long basisLoanId, Long docSize, String targetDocFullName, int secondSort) {
-        LoanDoc loanDoc = LoanDoc.builder().loanBasisId(basisLoanId).docName(modelFileName())
-                .docPath(targetDocFullName).docSize(docSize).downloadTimes(0)
-                .printTimes(0).sort(sort() + secondSort)
-                .createTime(new Date()).build();
+        LoanDoc loanDoc = new LoanDoc();
+        loanDoc.setLoanBasisId(basisLoanId);
+        loanDoc.setDocName(modelFileName());
+        loanDoc.setDocPath(targetDocFullName);
+        loanDoc.setDocSize(docSize);
+        loanDoc.setDownloadTimes(0);
+        loanDoc.setPrintTimes(0);
+        loanDoc.setSort(sort() + secondSort);
+        loanDoc.setCreateTime(new Date());
 
         return loanDocMapper.add(loanDoc) > 0;
     }
@@ -181,7 +174,7 @@ public abstract class AbstractOfficeTool {
 
             long docSize = transformPdf(getModelFullPath(docType().getSuffixName()), targetDocFullName);
 
-            return new AsyncResult<>(persistence(docCommonModel.getLoanBasis().getId(), docSize,
+            return new AsyncResult<>(save(docCommonModel.getLoanBasis().getId(), docSize,
                     targetDocFullName, 0));
         } catch (Exception e) {
             log.error("clone failed by basisLoanId[{}]", docCommonModel.getLoanBasis().getId(), e);
@@ -233,11 +226,11 @@ public abstract class AbstractOfficeTool {
                 long docSize = transformPdf(targetDocFullName + docType().getSuffixName(),
                         targetDocFullName + docType().getSuffixName());
 
-//                persistence(docCommonModel.getLoanBasis().getId(), docSize,
+//                save(docCommonModel.getLoanBasis().getId(), docSize,
 //                        targetDocFullName + DocConstants.DocType.PDF.getSuffixName(),
 //                        index);
 
-                persistence(docCommonModel.getLoanBasis().getId(), docSize,
+                save(docCommonModel.getLoanBasis().getId(), docSize,
                         targetDocFullName + docType().getSuffixName(),
                         index);
 
@@ -259,7 +252,8 @@ public abstract class AbstractOfficeTool {
      */
     private String translate(String modelContent, Map<String, Object> variables) {
         for (Map.Entry<String, Object> entry : variables.entrySet()) {
-            modelContent = modelContent.replace("{{" + entry.getKey() + "}}", entry.getValue().toString());
+            modelContent = modelContent.replace("{{" + entry.getKey() + "}}",
+                    entry.getValue() == null ? "  " : entry.getValue().toString());
         }
 
         // 替换未设置的变量  为空值
@@ -344,4 +338,22 @@ public abstract class AbstractOfficeTool {
         return list.get(index).getOrDefault(key, "").toString();
     }
 
+    protected Map<Integer, String> getCalendar(Date date) {
+        Map<Integer, String> calandarMap = new HashMap<>();
+        if (date == null) {
+            calandarMap.put(Calendar.YEAR, "    ");
+            calandarMap.put(Calendar.MONTH, "  ");
+            calandarMap.put(Calendar.DAY_OF_MONTH, "  ");
+            return calandarMap;
+        }
+
+        // 转换年月日
+        Calendar ca = Calendar.getInstance();
+        ca.setTime(date);
+
+        calandarMap.put(Calendar.YEAR, ca.get(Calendar.YEAR) + "");
+        calandarMap.put(Calendar.MONTH, ca.get(Calendar.MONTH) + "");
+        calandarMap.put(Calendar.DAY_OF_MONTH, ca.get(Calendar.DAY_OF_MONTH) + "");
+        return calandarMap;
+    }
 }

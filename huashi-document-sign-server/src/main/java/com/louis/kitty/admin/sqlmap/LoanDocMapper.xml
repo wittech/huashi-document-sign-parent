@@ -169,7 +169,7 @@
         set download_times = download_times + 1,
         last_update_time = CURRENT_TIMESTAMP
         WHERE id IN
-        <foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
             #{id}
         </foreach>
     </update>
@@ -179,7 +179,7 @@
         set print_times = print_times + 1,
         last_update_time = CURRENT_TIMESTAMP
         WHERE id IN
-        <foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
             #{id}
         </foreach>
     </update>

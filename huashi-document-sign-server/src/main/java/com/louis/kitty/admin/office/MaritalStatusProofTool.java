@@ -58,9 +58,7 @@ public class MaritalStatusProofTool extends AbstractOfficeTool {
         variables.put("applyPersonName", docCommonModel.getBorrower().getName());
         variables.put("applyPersonIdentityNumber", docCommonModel.getBorrower().getIdentityNumber());
 
-        // 转换年月日
-        Calendar ca = Calendar.getInstance();
-        ca.setTime(docCommonModel.getBorrower().getDivorceTime());
+        Map<Integer, String> calendar = getCalendar(docCommonModel.getBorrower().getDivorceTime());
 
         // 0->1, 2->2, 3->3
         if(docCommonModel.getBorrower().getMaritalStatus() == 0) {
@@ -80,9 +78,9 @@ public class MaritalStatusProofTool extends AbstractOfficeTool {
             variables.put("threeChoicesOne", "2");
 
             variables.put("originalSpouseName", docCommonModel.getBorrower().getOriginalSpouseName());
-            variables.put("divorceYear", ca.get(Calendar.YEAR));
-            variables.put("divorceMonth", ca.get(Calendar.MONTH));
-            variables.put("divorceDay", ca.get(Calendar.DAY_OF_MONTH));
+            variables.put("divorceYear", calendar.get(Calendar.YEAR));
+            variables.put("divorceMonth", calendar.get(Calendar.MONTH));
+            variables.put("divorceDay", calendar.get(Calendar.DAY_OF_MONTH));
             variables.put("divorceType", setDivorceTypes(docCommonModel.getBorrower().getDivorceMethod()));
 
             variables.put("originalSpouseName2", "");
@@ -94,9 +92,9 @@ public class MaritalStatusProofTool extends AbstractOfficeTool {
             variables.put("threeChoicesOne", "3");
 
             variables.put("originalSpouseName2", docCommonModel.getBorrower().getOriginalSpouseName());
-            variables.put("divorceYear2", ca.get(Calendar.YEAR));
-            variables.put("divorceMonth2", ca.get(Calendar.MONTH));
-            variables.put("divorceDay2", ca.get(Calendar.DAY_OF_MONTH));
+            variables.put("divorceYear2", calendar.get(Calendar.YEAR));
+            variables.put("divorceMonth2", calendar.get(Calendar.MONTH));
+            variables.put("divorceDay2", calendar.get(Calendar.DAY_OF_MONTH));
 
             variables.put("originalSpouseName", "");
             variables.put("divorceYear", "");

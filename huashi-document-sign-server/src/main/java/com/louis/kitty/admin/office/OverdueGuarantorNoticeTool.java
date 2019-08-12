@@ -59,12 +59,11 @@ public class OverdueGuarantorNoticeTool extends AbstractOfficeTool {
             variables.put("oweInterestRMB",
                     RmbUtil.number2CNMontrayUnit(new BigDecimal(collectionNotice.getOweInterest())));
 
-            Calendar ca = Calendar.getInstance();
-            ca.setTime(collectionNotice.getFillDate());
+            Map<Integer, String> calendar = getCalendar(collectionNotice.getFillDate());
 
-            variables.put("fillDateYear", ca.get(Calendar.YEAR));
-            variables.put("fillDateMonth", ca.get(Calendar.MONTH));
-            variables.put("fillDateDay", ca.get(Calendar.DAY_OF_MONTH));
+            variables.put("fillDateYear", calendar.get(Calendar.YEAR));
+            variables.put("fillDateMonth", calendar.get(Calendar.MONTH));
+            variables.put("fillDateDay", calendar.get(Calendar.DAY_OF_MONTH));
         }
     }
 

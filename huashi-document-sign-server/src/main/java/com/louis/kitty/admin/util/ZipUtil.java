@@ -126,9 +126,11 @@ public class ZipUtil {
             logger.error("sourceFileNames[{}] zip failed", sourceFileNames, e);
             return false;
         }
-
-
     }
 
-
+    public static void main(String[] args) {
+        String dir = "/Users/tenx/Documents/test/model/xml/target/20190813/";
+        zip(new String[]{dir+ "不动产登记申请表-201908130150383.doc", dir + "撤押证明-201908130150530.doc"},
+                dir+ "撤押证明-201908130150530.zip");
+    }
 }

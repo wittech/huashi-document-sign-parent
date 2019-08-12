@@ -1,5 +1,6 @@
 package com.louis.kitty.admin.office;
 
+import com.alibaba.druid.util.StringUtils;
 import com.louis.kitty.admin.constants.BankConstants;
 import com.louis.kitty.admin.constants.DocConstants;
 import com.louis.kitty.admin.model.DocCommonModel;
@@ -40,9 +41,9 @@ public class MortgageQuartetAgreementTool extends AbstractOfficeTool {
      */
     private void setLeaseInfo(String applyFamilyPersonName, String bankBranchName, String tripartiteName, String quartetName,
                               String applyMoneyRMB, String goodsAddress, String goodsArea,
-                              int startYear, int startMonth, int startDay, int endYear,
-                              int endMonth, int endDay, int secondStartYear, int secondStartMonth,
-                              int secondStartDay, int secondEndYear, int secondEndMonth, int secondEndDay,
+                              String startYear, String startMonth, String startDay, String endYear,
+                              String endMonth, String endDay, String secondStartYear, String secondStartMonth,
+                              String secondStartDay, String secondEndYear, String secondEndMonth, String secondEndDay,
                               String secondMoneyRMB, String secondMoney,
                               Map<String, Object> variables) {
         StringBuilder data = new StringBuilder();
@@ -515,31 +516,24 @@ public class MortgageQuartetAgreementTool extends AbstractOfficeTool {
             variables.put("bankBranchName", BankConstants.BANK_BRANCH_NAME);
             variables.put("applyFamilyPersonName", docCommonModel.getApplyFamilyName());
 
-            // 转换年月日
-            Calendar ca = Calendar.getInstance();
-            ca.setTime(docCommonModel.getContractInformation().getBorrowingStartPeriod());
+            Map<Integer, String> calendar = getCalendar(docCommonModel.getContractInformation().getBorrowingStartPeriod());
 
-            // 转换年月日
-            Calendar ca1 = Calendar.getInstance();
-            ca1.setTime(docCommonModel.getContractInformation().getBorrowingEndPeriod());
+            Map<Integer, String> calendar1 = getCalendar(docCommonModel.getContractInformation().getBorrowingEndPeriod());
 
-            // 转换年月日
-            Calendar ca2 = Calendar.getInstance();
-            ca2.setTime(pawn.getLeaseTermStartTime());
+            Map<Integer, String> calendar2 = getCalendar(pawn.getLeaseTermStartTime());
 
-            // 转换年月日
-            Calendar ca3 = Calendar.getInstance();
-            ca3.setTime(pawn.getLeaseTermEndTime());
+            Map<Integer, String> calendar3 = getCalendar(pawn.getLeaseTermEndTime());
 
             setLeaseInfo(docCommonModel.getApplyFamilyName(), BankConstants.BANK_BRANCH_NAME,
                     pawn.getOwners(), pawn.getLesseeName(),
                     docCommonModel.getApplyMoneyRMB(), pawn.getCollateralDeposit(),
                     (pawn.getMortgageType() == 0 ? pawn.getBuildingArea() : pawn.getLandOccupationArea()),
-                    ca.get(Calendar.YEAR), ca.get(Calendar.MONTH), ca.get(Calendar.DAY_OF_MONTH),
-                    ca1.get(Calendar.YEAR), ca1.get(Calendar.MONTH), ca1.get(Calendar.DAY_OF_MONTH),
-                    ca2.get(Calendar.YEAR), ca2.get(Calendar.MONTH), ca2.get(Calendar.DAY_OF_MONTH),
-                    ca3.get(Calendar.YEAR), ca3.get(Calendar.MONTH), ca3.get(Calendar.DAY_OF_MONTH),
-                    RmbUtil.number2CNMontrayUnit(new BigDecimal(pawn.getRent())), pawn.getRent(), variables);
+                    calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),
+                    calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH), calendar1.get(Calendar.DAY_OF_MONTH),
+                    calendar2.get(Calendar.YEAR), calendar2.get(Calendar.MONTH), calendar2.get(Calendar.DAY_OF_MONTH),
+                    calendar3.get(Calendar.YEAR), calendar3.get(Calendar.MONTH), calendar3.get(Calendar.DAY_OF_MONTH),
+                    StringUtils.isEmpty(pawn.getRent()) ? "   " : RmbUtil.number2CNMontrayUnit(new BigDecimal(pawn.getRent())),
+                    pawn.getRent(), variables);
         }
 
     }
