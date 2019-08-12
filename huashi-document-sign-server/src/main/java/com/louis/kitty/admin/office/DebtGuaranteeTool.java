@@ -75,6 +75,19 @@ public class DebtGuaranteeTool extends AbstractOfficeTool {
         return tempMap;
     }
 
+    private Map<Long, String> fillCoupleInfo(DocCommonModel model) {
+        Map<Long, String> coupleMap = new HashMap<>();
+        for (RelatedPersonnelInformation relatedPersonnelInformation : model.getGuarantorList()) {
+            if (relatedPersonnelInformation.getCoupleId() == null || relatedPersonnelInformation.getCoupleId() == 0) {
+                continue;
+            }
+
+            coupleMap.put(relatedPersonnelInformation.getCoupleId(), relatedPersonnelInformation.getName());
+        }
+
+        return coupleMap;
+    }
+
 
     private void setGuaranteeList(DocCommonModel model, Map<String, Object> variables) {
         // related_personnel_information  3和4类型, 先查询 主加人， 跟根据主加人配偶ID查询姓名拼接
@@ -84,8 +97,11 @@ public class DebtGuaranteeTool extends AbstractOfficeTool {
             return;
         }
 
+        Map<Long, String> coupleMap = fillCoupleInfo(model);
         for (RelatedPersonnelInformation relatedPersonnelInformation : model.getGuarantorList()) {
-            guaranteeList.add(guarantee(relatedPersonnelInformation.getName(), "",
+            guaranteeList.add(guarantee(relatedPersonnelInformation.getName(),
+                    coupleMap.get(relatedPersonnelInformation.getId()) == null ? "" :
+                            coupleMap.get(relatedPersonnelInformation.getId()),
                     relatedPersonnelInformation.getContactNumber(),
                     relatedPersonnelInformation.getCurrentHomeAddress()));
 
