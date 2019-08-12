@@ -6,7 +6,6 @@ import com.louis.kitty.admin.dao.LoanDocMapper;
 import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.LoanDoc;
 import com.louis.kitty.admin.util.FileDirectoryUtil;
-import com.louis.kitty.admin.util.OfficeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +14,7 @@ import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -69,7 +69,7 @@ public abstract class AbstractOfficeTool {
     }
 
     /**
-     * 文件拷贝
+     * 转换PDF
      *
      * @param sourcePath 原文件路径
      * @param targetPath 拷贝后文件路径
@@ -77,17 +77,19 @@ public abstract class AbstractOfficeTool {
      * @throws IOException IO
      */
     private long transformPdf(String sourcePath, String targetPath) throws Exception {
-        if (docType() == DocConstants.DocType.WORD || docType() == DocConstants.DocType.WORD_07) {
-            OfficeUtil.word2Pdf(sourcePath, targetPath);
-        } else if (docType() == DocConstants.DocType.EXCEL || docType() == DocConstants.DocType.EXCEL_07) {
-            OfficeUtil.excel2Pdf(sourcePath, targetPath);
-        }
+//        if (docType() == DocConstants.DocType.WORD || docType() == DocConstants.DocType.WORD_07) {
+//            OfficeUtil.word2Pdf(sourcePath, targetPath);
+//        } else if (docType() == DocConstants.DocType.EXCEL || docType() == DocConstants.DocType.EXCEL_07) {
+//            OfficeUtil.excel2Pdf(sourcePath, targetPath);
+//        }
+
+        Files.copy(Paths.get(sourcePath), Paths.get(targetPath));
 
         byte[] data = Files.readAllBytes(Paths.get(targetPath));
         if (data.length == 0) {
             throw new IOException("Path[" + sourcePath + "] data can not be '0'");
         }
-//        Files.copy(Paths.get(sourcePath), Paths.get(targetPath));
+
 
         return data.length;
     }
@@ -170,9 +172,12 @@ public abstract class AbstractOfficeTool {
      */
     private Future<Boolean> clone(DocCommonModel docCommonModel) {
         try {
-            // 最终生成文件的全路径（包含文件名称）
+            // 最终生成文件的全路径（包含文件名称） @@@恢复
+//            String targetDocFullName = targetDocFullNameWithoutTail("")
+//                    + DocConstants.DocType.PDF.getSuffixName();
+
             String targetDocFullName = targetDocFullNameWithoutTail("")
-                    + DocConstants.DocType.PDF.getSuffixName();
+                    + docType().getSuffixName();
 
             long docSize = transformPdf(getModelFullPath(docType().getSuffixName()), targetDocFullName);
 
@@ -221,12 +226,19 @@ public abstract class AbstractOfficeTool {
                 // 生成模板替换后的文件
                 write2Disk(targetDocFullName, xmlContent);
 
-                // 将office文件转换为PDF文件
+                // 将office文件转换为PDF文件   @@@
+//                long docSize = transformPdf(targetDocFullName + docType().getSuffixName(),
+//                        targetDocFullName + DocConstants.DocType.PDF.getSuffixName());
+
                 long docSize = transformPdf(targetDocFullName + docType().getSuffixName(),
-                        targetDocFullName + DocConstants.DocType.PDF.getSuffixName());
+                        targetDocFullName + docType().getSuffixName());
+
+//                persistence(docCommonModel.getLoanBasis().getId(), docSize,
+//                        targetDocFullName + DocConstants.DocType.PDF.getSuffixName(),
+//                        index);
 
                 persistence(docCommonModel.getLoanBasis().getId(), docSize,
-                        targetDocFullName + DocConstants.DocType.PDF.getSuffixName(),
+                        targetDocFullName + docType().getSuffixName(),
                         index);
 
                 index++;
@@ -315,7 +327,7 @@ public abstract class AbstractOfficeTool {
             throw new RuntimeException(docMeta.getMsg());
         }
 
-        return docMeta.getPath() + modelFileName() + indexInMultiDocs + DOC_FILE_SPLIT_CHAR
+        return docMeta.getPath() + File.separator + modelFileName() + indexInMultiDocs + DOC_FILE_SPLIT_CHAR
                 + datetimeTitle();
     }
 

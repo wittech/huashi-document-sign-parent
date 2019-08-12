@@ -2,12 +2,15 @@ package com.louis.kitty.admin.sevice.impl;
 
 import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
+import com.itextpdf.text.DocumentException;
+import com.louis.kitty.admin.constants.DocConstants;
 import com.louis.kitty.admin.constants.LoanConstants;
 import com.louis.kitty.admin.dao.LoanDocMapper;
 import com.louis.kitty.admin.model.*;
 import com.louis.kitty.admin.office.*;
 import com.louis.kitty.admin.sevice.*;
 import com.louis.kitty.admin.util.FileDownloadUtil;
+import com.louis.kitty.admin.util.PdfUtil;
 import com.louis.kitty.admin.util.ZipUtil;
 import com.louis.kitty.core.page.ColumnFilter;
 import com.louis.kitty.core.page.MybatisPageHelper;
@@ -22,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -34,6 +38,9 @@ public class LoanDocServiceImpl implements LoanDocService {
 
     @Value("${storage.model.target}")
     private String docTarget;
+
+    @Value("${storage.model.domain}")
+    private String docDomain;
 
     @Resource
     private LoanDocMapper loanDocMapper;
@@ -342,7 +349,7 @@ public class LoanDocServiceImpl implements LoanDocService {
             zipFileNames.add(loanDoc.getDocPath());
         }
 
-        String targetFileName = System.currentTimeMillis() + ".zip";
+        String targetFileName = System.currentTimeMillis() + DocConstants.DocType.ZIP.getSuffixName();
         String targetFileFullName = docTarget + targetFileName;
 
         boolean isZipOk = ZipUtil.zip(zipFileNames.toArray(new String[]{}), targetFileFullName);
@@ -351,13 +358,41 @@ public class LoanDocServiceImpl implements LoanDocService {
             return null;
         }
 
+        addOneIfDownload(loanDocIds);
 
         return FileDownloadUtil.download(targetFileFullName, targetFileName);
     }
 
     @Override
     public String print(String loanDocIds) {
-        return null;
+        if (StringUtils.isEmpty(loanDocIds)) {
+            log.error("loanDocIds[{}] is empty", loanDocIds);
+            return null;
+        }
+
+        String[] loanDocIdArray = loanDocIds.split(",");
+        List<LoanDoc> loanDocList = loanDocMapper.findByIds(Arrays.asList(loanDocIdArray));
+
+        List<String> pdfFileNames = new ArrayList<>();
+        for (LoanDoc loanDoc : loanDocList) {
+            if (loanDoc == null) {
+                continue;
+            }
+
+            pdfFileNames.add(loanDoc.getDocPath());
+        }
+
+        String targetPdfFileName = System.currentTimeMillis() + DocConstants.DocType.PDF.getSuffixName();
+
+        try {
+            PdfUtil.mergeFiles(pdfFileNames.toArray(new String[]{}), docTarget + targetPdfFileName);
+
+            return docDomain + targetPdfFileName;
+
+        } catch (IOException | DocumentException e) {
+            log.error("loanDocIds[{}] doc print failed", loanDocIds, e);
+            return null;
+        }
     }
 
     @Override
@@ -371,13 +406,21 @@ public class LoanDocServiceImpl implements LoanDocService {
     }
 
     @Override
-    public boolean addOneIfDownload(Long loanDocId) {
-        return loanDocMapper.addOneIfDownload(loanDocId) > 0;
+    public boolean addOneIfDownload(String loanDocIds) {
+        if (StringUtils.isEmpty(loanDocIds)) {
+            return false;
+        }
+
+        return loanDocMapper.addOneIfDownload(Arrays.asList(loanDocIds.split(","))) > 0;
     }
 
     @Override
-    public boolean addOneIfPrint(Long loanDocId) {
-        return loanDocMapper.addOneIfPrint(loanDocId) > 0;
+    public boolean addOneIfPrint(String loanDocIds) {
+        if (StringUtils.isEmpty(loanDocIds)) {
+            return false;
+        }
+
+        return loanDocMapper.addOneIfPrint(Arrays.asList(loanDocIds.split(","))) > 0;
     }
 
     @Override

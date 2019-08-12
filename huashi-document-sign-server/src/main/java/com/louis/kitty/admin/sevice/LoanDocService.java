@@ -52,17 +52,17 @@ public interface LoanDocService extends CurdService<LoanDoc> {
     /**
      * 下载次数+1
      *
-     * @param loanDocId 文档ID
+     * @param loanDocIds 文档ID集合
      * @return 处理结果
      */
-    boolean addOneIfDownload(Long loanDocId);
+    boolean addOneIfDownload(String loanDocIds);
 
     /**
      * 打印次数+1
      *
-     * @param loanDocId 文档ID
+     * @param loanDocsId 文档ID集合
      * @return 处理结果
      */
-    boolean addOneIfPrint(Long loanDocId);
+    boolean addOneIfPrint(String loanDocsId);
 
 }

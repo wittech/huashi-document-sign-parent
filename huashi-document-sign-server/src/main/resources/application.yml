@@ -61,6 +61,7 @@ storage:
   model:
     home: /Users/tenx/Documents/test/model/xml/
     target: /Users/tenx/Documents/test/model/xml/target/
+    domain: http://api.hspaas.cn:8040/pdf/
   resource:
     path: /Users/tenx/Documents/test/pic/
     domain: http://localhost/resource/

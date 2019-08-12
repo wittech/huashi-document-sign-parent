@@ -322,7 +322,7 @@
     <select id="findByLoanBasisId" resultMap="BaseResultMap">
         select *
         from loan_business_information
-        where loan_basis_id = #{LoanBasicId,jdbcType=BIGINT}
+        where loan_basis_id = #{LoanBasicId,jdbcType=BIGINT} limit 1
     </select>
 
 

@@ -12,7 +12,7 @@ public class DocConstants {
      */
     public enum DocType {
         WORD(".doc"), EXCEL(".xls"), WORD_07(".docx"), EXCEL_07(".xlsx"),
-        PDF(".pdf");
+        PDF(".pdf"), ZIP(".zip");
 
         DocType(String suffixName) {
             this.suffixName = suffixName;

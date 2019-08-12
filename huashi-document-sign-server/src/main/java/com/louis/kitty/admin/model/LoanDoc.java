@@ -1,6 +1,7 @@
 package com.louis.kitty.admin.model;
 
 import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 /**
  * ---------------------------
@@ -13,6 +14,7 @@ import lombok.Builder;
  */
 
 @Builder
+@NoArgsConstructor
 public class LoanDoc {
 
     /**

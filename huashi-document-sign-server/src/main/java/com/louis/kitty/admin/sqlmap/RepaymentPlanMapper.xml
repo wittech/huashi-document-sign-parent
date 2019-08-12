@@ -74,7 +74,7 @@
     select * from repayment_plan
   </select>
 
-  <select id="findByLoanBasisId" resultMap="BaseResultMap">
+  <select id="findByloanBusinessInformationId" resultMap="BaseResultMap">
     select * from repayment_plan where loan_business_information_id = #{loanBusinessInformationId,jdbcType=BIGINT}
   </select>
 

@@ -63,12 +63,12 @@ public interface LoanDocMapper {
     /**
      * 下次次数+1
      */
-    int addOneIfDownload(Long id);
+    int addOneIfDownload(List<String> ids);
 
     /**
      * 打印次数+1
      */
-    int addOneIfPrint(Long id);
+    int addOneIfPrint(List<String> ids);
 
     /**
      * 根据基础借贷信息删除
