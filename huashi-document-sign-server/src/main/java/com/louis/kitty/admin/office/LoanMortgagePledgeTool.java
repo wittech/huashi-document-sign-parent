@@ -69,7 +69,7 @@ public class LoanMortgagePledgeTool extends AbstractOfficeTool {
                 "  <w:rFonts w:hint=\"eastAsia\"/>\n" +
                 "  <w:b/>\n" +
                 "</w:rPr>\n" +
-                "<w:t>元（人民币），以</w:t>\n" +
+                "<w:t>（人民币），以</w:t>\n" +
                 "</w:r>\n" +
                 "<w:r>\n" +
                 "<w:rPr>\n" +

@@ -39,6 +39,10 @@ public class RmbUtil {
      * @return 对应的汉语大写
      */
     public static String number2CNMontrayUnit(BigDecimal numberOfMoney) {
+        if(numberOfMoney == null) {
+            return "    ";
+        }
+
         StringBuffer sb = new StringBuffer();
         // -1, 0, or 1 as the value of this BigDecimal is negative, zero, or
         // positive.

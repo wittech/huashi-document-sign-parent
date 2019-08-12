@@ -1,5 +1,6 @@
 package com.louis.kitty.admin.office;
 
+import com.alibaba.druid.util.StringUtils;
 import com.louis.kitty.admin.constants.BankConstants;
 import com.louis.kitty.admin.constants.DocConstants;
 import com.louis.kitty.admin.model.DocCommonModel;
@@ -531,7 +532,8 @@ public class MortgageQuartetAgreementTool extends AbstractOfficeTool {
                     calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH), calendar1.get(Calendar.DAY_OF_MONTH),
                     calendar2.get(Calendar.YEAR), calendar2.get(Calendar.MONTH), calendar2.get(Calendar.DAY_OF_MONTH),
                     calendar3.get(Calendar.YEAR), calendar3.get(Calendar.MONTH), calendar3.get(Calendar.DAY_OF_MONTH),
-                    RmbUtil.number2CNMontrayUnit(new BigDecimal(pawn.getRent())), pawn.getRent(), variables);
+                    StringUtils.isEmpty(pawn.getRent()) ? "   " : RmbUtil.number2CNMontrayUnit(new BigDecimal(pawn.getRent())),
+                    pawn.getRent(), variables);
         }
 
     }

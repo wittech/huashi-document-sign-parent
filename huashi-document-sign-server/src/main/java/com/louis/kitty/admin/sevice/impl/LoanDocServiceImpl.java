@@ -244,6 +244,10 @@ public class LoanDocServiceImpl implements LoanDocService {
 
         long startTime = System.currentTimeMillis();
         try {
+
+            // 清除原有记录,后续要考虑持续追加的类型，不能直接删除
+            loanDocMapper.deleteByLoanBasisId(loanBasisId);
+
             List<Future<Boolean>> futureList = asyncExecute(model);
 
             return getResult(futureList);
