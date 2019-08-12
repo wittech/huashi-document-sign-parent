@@ -21,6 +21,8 @@ public class LoanPageDto {
 	private int status;
 	private Date createTime;
 	private String applicationPeriod;
+	private String guaranteeMethod;
+	private String createBy;
 
 	public int getId() {
 		return id;
@@ -92,6 +94,23 @@ public class LoanPageDto {
 
 	public void setApplicationPeriod(String applicationPeriod) {
 		this.applicationPeriod = applicationPeriod;
+	}
+
+
+	public String getGuaranteeMethod() {
+		return guaranteeMethod;
+	}
+
+	public void setGuaranteeMethod(String guaranteeMethod) {
+		this.guaranteeMethod = guaranteeMethod;
+	}
+
+	public String getCreateBy() {
+		return createBy;
+	}
+
+	public void setCreateBy(String createBy) {
+		this.createBy = createBy;
 	}
 
 }

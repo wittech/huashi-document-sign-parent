@@ -26,6 +26,8 @@
 	<result column="application_amount" jdbcType="DECIMAL" property="applicationAmount" />
 	<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
 	<result column="application_period" jdbcType="VARCHAR" property="applicationPeriod" />
+	<result column="guarantee_method" jdbcType="VARCHAR" property="guaranteeMethod" />
+	<result column="create_by" jdbcType="VARCHAR" property="createBy" />
   </resultMap>
   
   <insert id="add" parameterType="com.louis.kitty.admin.model.LoanBasis" useGeneratedKeys="true" keyProperty="id">
@@ -157,18 +159,15 @@
   </select>
   
   <select id="findPageByBorrowerAndStatus"  parameterType="com.louis.kitty.admin.model.LoanBasis" resultMap="BasePageResultMap">
-    select lb.id,lb.create_time,lb.status,lb.loan_type,lb.application_matters,lb.borrower,
+    select lb.id,lb.create_time,lb.guarantee_method,lb.create_by,lb.status,lb.loan_type,lb.application_matters,lb.borrower,
     lbi.application_period,lbi.application_amount,ci.loan_date from loan_basis lb
     left join loan_business_information lbi 
     on lb.id = lbi.loan_basis_id
     left join contract_information ci
     on lb.id = ci.loan_basis_id
     where 1=1
-    <if test="borrower != null">
+    <if test="borrower != null and borrower != ''">
     	and lb.borrower  = #{borrower,jdbcType=VARCHAR}
-     </if>
-     <if test="status >0">
-    	and lb.status = #{status,jdbcType=BIGINT}
      </if>
      order by lb.create_time 
   </select>

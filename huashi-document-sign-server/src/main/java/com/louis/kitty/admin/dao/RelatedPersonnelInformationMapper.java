@@ -2,8 +2,6 @@ package com.louis.kitty.admin.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
 
 /**
@@ -57,6 +55,6 @@ public interface RelatedPersonnelInformationMapper {
      * @param loanBasisId
      * @return
      */
-    List<RelatedPersonnelInformation> findByBaseIdList(@Param(value = "loanBasisId") Long loanBasisId);
+    List<RelatedPersonnelInformation> findByBaseIdList(Long loanBasisId);
 
 }

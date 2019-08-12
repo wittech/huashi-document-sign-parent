@@ -194,7 +194,7 @@
         SELECT *
         from loan_doc
         WHERE id IN
-        <foreach collection="array" item="id" index="index" open="(" close=")" separator=",">
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
             #{id}
         </foreach>
     </select>

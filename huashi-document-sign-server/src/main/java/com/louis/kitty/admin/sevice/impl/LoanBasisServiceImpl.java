@@ -56,7 +56,9 @@ public class LoanBasisServiceImpl implements LoanBasisService {
 
 	@Override
 	public PageResult findPage(PageRequest pageRequest) {
-		String name = getColumnFilterValue(pageRequest, "name");
+		System.out.println("pageRequest==="+pageRequest);
+		String name = getColumnFilterValue(pageRequest, "borrower");
+		System.out.println("name==="+name);
 		LoanBasis record = new LoanBasis();
 		record.setBorrower(name);
 		return MybatisPageHelper.findPage(pageRequest, loanBasisMapper, "findPageByBorrowerAndStatus", record);
