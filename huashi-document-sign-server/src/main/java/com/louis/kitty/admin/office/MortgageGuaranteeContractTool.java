@@ -2,6 +2,7 @@ package com.louis.kitty.admin.office;
 
 import com.louis.kitty.admin.constants.BankConstants;
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.dao.RelatedPersonnelInformationMapper;
 import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.Pawn;
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
@@ -9,13 +10,14 @@ import com.louis.kitty.admin.sevice.RelatedPersonnelInformationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 @Component
 public class MortgageGuaranteeContractTool extends AbstractOfficeTool {
 
-    @Autowired
-    private RelatedPersonnelInformationService relatedPersonnelInformationService;
+    @Resource
+    private RelatedPersonnelInformationMapper relatedPersonnelInformationMapper;
 
     private void setMortgageCoownerList(List<Map<String, Object>> mortgageCoownerList, Map<String, Object> variables) {
         StringBuilder data = new StringBuilder();
@@ -525,7 +527,7 @@ public class MortgageGuaranteeContractTool extends AbstractOfficeTool {
             List<Map<String, Object>> mortgageCoownerList = new ArrayList<>();
             String[] ownerIds = owner.split(",");
             for (String ownerId : ownerIds) {
-                RelatedPersonnelInformation relatedPersonnelInformation = relatedPersonnelInformationService.findById(Long.valueOf(ownerId));
+                RelatedPersonnelInformation relatedPersonnelInformation = relatedPersonnelInformationMapper.findById(Long.valueOf(ownerId));
                 if (relatedPersonnelInformation == null) {
                     continue;
                 }

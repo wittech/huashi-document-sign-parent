@@ -228,9 +228,9 @@
 
         <!-- office 转换操作 -->
         <dependency>
-            <groupId>net.sf.jacob-project</groupId>
+            <groupId>com.hynnet</groupId>
             <artifactId>jacob</artifactId>
-            <version>1.14.3</version>
+            <version>1.18</version>
         </dependency>
 
 
