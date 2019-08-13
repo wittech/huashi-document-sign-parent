@@ -2,10 +2,13 @@ package com.louis.kitty.admin.office;
 
 import com.louis.kitty.admin.constants.BankConstants;
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.dao.RelatedPersonnelInformationMapper;
 import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.Pawn;
+import com.louis.kitty.admin.model.RelatedPersonnelInformation;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +16,9 @@ import java.util.Map;
 
 @Component
 public class MortgageListTool extends AbstractOfficeTool {
+
+    @Resource
+    private RelatedPersonnelInformationMapper relatedPersonnelInformationMapper;
 
     private void setPawnList(List<Map<String, Object>> pawnList, Map<String, Object> variables) {
         StringBuilder data = new StringBuilder();
@@ -658,29 +664,57 @@ public class MortgageListTool extends AbstractOfficeTool {
             Map<String, Object> variables = newRound();
             variables.put("bankBranchName", BankConstants.BANK_BRANCH_NAME);
 
+            RelatedPersonnelInformation relatedPersonnelInformation = relatedPersonnelInformationMapper.findById(Long.valueOf(entry.getKey()));
+
             // 抵押物 所有抵押人信息
-            variables.put("mortgageCoownerName", entry.getKey());
+            variables.put("mortgageCoownerName", relatedPersonnelInformation.getName());
 
             List<Map<String, Object>> pawnList = new ArrayList<>();
             for (Pawn pawn : entry.getValue()) {
-                Map<String, Object> tempMap = new HashMap<>();
                 if (pawn.getMortgageType() == 0) {
-                    tempMap.put("pawnType", "房产证");
-                    tempMap.put("amountWithUnit", pawn.getBuildingArea() + "㎡");
-                    tempMap.put("pawnNo", pawn.getPropertyCertificateNumber());
-                    tempMap.put("issueOrg", "                ");
+                    if (pawn.getWhetherOwnershipCertificates() == 0) {
+                        Map<String, Object> tempMap = new HashMap<>();
+                        tempMap.put("pawnOwner", relatedPersonnelInformation.getName());
+                        tempMap.put("storageAddress", pawn.getCollateralDeposit());
+                        tempMap.put("evasluation", pawn.getValue());
+                        tempMap.put("pawnType", "不动产权证");
+                        tempMap.put("amountWithUnit", pawn.getBuildingArea() + "㎡");
+                        tempMap.put("pawnNo", pawn.getPropertyCertificateNumber());
+                        tempMap.put("issueOrg", "                ");
+                        pawnList.add(tempMap);
+
+                    } else {
+                        Map<String, Object> tempMap = new HashMap<>();
+                        tempMap.put("pawnOwner", relatedPersonnelInformation.getName());
+                        tempMap.put("storageAddress", pawn.getCollateralDeposit());
+                        tempMap.put("evasluation", pawn.getValue());
+                        tempMap.put("pawnType", "房产证");
+                        tempMap.put("amountWithUnit", pawn.getBuildingArea() + "㎡");
+                        tempMap.put("pawnNo", pawn.getPropertyCertificateNumber());
+                        tempMap.put("issueOrg", "                ");
+                        pawnList.add(tempMap);
+
+                        tempMap = new HashMap<>();
+                        tempMap.put("pawnOwner", relatedPersonnelInformation.getName());
+                        tempMap.put("storageAddress", pawn.getCollateralDeposit());
+                        tempMap.put("evasluation", pawn.getValue());
+                        tempMap.put("pawnType", "土地证");
+                        tempMap.put("amountWithUnit", pawn.getLandOccupationArea() + "㎡");
+                        tempMap.put("pawnNo", pawn.getLandCertificateNumber());
+                        tempMap.put("issueOrg", "                ");
+                        pawnList.add(tempMap);
+                    }
                 } else {
+                    Map<String, Object> tempMap = new HashMap<>();
+                    tempMap.put("pawnOwner", relatedPersonnelInformation.getName());
+                    tempMap.put("storageAddress", pawn.getCollateralDeposit());
+                    tempMap.put("evasluation", pawn.getValue());
                     tempMap.put("pawnType", "土地证");
                     tempMap.put("amountWithUnit", pawn.getLandOccupationArea() + "㎡");
                     tempMap.put("pawnNo", pawn.getLandCertificateNumber());
                     tempMap.put("issueOrg", "                ");
+                    pawnList.add(tempMap);
                 }
-
-                tempMap.put("pawnOwner", entry.getKey());
-                tempMap.put("storageAddress", pawn.getCollateralDeposit());
-                tempMap.put("evaluation", pawn.getValue());
-
-                pawnList.add(tempMap);
             }
 
             setPawnList(pawnList, variables);
