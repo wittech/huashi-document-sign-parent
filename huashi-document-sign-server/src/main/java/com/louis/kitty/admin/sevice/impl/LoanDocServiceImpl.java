@@ -392,11 +392,11 @@ public class LoanDocServiceImpl implements LoanDocService {
             pdfFileNames.add(loanDoc.getPdfPath());
         }
 
-        String targetPdfFileName = getDateTimeFileName(loanDocList.size()) + DocConstants.DocType.PDF.getSuffixName();
+        String targetPdfFileName = getDirWithDate(docPrintFileTarget) +
+                getDateTimeFileName(loanDocList.size()) + DocConstants.DocType.PDF.getSuffixName();
 
         try {
-            PdfUtil.mergeFiles(pdfFileNames.toArray(new String[]{}),
-                    getDirWithDate(docPrintFileTarget) + targetPdfFileName);
+            PdfUtil.mergeFiles(pdfFileNames.toArray(new String[]{}), targetPdfFileName);
 
             return docDomain + targetPdfFileName;
 
