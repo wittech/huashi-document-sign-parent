@@ -6,6 +6,7 @@ import com.louis.kitty.admin.dao.LoanDocMapper;
 import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.LoanDoc;
 import com.louis.kitty.admin.util.FileDirectoryUtil;
+import com.louis.kitty.admin.util.OfficeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -47,7 +48,7 @@ public abstract class AbstractOfficeTool {
     /**
      * 模板变量
      */
-    protected final List<Map<String, Object>> VARIABLES_IN_MODEL = new CopyOnWriteArrayList<>();
+    private final List<Map<String, Object>> VARIABLES_IN_MODEL = new CopyOnWriteArrayList<>();
 
     /**
      * 填充变量
@@ -57,28 +58,24 @@ public abstract class AbstractOfficeTool {
     /**
      * 写入磁盘
      */
-    private void write2Disk(String storagePath, String data) throws IOException {
+    private long write2Disk(String storagePath, String data) throws IOException {
         storagePath = storagePath + docType().getSuffixName();
         byte[] targetFileData = data.getBytes(Charset.forName(DEFAULT_ENCODING));
 
         Files.write(Paths.get(storagePath), targetFileData);
+
+        return targetFileData.length;
     }
 
     /**
-     * 转换PDF
+     * 拷贝文件
      *
      * @param sourcePath 原文件路径
      * @param targetPath 拷贝后文件路径
      * @return 文件大小
-     * @throws IOException IO
+     * @throws Exception IO
      */
-    private long transformPdf(String sourcePath, String targetPath) throws Exception {
-//        if (docType() == DocConstants.DocType.WORD || docType() == DocConstants.DocType.WORD_07) {
-//            OfficeUtil.word2Pdf(sourcePath, targetPath);
-//        } else if (docType() == DocConstants.DocType.EXCEL || docType() == DocConstants.DocType.EXCEL_07) {
-//            OfficeUtil.excel2Pdf(sourcePath, targetPath);
-//        }
-
+    private long copyFile(String sourcePath, String targetPath) throws Exception {
         Files.copy(Paths.get(sourcePath), Paths.get(targetPath));
 
         byte[] data = Files.readAllBytes(Paths.get(targetPath));
@@ -88,6 +85,27 @@ public abstract class AbstractOfficeTool {
 
 
         return data.length;
+    }
+
+    /**
+     * 转换PDF
+     *
+     * @param sourcePath 原文件路径
+     * @param targetPath 拷贝后文件路径
+     */
+    private String transformPdf(String sourcePath, String targetPath) {
+        try {
+            if (docType() == DocConstants.DocType.WORD || docType() == DocConstants.DocType.WORD_07) {
+                OfficeUtil.word2Pdf(sourcePath, targetPath);
+            } else if (docType() == DocConstants.DocType.EXCEL || docType() == DocConstants.DocType.EXCEL_07) {
+                OfficeUtil.excel2Pdf(sourcePath, targetPath);
+            }
+
+            return targetPath;
+        } catch (Exception e) {
+            log.error("transform pdf[{}] from '{}' failed", targetPath, sourcePath, e);
+            return null;
+        }
     }
 
     /**
@@ -133,11 +151,12 @@ public abstract class AbstractOfficeTool {
      * @return 处理结果
      */
 
-    private boolean save(Long basisLoanId, Long docSize, String targetDocFullName, int secondSort) {
+    private boolean save(Long basisLoanId, Long docSize, String targetDocFullName, String targetPdfFullName, int secondSort) {
         LoanDoc loanDoc = new LoanDoc();
         loanDoc.setLoanBasisId(basisLoanId);
         loanDoc.setDocName(modelFileName());
         loanDoc.setDocPath(targetDocFullName);
+        loanDoc.setPdfPath(targetPdfFullName);
         loanDoc.setDocSize(docSize);
         loanDoc.setDownloadTimes(0);
         loanDoc.setPrintTimes(0);
@@ -148,34 +167,24 @@ public abstract class AbstractOfficeTool {
     }
 
     /**
-     * 保存记录至库表
-     *
-     * @param loanBasisId 基础借贷ID
-     * @param type        类型
-     * @return 处理结果
-     */
-    private int delete(Long loanBasisId, Integer type) {
-        return loanDocMapper.deleteByLoanBasisId(loanBasisId);
-    }
-
-    /**
      * 文件拷贝流程
      *
      * @return 处理结果
      */
     private Future<Boolean> clone(DocCommonModel docCommonModel) {
         try {
-            // 最终生成文件的全路径（包含文件名称） @@@恢复
-//            String targetDocFullName = targetDocFullNameWithoutTail("")
-//                    + DocConstants.DocType.PDF.getSuffixName();
+            String targetDocName = targetDocFullNameWithoutTail("");
+            String targetDocFullName = targetDocName + docType().getSuffixName();
 
-            String targetDocFullName = targetDocFullNameWithoutTail("")
-                    + docType().getSuffixName();
+            // pdf 全路径
+            String targetPdfFullName = targetDocName + DocConstants.DocType.PDF.getSuffixName();
 
-            long docSize = transformPdf(getModelFullPath(docType().getSuffixName()), targetDocFullName);
+            long docSize = copyFile(getModelFullPath(docType().getSuffixName()), targetDocFullName);
+
+            targetPdfFullName = transformPdf(targetDocFullName, targetPdfFullName);
 
             return new AsyncResult<>(save(docCommonModel.getLoanBasis().getId(), docSize,
-                    targetDocFullName, 0));
+                    targetDocFullName, targetPdfFullName, 0));
         } catch (Exception e) {
             log.error("clone failed by basisLoanId[{}]", docCommonModel.getLoanBasis().getId(), e);
             return new AsyncResult<>(false);
@@ -213,25 +222,17 @@ public abstract class AbstractOfficeTool {
                 // 替换参数生成新的XML内容
                 xmlContent = translate(xmlContent, variables);
 
+                String targetDocName = targetDocFullNameWithoutTail(indexInMultiDocs(index));
                 // 最终生成文件的全路径（包含文件名称）
-                String targetDocFullName = targetDocFullNameWithoutTail(indexInMultiDocs(index));
+                String targetDocFullName = targetDocName + docType().getSuffixName();
+                String targetPdfFullName = targetDocName + DocConstants.DocType.PDF.getSuffixName();
 
                 // 生成模板替换后的文件
-                write2Disk(targetDocFullName, xmlContent);
+                long docSize = write2Disk(targetDocFullName, xmlContent);
 
-                // 将office文件转换为PDF文件   @@@
-//                long docSize = transformPdf(targetDocFullName + docType().getSuffixName(),
-//                        targetDocFullName + DocConstants.DocType.PDF.getSuffixName());
+                targetPdfFullName = transformPdf(targetDocFullName, targetPdfFullName);
 
-                long docSize = transformPdf(targetDocFullName + docType().getSuffixName(),
-                        targetDocFullName + docType().getSuffixName());
-
-//                save(docCommonModel.getLoanBasis().getId(), docSize,
-//                        targetDocFullName + DocConstants.DocType.PDF.getSuffixName(),
-//                        index);
-
-                save(docCommonModel.getLoanBasis().getId(), docSize,
-                        targetDocFullName + docType().getSuffixName(),
+                save(docCommonModel.getLoanBasis().getId(), docSize, targetDocFullName, targetPdfFullName,
                         index);
 
                 index++;
@@ -256,9 +257,25 @@ public abstract class AbstractOfficeTool {
                     entry.getValue() == null ? "  " : entry.getValue().toString());
         }
 
-        // 替换未设置的变量  为空值
+        // 如果内容中包含{{var}}变量格式没替换， 则最后统一将模板中未替换的处理掉
+        modelContent = replaceNotSet(modelContent);
 
         return modelContent;
+    }
+
+    /**
+     * 内容中包含{{var}}变量数据替换空值（8个空格）
+     *
+     * @param content 内容
+     * @return 替换后内容
+     */
+    private String replaceNotSet(String content) {
+        if (StringUtils.isEmpty(content)) {
+            return content;
+        }
+
+        // 8个空格是为了文档中有下划线样式的需要留空值填充进行拉伸
+        return content.replaceAll("\\{\\{[a-z]*[0-9]*[A-Z]*}}", "        ");
     }
 
     private String getModelFullPath() {

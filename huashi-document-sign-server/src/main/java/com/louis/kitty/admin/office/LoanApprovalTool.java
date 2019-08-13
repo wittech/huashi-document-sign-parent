@@ -21,7 +21,7 @@ import java.util.Map;
  */
 
 @Component
-public class LoanApprovalTool extends AbstractOfficeTool{
+public class LoanApprovalTool extends AbstractOfficeTool {
 
     @Override
     protected void fillVariable(DocCommonModel docCommonModel) {
@@ -44,7 +44,7 @@ public class LoanApprovalTool extends AbstractOfficeTool{
 
         variables.put("deadlineMonth", docCommonModel.getLoanBusinessInformation().getApplicationPeriod());
         variables.put("applyRate", docCommonModel.getLoanBusinessInformation().getApplicationRate() + "%");
-        variables.put("marginRate",  docCommonModel.getLoanBusinessInformation().getMarginRatio()+"%");
+        variables.put("marginRate", docCommonModel.getLoanBusinessInformation().getMarginRatio() + "%");
         variables.put("originBalance", docCommonModel.getLoanBusinessInformation().getOriginalCreditBalance());
         variables.put("applyMoneyRMB",
                 RmbUtil.number2CNMontrayUnit(new BigDecimal(variables.get("applyMoney").toString())));
@@ -80,7 +80,7 @@ public class LoanApprovalTool extends AbstractOfficeTool{
     private void setGuarantorList(DocCommonModel model, Map<String, Object> variables) {
         // related_personnel_information  type 3和4,5
         List<Map<String, Object>> guarantorList = new ArrayList<>();
-        if(CollectionUtils.isEmpty(model.getMortgageGuarantorList()) &&
+        if (CollectionUtils.isEmpty(model.getMortgageGuarantorList()) &&
                 CollectionUtils.isEmpty(model.getGuarantorList())) {
             guarantorList.add(guarantor(""));
         } else {
@@ -96,7 +96,7 @@ public class LoanApprovalTool extends AbstractOfficeTool{
         setGuarantorListText(guarantorList, variables);
     }
 
-    private Map<String, Object> mortgage(String address, String name,String collateralArea,
+    private Map<String, Object> mortgage(String address, String name, String collateralArea,
                                          String collateralFee) {
         Map<String, Object> tempMap1 = new HashMap<>();
         tempMap1.put("address", address);
@@ -123,13 +123,13 @@ public class LoanApprovalTool extends AbstractOfficeTool{
 
                 // 抵押物类型 0房屋 1土地
                 String collateralAmount;
-                if(pawn.getMortgageType() == 1) {
+                if (pawn.getMortgageType() == 1) {
                     collateralAmount = pawn.getLandOccupationArea();
                 } else {
                     collateralAmount = pawn.getBuildingArea();
                 }
 
-                pawnList.add(mortgage(pawn.getCollateralDeposit(), name, collateralAmount,pawn.getValue()));
+                pawnList.add(mortgage(pawn.getCollateralDeposit(), name, collateralAmount, pawn.getValue()));
             }
         }
 
@@ -144,19 +144,19 @@ public class LoanApprovalTool extends AbstractOfficeTool{
      */
     private String getRepayment(int repayment) {
         String repaymentText = "";
-        if(repayment == 1) {
+        if (repayment == 1) {
             repaymentText = "利随本清";
-        } else if(repayment == 2) {
+        } else if (repayment == 2) {
             repaymentText = "按月结息，到期一次性还本";
-        } else if(repayment == 3) {
+        } else if (repayment == 3) {
             repaymentText = "按月结息，分期还本";
-        } else if(repayment == 4) {
+        } else if (repayment == 4) {
             repaymentText = "按季结息，分期还本";
-        } else if(repayment == 5) {
+        } else if (repayment == 5) {
             repaymentText = "等额本金";
-        }else if(repayment == 6) {
+        } else if (repayment == 6) {
             repaymentText = "等额本息";
-        }else if(repayment == 7) {
+        } else if (repayment == 7) {
             repaymentText = "其他";
         }
 
@@ -168,19 +168,18 @@ public class LoanApprovalTool extends AbstractOfficeTool{
      */
     private String getApplicationMatters(int applicationMatters) {
         String applicationMattersText = "";
-        if(applicationMatters == 0) {
+        if (applicationMatters == 0) {
             applicationMattersText = "个人经营性贷款";
-        } else if(applicationMatters == 1) {
+        } else if (applicationMatters == 1) {
             applicationMattersText = "信用贷款";
-        } else if(applicationMatters == 2) {
+        } else if (applicationMatters == 2) {
             applicationMattersText = "房屋按揭贷款";
-        } else if(applicationMatters == 3) {
+        } else if (applicationMatters == 3) {
             applicationMattersText = "个人消费类贷款";
         }
 
         return applicationMattersText;
     }
-
 
 
     private void setCollateralListText(List<Map<String, Object>> collateralList, Map<String, Object> variables) {
@@ -192,25 +191,20 @@ public class LoanApprovalTool extends AbstractOfficeTool{
         int index = 0;
         StringBuilder data = new StringBuilder();
         for (Map<String, Object> map : collateralList) {
-            index ++;
-            data.append("<Row ss:Height=\"44\">")
-                    .append("<Cell ss:Index=\"3\" ss:StyleID=\"s63\">")
-                    .append("<Data ss:Type=\"Number\">").append(index).append("</Data>")
-                    .append("</Cell>")
-                    .append("<Cell ss:StyleID=\"s115\" ss:MergeAcross=\"2\">")
-                    .append("<Data ss:Type=\"String\">").append(map.get("address")).append("</Data>")
-                    .append("</Cell>")
-                    .append("<Cell ss:StyleID=\"s116\" ss:MergeAcross=\"3\">")
-                    .append("<Data ss:Type=\"String\">").append(map.get("personName")).append("</Data>")
-                    .append("</Cell>")
-                    .append("<Cell ss:StyleID=\"s117\" ss:MergeAcross=\"1\">")
-                    .append("<ss:Data xmlns=\"http://www.w3.org/TR/REC-html40\" ss:Type=\"String\">")
-                    .append(map.get("unit")).append("</ss:Data>")
-                    .append("</Cell>")
-                    .append("<Cell ss:StyleID=\"s118\" ss:MergeAcross=\"4\">")
-                    .append("<Data ss:Type=\"Number\">").append(map.get("money")).append("</Data>")
-                    .append("</Cell>")
-                    .append("</Row>");
+            index++;
+            data.append("<Row ss:AutoFitHeight=\"0\" ss:Height=\"44.0625\">\n" +
+                    "    <Cell ss:Index=\"3\" ss:StyleID=\"s96\"><Data ss:Type=\"Number\">" + index + "</Data><NamedCell\n" +
+                    "      ss:Name=\"Print_Area\"/></Cell>\n" +
+                    "    <Cell ss:MergeAcross=\"2\" ss:StyleID=\"s128\"><Data ss:Type=\"String\">" + map.get("address") + "</Data><NamedCell\n" +
+                    "      ss:Name=\"Print_Area\"/></Cell>\n" +
+                    "    <Cell ss:MergeAcross=\"3\" ss:StyleID=\"s129\"><Data ss:Type=\"String\">" + map.get("personName") + "</Data><NamedCell\n" +
+                    "      ss:Name=\"Print_Area\"/></Cell>\n" +
+                    "    <Cell ss:MergeAcross=\"1\" ss:StyleID=\"s129\"><ss:Data ss:Type=\"String\"\n" +
+                    "      xmlns=\"http://www.w3.org/TR/REC-html40\">" + map.get("unit") + "<Font html:Face=\"SimSun\"\n" +
+                    "       x:CharSet=\"134\">㎡</Font></ss:Data><NamedCell ss:Name=\"Print_Area\"/></Cell>\n" +
+                    "    <Cell ss:MergeAcross=\"4\" ss:StyleID=\"s130\"><Data ss:Type=\"Number\">" + map.get("money") + "</Data><NamedCell\n" +
+                    "      ss:Name=\"Print_Area\"/></Cell>\n" +
+                    "   </Row>");
         }
         variables.put("collateralList", data.toString());
     }
@@ -224,21 +218,19 @@ public class LoanApprovalTool extends AbstractOfficeTool{
         StringBuilder data = new StringBuilder();
         int index = 0;
         for (Map<String, Object> map : guarantorList) {
+            index++;
 
-            index ++;
-            data.append("<Row ss:Height=\"16\">")
-                    .append("<Cell ss:StyleID=\"s55\"/>")
-                    .append("<Cell ss:StyleID=\"s66\"/>")
-                    .append("<Cell ss:StyleID=\"s63\">")
-                    .append("<Data ss:Type=\"Number\">").append(index).append("</Data>")
-                    .append("</Cell>")
-                    .append("<Cell ss:StyleID=\"s121\" ss:MergeAcross=\"6\">")
-                    .append("<Data ss:Type=\"String\">").append(map.get("personName")).append("</Data>")
-                    .append("</Cell>")
-                    .append("<Cell ss:StyleID=\"s122\" ss:MergeAcross=\"6\">")
-                    .append("<Data ss:Type=\"String\"></Data>")
-                    .append("</Cell>")
-                    .append("</Row>");
+            data.append("<Row ss:AutoFitHeight=\"0\" ss:Height=\"15.9375\">\n" +
+                    "    <Cell ss:StyleID=\"s65\"><NamedCell ss:Name=\"Print_Area\"/></Cell>\n" +
+                    "    <Cell ss:StyleID=\"s69\"><NamedCell ss:Name=\"Print_Area\"/></Cell>\n" +
+                    "    <Cell ss:StyleID=\"s96\"><Data ss:Type=\"Number\">" + index + "</Data><NamedCell\n" +
+                    "      ss:Name=\"Print_Area\"/></Cell>\n" +
+                    "    <Cell ss:MergeAcross=\"6\" ss:StyleID=\"s126\"><Data ss:Type=\"String\">" + map.get("personName") + "</Data><NamedCell\n" +
+                    "      ss:Name=\"Print_Area\"/></Cell>\n" +
+                    "    <Cell ss:MergeAcross=\"6\" ss:StyleID=\"s127\"><Data ss:Type=\"String\">10007038780</Data><NamedCell\n" +
+                    "      ss:Name=\"Print_Area\"/></Cell>\n" +
+                    "   </Row>");
+
         }
         variables.put("guarantorList", data.toString());
     }

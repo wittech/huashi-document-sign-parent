@@ -1,8 +1,5 @@
 package com.louis.kitty.admin.model;
 
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-
 /**
  * ---------------------------
  * (LoanDoc)
@@ -34,6 +31,11 @@ public class LoanDoc {
      * 下载路径
      */
     private String docPath;
+
+    /**
+     * pdf生成文件
+     */
+    private String pdfPath;
     /**
      * 网络URL
      */
@@ -159,4 +161,11 @@ public class LoanDoc {
         this.lastUpdateTime = lastUpdateTime;
     }
 
+    public String getPdfPath() {
+        return pdfPath;
+    }
+
+    public void setPdfPath(String pdfPath) {
+        this.pdfPath = pdfPath;
+    }
 }

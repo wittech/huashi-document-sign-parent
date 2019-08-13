@@ -1,24 +1,27 @@
 package com.louis.kitty.admin.office;
 
+import com.louis.kitty.admin.constants.BankConstants;
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.model.CounterpartyInformation;
 import com.louis.kitty.admin.model.DocCommonModel;
-import com.louis.kitty.common.utils.StringUtils;
+import com.louis.kitty.admin.model.RelatedPersonnelInformation;
+import com.louis.kitty.admin.model.RepaymentPlan;
+import com.louis.kitty.admin.util.RmbUtil;
+import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
 @Component
 public class PersonalLoanContractTool extends AbstractOfficeTool {
 
-    private void setCoupleInfo(boolean isHasCouple, String coupleName, String coupleIdentityNumber,
+    private void setCoupleInfo(String coupleName, String coupleIdentityNumber,
                                String coupleAddress, String coupleContactNumber, Map<String, Object> variables) {
-        if (!isHasCouple) {
-            return;
-        }
-
         StringBuilder data = new StringBuilder();
         data.append("<w:p>\n" +
                 "\t<w:pPr>\n" +
@@ -245,9 +248,14 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
         variables.put("coupleInfo", data.toString());
     }
 
-    private void setCounterpartyInformation(List<Map<String, Object>> counterpartyInformations, Map<String, Object> variables) {
+    private void setCounterpartyInformation(List<CounterpartyInformation> counterpartyInformationList, String moneyUsage, Map<String, Object> variables) {
+        if (CollectionUtils.isEmpty(counterpartyInformationList)) {
+            variables.put("counterpartyInformation", "");
+            return;
+        }
+
         StringBuilder data = new StringBuilder();
-        for (Map<String, Object> counterparty : counterpartyInformations) {
+        for (CounterpartyInformation counterpartyInformation : counterpartyInformationList) {
             data.append("<w:tr>\n" +
                     "\t  <w:tblPrEx>\n" +
                     "\t\t<w:tblBorders>\n" +
@@ -294,7 +302,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t\t  <w:sz w:val=\"24\"/>\n" +
                     "\t\t\t  <w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\"/>\n" +
                     "\t\t\t</w:rPr>\n" +
-                    "\t\t\t<w:t>" + counterparty.get("name") + "</w:t>\n" +
+                    "\t\t\t<w:t>" + counterpartyInformation.getName() + "</w:t>\n" +
                     "\t\t  </w:r>\n" +
                     "\t\t</w:p>\n" +
                     "\t  </w:tc>\n" +
@@ -322,7 +330,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t\t  <w:sz w:val=\"24\"/>\n" +
                     "\t\t\t  <w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\"/>\n" +
                     "\t\t\t</w:rPr>\n" +
-                    "\t\t\t<w:t>" + counterparty.get("accountNo") + "</w:t>\n" +
+                    "\t\t\t<w:t>" + counterpartyInformation.getAccountNumber() + "</w:t>\n" +
                     "\t\t  </w:r>\n" +
                     "\t\t</w:p>\n" +
                     "\t  </w:tc>\n" +
@@ -349,7 +357,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t\t  <w:sz w:val=\"24\"/>\n" +
                     "\t\t\t  <w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\"/>\n" +
                     "\t\t\t</w:rPr>\n" +
-                    "\t\t\t<w:t>" + counterparty.get("bankName") + "</w:t>\n" +
+                    "\t\t\t<w:t>" + counterpartyInformation.getBank() + "</w:t>\n" +
                     "\t\t  </w:r>\n" +
                     "\t\t</w:p>\n" +
                     "\t  </w:tc>\n" +
@@ -384,7 +392,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t\t  <w:sz w:val=\"24\"/>\n" +
                     "\t\t\t  <w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\"/>\n" +
                     "\t\t\t</w:rPr>\n" +
-                    "\t\t\t<w:t>" + counterparty.get("money") + "</w:t>\n" +
+                    "\t\t\t<w:t>" + counterpartyInformation.getAmount() + "</w:t>\n" +
                     "\t\t  </w:r>\n" +
                     "\t\t</w:p>\n" +
                     "\t  </w:tc>\n" +
@@ -425,7 +433,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t\t  <w:sz w:val=\"24\"/>\n" +
                     "\t\t\t  <w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\"/>\n" +
                     "\t\t\t</w:rPr>\n" +
-                    "\t\t\t<w:t xml:space=\"preserve\">" + counterparty.get("usage") + " </w:t>\n" +
+                    "\t\t\t<w:t xml:space=\"preserve\">" + moneyUsage + " </w:t>\n" +
                     "\t\t  </w:r>\n" +
                     "\t\t</w:p>\n" +
                     "\t  </w:tc>\n" +
@@ -435,9 +443,14 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
         variables.put("counterpartyInformation", data.toString());
     }
 
-    private void setRepaymentPlanList(List<Map<String, Object>> repaymentPlanList, Map<String, Object> variables) {
+    private void setRepaymentPlanList(List<RepaymentPlan> repaymentPlanList, Map<String, Object> variables) {
         StringBuilder data = new StringBuilder();
-        for (Map<String, Object> repaymentPlan : repaymentPlanList) {
+        for (RepaymentPlan repaymentPlan : repaymentPlanList) {
+            if (repaymentPlan == null) {
+                continue;
+            }
+
+            Map<Integer, String> calendar = getCalendar(repaymentPlan.getRepaymentTime());
             data.append("<w:p>\n" +
                     "\t<w:pPr>\n" +
                     "\t  <w:snapToGrid w:val=\"0\"/>\n" +
@@ -464,7 +477,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t<w:u w:val=\"single\"/>\n" +
                     "\t\t<w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\"/>\n" +
                     "\t  </w:rPr>\n" +
-                    "\t  <w:t>" + repaymentPlan.get("year") + "</w:t>\n" +
+                    "\t  <w:t>" + calendar.get(Calendar.YEAR) + "</w:t>\n" +
                     "\t</w:r>\n" +
                     "\t<w:r>\n" +
                     "\t  <w:rPr>\n" +
@@ -496,7 +509,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t<w:u w:val=\"single\"/>\n" +
                     "\t\t<w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\"/>\n" +
                     "\t  </w:rPr>\n" +
-                    "\t  <w:t>" + repaymentPlan.get("month") + "</w:t>\n" +
+                    "\t  <w:t>" + calendar.get(Calendar.MONTH) + "</w:t>\n" +
                     "\t</w:r>\n" +
                     "\t<w:r>\n" +
                     "\t  <w:rPr>\n" +
@@ -520,7 +533,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t<w:u w:val=\"single\"/>\n" +
                     "\t\t<w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\"/>\n" +
                     "\t  </w:rPr>\n" +
-                    "\t  <w:t>" + repaymentPlan.get("day") + "</w:t>\n" +
+                    "\t  <w:t>" + calendar.get(Calendar.DAY_OF_MONTH) + "</w:t>\n" +
                     "\t</w:r>\n" +
                     "\t<w:r>\n" +
                     "\t  <w:rPr>\n" +
@@ -552,7 +565,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t<w:u w:val=\"single\"/>\n" +
                     "\t\t<w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\"/>\n" +
                     "\t  </w:rPr>\n" +
-                    "\t  <w:t xml:space=\"preserve\">" + repaymentPlan.get("moneyRMB") + "</w:t>\n" +
+                    "\t  <w:t xml:space=\"preserve\">" + RmbUtil.number2CNMontrayUnit(new BigDecimal(repaymentPlan.getAmount())) + "</w:t>\n" +
                     "\t</w:r>\n" +
                     "\t<w:r>\n" +
                     "\t  <w:rPr>\n" +
@@ -575,9 +588,14 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
         variables.put("repaymentPlanList", data.toString());
     }
 
-    private void setApplyFamilyPersonList(List<Map<String, Object>> applyFamilyPersonList, Map<String, Object> variables) {
+    private void setApplyFamilyPersonList(List<RelatedPersonnelInformation> applyFamilyPersonList, Map<String, Object> variables) {
+        if (CollectionUtils.isEmpty(applyFamilyPersonList)) {
+            variables.put("contractNoTypeCheck", "");
+            return;
+        }
+
         StringBuilder data = new StringBuilder();
-        for (Map<String, Object> applyFamilyPerson : applyFamilyPersonList) {
+        for (RelatedPersonnelInformation applyFamilyPerson : applyFamilyPersonList) {
             data.append("<w:p>\n" +
                     "\t<w:pPr>\n" +
                     "\t  <w:spacing w:line=\"400\" w:lineRule=\"exact\"/>\n" +
@@ -621,7 +639,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t<w:u w:val=\"single\"/>\n" +
                     "\t\t<w:lang w:eastAsia=\"zh-CN\"/>\n" +
                     "\t  </w:rPr>\n" +
-                    "\t  <w:t>" + applyFamilyPerson.get("address") + "</w:t>\n" +
+                    "\t  <w:t>" + applyFamilyPerson.getCurrentHomeAddress() + "</w:t>\n" +
                     "\t</w:r>\n" +
                     "\t<w:r>\n" +
                     "\t  <w:rPr>\n" +
@@ -661,7 +679,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t<w:u w:val=\"single\"/>\n" +
                     "\t\t<w:lang w:eastAsia=\"zh-CN\"/>\n" +
                     "\t  </w:rPr>\n" +
-                    "\t  <w:t>" + applyFamilyPerson.get("name") + "</w:t>\n" +
+                    "\t  <w:t>" + applyFamilyPerson.getName() + "</w:t>\n" +
                     "\t</w:r>\n" +
                     "\t<w:r>\n" +
                     "\t  <w:rPr>\n" +
@@ -691,7 +709,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t<w:sz w:val=\"24\"/>\n" +
                     "\t\t<w:u w:val=\"single\"/>\n" +
                     "\t  </w:rPr>\n" +
-                    "\t  <w:t xml:space=\"preserve\"> " + applyFamilyPerson.get("mobile") + "</w:t>\n" +
+                    "\t  <w:t xml:space=\"preserve\"> " + applyFamilyPerson.getContactNumber() + "</w:t>\n" +
                     "\t</w:r>\n" +
                     "\t<w:r>\n" +
                     "\t  <w:rPr>\n" +
@@ -720,7 +738,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t<w:sz w:val=\"24\"/>\n" +
                     "\t\t<w:u w:val=\"single\"/>\n" +
                     "\t  </w:rPr>\n" +
-                    "\t  <w:t xml:space=\"preserve\">      " + applyFamilyPerson.get("email") + "   </w:t>\n" +
+                    "\t  <w:t xml:space=\"preserve\">      " + (applyFamilyPerson.getEmail() == null ? "" : applyFamilyPerson.getEmail()) + "   </w:t>\n" +
                     "\t</w:r>\n" +
                     "\t<w:r>\n" +
                     "\t  <w:rPr>\n" +
@@ -761,7 +779,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t<w:u w:val=\"single\"/>\n" +
                     "\t\t<w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\"/>\n" +
                     "\t  </w:rPr>\n" +
-                    "\t  <w:t>" + applyFamilyPerson.get("wechat") + "</w:t>\n" +
+                    "\t  <w:t>" + (applyFamilyPerson.getWechat() == null ? "" : applyFamilyPerson.getWechat()) + "</w:t>\n" +
                     "\t</w:r>\n" +
                     "\t<w:r>\n" +
                     "\t  <w:rPr>\n" +
@@ -802,7 +820,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
         String guaranteeMethod2C1CheckText;
         if (StringUtils.isBlank(guaranteeMethod2C1Check)) {
             guaranteeMethod2C1CheckText = "□信用/□担保";
-        } else if (guaranteeMethod2C1Check.equals("上")) {
+        } else if (guaranteeMethod2C1Check.contains("信用")) {
             guaranteeMethod2C1CheckText = "☑信用/□担保";
         } else {
             guaranteeMethod2C1CheckText = "□信用/☑担保";
@@ -833,7 +851,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
         if (StringUtils.isBlank(repaymentEndCheck)) {
             repaymentCheckText = "□月/□季末月/□6月和12月/□年末月";
         } else if (repaymentEndCheck.equals("月")) {
-            repaymentCheckText = "□月/□季末月/□6月和12月/□年末月";
+            repaymentCheckText = "☑月/□季末月/□6月和12月/□年末月";
         } else if (repaymentEndCheck.equals("季末月")) {
             repaymentCheckText = "□月/☑季末月/□6月和12月/□年末月";
         } else if (repaymentEndCheck.equals("6月和12月")) {
@@ -904,135 +922,149 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
     @Override
     protected void fillVariable(DocCommonModel docCommonModel) {
         Map<String, Object> variables = newRound();
-        variables.put("bankBranchName", "城北支行");
+        variables.put("bankBranchName", BankConstants.BANK_BRANCH_NAME);
 
-        variables.put("personalLoanContractNo", "361102191586541");
-        variables.put("applyPersonName", "罗永芳");
-        variables.put("applyPersonIdentityNumber", "510102196901118483");
-        variables.put("applyPersonCurrentHomeAddress", "广西桂林市象山区民主路12-1号");
-        variables.put("applyPersonContactNumber", "15807737711");
+        variables.put("personalLoanContractNo", docCommonModel.getContractInformation().getPersonalLoanContractNo());
+        variables.put("applyPersonName", docCommonModel.getBorrower().getName());
+        variables.put("applyPersonIdentityNumber", docCommonModel.getBorrower().getIdentityNumber());
+        variables.put("applyPersonCurrentHomeAddress", docCommonModel.getBorrower().getCurrentHomeAddress());
+        variables.put("applyPersonContactNumber", docCommonModel.getBorrower().getContactNumber());
 
         // 没有配偶就不需要
-        setCoupleInfo(true, "唐建国", "45030519540601001X",
-                "广西桂林市叠彩区铁佛路6号2栋2单元501室",
-                "13707737775", variables);
+        if (docCommonModel.getBorrowerCouple() != null) {
+            setCoupleInfo(docCommonModel.getBorrowerCouple().getName(), docCommonModel.getBorrowerCouple().getIdentityNumber(),
+                    docCommonModel.getBorrowerCouple().getCurrentHomeAddress(), docCommonModel.getBorrowerCouple().getContactNumber(), variables);
+        }
 
-        variables.put("applyMoneyRMB", "壹佰捌拾万元整");
-        variables.put("applyMoney", "1800000.00");
-        variables.put("moneyUsage", "用于归还借款人罗永芳在广西桂林漓江农村合作银行合同编号为361102150060192、展期协议编号为：361126180056081合同项下所欠债务。");
-        variables.put("deadlineMonth", "36");
+        variables.put("applyMoneyRMB", docCommonModel.getApplyMoneyRMB());
+        variables.put("applyMoney", docCommonModel.getLoanBusinessInformation().getApplicationAmount());
+        variables.put("moneyUsage", docCommonModel.getLoanBusinessInformation().getDescription());
+        variables.put("deadlineMonth", docCommonModel.getLoanBusinessInformation().getApplicationPeriod());
+
+        Map<Integer, String> calendar = getCalendar(docCommonModel.getContractInformation().getBorrowingStartPeriod());
+
+        Map<Integer, String> calendar1 = getCalendar(docCommonModel.getContractInformation().getBorrowingEndPeriod());
 
         // 1.16. contract_information合同信息表 borrowing_start_period
-        variables.put("borrowingStartPeriodYears", "2019");
-        variables.put("borrowingStartPeriodMonth", "7");
-        variables.put("borrowingStartPeriodDay", "12");
+        variables.put("borrowingStartPeriodYears", calendar.get(Calendar.YEAR));
+        variables.put("borrowingStartPeriodMonth", calendar.get(Calendar.MONTH));
+        variables.put("borrowingStartPeriodDay", calendar.get(Calendar.DAY_OF_MONTH));
 
-        variables.put("borrowingEndPeriodYear", "2022");
-        variables.put("borrowingEndPeriodMonth", "7");
-        variables.put("borrowingEndPeriodDay", "12");
+        variables.put("borrowingEndPeriodYear", calendar1.get(Calendar.YEAR));
+        variables.put("borrowingEndPeriodMonth", calendar1.get(Calendar.MONTH));
+        variables.put("borrowingEndPeriodDay", calendar1.get(Calendar.DAY_OF_MONTH));
 
         //  1.11. loan_business_information贷款业务信息表 interest_rate 利率 1浮动利率 2固定利率
-        // 1: 16.4.1  2:16.4.2
-        variables.put("interestRateText", "16.4.1");
+        // 1: 16.4.1  2:16.4.2  申请利率%
+        if (docCommonModel.getLoanBusinessInformation().getInterestRate() == null) {
+            variables.put("interestRateText", "        ");
 
-        // capplication_rate 申请利率%
-        variables.put("applicationRate", "8.07500");
-        variables.put("applicationRate2", "8.07500");
+            variables.put("applicationRate", "        ");
+            variables.put("applicationRate2", "        ");
+        } else if (docCommonModel.getLoanBusinessInformation().getInterestRate() == 1) {
+            variables.put("interestRateText", "16.4.1");
+            variables.put("applicationRate", docCommonModel.getLoanBusinessInformation().getApplicationRate());
+            variables.put("applicationRate2", "        ");
+        } else if (docCommonModel.getLoanBusinessInformation().getInterestRate() == 2) {
+            variables.put("interestRateText", "16.4.2");
+            variables.put("applicationRate", "        ");
+            variables.put("applicationRate2", docCommonModel.getLoanBusinessInformation().getApplicationRate());
+        }
 
         // adjustment_method 利率调整方式 1立即生效 2次年一月一日起生效 3对月对日生效
-        variables.put("adjustmentMethod", "1");
+        if (docCommonModel.getLoanBusinessInformation().getAdjustmentMethod() == null) {
+            variables.put("adjustmentMethod", "    ");
+        } else if (docCommonModel.getLoanBusinessInformation().getInterestRate() == 1) {
+            variables.put("adjustmentMethod", "立即生效");
+        } else if (docCommonModel.getLoanBusinessInformation().getInterestRate() == 2) {
+            variables.put("adjustmentMethod", "次年一月一日起生效");
+        } else if (docCommonModel.getLoanBusinessInformation().getInterestRate() == 3) {
+            variables.put("adjustmentMethod", "对月对日生效");
+        }
 
         // 1.1. loan_basis借口人基础信息表  guarantee_method  担保方式 逗号分隔 例如 保证,抵押,质押
         setGuaranteeMethod2C1CheckText("担保", variables);
 
         // 1.12. counterparty_information交易对手信息表
-        List<Map<String, Object>> counterpartyInformations = new ArrayList<>();
-        Map<String, Object> counterpartyInformation = new HashMap<>();
-        counterpartyInformation.put("name", "罗永芳");
-        counterpartyInformation.put("account", "6231330500000311451");
-        counterpartyInformation.put("bankName", "广西桂林漓江农村合作银行");
-        counterpartyInformation.put("money", "1800000.00");
-        counterpartyInformation.put("usage", "用于归还借款人罗永芳在广西桂林漓江农村合作银行合同编号为361102150060192、展期协议编号为：361126180056081合同项下所欠债务。");
-        counterpartyInformations.add(counterpartyInformation);
-        // 可追加多个
-        setCounterpartyInformation(counterpartyInformations, variables);
+        setCounterpartyInformation(docCommonModel.getCounterpartyInformationList(), docCommonModel.getLoanBusinessInformation().getDescription(), variables);
+
+        // 1.11. loan_business_information贷款业务信息表 repayment 还款方式 1利随本清 2按月结息，到期一次性还本 3按月结息，分期还本 4按季结息，分期还本 5等额本金 6等额本息 7其他
+        setRepayment(docCommonModel, variables);
+
+        // 1.11. loan_business_information贷款业务信息表
+        variables.put("deductionAccountName", docCommonModel.getLoanBusinessInformation().getDebitAccountName());
+        variables.put("deductionAccount", docCommonModel.getLoanBusinessInformation().getDepositAccount());
 
 
+        // 1.1. loan_basis借口人基础信息表 guarantee_method
+        setGuaranteeMethod(docCommonModel.getLoanBasis().getGuaranteeMethod(), variables);
+        setContractNoTypeCheck(docCommonModel.getLoanBasis().getGuaranteeMethod(), variables);
+
+        // 1.16. contract_information合同信息表
+        variables.put("contractNo", docCommonModel.getContractInformation().getMortgageGuaranteeContractNo());
+
+        List<RelatedPersonnelInformation> applyFamilyPersonList = new ArrayList<>();
+        if(docCommonModel.getBorrower() != null) {
+            applyFamilyPersonList.add(docCommonModel.getBorrower());
+        }
+
+        if(docCommonModel.getBorrowerCouple() != null) {
+            applyFamilyPersonList.add(docCommonModel.getBorrowerCouple());
+        }
+
+        setApplyFamilyPersonList(applyFamilyPersonList, variables);
+    }
+
+    private void setRepayment(DocCommonModel model, Map<String, Object> variables) {
         //  1.11. loan_business_information贷款业务信息表 repayment 还款方式 1利随本清 2按月结息，到期一次性还本 3按月结息，分期还本 4按季结息，分期还本 5等额本金 6等额本息 7其他
         // 1->18.1.1  , 2->18.1.2, 3,4->18.1.3, 5->18.1.5, 6->18.1.4, 7->18.1.6
 
         // 18.1.1/ 18.1.4/18.1.5 则都为空
         // 18.1.2 则 setRepayment("月"), setRepaymentEnd("月")
-        // 18.1.3 则 3->setRepayment("月"), setRepaymentEnd("月")， 4：>setRepayment("季"), setRepaymentEnd("季末月")
+        // 18.1.3 则 3-> 4：>setRepayment("季"), setRepaymentEnd("季末月")
         // 18.1.6 则 otherValue
-        variables.put("repaymentCatalog", "18.1.1");
-        variables.put("repayment", "/");
+
+        variables.put("repaymentCatalog", "        ");
+        variables.put("repayment", "");
         variables.put("repaymentCheck", setRepayment(""));
         variables.put("repaymentEndCheck", setRepaymentEnd(""));
 
-        variables.put("repayment2", "/");
+        variables.put("repayment2", "");
         variables.put("repaymentCheck2", setRepayment(""));
         variables.put("repaymentEndCheck2", setRepaymentEnd(""));
 
-        // 仅有 3 才有还款计划
-        // 1.13. repayment_plan还款计划信息表
-        List<Map<String, Object>> repaymentPlanList = new ArrayList<>();
-        Map<String, Object> tempMap = new HashMap<>();
-        tempMap.put("year", "2020");
-        tempMap.put("month", "7");
-        tempMap.put("day", "12");
-        tempMap.put("money", "伍万");
-        repaymentPlanList.add(tempMap);
+        if (model.getLoanBusinessInformation().getRepayment() == null) {
+            return;
+        }
 
-        tempMap = new HashMap<>();
-        tempMap.put("year", "2021");
-        tempMap.put("month", "7");
-        tempMap.put("day", "12");
-        tempMap.put("money", "壹拾万");
-        repaymentPlanList.add(tempMap);
+        if (model.getLoanBusinessInformation().getRepayment() == 1) {
+            variables.put("repaymentCatalog", "18.1.1");
+        } else if (model.getLoanBusinessInformation().getRepayment() == 2) {
+            variables.put("repaymentCatalog", "18.1.2");
+            variables.put("repaymentCheck", setRepayment("月"));
+            variables.put("repaymentEndCheck", setRepaymentEnd("月"));
 
-        tempMap = new HashMap<>();
-        tempMap.put("year", "2022");
-        tempMap.put("month", "7");
-        tempMap.put("day", "12");
-        tempMap.put("money", "壹佰陆拾伍万");
-        repaymentPlanList.add(tempMap);
+            variables.put("repayment2", "/");
+        } else if (model.getLoanBusinessInformation().getRepayment() == 3 ||
+                model.getLoanBusinessInformation().getRepayment() == 4) {
+            variables.put("repaymentCatalog", "18.1.3");
 
-        setRepaymentPlanList(repaymentPlanList, variables);
+            variables.put("repaymentCheck2", setRepayment(model.getLoanBusinessInformation().getRepayment() == 3 ? "月" : "季"));
+            variables.put("repaymentEndCheck2", setRepaymentEnd(setRepayment(model.getLoanBusinessInformation().getRepayment() == 3 ? "月" : "季末月")));
 
-        variables.put("otherValue", "/");
+            variables.put("repayment", "/");
 
-        // 1.11. loan_business_information贷款业务信息表
-        variables.put("deductionAccountName", "罗永芳");
-        variables.put("deductionAccount", "6231330500000311451");
-
-
-        // 1.1. loan_basis借口人基础信息表 guarantee_method
-        setGuaranteeMethod("抵押,保证", variables);
-        setContractNoTypeCheck("抵押,保证", variables);
-
-        // 1.16. contract_information合同信息表，如果多个则 、分割
-        variables.put("contractNo", "361104190989043");
-
-
-        List<Map<String, Object>> applyFamilyPersonList = new ArrayList<>();
-        Map<String, Object> applyFamilyPerson = new HashMap<>();
-        applyFamilyPerson.put("address", "广西桂林市象山区民主路12-1号");
-        applyFamilyPerson.put("name", "罗永芳");
-        applyFamilyPerson.put("mobile", "15807737711");
-        applyFamilyPerson.put("email", "/");
-        applyFamilyPerson.put("wechat", "/");
-        applyFamilyPersonList.add(applyFamilyPerson);
-
-        applyFamilyPerson = new HashMap<>();
-        applyFamilyPerson.put("address", "广西桂林市叠彩区铁佛路6号2栋2单元501室");
-        applyFamilyPerson.put("name", "唐建国");
-        applyFamilyPerson.put("mobile", "13707737775");
-        applyFamilyPerson.put("email", "/");
-        applyFamilyPerson.put("wechat", "/");
-        applyFamilyPersonList.add(applyFamilyPerson);
-
-        setApplyFamilyPersonList(applyFamilyPersonList, variables);
+            // 仅有 3 才有还款计划
+            // 1.13. repayment_plan还款计划信息表
+            setRepaymentPlanList(model.getRepaymentPlanList(), variables);
+        } else if (model.getLoanBusinessInformation().getRepayment() == 5) {
+            variables.put("repaymentCatalog", "18.1.5");
+        } else if (model.getLoanBusinessInformation().getRepayment() == 6) {
+            variables.put("repaymentCatalog", "18.1.4");
+        } else if (model.getLoanBusinessInformation().getRepayment() == 7) {
+            variables.put("repaymentCatalog", "18.1.6");
+            variables.put("otherValue", model.getLoanBusinessInformation().getValue());
+        }
     }
 
     @Override

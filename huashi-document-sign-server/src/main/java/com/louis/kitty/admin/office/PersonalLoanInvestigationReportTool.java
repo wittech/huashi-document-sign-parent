@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @Component
-public class PersonalLoansChecklistTool extends AbstractOfficeTool {
+public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
 
     @Resource
     private PostLoanNotImplementedMapper postLoanNotImplementedMapper;
@@ -198,12 +198,12 @@ public class PersonalLoansChecklistTool extends AbstractOfficeTool {
 
     @Override
     protected String modelFileName() {
-        return "个人贷款贷后检查表";
+        return "个人贷款调查报告";
     }
 
     @Override
     protected int sort() {
-        return 3_6_00;
+        return 3_7_00;
     }
 
     @Override

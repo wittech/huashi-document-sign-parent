@@ -3,10 +3,8 @@ package com.louis.kitty.admin.office;
 import com.louis.kitty.admin.constants.DocConstants;
 import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.Pawn;
-import com.louis.kitty.admin.model.PawnPersonnelMapping;
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
 import com.louis.kitty.admin.sevice.PawnPersonnelMappingService;
-import com.louis.kitty.admin.sevice.PawnService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,32 +23,19 @@ public class LenderRelationshipTool extends AbstractOfficeTool {
 
         for (int i = 0; i < relationshipList.size(); i++) {
             Map<String, Object> relationship = relationshipList.get(i);
-            data.append("<Row ss:Height=\"102\">\n")
-                    .append("<Cell ss:StyleID=\"s52\">\n")
-                    .append("<Data ss:Type=\"Number\">").append(i + 1).append("</Data>\n")
-                    .append("</Cell>\n")
-                    .append("<Cell ss:StyleID=\"s52\">\n")
-                    .append("<Data ss:Type=\"String\">").append(relationship.get("name")).append("</Data>\n")
-                    .append("</Cell>\n")
-                    .append("<Cell ss:StyleID=\"s60\">\n")
-                    .append("<Data ss:Type=\"String\">").append(relationship.get("relationship")).append("</Data>\n")
-                    .append("</Cell>\n")
-                    .append("<Cell ss:StyleID=\"s61\">\n")
-                    .append("<Data ss:Type=\"String\" x:Ticked=\"1\">").append(relationship.get("idcard")).append("</Data>\n")
-                    .append("</Cell>\n")
-                    .append("<Cell ss:StyleID=\"s62\">\n")
-                    .append("<Data ss:Type=\"String\">").append(relationship.get("address")).append("</Data>\n")
-                    .append("</Cell>\n")
-                    .append("<Cell ss:StyleID=\"s60\">\n")
-                    .append("<Data ss:Type=\"Number\">").append(relationship.get("mobile")).append("</Data>\n")
-                    .append("</Cell>\n")
-                    .append("<Cell ss:StyleID=\"s53\"/>\n")
-                    .append("<Cell ss:StyleID=\"s53\"/>\n")
-                    .append("<Cell ss:StyleID=\"s53\"/>\n")
-                    .append("<Cell ss:StyleID=\"s62\">\n")
-                    .append("<Data ss:Type=\"String\">").append(relationship.get("remark")).append("</Data>\n")
-                    .append("</Cell>\n")
-                    .append("</Row>");
+            data.append("<Row ss:AutoFitHeight=\"0\" ss:Height=\"102\">\n" +
+                    "    <Cell ss:StyleID=\"s65\"><Data ss:Type=\"Number\">" + (i + 1) + "</Data></Cell>\n" +
+                    "    <Cell ss:StyleID=\"s65\"><Data ss:Type=\"String\">" + relationship.get("name") + "</Data></Cell>\n" +
+                    "    <Cell ss:StyleID=\"s65\"><Data ss:Type=\"String\">" + relationship.get("relationship") + "</Data></Cell>\n" +
+                    "    <Cell ss:StyleID=\"s70\"><Data ss:Type=\"String\" x:Ticked=\"1\">" + relationship.get("idcard") + "</Data></Cell>\n" +
+                    "    <Cell ss:StyleID=\"s71\"><Data ss:Type=\"String\">" + relationship.get("address") + "</Data></Cell>\n" +
+                    "    <Cell ss:StyleID=\"s65\"><Data ss:Type=\"Number\">" + relationship.get("mobile") + "</Data></Cell>\n" +
+                    "    <Cell ss:StyleID=\"s66\"/>\n" +
+                    "    <Cell ss:StyleID=\"s66\"/>\n" +
+                    "    <Cell ss:StyleID=\"s66\"/>\n" +
+                    "    <Cell ss:StyleID=\"s71\"><Data ss:Type=\"String\">" + relationship.get("remark") + "</Data></Cell>\n" +
+                    "   </Row>");
+
         }
 
         variables.put("relationshipList", data.toString());
@@ -81,7 +66,7 @@ public class LenderRelationshipTool extends AbstractOfficeTool {
         // 1.2. related_personnel_information相关人员信息表
         List<Map<String, Object>> relationshipList = new ArrayList<>();
 
-        if(docCommonModel.getBorrower() != null) {
+        if (docCommonModel.getBorrower() != null) {
             relationshipList.add(relationship(docCommonModel.getBorrower().getName(),
                     "借款人本人", docCommonModel.getBorrower().getIdentityNumber(),
                     docCommonModel.getBorrower().getContactNumber(),
@@ -89,15 +74,15 @@ public class LenderRelationshipTool extends AbstractOfficeTool {
                     getMortgageGoodsName(docCommonModel.getBorrower().getId())));
         }
 
-        if(docCommonModel.getBorrowerCouple() != null) {
+        if (docCommonModel.getBorrowerCouple() != null) {
             relationshipList.add(relationship(docCommonModel.getBorrowerCouple().getName(),
                     "借款人配偶", docCommonModel.getBorrowerCouple().getIdentityNumber(),
                     docCommonModel.getBorrowerCouple().getContactNumber(),
                     docCommonModel.getBorrowerCouple().getCurrentHomeAddress(), ""));
         }
 
-        if(CollectionUtils.isNotEmpty(docCommonModel.getGuarantorList())) {
-            for(RelatedPersonnelInformation relatedPersonnelInformation : docCommonModel.getGuarantorList()) {
+        if (CollectionUtils.isNotEmpty(docCommonModel.getGuarantorList())) {
+            for (RelatedPersonnelInformation relatedPersonnelInformation : docCommonModel.getGuarantorList()) {
 
                 relationshipList.add(relationship(relatedPersonnelInformation.getName(),
                         "保证担保人", relatedPersonnelInformation.getIdentityNumber(),
@@ -106,8 +91,8 @@ public class LenderRelationshipTool extends AbstractOfficeTool {
             }
         }
 
-        if(CollectionUtils.isNotEmpty(docCommonModel.getMortgageGuarantorList())) {
-            for(RelatedPersonnelInformation relatedPersonnelInformation : docCommonModel.getMortgageGuarantorList()) {
+        if (CollectionUtils.isNotEmpty(docCommonModel.getMortgageGuarantorList())) {
+            for (RelatedPersonnelInformation relatedPersonnelInformation : docCommonModel.getMortgageGuarantorList()) {
 
                 relationshipList.add(relationship(relatedPersonnelInformation.getName(),
                         "抵押担保人", relatedPersonnelInformation.getIdentityNumber(),
@@ -122,12 +107,12 @@ public class LenderRelationshipTool extends AbstractOfficeTool {
 
     private String getMortgageGoodsName(Long rpiId) {
         List<Pawn> list = pawnPersonnelMappingService.findByRpiId(rpiId);
-        if(CollectionUtils.isEmpty(list)) {
+        if (CollectionUtils.isEmpty(list)) {
             return "";
         }
 
         Set<String> mortgageGoodsName = new HashSet<>();
-        for(Pawn pawn : list) {
+        for (Pawn pawn : list) {
             mortgageGoodsName.add(pawn.getCollateralDeposit());
         }
 
