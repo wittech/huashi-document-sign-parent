@@ -389,7 +389,7 @@ public class LoanDocServiceImpl implements LoanDocService {
                 continue;
             }
 
-            pdfFileNames.add(loanDoc.getDocPath());
+            pdfFileNames.add(loanDoc.getPdfPath());
         }
 
         String targetPdfFileName = getDateTimeFileName(loanDocList.size()) + DocConstants.DocType.PDF.getSuffixName();
