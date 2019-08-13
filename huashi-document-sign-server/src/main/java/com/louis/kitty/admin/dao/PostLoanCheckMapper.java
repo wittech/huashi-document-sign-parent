@@ -2,6 +2,7 @@ package com.louis.kitty.admin.dao;
 
 import java.util.List;
 
+import com.louis.kitty.admin.dto.PostLoanCheckDto;
 import com.louis.kitty.admin.model.PostLoanCheck;
 
 /**
@@ -49,5 +50,12 @@ public interface PostLoanCheckMapper {
      * @return
      */    
     List<PostLoanCheck> findPage();
+    
+    /**
+     * 根据借款人 状态查询 分页
+     * @param record
+     * @return
+     */
+     List<PostLoanCheckDto> findPageByBorrowerAndStatus(PostLoanCheck record);
     
 }

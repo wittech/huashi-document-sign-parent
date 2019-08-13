@@ -2,16 +2,17 @@ package com.louis.kitty.admin.sevice.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.louis.kitty.admin.dao.PostLoanCheckMapper;
+import com.louis.kitty.admin.model.PostLoanCheck;
+import com.louis.kitty.admin.sevice.PostLoanCheckService;
+import com.louis.kitty.core.page.ColumnFilter;
 import com.louis.kitty.core.page.MybatisPageHelper;
 import com.louis.kitty.core.page.PageRequest;
 import com.louis.kitty.core.page.PageResult;
-
-import com.louis.kitty.admin.model.PostLoanCheck;
-import com.louis.kitty.admin.dao.PostLoanCheckMapper;
-import com.louis.kitty.admin.sevice.PostLoanCheckService;
 
 /**
  * ---------------------------
@@ -56,7 +57,29 @@ public class PostLoanCheckServiceImpl implements PostLoanCheckService {
 
 	@Override
 	public PageResult findPage(PageRequest pageRequest) {
-		return MybatisPageHelper.findPage(pageRequest, postLoanCheckMapper);
+		String borrower = getColumnFilterValue(pageRequest, "borrower");
+		System.out.println("borrower==="+borrower);
+		String status = getColumnFilterValue(pageRequest, "status");
+		System.out.println("status==="+status);
+		PostLoanCheck record = new PostLoanCheck();
+		record.setBorrower(borrower);
+		if(StringUtils.isNotEmpty(status)){
+			record.setStatus(Integer.parseInt(status));
+		}
+		return MybatisPageHelper.findPage(pageRequest, postLoanCheckMapper, "findPageByBorrowerAndStatus", record);
 	}
 	
+	/**
+	 * 获取过滤字段的值
+	 * @param filterName
+	 * @return
+	 */
+	public String getColumnFilterValue(PageRequest pageRequest, String filterName) {
+		String value = null;
+		ColumnFilter columnFilter = pageRequest.getColumnFilter(filterName);
+		if(columnFilter != null) {
+			value = columnFilter.getValue();
+		}
+		return value;
+	}
 }
