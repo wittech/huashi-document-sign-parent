@@ -13,6 +13,7 @@
         <result column="owe_principal" jdbcType="DECIMAL" property="owePrincipal"/>
         <result column="owe_interest" jdbcType="DECIMAL" property="oweInterest"/>
         <result column="fill_date" jdbcType="TIMESTAMP" property="fillDate"/>
+        <result column="status" jdbcType="BIGINT" property="status"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
         <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
@@ -52,6 +53,9 @@
             </if>
             <if test="fillDate != null">
                 fill_date,
+            </if>
+             <if test="status != null">
+                status,
             </if>
             <if test="createTime != null">
                 create_time,
@@ -99,6 +103,9 @@
             </if>
             <if test="fillDate != null">
                 #{fillDate,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+             	#{status,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
@@ -156,6 +163,9 @@
             </if>
             <if test="fillDate != null">
                 fill_date = #{fillDate,jdbcType=TIMESTAMP},
+            </if>
+             <if test="status != null">
+                status = #{status,jdbcType=INTEGER},
             </if>
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},

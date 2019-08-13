@@ -32,6 +32,8 @@
         <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy"/>
         <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
         <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
+        <result column="debit_account_name" jdbcType="VARCHAR" property="debitAccountName"/>
+        <result column="account_number" jdbcType="VARCHAR" property="accountNumber"/>
     </resultMap>
 
     <insert id="add" parameterType="com.louis.kitty.admin.model.LoanBusinessInformation" useGeneratedKeys="true"
@@ -43,6 +45,12 @@
             </if>
             <if test="loanBasisId != null">
                 loan_basis_id,
+            </if>
+            <if test="debitAccountName != null">
+                debit_account_name,
+            </if>
+            <if test="accountNumber != null">
+                account_number,
             </if>
             <if test="borrowerAccount != null">
                 borrower_account,
@@ -129,6 +137,12 @@
             </if>
             <if test="loanBasisId != null">
                 #{loanBasisId,jdbcType=BIGINT},
+            </if>
+            <if test="debitAccountName != null">
+                 #{debitAccountName,jdbcType=VARCHAR},
+            </if>
+            <if test="accountNumber != null">
+                 #{accountNumber,jdbcType=VARCHAR},
             </if>
             <if test="borrowerAccount != null">
                 #{borrowerAccount,jdbcType=VARCHAR},
@@ -222,6 +236,12 @@
         <set>
             <if test="id != null">
                 id = #{id,jdbcType=BIGINT},
+            </if>
+             <if test="debitAccountName != null">
+                 debit_account_name=#{debitAccountName,jdbcType=VARCHAR},
+            </if>
+            <if test="accountNumber != null">
+                 account_number=#{accountNumber,jdbcType=VARCHAR},
             </if>
             <if test="loanBasisId != null">
                 loan_basis_id = #{loanBasisId,jdbcType=BIGINT},

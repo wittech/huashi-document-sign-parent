@@ -19,6 +19,7 @@
 	<result column="is_complete" jdbcType="INTEGER" property="isComplete" />
 	<result column="complete" jdbcType="INTEGER" property="complete" />
 	<result column="has_implemented" jdbcType="INTEGER" property="hasImplemented" />
+	<result column="status" jdbcType="BIGINT" property="status"/>
 	<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
 	<result column="create_by" jdbcType="VARCHAR" property="createBy" />
 	<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
@@ -76,6 +77,9 @@
       </if>
       <if test="hasImplemented != null">
         has_implemented,
+      </if>
+      <if test="status != null">
+        status,
       </if>
       <if test="createTime != null">
         create_time,
@@ -141,6 +145,9 @@
       </if>
       <if test="hasImplemented != null">
         #{hasImplemented,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+      	 #{status,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
@@ -215,6 +222,9 @@
       </if>
       <if test="hasImplemented != null">
         has_implemented = #{hasImplemented,jdbcType=INTEGER},
+      </if>
+       <if test="status != null">
+        	status = #{status,jdbcType=INTEGER},
       </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},

@@ -71,6 +71,10 @@ public class LoanBusinessInformation {
 	private Integer delFlag;
 	private List<CounterpartyInformation> counterpartyInformation;
 	private List<RepaymentPlan> repaymentPlan;
+	//扣款账户名
+	private String debitAccountName;
+	//账号
+	private String accountNumber;
 
 	public List<CounterpartyInformation> getCounterpartyInformation() {
 		return counterpartyInformation;
@@ -310,6 +314,22 @@ public class LoanBusinessInformation {
 
 	public void setDelFlag(Integer delFlag) {
 		this.delFlag = delFlag;
+	}
+
+	public String getDebitAccountName() {
+		return debitAccountName;
+	}
+
+	public void setDebitAccountName(String debitAccountName) {
+		this.debitAccountName = debitAccountName;
+	}
+
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 
 }

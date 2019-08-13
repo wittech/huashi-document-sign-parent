@@ -53,6 +53,8 @@ public class PostLoanCheck {
 	private String lastUpdateBy;
 	/** 是否删除  -1：已删除  0：正常 */
 	private Integer delFlag;
+	private Integer status;
+	
 
 	public Long getId() {
 		return id;
@@ -220,6 +222,14 @@ public class PostLoanCheck {
 
 	public void setDelFlag(Integer delFlag) {
 		this.delFlag = delFlag;
+	}
+
+	public Integer getStatus() {
+		return status;
+	}
+
+	public void setStatus(Integer status) {
+		this.status = status;
 	}
 
 }
