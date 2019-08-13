@@ -502,7 +502,7 @@ public class MortgageQuartetAgreementTool extends AbstractOfficeTool {
                 "  <w:t>" + secondMoneyRMB + "（¥" + secondMoney + "）</w:t>\n" +
                 "</w:r>");
 
-        variables.put("noLeaseInfo", data.toString());
+        variables.put("leaseInfo", data.toString());
     }
 
     @Override
