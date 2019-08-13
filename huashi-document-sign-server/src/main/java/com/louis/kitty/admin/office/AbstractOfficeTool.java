@@ -59,7 +59,6 @@ public abstract class AbstractOfficeTool {
      * 写入磁盘
      */
     private long write2Disk(String storagePath, String data) throws IOException {
-        storagePath = storagePath + docType().getSuffixName();
         byte[] targetFileData = data.getBytes(Charset.forName(DEFAULT_ENCODING));
 
         Files.write(Paths.get(storagePath), targetFileData);
