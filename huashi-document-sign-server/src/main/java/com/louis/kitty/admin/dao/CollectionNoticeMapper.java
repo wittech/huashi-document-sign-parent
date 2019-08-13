@@ -2,6 +2,7 @@ package com.louis.kitty.admin.dao;
 
 import java.util.List;
 
+import com.louis.kitty.admin.dto.CollectionNoticeDto;
 import com.louis.kitty.admin.model.CollectionNotice;
 
 /**
@@ -50,5 +51,12 @@ public interface CollectionNoticeMapper {
     List<CollectionNotice> findPage();
 
     CollectionNotice findByLoanBasisId(Long loanBasisId);
+    
+    /**
+     * 根据借款人 状态查询 分页
+     * @param record
+     * @return
+     */
+     List<CollectionNoticeDto> findPageByBorrowerAndStatus(CollectionNotice record);
 
 }

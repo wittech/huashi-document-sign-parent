@@ -20,6 +20,17 @@
         <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy"/>
         <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
     </resultMap>
+    
+    <resultMap id="BasePageResultMap" type="com.louis.kitty.admin.dto.CollectionNoticeDto">
+		<id column="id" jdbcType="BIGINT" property="id" />
+		<result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId" />
+		<result column="status" jdbcType="BIGINT" property="status" />
+		<result column="borrower" jdbcType="VARCHAR" property="borrower" />
+		<result column="loan_type" jdbcType="BIGINT" property="loanType" />
+		<result column="application_matters" jdbcType="INTEGER" property="applicationMatters" />
+		<result column="loan_start_and_stop_date" jdbcType="VARCHAR" property="loanStartAndStopDate" />
+		<result column="application_amount" jdbcType="DECIMAL" property="applicationAmount" />
+  	</resultMap>
 
     <insert id="add" parameterType="com.louis.kitty.admin.model.CollectionNotice">
         insert into collection_notice
@@ -202,6 +213,19 @@
         from collection_notice
         where loan_basis_id = #{loanBasisId,jdbcType=BIGINT}
     </select>
+    
+    <select id="findPageByBorrowerAndStatus"  parameterType="com.louis.kitty.admin.dto.CollectionNoticeDto" resultMap="BasePageResultMap">
+	    select cn.id,cn.loan_basis_id,cn.loan_start_and_stop_date,lb.loan_type,lb.application_matters,lbi.application_amount from collection_notice cn
+	    inner join loan_basis lb on cn.loan_basis_id=lb.id left join loan_business_information lbi on cn.loan_basis_id=lbi.loan_basis_id
+	    where cn.del_flag=0
+	    <if test="borrower != null and borrower != ''">
+	    	and cn.borrower  = #{borrower,jdbcType=VARCHAR}
+	     </if>
+	      <if test="status != null and sttaus != '' and sttaus > 0">
+	    	and cn.status  = #{status,jdbcType=BIGINT}
+	     </if>
+	     order by cn.create_time 
+  	</select>
 
 
 </mapper>

@@ -41,7 +41,7 @@ public class PostLoanCheckController {
 	public HttpResult save(@RequestBody PostLoanCheck record) {
 		return HttpResult.ok(postLoanCheckService.save(record));
 	}
-
+	
     /**
      * 删除贷后检查信息表
      * @param records
