@@ -49,5 +49,6 @@ public interface PostLoanNotImplementedMapper {
      * @return
      */    
     List<PostLoanNotImplemented> findPage();
-    
+
+    List<PostLoanNotImplemented> findByCheckId(Long postLoanCheckId);
 }

@@ -2,106 +2,115 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.louis.kitty.admin.dao.PostLoanNotImplementedMapper">
 
-  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.PostLoanNotImplemented">
-	<id column="id" jdbcType="BIGINT" property="id" />
-	<result column="post_loan_check_id" jdbcType="BIGINT" property="postLoanCheckId" />
-	<result column="item" jdbcType="VARCHAR" property="item" />
-	<result column="reason" jdbcType="VARCHAR" property="reason" />
-	<result column="measures" jdbcType="VARCHAR" property="measures" />
-	<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-	<result column="create_by" jdbcType="VARCHAR" property="createBy" />
-  </resultMap>
-  
-  <insert id="add" parameterType="com.louis.kitty.admin.model.PostLoanNotImplemented">
-    insert into post_loan_not_implemented
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="postLoanCheckId != null">
-        post_loan_check_id,
-      </if>
-      <if test="item != null">
-        item,
-      </if>
-      <if test="reason != null">
-        reason,
-      </if>
-      <if test="measures != null">
-        measures,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="createBy != null">
-        create_by,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="postLoanCheckId != null">
-        #{postLoanCheckId,jdbcType=BIGINT},
-      </if>
-      <if test="item != null">
-        #{item,jdbcType=VARCHAR},
-      </if>
-      <if test="reason != null">
-        #{reason,jdbcType=VARCHAR},
-      </if>
-      <if test="measures != null">
-        #{measures,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createBy != null">
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-    </trim>
-  </insert>
+    <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.PostLoanNotImplemented">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="post_loan_check_id" jdbcType="BIGINT" property="postLoanCheckId"/>
+        <result column="item" jdbcType="VARCHAR" property="item"/>
+        <result column="reason" jdbcType="VARCHAR" property="reason"/>
+        <result column="measures" jdbcType="VARCHAR" property="measures"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+    </resultMap>
 
-  <delete id="delete" parameterType="java.lang.Long">
-    delete from post_loan_not_implemented
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  
-  <update id="update" parameterType="com.louis.kitty.admin.model.PostLoanNotImplemented">
-    update post_loan_not_implemented
-    <set>
-      <if test="id != null">
-        id = #{id,jdbcType=BIGINT},
-      </if>
-      <if test="postLoanCheckId != null">
-        post_loan_check_id = #{postLoanCheckId,jdbcType=BIGINT},
-      </if>
-      <if test="item != null">
-        item = #{item,jdbcType=VARCHAR},
-      </if>
-      <if test="reason != null">
-        reason = #{reason,jdbcType=VARCHAR},
-      </if>
-      <if test="measures != null">
-        measures = #{measures,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="createBy != null">
-        create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <insert id="add" parameterType="com.louis.kitty.admin.model.PostLoanNotImplemented">
+        insert into post_loan_not_implemented
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="postLoanCheckId != null">
+                post_loan_check_id,
+            </if>
+            <if test="item != null">
+                item,
+            </if>
+            <if test="reason != null">
+                reason,
+            </if>
+            <if test="measures != null">
+                measures,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="postLoanCheckId != null">
+                #{postLoanCheckId,jdbcType=BIGINT},
+            </if>
+            <if test="item != null">
+                #{item,jdbcType=VARCHAR},
+            </if>
+            <if test="reason != null">
+                #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="measures != null">
+                #{measures,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
 
-  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select * from post_loan_not_implemented
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  
-  <select id="findPage" resultMap="BaseResultMap">
-    select * from post_loan_not_implemented
-  </select>
-  
+    <delete id="delete" parameterType="java.lang.Long">
+        delete
+        from post_loan_not_implemented
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <update id="update" parameterType="com.louis.kitty.admin.model.PostLoanNotImplemented">
+        update post_loan_not_implemented
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=BIGINT},
+            </if>
+            <if test="postLoanCheckId != null">
+                post_loan_check_id = #{postLoanCheckId,jdbcType=BIGINT},
+            </if>
+            <if test="item != null">
+                item = #{item,jdbcType=VARCHAR},
+            </if>
+            <if test="reason != null">
+                reason = #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="measures != null">
+                measures = #{measures,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from post_loan_not_implemented
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPage" resultMap="BaseResultMap">
+        select *
+        from post_loan_not_implemented
+    </select>
+
+    <select id="findByCheckId" resultMap="BaseResultMap">
+        select *
+        from post_loan_not_implemented where post_loan_check_id = #{postLoanCheckId,jdbcType=BIGINT}
+    </select>
+
+
 </mapper>

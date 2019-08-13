@@ -51,6 +51,11 @@ public class DocCommonModel {
     private List<RelatedPersonnelInformation> guarantorList = new ArrayList<>();
 
     /**
+     * 其他类型关系人（指关系类型 为空数据）
+     */
+    private List<RelatedPersonnelInformation> otherPartyList = new ArrayList<>();
+
+    /**
      * 抵押物信息表
      */
     private List<Pawn> pawnList = new ArrayList<>();

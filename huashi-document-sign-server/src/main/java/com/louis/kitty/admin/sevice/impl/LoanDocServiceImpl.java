@@ -9,9 +9,7 @@ import com.louis.kitty.admin.dao.LoanDocMapper;
 import com.louis.kitty.admin.model.*;
 import com.louis.kitty.admin.office.*;
 import com.louis.kitty.admin.sevice.*;
-import com.louis.kitty.admin.util.FileDownloadUtil;
-import com.louis.kitty.admin.util.PdfUtil;
-import com.louis.kitty.admin.util.ZipUtil;
+import com.louis.kitty.admin.util.*;
 import com.louis.kitty.core.page.ColumnFilter;
 import com.louis.kitty.core.page.MybatisPageHelper;
 import com.louis.kitty.core.page.PageRequest;
@@ -25,9 +23,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -36,8 +37,11 @@ import java.util.concurrent.Future;
 @Service
 public class LoanDocServiceImpl implements LoanDocService {
 
-    @Value("${storage.model.target}")
-    private String docTarget;
+    @Value("${storage.model.download}")
+    private String docDownloadFileTarget;
+
+    @Value("${storage.model.print}")
+    private String docPrintFileTarget;
 
     @Value("${storage.model.domain}")
     private String docDomain;
@@ -100,15 +104,9 @@ public class LoanDocServiceImpl implements LoanDocService {
     @Autowired
     private MortgageQuartetAgreementTool mortgageQuartetAgreementTool;
     @Autowired
-    private OverdueBorrowerNoticeTool overdueBorrowerNoticeTool;
-    @Autowired
-    private OverdueGuarantorNoticeTool overdueGuarantorNoticeTool;
-    @Autowired
     private PersonalLoanApplicationTool personalLoanApplicationTool;
     @Autowired
     private PersonalLoanContractTool personalLoanContractTool;
-    @Autowired
-    private PersonalLoansChecklistTool personalLoansChecklistTool;
     @Autowired
     private SuretyBondsContractTool suretyBondsContractTool;
     @Autowired
@@ -159,7 +157,9 @@ public class LoanDocServiceImpl implements LoanDocService {
                 continue;
             }
 
-            if (LoanConstants.PersonnelType.BORROWER.getCode() == relatedPersonnelInformation.getType()) {
+            if (relatedPersonnelInformation.getType() == null) {
+                model.getOtherPartyList().add(relatedPersonnelInformation);
+            } else if (LoanConstants.PersonnelType.BORROWER.getCode() == relatedPersonnelInformation.getType()) {
                 model.setBorrower(relatedPersonnelInformation);
             } else if (LoanConstants.PersonnelType.BORROWER_COUPLE.getCode() == relatedPersonnelInformation.getType()) {
                 model.setBorrowerCouple(relatedPersonnelInformation);
@@ -318,11 +318,8 @@ public class LoanDocServiceImpl implements LoanDocService {
             futureList.add(mortgageGuaranteeContractTool.execute(model));
             futureList.add(mortgageListTool.execute(model));
             futureList.add(mortgageQuartetAgreementTool.execute(model));
-            futureList.add(overdueBorrowerNoticeTool.execute(model));
-            futureList.add(overdueGuarantorNoticeTool.execute(model));
             futureList.add(personalLoanApplicationTool.execute(model));
             futureList.add(personalLoanContractTool.execute(model));
-            futureList.add(personalLoansChecklistTool.execute(model));
             futureList.add(suretyBondsContractTool.execute(model));
             futureList.add(valuationConfirmationTool.execute(model));
             futureList.add(withdrawalCertificateTool.execute(model));
@@ -332,6 +329,15 @@ public class LoanDocServiceImpl implements LoanDocService {
 
         log.info("async building docs end...");
         return futureList;
+    }
+
+    private String getDateTimeFileName(int size) {
+        return new SimpleDateFormat("yyyyMMddHHmmSS").format(new Date()) + "-" + size
+                + "-" + RandomUtil.randomCode();
+    }
+
+    private String getDirWithDate(String dir) {
+        return FileDirectoryUtil.createDir(dir).getPath() + File.separator;
     }
 
     @Override
@@ -353,8 +359,8 @@ public class LoanDocServiceImpl implements LoanDocService {
             zipFileNames.add(loanDoc.getDocPath());
         }
 
-        String targetFileName = System.currentTimeMillis() + DocConstants.DocType.ZIP.getSuffixName();
-        String targetFileFullName = docTarget + targetFileName;
+        String targetFileName = getDateTimeFileName(loanDocList.size()) + DocConstants.DocType.ZIP.getSuffixName();
+        String targetFileFullName = getDirWithDate(docDownloadFileTarget) + targetFileName;
 
         boolean isZipOk = ZipUtil.zip(zipFileNames.toArray(new String[]{}), targetFileFullName);
         if (!isZipOk) {
@@ -386,10 +392,11 @@ public class LoanDocServiceImpl implements LoanDocService {
             pdfFileNames.add(loanDoc.getDocPath());
         }
 
-        String targetPdfFileName = System.currentTimeMillis() + DocConstants.DocType.PDF.getSuffixName();
+        String targetPdfFileName = getDateTimeFileName(loanDocList.size()) + DocConstants.DocType.PDF.getSuffixName();
 
         try {
-            PdfUtil.mergeFiles(pdfFileNames.toArray(new String[]{}), docTarget + targetPdfFileName);
+            PdfUtil.mergeFiles(pdfFileNames.toArray(new String[]{}),
+                    getDirWithDate(docPrintFileTarget) + targetPdfFileName);
 
             return docDomain + targetPdfFileName;
 

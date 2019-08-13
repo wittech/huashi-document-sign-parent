@@ -8,6 +8,7 @@
         <result column="doc_name" jdbcType="VARCHAR" property="docName"/>
         <result column="doc_size" jdbcType="BIGINT" property="docSize"/>
         <result column="doc_path" jdbcType="VARCHAR" property="docPath"/>
+        <result column="pdf_path" jdbcType="VARCHAR" property="pdfPath"/>
         <result column="doc_url" jdbcType="VARCHAR" property="docUrl"/>
         <result column="download_times" jdbcType="INTEGER" property="downloadTimes"/>
         <result column="print_times" jdbcType="INTEGER" property="printTimes"/>
@@ -34,6 +35,9 @@
             </if>
             <if test="docPath != null">
                 doc_path,
+            </if>
+            <if test="pdfPath != null">
+                pdf_path,
             </if>
             <if test="docUrl != null">
                 doc_url,
@@ -72,6 +76,9 @@
             </if>
             <if test="docPath != null">
                 #{docPath,jdbcType=VARCHAR},
+            </if>
+            <if test="pdfPath != null">
+                #{pdfPath,jdbcType=VARCHAR},
             </if>
             <if test="docUrl != null">
                 #{docUrl,jdbcType=VARCHAR},
@@ -120,6 +127,9 @@
             </if>
             <if test="docPath != null">
                 doc_path = #{docPath,jdbcType=VARCHAR},
+            </if>
+            <if test="pdfPath != null">
+                pdf_path = #{pdfPath,jdbcType=VARCHAR},
             </if>
             <if test="docUrl != null">
                 doc_url = #{docUrl,jdbcType=VARCHAR},
