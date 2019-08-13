@@ -266,13 +266,14 @@
   </select>
   
    <select id="findPageByBorrowerAndStatus"  parameterType="com.louis.kitty.admin.model.PostLoanCheck" resultMap="BasePageResultMap">
-	     select cn.id,cn.loan_basis_id,cn.loan_start_and_stop_date,lb.loan_type,lb.application_matters,lbi.loan_date from post_loan_check cn
-	    inner join loan_basis lb on cn.loan_basis_id=lb.id left join contract_information lbi on cn.loan_basis_id=lbi.loan_basis_id
+	     select cn.id,cn.borrower,cn.status,cn.loan_basis_id,cn.loan_start_and_stop_date,lb.loan_type,lb.application_matters,ci.loan_date,lbi.application_amount from post_loan_check cn
+	    inner join loan_basis lb on cn.loan_basis_id=lb.id left join contract_information ci on cn.loan_basis_id=ci.loan_basis_id
+	    left join loan_business_information lbi on cn.loan_basis_id=lbi.loan_basis_id
 	    where cn.del_flag=0
 	    <if test="borrower != null and borrower != ''">
 	    	and cn.borrower  = #{borrower,jdbcType=VARCHAR}
 	     </if>
-	      <if test="status != null and sttaus != '' and sttaus > 0">
+	      <if test="status >-1">
 	    	and cn.status  = #{status,jdbcType=BIGINT}
 	     </if>
 	     order by cn.create_time 
