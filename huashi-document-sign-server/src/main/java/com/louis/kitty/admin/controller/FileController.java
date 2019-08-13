@@ -33,8 +33,8 @@ public class FileController {
         return loanDocService.download(loanDocIds);
     }
 
-    @RequestMapping(value = "/print", method = RequestMethod.POST)
-    @ApiOperation(value = "打印借贷文件", httpMethod = "POST")
+    @RequestMapping(value = "/print")
+    @ApiOperation(value = "打印借贷文件")
     public String print(@RequestParam String loanDocIds) {
         return loanDocService.print(loanDocIds);
     }
