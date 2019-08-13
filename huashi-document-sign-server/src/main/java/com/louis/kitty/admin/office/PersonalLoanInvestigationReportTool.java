@@ -141,6 +141,15 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
         Map<String, Object> variables = newRound();
 
         variables.put("applyPersonName", docCommonModel.getBorrower().getName());
+        if(docCommonModel.getBorrowerCouple() != null) {
+            variables.put("coupleName", docCommonModel.getBorrowerCouple().getName());
+            variables.put("coupleCurrentHomeAddress", docCommonModel.getBorrowerCouple().getCurrentHomeAddress());
+
+        }
+
+        variables.put("whetherLocalHouseholdRegistration", docCommonModel.getBorrowerCouple().getName());
+
+
 
         Map<Integer, String> calendar = getCalendar(docCommonModel.getContractInformation().getBorrowingStartPeriod());
 
