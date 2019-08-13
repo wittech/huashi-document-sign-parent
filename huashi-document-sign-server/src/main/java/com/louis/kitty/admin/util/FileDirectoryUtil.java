@@ -54,7 +54,7 @@ public class FileDirectoryUtil {
     }
 
 
-    private static String getDate() {
+    public static String getDate() {
         return new SimpleDateFormat("yyyyMMdd").format(new Date());
     }
 
