@@ -3,6 +3,7 @@ package com.louis.kitty.admin.dao;
 import java.util.List;
 
 import com.louis.kitty.admin.model.LoanCheckDoc;
+import com.louis.kitty.admin.model.LoanDoc;
 
 /**
  * ---------------------------
@@ -49,5 +50,33 @@ public interface LoanCheckDocMapper {
      * @return
      */    
     List<LoanCheckDoc> findPage();
+
+    /**
+     * 根据借贷检查ID查询所有的文档信息
+     */
+    List<LoanCheckDoc> findByLoanCheckId(Long loanCheckId);
+
+    /**
+     * 根据IDS查询集合
+     * @param ids ID集合
+     */
+    List<LoanCheckDoc> findByIds(List<String> ids);
+
+    /**
+     * 下次次数+1
+     */
+    int addOneIfDownload(List<String> ids);
+
+    /**
+     * 打印次数+1
+     */
+    int addOneIfPrint(List<String> ids);
+
+    /**
+     * 根据基础借贷信息删除
+     * @param loanCheckId
+     * @return
+     */
+    int deleteByLoanCheckId(Long loanCheckId);
     
 }

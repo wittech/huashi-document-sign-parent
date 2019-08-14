@@ -30,7 +30,8 @@ public class FileDirectoryUtil {
             return DirMeta.builder().result(false).msg("home dir is empty").build();
         }
 
-        String dirName = home + getDate();
+        String date = getDate();
+        String dirName = home + date;
 
         if(CURRENT_DATE_DIR.containsKey(dirName)) {
             return CURRENT_DATE_DIR.get(dirName);
@@ -40,7 +41,7 @@ public class FileDirectoryUtil {
         File dir = new File(dirName);
 
         if (dir.exists()) {
-            CURRENT_DATE_DIR.put(dirName, DirMeta.builder().result(true).path(dirName).build());
+            CURRENT_DATE_DIR.put(dirName, DirMeta.builder().result(true).path(dirName).date(date).build());
             return CURRENT_DATE_DIR.get(dirName);
         }
 
@@ -49,7 +50,7 @@ public class FileDirectoryUtil {
             return DirMeta.builder().result(false).msg("dir["+dirName+"] create failed").build();
         }
 
-        CURRENT_DATE_DIR.put(dirName, DirMeta.builder().result(true).path(dirName).build());
+        CURRENT_DATE_DIR.put(dirName, DirMeta.builder().result(true).path(dirName).date(date).build());
         return CURRENT_DATE_DIR.get(dirName);
     }
 
@@ -65,6 +66,7 @@ public class FileDirectoryUtil {
         private boolean result;
         private String msg;
         private String path;
+        private String date;
 
     }
 

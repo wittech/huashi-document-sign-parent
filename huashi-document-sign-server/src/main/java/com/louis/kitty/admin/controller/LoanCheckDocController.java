@@ -2,13 +2,9 @@ package com.louis.kitty.admin.controller;
 
 import java.util.List;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.louis.kitty.core.http.HttpResult;
 import com.louis.kitty.core.page.PageRequest;
@@ -32,43 +28,15 @@ public class LoanCheckDocController {
 	@Autowired
 	private LoanCheckDocService loanCheckDocService;
 
-	/**
-	 * 保存
-	 * @param record
-	 * @return
-	 */	
-	@PostMapping(value="/save")
-	public HttpResult save(@RequestBody LoanCheckDoc record) {
-		return HttpResult.ok(loanCheckDocService.save(record));
+	@RequestMapping(value = "/download", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@ApiOperation(value = "下载借贷检查文件", httpMethod = "GET", produces = "application/json;charset=UTF-8")
+	public Object download(@RequestParam String loanCheckIds) {
+		return loanCheckDocService.download(loanCheckIds);
 	}
 
-    /**
-     * 删除
-     * @param records
-     * @return
-     */
-	@PostMapping(value="/delete")
-	public HttpResult delete(@RequestBody List<LoanCheckDoc> records) {
-		return HttpResult.ok(loanCheckDocService.delete(records));
-	}
-
-    /**
-     * 基础分页查询
-     * @param pageRequest
-     * @return
-     */    
-	@PostMapping(value="/findPage")
-	public HttpResult findPage(@RequestBody PageRequest pageRequest) {
-		return HttpResult.ok(loanCheckDocService.findPage(pageRequest));
-	}
-	
-    /**
-     * 根据主键查询
-     * @param id
-     * @return
-     */ 	
-	@GetMapping(value="/findById")
-	public HttpResult findById(@RequestParam Long id) {
-		return HttpResult.ok(loanCheckDocService.findById(id));
+	@RequestMapping(value = "/print")
+	@ApiOperation(value = "打印借贷检查文件")
+	public String print(@RequestParam String loanCheckIds) {
+		return loanCheckDocService.print(loanCheckIds);
 	}
 }

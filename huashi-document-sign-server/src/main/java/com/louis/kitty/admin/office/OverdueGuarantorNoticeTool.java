@@ -4,10 +4,8 @@ import com.louis.kitty.admin.constants.DocConstants;
 import com.louis.kitty.admin.model.CollectionNotice;
 import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
-import com.louis.kitty.admin.sevice.CollectionNoticeService;
 import com.louis.kitty.admin.util.RmbUtil;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -17,9 +15,6 @@ import java.util.Map;
 
 @Component
 public class OverdueGuarantorNoticeTool extends AbstractOfficeTool {
-
-    @Autowired
-    private CollectionNoticeService collectionNoticeService;
 
     private void round(RelatedPersonnelInformation relatedPersonnelInformation, DocCommonModel docCommonModel) {
         Map<String, Object> variables = newRound();
@@ -37,7 +32,7 @@ public class OverdueGuarantorNoticeTool extends AbstractOfficeTool {
         variables.put("borrowingEndPeriod", formater.format(docCommonModel.getContractInformation().getBorrowingEndPeriod()));
 
         // 1.18. collection_notice贷款到期（逾期）催收通知书信息表  fill_date 填写日期
-        CollectionNotice collectionNotice = collectionNoticeService.findByLoanBasisId(docCommonModel.getLoanBasicId());
+        CollectionNotice collectionNotice = docCommonModel.getCollectionNotice();
         if (collectionNotice == null) {
             variables.put("fillDate", "      年  月  日");
             // owe_principal

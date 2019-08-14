@@ -34,35 +34,11 @@ public interface LoanDocService extends CurdService<LoanDoc> {
     String print(String loanDocIds);
 
     /**
-     * 根据借贷基础ID批量下载文件
-     *
-     * @param loanBasisId 借贷基础ID
-     * @return 批量文件
-     */
-    ResponseEntity<InputStreamResource> downloadAllDoc(Long loanBasisId);
-
-    /**
      * 查询所有 借贷文档信息
      *
      * @param loanBasisId 借贷基础ID
      * @return 借贷文档集合信息
      */
     List<LoanDoc> queryByLoanBasisId(Long loanBasisId);
-
-    /**
-     * 下载次数+1
-     *
-     * @param loanDocIds 文档ID集合
-     * @return 处理结果
-     */
-    boolean addOneIfDownload(String loanDocIds);
-
-    /**
-     * 打印次数+1
-     *
-     * @param loanDocsId 文档ID集合
-     * @return 处理结果
-     */
-    boolean addOneIfPrint(String loanDocsId);
 
 }

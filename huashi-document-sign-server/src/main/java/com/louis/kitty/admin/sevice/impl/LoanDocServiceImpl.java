@@ -1,71 +1,34 @@
 package com.louis.kitty.admin.sevice.impl;
 
-import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
-import com.itextpdf.text.DocumentException;
-import com.louis.kitty.admin.constants.DocConstants;
-import com.louis.kitty.admin.constants.LoanConstants;
 import com.louis.kitty.admin.dao.LoanDocMapper;
-import com.louis.kitty.admin.model.*;
+import com.louis.kitty.admin.model.DocCommonModel;
+import com.louis.kitty.admin.model.LoanBasis;
+import com.louis.kitty.admin.model.LoanDoc;
 import com.louis.kitty.admin.office.*;
-import com.louis.kitty.admin.sevice.*;
-import com.louis.kitty.admin.util.*;
+import com.louis.kitty.admin.sevice.LoanDocService;
 import com.louis.kitty.core.page.ColumnFilter;
 import com.louis.kitty.core.page.MybatisPageHelper;
 import com.louis.kitty.core.page.PageRequest;
 import com.louis.kitty.core.page.PageResult;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
-@Slf4j
 @Service
-public class LoanDocServiceImpl implements LoanDocService {
-
-    @Value("${storage.model.download}")
-    private String docDownloadFileTarget;
-
-    @Value("${storage.model.print}")
-    private String docPrintFileTarget;
-
-    @Value("${storage.model.domain}")
-    private String docDomain;
+public class LoanDocServiceImpl extends AbstractDocService implements LoanDocService {
 
     @Resource
     private LoanDocMapper loanDocMapper;
-    @Autowired
-    private LoanBasisService loanBasisService;
-    @Autowired
-    private RelatedPersonnelInformationService relatedPersonnelInformationService;
-    @Autowired
-    private LoanBusinessInformationService loanBusinessInformationService;
-    @Autowired
-    private ContractInformationService contractInformationService;
-    @Autowired
-    private PawnService pawnService;
-    @Autowired
-    private PawnPersonnelMappingService pawnPersonnelMappingService;
-    @Autowired
-    private CounterpartyInformationService counterpartyInformationService;
-
-
-    @Autowired
-    private RepaymentPlanService repaymentPlanService;
 
     @Autowired
     private AuthenticityCommitmentTool authenticityCommitmentTool;
@@ -114,9 +77,8 @@ public class LoanDocServiceImpl implements LoanDocService {
     @Autowired
     private WithdrawalCertificateTool withdrawalCertificateTool;
 
-
     private DocCommonModel pickupModel(Long loanBasisId) {
-        LoanBasis loanBasis = loanBasisService.findById(loanBasisId);
+        LoanBasis loanBasis = getLoanBais(loanBasisId);
         if (loanBasis == null) {
             log.warn("Can not find any data by id[{}]", loanBasisId);
             return null;
@@ -146,90 +108,6 @@ public class LoanDocServiceImpl implements LoanDocService {
         return model;
     }
 
-    private void setRelatedPersonnelInformations(DocCommonModel model) {
-        List<RelatedPersonnelInformation> list = relatedPersonnelInformationService.findByBaseIdList(model.getLoanBasicId());
-        if (CollectionUtils.isEmpty(list)) {
-            return;
-        }
-
-        for (RelatedPersonnelInformation relatedPersonnelInformation : list) {
-            if (relatedPersonnelInformation == null) {
-                continue;
-            }
-
-            if (relatedPersonnelInformation.getType() == null) {
-                model.getOtherPartyList().add(relatedPersonnelInformation);
-            } else if (LoanConstants.PersonnelType.BORROWER.getCode() == relatedPersonnelInformation.getType()) {
-                model.setBorrower(relatedPersonnelInformation);
-            } else if (LoanConstants.PersonnelType.BORROWER_COUPLE.getCode() == relatedPersonnelInformation.getType()) {
-                model.setBorrowerCouple(relatedPersonnelInformation);
-            } else if (LoanConstants.PersonnelType.MORTGAGE_GUARANTOR.getCode() == relatedPersonnelInformation.getType()) {
-                model.getMortgageGuarantorList().add(relatedPersonnelInformation);
-            } else if (LoanConstants.PersonnelType.GUARANTOR.getCode() == relatedPersonnelInformation.getType()) {
-                model.getGuarantorList().add(relatedPersonnelInformation);
-            } else if (LoanConstants.PersonnelType.GUARANTOR_BOTH.getCode() == relatedPersonnelInformation.getType()) {
-                model.getMortgageGuarantorList().add(relatedPersonnelInformation);
-                model.getGuarantorList().add(relatedPersonnelInformation);
-            }
-        }
-
-
-    }
-
-    private void setLoanBusinessInformation(DocCommonModel model) {
-        LoanBusinessInformation loanBusinessInformation = loanBusinessInformationService.findByBasisId(model.getLoanBasicId());
-        if (loanBusinessInformation == null) {
-            return;
-        }
-
-        model.setLoanBusinessInformation(loanBusinessInformation);
-    }
-
-    private void setContractInformation(DocCommonModel model) {
-        ContractInformation contractInformation = contractInformationService.findByLoanBasisId(model.getLoanBasicId());
-        if (contractInformation == null) {
-            return;
-        }
-
-        model.setContractInformation(contractInformation);
-    }
-
-    private void setPawnList(DocCommonModel model) {
-        if (!model.isContainsMortgage()) {
-            log.info("ignored cause by loanBasisId[{}] is not belong to mortgage");
-            return;
-        }
-
-        List<Pawn> pawnList = pawnService.findByLoanBasisId(model.getLoanBasicId());
-        if (CollectionUtils.isEmpty(pawnList)) {
-            return;
-        }
-
-        for (Pawn pawn : pawnList) {
-            pawn.getRelatedPersonnelInformationList().addAll(pawnPersonnelMappingService.findByPawnId(pawn.getId()));
-        }
-
-        model.setPawnList(pawnList);
-    }
-
-    private void setRepaymentPlanList(DocCommonModel model) {
-        List<RepaymentPlan> repaymentPlanList = repaymentPlanService.findByIoanBusinessInformationId(model.getLoanBusinessInformationId());
-        if (CollectionUtils.isEmpty(repaymentPlanList)) {
-            return;
-        }
-
-        model.setRepaymentPlanList(repaymentPlanList);
-    }
-
-    private void setCounterpartyInformationList(DocCommonModel model) {
-        List<CounterpartyInformation> counterpartyInformationList = counterpartyInformationService.findByIoanBusinessInformationId(model.getLoanBusinessInformationId());
-        if (CollectionUtils.isEmpty(counterpartyInformationList)) {
-            return;
-        }
-
-        model.setCounterpartyInformationList(counterpartyInformationList);
-    }
-
     @Override
     public int born(Long loanBasisId) throws Exception {
         if (loanBasisId == null) {
@@ -256,47 +134,8 @@ public class LoanDocServiceImpl implements LoanDocService {
         }
     }
 
-    private int getResult(List<Future<Boolean>> futureList) {
-        if (CollectionUtils.isEmpty(futureList)) {
-            return 0;
-        }
-
-        int result;
-        while (true) {
-            result = 0;
-            int doneCount = 0;
-            for (Future<Boolean> future : futureList) {
-                if (!future.isDone()) {
-                    break;
-                }
-
-                try {
-                    if (future.get()) {
-                        result += 1;
-                    }
-                } catch (InterruptedException | ExecutionException e) {
-                    log.warn("ignored by msg [{}]", e.getMessage());
-                }
-
-                doneCount++;
-            }
-
-            if (doneCount == futureList.size()) {
-                break;
-            }
-
-            log.info("total count is '{}', finish count is '{}'", futureList.size(), doneCount);
-
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-            }
-        }
-
-        return result;
-    }
-
-    private List<Future<Boolean>> asyncExecute(DocCommonModel model) {
+    @Override
+    protected List<Future<Boolean>> asyncExecute(DocCommonModel model) {
         List<Future<Boolean>> futureList = new ArrayList<>();
         try {
             log.info("async building docs start...");
@@ -331,84 +170,61 @@ public class LoanDocServiceImpl implements LoanDocService {
         return futureList;
     }
 
-    private String getDateTimeFileName(int size) {
-        return new SimpleDateFormat("yyyyMMddHHmmSS").format(new Date()) + "-" + size
-                + "-" + RandomUtil.randomCode();
-    }
+    private List<String> findFileNamesByIds(String loanDocIds, boolean isPdf) {
+        if (StringUtils.isEmpty(loanDocIds)) {
+            log.error("loanDocIds[{}] is empty", loanDocIds);
+            return null;
+        }
 
-    private String getDirWithDate(String dir) {
-        return FileDirectoryUtil.createDir(dir).getPath() + File.separator;
+        String[] loanDocIdArray = loanDocIds.split(",");
+        List<LoanDoc> loanDocList = loanDocMapper.findByIds(Arrays.asList(loanDocIdArray));
+
+        List<String> fileNames = new ArrayList<>();
+        for (LoanDoc loanDoc : loanDocList) {
+            if (loanDoc == null) {
+                continue;
+            }
+
+            if (isPdf) {
+                fileNames.add(loanDoc.getPdfPath());
+            } else {
+                fileNames.add(loanDoc.getDocPath());
+            }
+        }
+
+        return fileNames;
     }
 
     @Override
     public ResponseEntity<InputStreamResource> download(String loanDocIds) {
-        if (StringUtils.isEmpty(loanDocIds)) {
-            log.error("loanDocIds[{}] is empty", loanDocIds);
+        List<String> fileNames = findFileNamesByIds(loanDocIds, false);
+        if (CollectionUtils.isEmpty(fileNames)) {
+            log.warn("Can not find any data by loanDocIds[{}]", loanDocIds);
             return null;
         }
 
-        String[] loanDocIdArray = loanDocIds.split(",");
-        List<LoanDoc> loanDocList = loanDocMapper.findByIds(Arrays.asList(loanDocIdArray));
-
-        List<String> zipFileNames = new ArrayList<>();
-        for (LoanDoc loanDoc : loanDocList) {
-            if (loanDoc == null) {
-                continue;
-            }
-
-            zipFileNames.add(loanDoc.getDocPath());
+        ResponseEntity<InputStreamResource> resourceResponseEntity = getZipFile(fileNames);
+        if(resourceResponseEntity != null) {
+            addOneIfDownload(loanDocIds);
         }
 
-        String targetFileName = getDateTimeFileName(loanDocList.size()) + DocConstants.DocType.ZIP.getSuffixName();
-        String targetFileFullName = getDirWithDate(docDownloadFileTarget) + targetFileName;
-
-        boolean isZipOk = ZipUtil.zip(zipFileNames.toArray(new String[]{}), targetFileFullName);
-        if (!isZipOk) {
-            log.error("loanDocIds[{}] zip failed", loanDocIds);
-            return null;
-        }
-
-        addOneIfDownload(loanDocIds);
-
-        return FileDownloadUtil.download(targetFileFullName, targetFileName);
+        return resourceResponseEntity;
     }
 
     @Override
     public String print(String loanDocIds) {
-        if (StringUtils.isEmpty(loanDocIds)) {
-            log.error("loanDocIds[{}] is empty", loanDocIds);
+        List<String> fileNames = findFileNamesByIds(loanDocIds, true);
+        if (CollectionUtils.isEmpty(fileNames)) {
+            log.warn("Can not find any data by loanDocIds[{}]", loanDocIds);
             return null;
         }
 
-        String[] loanDocIdArray = loanDocIds.split(",");
-        List<LoanDoc> loanDocList = loanDocMapper.findByIds(Arrays.asList(loanDocIdArray));
-
-        List<String> pdfFileNames = new ArrayList<>();
-        for (LoanDoc loanDoc : loanDocList) {
-            if (loanDoc == null) {
-                continue;
-            }
-
-            pdfFileNames.add(loanDoc.getPdfPath());
+        String pdfUrl = getPrintPdf(fileNames);
+        if(StringUtils.isNotEmpty(pdfUrl)) {
+            addOneIfPrint(loanDocIds);
         }
 
-        String targetPdfFileName = getDateTimeFileName(loanDocList.size()) + DocConstants.DocType.PDF.getSuffixName();
-
-        try {
-            PdfUtil.mergeFiles(pdfFileNames.toArray(new String[]{}),
-                    getDirWithDate(docPrintFileTarget) + targetPdfFileName);
-
-            return docDomain + FileDirectoryUtil.getDate() + "/" + targetPdfFileName;
-
-        } catch (IOException | DocumentException e) {
-            log.error("loanDocIds[{}] doc print failed", loanDocIds, e);
-            return null;
-        }
-    }
-
-    @Override
-    public ResponseEntity<InputStreamResource> downloadAllDoc(Long loaBasisId) {
-        return null;
+        return pdfUrl;
     }
 
     @Override
@@ -416,22 +232,20 @@ public class LoanDocServiceImpl implements LoanDocService {
         return loanDocMapper.findByLoanBasisId(loanBasisId);
     }
 
-    @Override
-    public boolean addOneIfDownload(String loanDocIds) {
+    private void addOneIfDownload(String loanDocIds) {
         if (StringUtils.isEmpty(loanDocIds)) {
-            return false;
+            return;
         }
 
-        return loanDocMapper.addOneIfDownload(Arrays.asList(loanDocIds.split(","))) > 0;
+        loanDocMapper.addOneIfDownload(Arrays.asList(loanDocIds.split(",")));
     }
 
-    @Override
-    public boolean addOneIfPrint(String loanDocIds) {
+    private void addOneIfPrint(String loanDocIds) {
         if (StringUtils.isEmpty(loanDocIds)) {
-            return false;
+            return;
         }
 
-        return loanDocMapper.addOneIfPrint(Arrays.asList(loanDocIds.split(","))) > 0;
+        loanDocMapper.addOneIfPrint(Arrays.asList(loanDocIds.split(",")));
     }
 
     @Override

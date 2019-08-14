@@ -1,8 +1,9 @@
 package com.louis.kitty.admin.dao;
 
-import java.util.List;
-
+import com.louis.kitty.admin.model.LoanCheckDoc;
 import com.louis.kitty.admin.model.LoanNoticeDoc;
+
+import java.util.List;
 
 /**
  * ---------------------------
@@ -49,5 +50,33 @@ public interface LoanNoticeDocMapper {
      * @return
      */    
     List<LoanNoticeDoc> findPage();
+
+    /**
+     * 根据催缴通知ID查询所有的文档信息
+     */
+    List<LoanNoticeDoc> findByLoanNoticeId(Long loanNoticeId);
+
+    /**
+     * 根据IDS查询集合
+     * @param ids ID集合
+     */
+    List<LoanNoticeDoc> findByIds(List<String> ids);
+
+    /**
+     * 下次次数+1
+     */
+    int addOneIfDownload(List<String> ids);
+
+    /**
+     * 打印次数+1
+     */
+    int addOneIfPrint(List<String> ids);
+
+    /**
+     * 根据基础借贷信息删除
+     * @param loanNoticeId
+     * @return
+     */
+    int deleteByLoanNoticeId(Long loanNoticeId);
     
 }

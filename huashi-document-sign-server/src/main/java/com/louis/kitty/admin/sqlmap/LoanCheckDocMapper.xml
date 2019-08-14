@@ -2,166 +2,211 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.louis.kitty.admin.dao.LoanCheckDocMapper">
 
-  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.LoanCheckDoc">
-	<id column="id" jdbcType="BIGINT" property="id" />
-	<result column="loan_check_id" jdbcType="BIGINT" property="loanCheckId" />
-	<result column="doc_name" jdbcType="VARCHAR" property="docName" />
-	<result column="doc_size" jdbcType="BIGINT" property="docSize" />
-	<result column="doc_path" jdbcType="VARCHAR" property="docPath" />
-	<result column="pdf_path" jdbcType="VARCHAR" property="pdfPath" />
-	<result column="doc_url" jdbcType="VARCHAR" property="docUrl" />
-	<result column="download_times" jdbcType="INTEGER" property="downloadTimes" />
-	<result column="print_times" jdbcType="INTEGER" property="printTimes" />
-	<result column="sort" jdbcType="INTEGER" property="sort" />
-	<result column="remark" jdbcType="VARCHAR" property="remark" />
-	<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-	<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
-  </resultMap>
-  
-  <insert id="add" parameterType="com.louis.kitty.admin.model.LoanCheckDoc">
-    insert into loan_check_doc
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="loanCheckId != null">
-        loan_check_id,
-      </if>
-      <if test="docName != null">
-        doc_name,
-      </if>
-      <if test="docSize != null">
-        doc_size,
-      </if>
-      <if test="docPath != null">
-        doc_path,
-      </if>
-      <if test="pdfPath != null">
-        pdf_path,
-      </if>
-      <if test="docUrl != null">
-        doc_url,
-      </if>
-      <if test="downloadTimes != null">
-        download_times,
-      </if>
-      <if test="printTimes != null">
-        print_times,
-      </if>
-      <if test="sort != null">
-        sort,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="lastUpdateTime != null">
-        last_update_time,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="loanCheckId != null">
-        #{loanCheckId,jdbcType=BIGINT},
-      </if>
-      <if test="docName != null">
-        #{docName,jdbcType=VARCHAR},
-      </if>
-      <if test="docSize != null">
-        #{docSize,jdbcType=BIGINT},
-      </if>
-      <if test="docPath != null">
-        #{docPath,jdbcType=VARCHAR},
-      </if>
-      <if test="pdfPath != null">
-        #{pdfPath,jdbcType=VARCHAR},
-      </if>
-      <if test="docUrl != null">
-        #{docUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="downloadTimes != null">
-        #{downloadTimes,jdbcType=INTEGER},
-      </if>
-      <if test="printTimes != null">
-        #{printTimes,jdbcType=INTEGER},
-      </if>
-      <if test="sort != null">
-        #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdateTime != null">
-        #{lastUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
+    <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.LoanCheckDoc">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="loan_check_id" jdbcType="BIGINT" property="loanCheckId"/>
+        <result column="doc_name" jdbcType="VARCHAR" property="docName"/>
+        <result column="doc_size" jdbcType="BIGINT" property="docSize"/>
+        <result column="doc_path" jdbcType="VARCHAR" property="docPath"/>
+        <result column="pdf_path" jdbcType="VARCHAR" property="pdfPath"/>
+        <result column="doc_url" jdbcType="VARCHAR" property="docUrl"/>
+        <result column="download_times" jdbcType="INTEGER" property="downloadTimes"/>
+        <result column="print_times" jdbcType="INTEGER" property="printTimes"/>
+        <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+    </resultMap>
 
-  <delete id="delete" parameterType="java.lang.Long">
-    delete from loan_check_doc
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  
-  <update id="update" parameterType="com.louis.kitty.admin.model.LoanCheckDoc">
-    update loan_check_doc
-    <set>
-      <if test="id != null">
-        id = #{id,jdbcType=BIGINT},
-      </if>
-      <if test="loanCheckId != null">
-        loan_check_id = #{loanCheckId,jdbcType=BIGINT},
-      </if>
-      <if test="docName != null">
-        doc_name = #{docName,jdbcType=VARCHAR},
-      </if>
-      <if test="docSize != null">
-        doc_size = #{docSize,jdbcType=BIGINT},
-      </if>
-      <if test="docPath != null">
-        doc_path = #{docPath,jdbcType=VARCHAR},
-      </if>
-      <if test="pdfPath != null">
-        pdf_path = #{pdfPath,jdbcType=VARCHAR},
-      </if>
-      <if test="docUrl != null">
-        doc_url = #{docUrl,jdbcType=VARCHAR},
-      </if>
-      <if test="downloadTimes != null">
-        download_times = #{downloadTimes,jdbcType=INTEGER},
-      </if>
-      <if test="printTimes != null">
-        print_times = #{printTimes,jdbcType=INTEGER},
-      </if>
-      <if test="sort != null">
-        sort = #{sort,jdbcType=INTEGER},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdateTime != null">
-        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <insert id="add" parameterType="com.louis.kitty.admin.model.LoanCheckDoc">
+        insert into loan_check_doc
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="loanCheckId != null">
+                loan_check_id,
+            </if>
+            <if test="docName != null">
+                doc_name,
+            </if>
+            <if test="docSize != null">
+                doc_size,
+            </if>
+            <if test="docPath != null">
+                doc_path,
+            </if>
+            <if test="pdfPath != null">
+                pdf_path,
+            </if>
+            <if test="docUrl != null">
+                doc_url,
+            </if>
+            <if test="downloadTimes != null">
+                download_times,
+            </if>
+            <if test="printTimes != null">
+                print_times,
+            </if>
+            <if test="sort != null">
+                sort,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="loanCheckId != null">
+                #{loanCheckId,jdbcType=BIGINT},
+            </if>
+            <if test="docName != null">
+                #{docName,jdbcType=VARCHAR},
+            </if>
+            <if test="docSize != null">
+                #{docSize,jdbcType=BIGINT},
+            </if>
+            <if test="docPath != null">
+                #{docPath,jdbcType=VARCHAR},
+            </if>
+            <if test="pdfPath != null">
+                #{pdfPath,jdbcType=VARCHAR},
+            </if>
+            <if test="docUrl != null">
+                #{docUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="downloadTimes != null">
+                #{downloadTimes,jdbcType=INTEGER},
+            </if>
+            <if test="printTimes != null">
+                #{printTimes,jdbcType=INTEGER},
+            </if>
+            <if test="sort != null">
+                #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
 
-  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select * from loan_check_doc
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  
-  <select id="findPage" resultMap="BaseResultMap">
-    select * from loan_check_doc
-  </select>
-  
+    <delete id="delete" parameterType="java.lang.Long">
+        delete
+        from loan_check_doc
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <update id="update" parameterType="com.louis.kitty.admin.model.LoanCheckDoc">
+        update loan_check_doc
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=BIGINT},
+            </if>
+            <if test="loanCheckId != null">
+                loan_check_id = #{loanCheckId,jdbcType=BIGINT},
+            </if>
+            <if test="docName != null">
+                doc_name = #{docName,jdbcType=VARCHAR},
+            </if>
+            <if test="docSize != null">
+                doc_size = #{docSize,jdbcType=BIGINT},
+            </if>
+            <if test="docPath != null">
+                doc_path = #{docPath,jdbcType=VARCHAR},
+            </if>
+            <if test="pdfPath != null">
+                pdf_path = #{pdfPath,jdbcType=VARCHAR},
+            </if>
+            <if test="docUrl != null">
+                doc_url = #{docUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="downloadTimes != null">
+                download_times = #{downloadTimes,jdbcType=INTEGER},
+            </if>
+            <if test="printTimes != null">
+                print_times = #{printTimes,jdbcType=INTEGER},
+            </if>
+            <if test="sort != null">
+                sort = #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from loan_check_doc
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPage" resultMap="BaseResultMap">
+        select *
+        from loan_check_doc
+    </select>
+
+    <select id="findByLoanCheckId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from loan_check_doc
+        where loan_check_id = #{loanCheckId,jdbcType=BIGINT}
+        order by sort asc
+    </select>
+
+    <update id="addOneIfDownload" parameterType="java.lang.Long">
+        update loan_check_doc
+        set download_times = download_times + 1,
+        last_update_time = CURRENT_TIMESTAMP
+        WHERE id IN
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <update id="addOneIfPrint">
+        update loan_check_doc
+        set print_times = print_times + 1,
+        last_update_time = CURRENT_TIMESTAMP
+        WHERE id IN
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </update>
+
+    <delete id="deleteByLoanCheckId" parameterType="java.lang.Long">
+        delete
+        from loan_check_doc
+        where loan_check_id = #{loanCheckId,jdbcType=BIGINT}
+    </delete>
+
+    <select id="findByIds" resultMap="BaseResultMap">
+        SELECT *
+        from loan_check_doc
+        WHERE id IN
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
 </mapper>

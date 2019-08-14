@@ -73,7 +73,12 @@ public class DocCommonModel {
     /**
      * 贷后检查表
      */
-    private List<PostLoanCheck> postLoanCheckList = new ArrayList<>();
+    private PostLoanCheck postLoanCheck;
+
+    /**
+     * 贷款到期（逾期）催收通知书信息表
+     */
+    private CollectionNotice collectionNotice;
 
     /**
      * 获取家庭姓名信息(一般为借款人、借款人配偶姓名)

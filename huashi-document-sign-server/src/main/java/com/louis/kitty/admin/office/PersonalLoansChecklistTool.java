@@ -173,7 +173,10 @@ public class PersonalLoansChecklistTool extends AbstractOfficeTool {
 
         // 1.17. post_loan_check贷后检查信息表
         // check_time
-        PostLoanCheck postLoanCheck = new PostLoanCheck();
+        PostLoanCheck postLoanCheck = docCommonModel.getPostLoanCheck();
+        if(postLoanCheck == null) {
+            return;
+        }
 
         Map<Integer, String> checkTime = getCalendar(postLoanCheck.getCheckTime());
 
