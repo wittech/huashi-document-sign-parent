@@ -21,32 +21,32 @@ public interface LoanCheckDocService extends CurdService<LoanCheckDoc> {
     /**
      * 生成文件（落地）
      *
-     * @param loanCheckIds 借贷检查Ids
+     * @param loanCheckId 借贷检查Id
      * @return 返回生成文件数
      */
-    int born(Long loanCheckIds) throws Exception;
+    int born(Long loanCheckId) throws Exception;
 
     /**
      * 下载文件ID
      *
-     * @param loanCheckIds 借贷检查Ids
+     * @param loanCheckDocIds 借贷检查Ids
      * @return 下载内容
      */
-    ResponseEntity<InputStreamResource> download(String loanCheckIds);
+    ResponseEntity<InputStreamResource> download(String loanCheckDocIds);
 
     /**
      * 打印
      *
-     * @param loanDocIds 借贷检查Ids
+     * @param loanCheckDocIds 借贷检查Ids
      * @return 打印PDF的URL信息
      */
-    String print(String loanDocIds);
+    String print(String loanCheckDocIds);
 
     /**
      * 查询所有 借贷文档信息
      *
-     * @param loanCheckIds 借贷检查Ids
+     * @param loanCheckId 借贷检查Id
      * @return 借贷文档集合信息
      */
-    List<LoanCheckDoc> queryByLoanCheckId(Long loanCheckIds);
+    List<LoanCheckDoc> queryByLoanCheckId(Long loanCheckId);
 }

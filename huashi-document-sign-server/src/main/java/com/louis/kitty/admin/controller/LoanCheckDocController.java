@@ -30,13 +30,33 @@ public class LoanCheckDocController {
 
 	@RequestMapping(value = "/download", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
 	@ApiOperation(value = "下载借贷检查文件", httpMethod = "GET", produces = "application/json;charset=UTF-8")
-	public Object download(@RequestParam String loanCheckIds) {
-		return loanCheckDocService.download(loanCheckIds);
+	public Object download(@RequestParam String loanCheckDocIds) {
+		return loanCheckDocService.download(loanCheckDocIds);
 	}
 
 	@RequestMapping(value = "/print")
 	@ApiOperation(value = "打印借贷检查文件")
-	public String print(@RequestParam String loanCheckIds) {
-		return loanCheckDocService.print(loanCheckIds);
+	public String print(@RequestParam String loanCheckDocIds) {
+		return loanCheckDocService.print(loanCheckDocIds);
 	}
+
+	/**
+	 * 根据基础信息表id 查询所有 借贷文档信息
+	 *
+	 * @param loanCheckId 借贷检查ID
+	 */
+	@GetMapping(value = "/findByLoanNoticeId")
+	public HttpResult findByLoanNoticeId(@RequestParam Long loanCheckId) {
+		return HttpResult.ok(loanCheckDocService.queryByLoanCheckId(loanCheckId));
+	}
+
+	@GetMapping(value = "/born")
+	public HttpResult born(@RequestParam Long loanCheckId) {
+		try {
+			return HttpResult.ok(loanCheckDocService.born(loanCheckId));
+		} catch (Exception e) {
+			return HttpResult.ok(0);
+		}
+	}
+
 }
