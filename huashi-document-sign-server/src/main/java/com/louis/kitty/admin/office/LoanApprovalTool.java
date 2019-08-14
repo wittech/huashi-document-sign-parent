@@ -27,7 +27,7 @@ public class LoanApprovalTool extends AbstractOfficeTool {
     protected void fillVariable(DocCommonModel docCommonModel) {
         Map<String, Object> variables = newRound();
         variables.put("contractNo", "");
-        variables.put("bankBranchName", BankConstants.BANK_FULL_NAME);
+        variables.put("bankBranchName", BankConstants.BANK_BRANCH_NAME);
         variables.put("bankPhone", BankConstants.BANK_PHONE);
 
         // related_personnel_information
@@ -136,7 +136,7 @@ public class LoanApprovalTool extends AbstractOfficeTool {
         setCollateralListText(pawnList, variables);
 
         variables.put("applyPersonMerge", pawnList.size() + 5);
-        variables.put("collateralMerge", pawnList.size() + 1);
+        variables.put("collateralMerge", pawnList.size() );
     }
 
     /**
@@ -201,7 +201,7 @@ public class LoanApprovalTool extends AbstractOfficeTool {
                     "      ss:Name=\"Print_Area\"/></Cell>\n" +
                     "    <Cell ss:MergeAcross=\"1\" ss:StyleID=\"s129\"><ss:Data ss:Type=\"String\"\n" +
                     "      xmlns=\"http://www.w3.org/TR/REC-html40\">" + map.get("unit") + "<Font html:Face=\"SimSun\"\n" +
-                    "       x:CharSet=\"134\">㎡</Font></ss:Data><NamedCell ss:Name=\"Print_Area\"/></Cell>\n" +
+                    "       x:CharSet=\"134\"></Font></ss:Data><NamedCell ss:Name=\"Print_Area\"/></Cell>\n" +
                     "    <Cell ss:MergeAcross=\"4\" ss:StyleID=\"s130\"><Data ss:Type=\"Number\">" + map.get("money") + "</Data><NamedCell\n" +
                     "      ss:Name=\"Print_Area\"/></Cell>\n" +
                     "   </Row>");
@@ -227,7 +227,7 @@ public class LoanApprovalTool extends AbstractOfficeTool {
                     "      ss:Name=\"Print_Area\"/></Cell>\n" +
                     "    <Cell ss:MergeAcross=\"6\" ss:StyleID=\"s126\"><Data ss:Type=\"String\">" + map.get("personName") + "</Data><NamedCell\n" +
                     "      ss:Name=\"Print_Area\"/></Cell>\n" +
-                    "    <Cell ss:MergeAcross=\"6\" ss:StyleID=\"s127\"><Data ss:Type=\"String\">10007038780</Data><NamedCell\n" +
+                    "    <Cell ss:MergeAcross=\"6\" ss:StyleID=\"s127\"><Data ss:Type=\"String\"></Data><NamedCell\n" +
                     "      ss:Name=\"Print_Area\"/></Cell>\n" +
                     "   </Row>");
 

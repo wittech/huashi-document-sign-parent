@@ -159,7 +159,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                 "\t\t<w:sz w:val=\"24\"/>\n" +
                 "\t\t<w:szCs w:val=\"24\"/>\n" +
                 "\t  </w:rPr>\n" +
-                "\t  <w:t>邮编：</w:t>\n" +
+                "\t  <w:t>             邮编：</w:t>\n" +
                 "\t</w:r>\n" +
                 "\t<w:r>\n" +
                 "\t  <w:rPr>\n" +
@@ -946,7 +946,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
         Map<Integer, String> calendar1 = getCalendar(docCommonModel.getContractInformation().getBorrowingEndPeriod());
 
         // 1.16. contract_information合同信息表 borrowing_start_period
-        variables.put("borrowingStartPeriodYears", calendar.get(Calendar.YEAR));
+        variables.put("borrowingStartPeriodYear", calendar.get(Calendar.YEAR));
         variables.put("borrowingStartPeriodMonth", calendar.get(Calendar.MONTH));
         variables.put("borrowingStartPeriodDay", calendar.get(Calendar.DAY_OF_MONTH));
 
@@ -1036,7 +1036,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
         if (model.getLoanBusinessInformation().getRepayment() == null) {
             return;
         }
-
+        variables.put("otherValue","");
         if (model.getLoanBusinessInformation().getRepayment() == 1) {
             variables.put("repaymentCatalog", "18.1.1");
         } else if (model.getLoanBusinessInformation().getRepayment() == 2) {
