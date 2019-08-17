@@ -64,6 +64,8 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 				//存储房屋
 				if(record.getAssetTypeHouses() !=null){
 					for(AssetTypeHouses house : record.getAssetTypeHouses()){
+						house.setCreateBy(record.getCreateBy());
+						house.setCreateTime(new Date());
 						house.setRpiId(id);
 						assetTypeHousesMapper.add(house);
 					}
@@ -71,6 +73,8 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 				//存储土地
 				if(record.getAssetTypeLand() !=null){
 					for(AssetTypeLand land : record.getAssetTypeLand()){
+						land.setCreateBy(record.getCreateBy());
+						land.setCreateTime(new Date());
 						land.setRpiId(id);
 						assetTypeLandMapper.add(land);
 					}
@@ -78,6 +82,8 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 				//存储汽车
 				if(record.getAssetTypeCar() !=null){
 					for(AssetTypeCar car : record.getAssetTypeCar()){
+						car.setCreateBy(record.getCreateBy());
+						car.setCreateTime(new Date());
 						car.setRpiId(id);
 						assetTypeCarMapper.add(car);
 					}
@@ -85,6 +91,8 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 				//存储证券
 				if(record.getAssetTypeSecurities() !=null){
 					for(AssetTypeSecurities aecurities : record.getAssetTypeSecurities()){
+						aecurities.setCreateBy(record.getCreateBy());
+						aecurities.setCreateTime(new Date());
 						aecurities.setRpiId(id);
 						assetTypeSecuritiesMapper.add(aecurities);
 					}
@@ -92,12 +100,16 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 				//存储其他
 				if(record.getAssetTypeOther() !=null){
 					for(AssetTypeOther other : record.getAssetTypeOther()){
+						other.setCreateBy(record.getCreateBy());
+						other.setCreateTime(new Date());
 						other.setRpiId(id);
 						assetTypeOtherMapper.add(other);
 					}
 				}
 				//保存家庭收支情况
 				if(record.getHouseholdIncomeForm() !=null){
+					record.getHouseholdIncomeForm().setCreateBy(record.getCreateBy());
+					record.getHouseholdIncomeForm().setCreateTime(new Date());
 					record.getHouseholdIncomeForm().setLoanBasisId(record.getLoanBasisId());
 					record.getHouseholdIncomeForm().setRpiId(id);
 					householdIncomeMapper.add(record.getHouseholdIncomeForm());
@@ -130,6 +142,8 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 						//存储房屋
 						if(record.getAssetTypeHouses() !=null){
 							for(AssetTypeHouses house : record.getAssetTypeHouses()){
+								house.setCreateBy(record.getCreateBy());
+								house.setCreateTime(new Date());
 								house.setRpiId(id);
 								assetTypeHousesMapper.add(house);
 							}
@@ -137,6 +151,8 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 						//存储土地
 						if(record.getAssetTypeLand() !=null){
 							for(AssetTypeLand land : record.getAssetTypeLand()){
+								land.setCreateBy(record.getCreateBy());
+								land.setCreateTime(new Date());
 								land.setRpiId(id);
 								assetTypeLandMapper.add(land);
 							}
@@ -144,6 +160,8 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 						//存储汽车
 						if(record.getAssetTypeCar() !=null){
 							for(AssetTypeCar car : record.getAssetTypeCar()){
+								car.setCreateBy(record.getCreateBy());
+								car.setCreateTime(new Date());
 								car.setRpiId(id);
 								assetTypeCarMapper.add(car);
 							}
@@ -151,6 +169,8 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 						//存储证券
 						if(record.getAssetTypeSecurities() !=null){
 							for(AssetTypeSecurities aecurities : record.getAssetTypeSecurities()){
+								aecurities.setCreateBy(record.getCreateBy());
+								aecurities.setCreateTime(new Date());
 								aecurities.setRpiId(id);
 								assetTypeSecuritiesMapper.add(aecurities);
 							}
@@ -158,6 +178,8 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 						//存储其他
 						if(record.getAssetTypeOther() !=null){
 							for(AssetTypeOther other : record.getAssetTypeOther()){
+								other.setCreateBy(record.getCreateBy());
+								other.setCreateTime(new Date());
 								other.setRpiId(id);
 								assetTypeOtherMapper.add(other);
 							}
