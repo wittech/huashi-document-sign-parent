@@ -165,11 +165,11 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 				}
 			}
 			//保存家庭收支情况
-			if(r.getHouseholdIncomeForm() !=null){
+			/*if(r.getHouseholdIncomeForm() !=null){
 				r.getHouseholdIncomeForm().setLoanBasisId(r.getLoanBasisId());
 				r.getHouseholdIncomeForm().setRpiId(r.getId());
 				householdIncomeMapper.add(r.getHouseholdIncomeForm());
-			}
+			}*/
 		}
 	}
 
