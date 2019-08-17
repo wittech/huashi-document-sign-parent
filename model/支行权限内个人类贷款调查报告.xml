@@ -419,7 +419,7 @@
                       <w:sz w:val="24"/>
                       <w:u w:val="single"/>
                     </w:rPr>
-                    <w:t xml:space="preserve"> {{currentHomeAddress}}</w:t>
+                    <w:t xml:space="preserve"> {{coupleCurrentHomeAddress}}</w:t>
                   </w:r>
                 </w:p>
                 {{applyFamilyAssetsInfo}}
@@ -1758,7 +1758,7 @@
                       <w:sz w:val="24"/>
                       <w:u w:val="single"/>
                     </w:rPr>
-                    <w:t xml:space="preserve">  {{guaranteeDebt}}  </w:t>
+                    <w:t xml:space="preserve">     </w:t>
                   </w:r>
                   <w:r>
                     <w:rPr>
@@ -2372,7 +2372,7 @@
                       <w:sz w:val="24"/>
                       <w:szCs w:val="24"/>
                     </w:rPr>
-                    <w:t>{{repaymentType2}}还款，呈领导审批。</w:t>
+                    <w:t>还款，呈领导审批。</w:t>
                   </w:r>
                 </w:p>
                 <w:p>
