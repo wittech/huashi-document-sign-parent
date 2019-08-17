@@ -30,6 +30,39 @@
 	<result column="create_by" jdbcType="VARCHAR" property="createBy" />
   </resultMap>
   
+  <!-- 抵押物引用 -->
+   <resultMap id="BaseHousLandResultMap" type="com.louis.kitty.admin.dto.HousingLandDto">
+	<result column="name" jdbcType="VARCHAR" property="name" />
+	<result column="property_certificate_number" jdbcType="VARCHAR" property="propertyCertificateNumber" />
+	<result column="whether_ownership_certificates" jdbcType="VARCHAR" property="whetherOwnershipCertificates" />
+	<result column="deed" jdbcType="VARCHAR" property="deed" />
+	<result column="land_certificate" jdbcType="VARCHAR" property="landCertificate" />
+	<result column="namehouses" jdbcType="VARCHAR" property="namehouses" />
+	<result column="affiliation" jdbcType="VARCHAR" property="affiliation" />
+	<result column="address" jdbcType="VARCHAR" property="address" />
+	<result column="construction_area" jdbcType="VARCHAR" property="constructionArea" />
+	<result column="value" jdbcType="VARCHAR" property="value" />
+	<result column="financing_situation" jdbcType="VARCHAR" property="financingSituation" />
+	<result column="whether_co_owner" jdbcType="VARCHAR" property="whetherCoowner" />
+	<result column="co_owner_name" jdbcType="VARCHAR" property="coownerName" />
+	<result column="affiliationLand" jdbcType="VARCHAR" property="affiliationLand" />
+	<result column="addressLand" jdbcType="VARCHAR" property="addressLand" />
+	<result column="constructionAreaLand" jdbcType="VARCHAR" property="constructionAreaLand" />
+	<result column="addressLand" jdbcType="VARCHAR" property="addressLand" />
+	<result column="constructionAreaLand" jdbcType="VARCHAR" property="constructionAreaLand" />
+	<result column="valueLand" jdbcType="VARCHAR" property="valueLand" />
+	<result column="whether_lease" jdbcType="VARCHAR" property="whetherLease" />
+	<result column="whetherCoownerLand" jdbcType="VARCHAR" property="whetherCoownerLand" />
+	<result column="coownerNameLand" jdbcType="VARCHAR" property="coownerNameLand" />
+	<result column="typeHous" jdbcType="VARCHAR" property="typeHous" />
+	<result column="typeLand" jdbcType="VARCHAR" property="typeLand" />
+	<result column="nameLand" jdbcType="VARCHAR" property="nameLand" />
+	<result column="landTypeCertificate" jdbcType="VARCHAR" property="landTypeCertificate" />
+	<result column="financingSituationLand" jdbcType="VARCHAR" property="financingSituationLand" />
+	<result column="whetherLeaseLand" jdbcType="VARCHAR" property="whetherLeaseLand" />
+	
+  </resultMap>
+  
   <insert id="add" parameterType="com.louis.kitty.admin.model.LoanBasis" useGeneratedKeys="true" keyProperty="id">
     insert into loan_basis
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -165,6 +198,27 @@
     	and lb.borrower  = #{borrower,jdbcType=VARCHAR}
      </if>
      order by lb.create_time 
+  </select>
+  
+  <!-- 根据基础id获取 引用房产 和土地信息 -->
+  <select id="findByLoanBasisIdList" parameterType="java.lang.Long" resultMap="BaseHousLandResultMap">
+  SELECT * FROM(
+	(SELECT '1' AS TYPE,rpi.name,ath.id as typeHous,'' AS typeLand,ath.property_certificate_number , ath.whether_ownership_certificates,ath.deed,
+	ath.land_certificate,ath.name namehouses,ath.affiliation,ath.address,ath.construction_area,ath.value,
+	ath.financing_situation,ath.whether_co_owner,ath.co_owner_name,
+	'' AS affiliationLand,'' AS addressLand,'' AS constructionAreaLand,
+	'' AS valueLand,'' AS financingSituationLand,'' AS whetherCoownerLand,
+	'' AS coownerNameLand,ath.whether_lease AS whether_lease,'' AS whetherLeaseLand,'' AS nameLand,'' AS landTypeCertificate
+	 FROM asset_type_houses ath LEFT JOIN related_personnel_information rpi ON ath.`rpi_id`=rpi.`id` where rpi.`loan_basis_id`=80) 
+	UNION ALL 
+	(SELECT '2' AS TYPE,rpi.name,'' AS typeHous,atl.id as typeLand,'' AS property_certificate_number ,'' AS whether_ownership_certificates,'' AS deed,
+	'' AS land_certificate,'' AS namehouses,'' AS affiliation,'' AS address,'' AS construction_area,'' AS VALUE,
+	'' AS financing_situation,'' AS whether_co_owner,'' AS co_owner_name,
+	atl.affiliation affiliationLand,atl.address addressLand,atl.construction_area constructionAreaLand,
+	atl.value valueLand,atl.financing_situation financingSituationLand,atl.whether_co_owner whetherCoownerLand,
+	atl.co_owner_name coownerNameLand,atl.whether_lease,atl.whether_lease AS whetherLeaseLand,atl.name nameLand,atl.land_certificate landTypeCertificate
+	 FROM asset_type_land atl LEFT JOIN related_personnel_information rpi ON atl.`rpi_id`=rpi.`id` where rpi.`loan_basis_id`=#{loanBasisId,jdbcType=BIGINT}) 
+	) AS a
   </select>
   
 </mapper>

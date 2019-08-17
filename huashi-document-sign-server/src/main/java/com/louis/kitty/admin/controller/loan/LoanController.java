@@ -193,4 +193,14 @@ public class LoanController {
 		return HttpResult.ok(0);
     }
 	
+	/**
+	 * 根据基础id获取 引用房产 和土地信息
+	 * @param loanBasisId
+	 * @return
+	 */
+	@GetMapping(value="/findByLoanBasisIdList")
+    public HttpResult findByLoanBasisIdList(@RequestParam Long loanBasisId) {
+		return HttpResult.ok(loanBasisService.findByLoanBasisIdList(loanBasisId));
+    }
+	
 }

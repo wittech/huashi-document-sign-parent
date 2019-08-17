@@ -1,5 +1,8 @@
 package com.louis.kitty.admin.sevice;
 
+import java.util.List;
+
+import com.louis.kitty.admin.dto.HousingLandDto;
 import com.louis.kitty.admin.model.LoanBasis;
 import com.louis.kitty.core.service.CurdService;
 
@@ -13,4 +16,12 @@ import com.louis.kitty.core.service.CurdService;
  * ---------------------------
  */
 public interface LoanBasisService extends CurdService<LoanBasis> {
+	
+	/**
+	 * 根据基础id获取 引用房产 和土地信息
+	 * 
+	 * @param loanBasisId
+	 * @return
+	 */
+	List<HousingLandDto> findByLoanBasisIdList(Long loanBasisId);
 }

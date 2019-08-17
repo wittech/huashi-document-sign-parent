@@ -1,12 +1,19 @@
 package com.louis.kitty.admin.sevice.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.louis.kitty.admin.dao.AssetTypeHousesMapper;
+import com.louis.kitty.admin.dao.AssetTypeLandMapper;
 import com.louis.kitty.admin.dao.LoanBasisMapper;
+import com.louis.kitty.admin.dao.RelatedPersonnelInformationMapper;
+import com.louis.kitty.admin.dto.HousingLandDto;
+import com.louis.kitty.admin.model.AssetTypeLand;
 import com.louis.kitty.admin.model.LoanBasis;
+import com.louis.kitty.admin.model.RelatedPersonnelInformation;
 import com.louis.kitty.admin.sevice.LoanBasisService;
 import com.louis.kitty.core.page.ColumnFilter;
 import com.louis.kitty.core.page.MybatisPageHelper;
@@ -27,7 +34,13 @@ public class LoanBasisServiceImpl implements LoanBasisService {
 
 	@Autowired
 	private LoanBasisMapper loanBasisMapper;
-
+	@Autowired
+	private RelatedPersonnelInformationMapper relatedPersonnelInformationMapper;
+	@Autowired
+	private AssetTypeLandMapper assetTypeLandMapper;
+	@Autowired
+	private AssetTypeHousesMapper assetTypeHousesMapper;
+	
 	@Override
 	public int save(LoanBasis record) {
 		if(record.getId() == null || record.getId() == 0) {
@@ -76,6 +89,23 @@ public class LoanBasisServiceImpl implements LoanBasisService {
 			value = columnFilter.getValue();
 		}
 		return value;
+	}
+
+	@Override
+	public List<HousingLandDto> findByLoanBasisIdList(Long loanBasisId) {
+		/*List<RelatedPersonnelInformation>  relatedList = relatedPersonnelInformationMapper.findByBaseIdList(loanBasisId);
+		List<HousingLandDto> housingLandList = new ArrayList<HousingLandDto>();
+		if(relatedList !=null){
+			for(RelatedPersonnelInformation r :relatedList){
+				 List<AssetTypeLand> landList = assetTypeLandMapper.findByRpiId(r.getId());
+				 if(landList !=null){
+					 for(AssetTypeLand land : landList){
+						 
+					 }
+				 }
+			}
+		}*/
+		return loanBasisMapper.findByLoanBasisIdList(loanBasisId);
 	}
 	
 }
