@@ -1,5 +1,6 @@
 package com.louis.kitty.admin.sevice.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,53 +115,60 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 	 */
 	private void saveSpouseInfo(RelatedPersonnelInformation r,Long parentId){
 		if(r.getSpouseInfo() !=null){
-			RelatedPersonnelInformation record = r.getSpouseInfo();
-			record.setCoupleId(parentId);
-			relatedPersonnelInformationMapper.add(record);
-			//获取相关人id
-			Long id = record.getId();
-			if(id>0){
-				//存储房屋
-				if(record.getAssetTypeHouses() !=null){
-					for(AssetTypeHouses house : record.getAssetTypeHouses()){
-						house.setRpiId(id);
-						assetTypeHousesMapper.add(house);
+			//已婚的时候存储配偶信息
+			if(r.getMaritalStatus()>0 && r.getMaritalStatus() !=null){
+				if(r.getMaritalStatus()==1){
+					RelatedPersonnelInformation record = r.getSpouseInfo();
+					record.setCoupleId(parentId);
+					record.setCreateTime(new Date());
+					record.setCreateBy(r.getCreateBy());
+					relatedPersonnelInformationMapper.add(record);
+					//获取相关人id
+					Long id = record.getId();
+					if(id>0){
+						//存储房屋
+						if(record.getAssetTypeHouses() !=null){
+							for(AssetTypeHouses house : record.getAssetTypeHouses()){
+								house.setRpiId(id);
+								assetTypeHousesMapper.add(house);
+							}
+						}
+						//存储土地
+						if(record.getAssetTypeLand() !=null){
+							for(AssetTypeLand land : record.getAssetTypeLand()){
+								land.setRpiId(id);
+								assetTypeLandMapper.add(land);
+							}
+						}
+						//存储汽车
+						if(record.getAssetTypeCar() !=null){
+							for(AssetTypeCar car : record.getAssetTypeCar()){
+								car.setRpiId(id);
+								assetTypeCarMapper.add(car);
+							}
+						}
+						//存储证券
+						if(record.getAssetTypeSecurities() !=null){
+							for(AssetTypeSecurities aecurities : record.getAssetTypeSecurities()){
+								aecurities.setRpiId(id);
+								assetTypeSecuritiesMapper.add(aecurities);
+							}
+						}
+						//存储其他
+						if(record.getAssetTypeOther() !=null){
+							for(AssetTypeOther other : record.getAssetTypeOther()){
+								other.setRpiId(id);
+								assetTypeOtherMapper.add(other);
+							}
+						}
 					}
 				}
-				//存储土地
-				if(record.getAssetTypeLand() !=null){
-					for(AssetTypeLand land : record.getAssetTypeLand()){
-						land.setRpiId(id);
-						assetTypeLandMapper.add(land);
-					}
-				}
-				//存储汽车
-				if(record.getAssetTypeCar() !=null){
-					for(AssetTypeCar car : record.getAssetTypeCar()){
-						car.setRpiId(id);
-						assetTypeCarMapper.add(car);
-					}
-				}
-				//存储证券
-				if(record.getAssetTypeSecurities() !=null){
-					for(AssetTypeSecurities aecurities : record.getAssetTypeSecurities()){
-						aecurities.setRpiId(id);
-						assetTypeSecuritiesMapper.add(aecurities);
-					}
-				}
-				//存储其他
-				if(record.getAssetTypeOther() !=null){
-					for(AssetTypeOther other : record.getAssetTypeOther()){
-						other.setRpiId(id);
-						assetTypeOtherMapper.add(other);
-					}
-				}
-				//保存家庭收支情况
-				if(record.getHouseholdIncomeForm() !=null){
-					record.getHouseholdIncomeForm().setLoanBasisId(record.getLoanBasisId());
-					record.getHouseholdIncomeForm().setRpiId(id);
-					householdIncomeMapper.add(record.getHouseholdIncomeForm());
-				}
+			}
+			//保存家庭收支情况
+			if(r.getHouseholdIncomeForm() !=null){
+				r.getHouseholdIncomeForm().setLoanBasisId(r.getLoanBasisId());
+				r.getHouseholdIncomeForm().setRpiId(r.getId());
+				householdIncomeMapper.add(r.getHouseholdIncomeForm());
 			}
 		}
 	}
