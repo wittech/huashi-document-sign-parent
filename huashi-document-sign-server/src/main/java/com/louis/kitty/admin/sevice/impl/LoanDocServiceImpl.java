@@ -76,6 +76,8 @@ public class LoanDocServiceImpl extends AbstractDocService implements LoanDocSer
     private ValuationConfirmationTool valuationConfirmationTool;
     @Autowired
     private WithdrawalCertificateTool withdrawalCertificateTool;
+    @Autowired
+    private PersonalLoanInvestigationReportTool personalLoanInvestigationReportTool;
 
     private DocCommonModel pickupModel(Long loanBasisId) {
         LoanBasis loanBasis = getLoanBais(loanBasisId);
@@ -162,6 +164,7 @@ public class LoanDocServiceImpl extends AbstractDocService implements LoanDocSer
             futureList.add(suretyBondsContractTool.execute(model));
             futureList.add(valuationConfirmationTool.execute(model));
             futureList.add(withdrawalCertificateTool.execute(model));
+            futureList.add(personalLoanInvestigationReportTool.execute(model));
         } catch (Exception e) {
             log.error("async execute doc build failed by model[{}]", JSON.toJSONString(model), e);
         }
