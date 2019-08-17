@@ -1,16 +1,16 @@
 package com.louis.kitty.admin.controller;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.louis.kitty.admin.sevice.LoanCheckDocService;
+import com.louis.kitty.core.http.HttpResult;
 
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-
-import com.louis.kitty.core.http.HttpResult;
-import com.louis.kitty.core.page.PageRequest;
-
-import com.louis.kitty.admin.model.LoanCheckDoc;
-import com.louis.kitty.admin.sevice.LoanCheckDocService;
 
 /**
  * ---------------------------
@@ -45,7 +45,7 @@ public class LoanCheckDocController {
 	 *
 	 * @param loanCheckId 借贷检查ID
 	 */
-	@GetMapping(value = "/findByLoanNoticeId")
+	@GetMapping(value = "/queryByLoanCheckId")
 	public HttpResult findByLoanNoticeId(@RequestParam Long loanCheckId) {
 		return HttpResult.ok(loanCheckDocService.queryByLoanCheckId(loanCheckId));
 	}
