@@ -76,7 +76,6 @@ public class LoanController {
 	 */
 	@PostMapping(value="/saveBorrower")
 	public HttpResult saveBorrower(@RequestBody RelatedPersonnelInformation record) {
-		record.setCreateTime(new Date());
 		return HttpResult.ok(relatedPersonnelInformationService.save(record));
 	}
 	

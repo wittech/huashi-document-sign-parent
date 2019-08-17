@@ -56,6 +56,7 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 	public int save(RelatedPersonnelInformation record) {
 		if(record.getId() == null || record.getId() == 0) {
 			record.setCoupleId(0L);
+			record.setCreateTime(new Date());
 			int i = relatedPersonnelInformationMapper.add(record);
 			//获取相关人id
 			Long id = record.getId();
