@@ -2,331 +2,344 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.louis.kitty.admin.dao.HouseholdIncomeMapper">
 
-  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.HouseholdIncome">
-	<id column="id" jdbcType="BIGINT" property="id" />
-	<result column="name" jdbcType="VARCHAR" property="name" />
-	<result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId" />
-	<result column="rpi_id" jdbcType="BIGINT" property="rpiId" />
-	<result column="total_assets" jdbcType="DECIMAL" property="totalAssets" />
-	<result column="total_revenue" jdbcType="DECIMAL" property="totalRevenue" />
-	<result column="applicant_annual_income" jdbcType="DECIMAL" property="applicantAnnualIncome" />
-	<result column="applicant_operating_income" jdbcType="DECIMAL" property="applicantOperatingIncome" />
-	<result column="applicant_other_income" jdbcType="DECIMAL" property="applicantOtherIncome" />
-	<result column="spouse_annual_income" jdbcType="DECIMAL" property="spouseAnnualIncome" />
-	<result column="spouse_operating_income" jdbcType="DECIMAL" property="spouseOperatingIncome" />
-	<result column="spouse_other_income" jdbcType="DECIMAL" property="spouseOtherIncome" />
-	<result column="total_annual_expenditure" jdbcType="DECIMAL" property="totalAnnualExpenditure" />
-	<result column="life_total_expenditure" jdbcType="DECIMAL" property="lifeTotalExpenditure" />
-	<result column="basic_life_total_expenditure" jdbcType="DECIMAL" property="basicLifeTotalExpenditure" />
-	<result column="education_expenditure" jdbcType="DECIMAL" property="educationExpenditure" />
-	<result column="temporary_expenditure" jdbcType="DECIMAL" property="temporaryExpenditure" />
-	<result column="debt_total_expenditure" jdbcType="DECIMAL" property="debtTotalExpenditure" />
-	<result column="annual_loan_expenditure" jdbcType="DECIMAL" property="annualLoanExpenditure" />
-	<result column="spouse_temporary_expenditure" jdbcType="DECIMAL" property="spouseTemporaryExpenditure" />
-	<result column="support_population" jdbcType="INTEGER" property="supportPopulation" />
-	<result column="foreign_guarantee_lump_sum" jdbcType="DECIMAL" property="foreignGuaranteeLumpSum" />
-	<result column="total_liability" jdbcType="DECIMAL" property="totalLiability" />
-	<result column="remark" jdbcType="VARCHAR" property="remark" />
-	<result column="create_by" jdbcType="VARCHAR" property="createBy" />
-	<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-	<result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
-	<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
-	<result column="del_flag" jdbcType="TINYINT" property="delFlag" />
-  </resultMap>
-  
-  <insert id="add" parameterType="com.louis.kitty.admin.model.HouseholdIncome">
-    insert into household_income
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="name != null">
-        name,
-      </if>
-      <if test="loanBasisId != null">
-        loan_basis_id,
-      </if>
-      <if test="rpiId != null">
-        rpi_id,
-      </if>
-      <if test="totalAssets != null">
-        total_assets,
-      </if>
-      <if test="totalRevenue != null">
-        total_revenue,
-      </if>
-      <if test="applicantAnnualIncome != null">
-        applicant_annual_income,
-      </if>
-      <if test="applicantOperatingIncome != null">
-        applicant_operating_income,
-      </if>
-      <if test="applicantOtherIncome != null">
-        applicant_other_income,
-      </if>
-      <if test="spouseAnnualIncome != null">
-        spouse_annual_income,
-      </if>
-      <if test="spouseOperatingIncome != null">
-        spouse_operating_income,
-      </if>
-      <if test="spouseOtherIncome != null">
-        spouse_other_income,
-      </if>
-      <if test="totalAnnualExpenditure != null">
-        total_annual_expenditure,
-      </if>
-      <if test="lifeTotalExpenditure != null">
-        life_total_expenditure,
-      </if>
-      <if test="basicLifeTotalExpenditure != null">
-        basic_life_total_expenditure,
-      </if>
-      <if test="educationExpenditure != null">
-        education_expenditure,
-      </if>
-      <if test="temporaryExpenditure != null">
-        temporary_expenditure,
-      </if>
-      <if test="debtTotalExpenditure != null">
-        debt_total_expenditure,
-      </if>
-      <if test="annualLoanExpenditure != null">
-        annual_loan_expenditure,
-      </if>
-      <if test="spouseTemporaryExpenditure != null">
-        spouse_temporary_expenditure,
-      </if>
-      <if test="supportPopulation != null">
-        support_population,
-      </if>
-      <if test="foreignGuaranteeLumpSum != null">
-        foreign_guarantee_lump_sum,
-      </if>
-      <if test="totalLiability != null">
-        total_liability,
-      </if>
-      <if test="remark != null">
-        remark,
-      </if>
-      <if test="createBy != null">
-        create_by,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="lastUpdateBy != null">
-        last_update_by,
-      </if>
-      <if test="lastUpdateTime != null">
-        last_update_time,
-      </if>
-      <if test="delFlag != null">
-        del_flag,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="name != null">
-        #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="loanBasisId != null">
-        #{loanBasisId,jdbcType=BIGINT},
-      </if>
-      <if test="rpiId != null">
-        #{rpiId,jdbcType=BIGINT},
-      </if>
-      <if test="totalAssets != null">
-        #{totalAssets,jdbcType=DECIMAL},
-      </if>
-      <if test="totalRevenue != null">
-        #{totalRevenue,jdbcType=DECIMAL},
-      </if>
-      <if test="applicantAnnualIncome != null">
-        #{applicantAnnualIncome,jdbcType=DECIMAL},
-      </if>
-      <if test="applicantOperatingIncome != null">
-        #{applicantOperatingIncome,jdbcType=DECIMAL},
-      </if>
-      <if test="applicantOtherIncome != null">
-        #{applicantOtherIncome,jdbcType=DECIMAL},
-      </if>
-      <if test="spouseAnnualIncome != null">
-        #{spouseAnnualIncome,jdbcType=DECIMAL},
-      </if>
-      <if test="spouseOperatingIncome != null">
-        #{spouseOperatingIncome,jdbcType=DECIMAL},
-      </if>
-      <if test="spouseOtherIncome != null">
-        #{spouseOtherIncome,jdbcType=DECIMAL},
-      </if>
-      <if test="totalAnnualExpenditure != null">
-        #{totalAnnualExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="lifeTotalExpenditure != null">
-        #{lifeTotalExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="basicLifeTotalExpenditure != null">
-        #{basicLifeTotalExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="educationExpenditure != null">
-        #{educationExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="temporaryExpenditure != null">
-        #{temporaryExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="debtTotalExpenditure != null">
-        #{debtTotalExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="annualLoanExpenditure != null">
-        #{annualLoanExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="spouseTemporaryExpenditure != null">
-        #{spouseTemporaryExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="supportPopulation != null">
-        #{supportPopulation,jdbcType=INTEGER},
-      </if>
-      <if test="foreignGuaranteeLumpSum != null">
-        #{foreignGuaranteeLumpSum,jdbcType=DECIMAL},
-      </if>
-      <if test="totalLiability != null">
-        #{totalLiability,jdbcType=DECIMAL},
-      </if>
-      <if test="remark != null">
-        #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="createBy != null">
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdateBy != null">
-        #{lastUpdateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="lastUpdateTime != null">
-        #{lastUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="delFlag != null">
-        #{delFlag,jdbcType=TINYINT},
-      </if>
-    </trim>
-  </insert>
+    <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.HouseholdIncome">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId"/>
+        <result column="rpi_id" jdbcType="BIGINT" property="rpiId"/>
+        <result column="total_assets" jdbcType="DECIMAL" property="totalAssets"/>
+        <result column="total_revenue" jdbcType="DECIMAL" property="totalRevenue"/>
+        <result column="applicant_annual_income" jdbcType="DECIMAL" property="applicantAnnualIncome"/>
+        <result column="applicant_operating_income" jdbcType="DECIMAL" property="applicantOperatingIncome"/>
+        <result column="applicant_other_income" jdbcType="DECIMAL" property="applicantOtherIncome"/>
+        <result column="spouse_annual_income" jdbcType="DECIMAL" property="spouseAnnualIncome"/>
+        <result column="spouse_operating_income" jdbcType="DECIMAL" property="spouseOperatingIncome"/>
+        <result column="spouse_other_income" jdbcType="DECIMAL" property="spouseOtherIncome"/>
+        <result column="total_annual_expenditure" jdbcType="DECIMAL" property="totalAnnualExpenditure"/>
+        <result column="life_total_expenditure" jdbcType="DECIMAL" property="lifeTotalExpenditure"/>
+        <result column="basic_life_total_expenditure" jdbcType="DECIMAL" property="basicLifeTotalExpenditure"/>
+        <result column="education_expenditure" jdbcType="DECIMAL" property="educationExpenditure"/>
+        <result column="temporary_expenditure" jdbcType="DECIMAL" property="temporaryExpenditure"/>
+        <result column="debt_total_expenditure" jdbcType="DECIMAL" property="debtTotalExpenditure"/>
+        <result column="annual_loan_expenditure" jdbcType="DECIMAL" property="annualLoanExpenditure"/>
+        <result column="spouse_temporary_expenditure" jdbcType="DECIMAL" property="spouseTemporaryExpenditure"/>
+        <result column="support_population" jdbcType="INTEGER" property="supportPopulation"/>
+        <result column="foreign_guarantee_lump_sum" jdbcType="DECIMAL" property="foreignGuaranteeLumpSum"/>
+        <result column="total_liability" jdbcType="DECIMAL" property="totalLiability"/>
+        <result column="remark" jdbcType="VARCHAR" property="remark"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+        <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
+    </resultMap>
 
-  <delete id="delete" parameterType="java.lang.Long">
-    delete from household_income
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  
-  <update id="update" parameterType="com.louis.kitty.admin.model.HouseholdIncome">
-    update household_income
-    <set>
-      <if test="id != null">
-        id = #{id,jdbcType=BIGINT},
-      </if>
-      <if test="name != null">
-        name = #{name,jdbcType=VARCHAR},
-      </if>
-      <if test="loanBasisId != null">
-        loan_basis_id = #{loanBasisId,jdbcType=BIGINT},
-      </if>
-      <if test="rpiId != null">
-        rpi_id = #{rpiId,jdbcType=BIGINT},
-      </if>
-      <if test="totalAssets != null">
-        total_assets = #{totalAssets,jdbcType=DECIMAL},
-      </if>
-      <if test="totalRevenue != null">
-        total_revenue = #{totalRevenue,jdbcType=DECIMAL},
-      </if>
-      <if test="applicantAnnualIncome != null">
-        applicant_annual_income = #{applicantAnnualIncome,jdbcType=DECIMAL},
-      </if>
-      <if test="applicantOperatingIncome != null">
-        applicant_operating_income = #{applicantOperatingIncome,jdbcType=DECIMAL},
-      </if>
-      <if test="applicantOtherIncome != null">
-        applicant_other_income = #{applicantOtherIncome,jdbcType=DECIMAL},
-      </if>
-      <if test="spouseAnnualIncome != null">
-        spouse_annual_income = #{spouseAnnualIncome,jdbcType=DECIMAL},
-      </if>
-      <if test="spouseOperatingIncome != null">
-        spouse_operating_income = #{spouseOperatingIncome,jdbcType=DECIMAL},
-      </if>
-      <if test="spouseOtherIncome != null">
-        spouse_other_income = #{spouseOtherIncome,jdbcType=DECIMAL},
-      </if>
-      <if test="totalAnnualExpenditure != null">
-        total_annual_expenditure = #{totalAnnualExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="lifeTotalExpenditure != null">
-        life_total_expenditure = #{lifeTotalExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="basicLifeTotalExpenditure != null">
-        basic_life_total_expenditure = #{basicLifeTotalExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="educationExpenditure != null">
-        education_expenditure = #{educationExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="temporaryExpenditure != null">
-        temporary_expenditure = #{temporaryExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="debtTotalExpenditure != null">
-        debt_total_expenditure = #{debtTotalExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="annualLoanExpenditure != null">
-        annual_loan_expenditure = #{annualLoanExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="spouseTemporaryExpenditure != null">
-        spouse_temporary_expenditure = #{spouseTemporaryExpenditure,jdbcType=DECIMAL},
-      </if>
-      <if test="supportPopulation != null">
-        support_population = #{supportPopulation,jdbcType=INTEGER},
-      </if>
-      <if test="foreignGuaranteeLumpSum != null">
-        foreign_guarantee_lump_sum = #{foreignGuaranteeLumpSum,jdbcType=DECIMAL},
-      </if>
-      <if test="totalLiability != null">
-        total_liability = #{totalLiability,jdbcType=DECIMAL},
-      </if>
-      <if test="remark != null">
-        remark = #{remark,jdbcType=VARCHAR},
-      </if>
-      <if test="createBy != null">
-        create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdateBy != null">
-        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="lastUpdateTime != null">
-        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="delFlag != null">
-        del_flag = #{delFlag,jdbcType=TINYINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <insert id="add" parameterType="com.louis.kitty.admin.model.HouseholdIncome">
+        insert into household_income
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="loanBasisId != null">
+                loan_basis_id,
+            </if>
+            <if test="rpiId != null">
+                rpi_id,
+            </if>
+            <if test="totalAssets != null">
+                total_assets,
+            </if>
+            <if test="totalRevenue != null">
+                total_revenue,
+            </if>
+            <if test="applicantAnnualIncome != null">
+                applicant_annual_income,
+            </if>
+            <if test="applicantOperatingIncome != null">
+                applicant_operating_income,
+            </if>
+            <if test="applicantOtherIncome != null">
+                applicant_other_income,
+            </if>
+            <if test="spouseAnnualIncome != null">
+                spouse_annual_income,
+            </if>
+            <if test="spouseOperatingIncome != null">
+                spouse_operating_income,
+            </if>
+            <if test="spouseOtherIncome != null">
+                spouse_other_income,
+            </if>
+            <if test="totalAnnualExpenditure != null">
+                total_annual_expenditure,
+            </if>
+            <if test="lifeTotalExpenditure != null">
+                life_total_expenditure,
+            </if>
+            <if test="basicLifeTotalExpenditure != null">
+                basic_life_total_expenditure,
+            </if>
+            <if test="educationExpenditure != null">
+                education_expenditure,
+            </if>
+            <if test="temporaryExpenditure != null">
+                temporary_expenditure,
+            </if>
+            <if test="debtTotalExpenditure != null">
+                debt_total_expenditure,
+            </if>
+            <if test="annualLoanExpenditure != null">
+                annual_loan_expenditure,
+            </if>
+            <if test="spouseTemporaryExpenditure != null">
+                spouse_temporary_expenditure,
+            </if>
+            <if test="supportPopulation != null">
+                support_population,
+            </if>
+            <if test="foreignGuaranteeLumpSum != null">
+                foreign_guarantee_lump_sum,
+            </if>
+            <if test="totalLiability != null">
+                total_liability,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdateBy != null">
+                last_update_by,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="loanBasisId != null">
+                #{loanBasisId,jdbcType=BIGINT},
+            </if>
+            <if test="rpiId != null">
+                #{rpiId,jdbcType=BIGINT},
+            </if>
+            <if test="totalAssets != null">
+                #{totalAssets,jdbcType=DECIMAL},
+            </if>
+            <if test="totalRevenue != null">
+                #{totalRevenue,jdbcType=DECIMAL},
+            </if>
+            <if test="applicantAnnualIncome != null">
+                #{applicantAnnualIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="applicantOperatingIncome != null">
+                #{applicantOperatingIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="applicantOtherIncome != null">
+                #{applicantOtherIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="spouseAnnualIncome != null">
+                #{spouseAnnualIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="spouseOperatingIncome != null">
+                #{spouseOperatingIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="spouseOtherIncome != null">
+                #{spouseOtherIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="totalAnnualExpenditure != null">
+                #{totalAnnualExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="lifeTotalExpenditure != null">
+                #{lifeTotalExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="basicLifeTotalExpenditure != null">
+                #{basicLifeTotalExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="educationExpenditure != null">
+                #{educationExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="temporaryExpenditure != null">
+                #{temporaryExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="debtTotalExpenditure != null">
+                #{debtTotalExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="annualLoanExpenditure != null">
+                #{annualLoanExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="spouseTemporaryExpenditure != null">
+                #{spouseTemporaryExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="supportPopulation != null">
+                #{supportPopulation,jdbcType=INTEGER},
+            </if>
+            <if test="foreignGuaranteeLumpSum != null">
+                #{foreignGuaranteeLumpSum,jdbcType=DECIMAL},
+            </if>
+            <if test="totalLiability != null">
+                #{totalLiability,jdbcType=DECIMAL},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateBy != null">
+                #{lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
 
-  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select * from household_income
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  
-  <select id="findPage" resultMap="BaseResultMap">
-    select * from household_income
-  </select>
+    <delete id="delete" parameterType="java.lang.Long">
+        delete
+        from household_income
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
 
-  <select id="findByRpiId" resultMap="BaseResultMap">
-    select * from household_income where rpi_id = #{rpiId,jdbcType=BIGINT} limit 1
-  </select>
+    <update id="update" parameterType="com.louis.kitty.admin.model.HouseholdIncome">
+        update household_income
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=BIGINT},
+            </if>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="loanBasisId != null">
+                loan_basis_id = #{loanBasisId,jdbcType=BIGINT},
+            </if>
+            <if test="rpiId != null">
+                rpi_id = #{rpiId,jdbcType=BIGINT},
+            </if>
+            <if test="totalAssets != null">
+                total_assets = #{totalAssets,jdbcType=DECIMAL},
+            </if>
+            <if test="totalRevenue != null">
+                total_revenue = #{totalRevenue,jdbcType=DECIMAL},
+            </if>
+            <if test="applicantAnnualIncome != null">
+                applicant_annual_income = #{applicantAnnualIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="applicantOperatingIncome != null">
+                applicant_operating_income = #{applicantOperatingIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="applicantOtherIncome != null">
+                applicant_other_income = #{applicantOtherIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="spouseAnnualIncome != null">
+                spouse_annual_income = #{spouseAnnualIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="spouseOperatingIncome != null">
+                spouse_operating_income = #{spouseOperatingIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="spouseOtherIncome != null">
+                spouse_other_income = #{spouseOtherIncome,jdbcType=DECIMAL},
+            </if>
+            <if test="totalAnnualExpenditure != null">
+                total_annual_expenditure = #{totalAnnualExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="lifeTotalExpenditure != null">
+                life_total_expenditure = #{lifeTotalExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="basicLifeTotalExpenditure != null">
+                basic_life_total_expenditure = #{basicLifeTotalExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="educationExpenditure != null">
+                education_expenditure = #{educationExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="temporaryExpenditure != null">
+                temporary_expenditure = #{temporaryExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="debtTotalExpenditure != null">
+                debt_total_expenditure = #{debtTotalExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="annualLoanExpenditure != null">
+                annual_loan_expenditure = #{annualLoanExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="spouseTemporaryExpenditure != null">
+                spouse_temporary_expenditure = #{spouseTemporaryExpenditure,jdbcType=DECIMAL},
+            </if>
+            <if test="supportPopulation != null">
+                support_population = #{supportPopulation,jdbcType=INTEGER},
+            </if>
+            <if test="foreignGuaranteeLumpSum != null">
+                foreign_guarantee_lump_sum = #{foreignGuaranteeLumpSum,jdbcType=DECIMAL},
+            </if>
+            <if test="totalLiability != null">
+                total_liability = #{totalLiability,jdbcType=DECIMAL},
+            </if>
+            <if test="remark != null">
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateBy != null">
+                last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
 
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from household_income
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPage" resultMap="BaseResultMap">
+        select *
+        from household_income
+    </select>
+
+    <select id="findByRpiId" resultMap="BaseResultMap">
+        select *
+        from household_income
+        where rpi_id = #{rpiId,jdbcType=BIGINT}
+        limit 1
+    </select>
+
+    <select id="findByRpiIds" resultMap="BaseResultMap">
+        select * from household_income
+        WHERE rpi_id IN
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
 
 </mapper>

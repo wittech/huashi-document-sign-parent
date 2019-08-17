@@ -243,5 +243,9 @@
   <select id="findPage" resultMap="BaseResultMap">
     select * from asset_type_houses
   </select>
-  
+
+  <select id="findByRpiId" resultMap="BaseResultMap">
+    select * from asset_type_houses where rpi_id = #{rpiId,jdbcType=BIGINT}
+  </select>
+
 </mapper>

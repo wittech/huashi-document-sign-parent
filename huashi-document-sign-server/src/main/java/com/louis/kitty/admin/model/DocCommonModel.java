@@ -138,7 +138,7 @@ public class DocCommonModel {
     }
 
     public String getApplyMoneyRMB() {
-        return RmbUtil.number2CNMontrayUnit(new BigDecimal(loanBusinessInformation.getApplicationAmount()));
+        return RmbUtil.rmb(new BigDecimal(loanBusinessInformation.getApplicationAmount()));
 
     }
 }

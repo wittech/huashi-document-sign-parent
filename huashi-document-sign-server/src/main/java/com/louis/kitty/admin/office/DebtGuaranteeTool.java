@@ -60,7 +60,7 @@ public class DebtGuaranteeTool extends AbstractOfficeTool {
         variables.put("applyPersonIdentityNumber", docCommonModel.getBorrower().getIdentityNumber());
 
         // 1.11. loan_business_information贷款业务信息表
-        variables.put("applyMoneyRMB", RmbUtil.number2CNMontrayUnit(new BigDecimal(docCommonModel.getLoanBusinessInformation().getApplicationAmount())));
+        variables.put("applyMoneyRMB", RmbUtil.rmb(new BigDecimal(docCommonModel.getLoanBusinessInformation().getApplicationAmount())));
         variables.put("moneyUsage", docCommonModel.getLoanBusinessInformation().getDescription());
 
         setGuaranteeList(docCommonModel, variables);

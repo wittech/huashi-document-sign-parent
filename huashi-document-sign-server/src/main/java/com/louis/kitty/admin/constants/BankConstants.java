@@ -14,5 +14,10 @@ public class BankConstants {
 
     public static final String BANK_PHONE = "0773-2624239";
 
+    /**
+     * 归属城市，目前主要用于判断是否为本地户口
+     */
+    public static final String CITY = "桂林";
+
 
 }

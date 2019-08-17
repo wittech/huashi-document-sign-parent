@@ -6,6 +6,9 @@ import com.louis.kitty.admin.dao.RelatedPersonnelInformationMapper;
 import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.Pawn;
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
+import com.louis.kitty.common.utils.StringUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -14,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Component
 public class MortgageListTool extends AbstractOfficeTool {
 
@@ -657,6 +661,20 @@ public class MortgageListTool extends AbstractOfficeTool {
         variables.put("pawnList", data.toString());
     }
 
+    private double addOneByOne(double current, String value) {
+        if (StringUtils.isBlank(value)) {
+            return current;
+        }
+
+        try {
+            return current + Double.parseDouble(value);
+        } catch (NumberFormatException e) {
+            log.warn("value[{}] parse double failed", value);
+            return current;
+        }
+
+    }
+
     @Override
     protected void fillVariable(DocCommonModel docCommonModel) {
         Map<String, List<Pawn>> pawnInOwners = calculateCount(docCommonModel);
@@ -669,6 +687,7 @@ public class MortgageListTool extends AbstractOfficeTool {
             // 抵押物 所有抵押人信息
             variables.put("mortgageCoownerName", relatedPersonnelInformation.getName());
 
+            Double evasluation = 0d;
             List<Map<String, Object>> pawnList = new ArrayList<>();
             for (Pawn pawn : entry.getValue()) {
                 if (pawn.getMortgageType() == 0) {
@@ -676,7 +695,6 @@ public class MortgageListTool extends AbstractOfficeTool {
                         Map<String, Object> tempMap = new HashMap<>();
                         tempMap.put("pawnOwner", relatedPersonnelInformation.getName());
                         tempMap.put("storageAddress", pawn.getCollateralDeposit());
-                        tempMap.put("evasluation", pawn.getValue());
                         tempMap.put("pawnType", "不动产权证");
                         tempMap.put("amountWithUnit", pawn.getBuildingArea() + "㎡");
                         tempMap.put("pawnNo", pawn.getPropertyCertificateNumber());
@@ -687,7 +705,6 @@ public class MortgageListTool extends AbstractOfficeTool {
                         Map<String, Object> tempMap = new HashMap<>();
                         tempMap.put("pawnOwner", relatedPersonnelInformation.getName());
                         tempMap.put("storageAddress", pawn.getCollateralDeposit());
-                        tempMap.put("evasluation", pawn.getValue());
                         tempMap.put("pawnType", "房产证");
                         tempMap.put("amountWithUnit", pawn.getBuildingArea() + "㎡");
                         tempMap.put("pawnNo", pawn.getPropertyCertificateNumber());
@@ -697,7 +714,6 @@ public class MortgageListTool extends AbstractOfficeTool {
                         tempMap = new HashMap<>();
                         tempMap.put("pawnOwner", relatedPersonnelInformation.getName());
                         tempMap.put("storageAddress", pawn.getCollateralDeposit());
-                        tempMap.put("evasluation", pawn.getValue());
                         tempMap.put("pawnType", "土地证");
                         tempMap.put("amountWithUnit", pawn.getLandOccupationArea() + "㎡");
                         tempMap.put("pawnNo", pawn.getLandCertificateNumber());
@@ -708,13 +724,19 @@ public class MortgageListTool extends AbstractOfficeTool {
                     Map<String, Object> tempMap = new HashMap<>();
                     tempMap.put("pawnOwner", relatedPersonnelInformation.getName());
                     tempMap.put("storageAddress", pawn.getCollateralDeposit());
-                    tempMap.put("evasluation", pawn.getValue());
                     tempMap.put("pawnType", "土地证");
                     tempMap.put("amountWithUnit", pawn.getLandOccupationArea() + "㎡");
                     tempMap.put("pawnNo", pawn.getLandCertificateNumber());
                     tempMap.put("issueOrg", "                ");
                     pawnList.add(tempMap);
                 }
+
+                evasluation = addOneByOne(evasluation, pawn.getValue());
+            }
+
+            // 设置第一条记录 总价值（累加）
+            if(CollectionUtils.isNotEmpty(pawnList)) {
+                pawnList.get(0).put("evasluation", evasluation);
             }
 
             setPawnList(pawnList, variables);

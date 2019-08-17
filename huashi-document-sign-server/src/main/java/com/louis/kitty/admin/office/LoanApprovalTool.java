@@ -47,7 +47,7 @@ public class LoanApprovalTool extends AbstractOfficeTool {
         variables.put("marginRate", docCommonModel.getLoanBusinessInformation().getMarginRatio() + "%");
         variables.put("originBalance", docCommonModel.getLoanBusinessInformation().getOriginalCreditBalance());
         variables.put("applyMoneyRMB",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(variables.get("applyMoney").toString())));
+                RmbUtil.rmb(new BigDecimal(variables.get("applyMoney").toString())));
         variables.put("floatingRate", docCommonModel.getLoanBusinessInformation().getInterestRateRise());
         // repayment 转义中文显示，如果为7 则 取 value字段值
         variables.put("payBackMethod", getRepayment(docCommonModel.getLoanBusinessInformation().getRepayment()));

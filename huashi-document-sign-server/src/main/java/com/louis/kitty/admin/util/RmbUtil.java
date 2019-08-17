@@ -1,5 +1,7 @@
 package com.louis.kitty.admin.util;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.math.BigDecimal;
 
 public class RmbUtil {
@@ -32,13 +34,21 @@ public class RmbUtil {
      */
     private static final String CN_ZEOR_FULL = "零元" + CN_FULL;
 
+    public static String rmb(String money) {
+        if(StringUtils.isEmpty(money)) {
+            return "    ";
+        }
+
+        return rmb(new BigDecimal(money));
+    }
+
     /**
      * 把输入的金额转换为汉语中人民币的大写
      *
      * @param numberOfMoney 输入的金额
      * @return 对应的汉语大写
      */
-    public static String number2CNMontrayUnit(BigDecimal numberOfMoney) {
+    public static String rmb(BigDecimal numberOfMoney) {
         if(numberOfMoney == null) {
             return "    ";
         }
@@ -120,7 +130,7 @@ public class RmbUtil {
     public static void main(String[] args) {
         double money = 3324433000.00;
         BigDecimal numberOfMoney = new BigDecimal(money);
-        String s = number2CNMontrayUnit(numberOfMoney);
+        String s = rmb(numberOfMoney);
         System.out.println("你输入的金额为：【" + money + "】   #--# [" + s
                 + "]");
     }

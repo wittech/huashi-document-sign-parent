@@ -532,7 +532,7 @@ public class MortgageQuartetAgreementTool extends AbstractOfficeTool {
                     calendar1.get(Calendar.YEAR), calendar1.get(Calendar.MONTH), calendar1.get(Calendar.DAY_OF_MONTH),
                     calendar2.get(Calendar.YEAR), calendar2.get(Calendar.MONTH), calendar2.get(Calendar.DAY_OF_MONTH),
                     calendar3.get(Calendar.YEAR), calendar3.get(Calendar.MONTH), calendar3.get(Calendar.DAY_OF_MONTH),
-                    StringUtils.isEmpty(pawn.getRent()) ? "   " : RmbUtil.number2CNMontrayUnit(new BigDecimal(pawn.getRent())),
+                    StringUtils.isEmpty(pawn.getRent()) ? "   " : RmbUtil.rmb(new BigDecimal(pawn.getRent())),
                     pawn.getRent(), variables);
         }
 

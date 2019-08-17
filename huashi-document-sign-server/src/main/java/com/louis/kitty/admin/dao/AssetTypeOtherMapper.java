@@ -1,8 +1,8 @@
 package com.louis.kitty.admin.dao;
 
-import java.util.List;
-
 import com.louis.kitty.admin.model.AssetTypeOther;
+
+import java.util.List;
 
 /**
  * ---------------------------
@@ -49,5 +49,6 @@ public interface AssetTypeOtherMapper {
      * @return
      */    
     List<AssetTypeOther> findPage();
-    
+
+    List<AssetTypeOther> findByRpiId(Long rpiId);
 }

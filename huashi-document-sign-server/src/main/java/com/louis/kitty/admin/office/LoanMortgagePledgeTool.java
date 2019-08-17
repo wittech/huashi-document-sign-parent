@@ -146,7 +146,7 @@ public class LoanMortgagePledgeTool extends AbstractOfficeTool {
         for (Pawn pawn : docCommonModel.getPawnList()) {
             Map<String, Object> variables = newRound();
             variables.put("bankBranchName", BankConstants.BANK_BRANCH_NAME);
-            variables.put("goodsValuationRMB", RmbUtil.number2CNMontrayUnit(new BigDecimal(pawn.getValue())));
+            variables.put("goodsValuationRMB", RmbUtil.rmb(new BigDecimal(pawn.getValue())));
 
             variables.put("goodsAddress", pawn.getCollateralDeposit());
             setMortgageGoodsInfo(docCommonModel.getApplyFamilyName(), docCommonModel.getApplyMoneyRMB(),

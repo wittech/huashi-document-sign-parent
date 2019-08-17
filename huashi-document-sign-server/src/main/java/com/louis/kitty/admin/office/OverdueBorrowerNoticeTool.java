@@ -43,11 +43,11 @@ public class OverdueBorrowerNoticeTool extends AbstractOfficeTool {
             variables.put("fillDate", formater.format(collectionNotice.getFillDate()));
             // owe_principal
             variables.put("owePrincipalRMB",
-                    RmbUtil.number2CNMontrayUnit(new BigDecimal(collectionNotice.getOwePrincipal())));
+                    RmbUtil.rmb(new BigDecimal(collectionNotice.getOwePrincipal())));
 
             // owe_interest 利息
             variables.put("oweInterestRMB",
-                    RmbUtil.number2CNMontrayUnit(new BigDecimal(collectionNotice.getOweInterest())));
+                    RmbUtil.rmb(new BigDecimal(collectionNotice.getOweInterest())));
 
             Map<Integer, String> calendar = getCalendar(collectionNotice.getFillDate());
 

@@ -114,7 +114,7 @@ public class XmlToExcelTest {
         variables.put("isNewerDes", variables.get("isNewer").toString().equals("是") ? "新增贷款" : "续贷");
 
         variables.put("originBalance", "0");
-        variables.put("applyMoneyRMB", RmbUtil.number2CNMontrayUnit(new BigDecimal(variables.get("applyMoney").toString())));
+        variables.put("applyMoneyRMB", RmbUtil.rmb(new BigDecimal(variables.get("applyMoney").toString())));
         variables.put("floatingRate", "70");
         variables.put("payBackMethod", "协议还本");
 

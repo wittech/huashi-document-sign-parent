@@ -3,16 +3,16 @@ package com.louis.kitty.admin.office;
 import com.alibaba.druid.util.StringUtils;
 import com.louis.kitty.admin.constants.BankConstants;
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.dao.HouseholdIncomeMapper;
 import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.HouseholdIncome;
 import com.louis.kitty.admin.model.Pawn;
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
-import com.louis.kitty.admin.sevice.HouseholdIncomeService;
 import com.louis.kitty.admin.util.RmbUtil;
 import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,8 +26,8 @@ import java.util.Map;
 @Component
 public class PersonalLoanApplicationTool extends AbstractOfficeTool {
 
-    @Autowired
-    private HouseholdIncomeService householdIncomeService;
+    @Resource
+    private HouseholdIncomeMapper householdIncomeMapper;
 
     /**
      * 设置担保情况---保证担保参数数据
@@ -243,50 +243,50 @@ public class PersonalLoanApplicationTool extends AbstractOfficeTool {
     }
 
     private void setHouseholdIncome(DocCommonModel docCommonModel, Map<String, Object> variables) {
-        HouseholdIncome householdIncome = householdIncomeService.findByRpiId(docCommonModel.getBorrower().getId());
+        HouseholdIncome householdIncome = householdIncomeMapper.findByRpiId(docCommonModel.getBorrower().getId());
         if (householdIncome == null) {
             return;
         }
 
         // 申请人家庭收支情况--家庭总收入  household_income
 
-        variables.put("totalRevenue", RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getTotalRevenue())));
+        variables.put("totalRevenue", RmbUtil.rmb(new BigDecimal(householdIncome.getTotalRevenue())));
         variables.put("applicantAnnualIncome",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getApplicantAnnualIncome())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getApplicantAnnualIncome())));
         variables.put("applicantOperatingIncome",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getApplicantOperatingIncome())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getApplicantOperatingIncome())));
         variables.put("applicantOtherIncome",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getApplicantOtherIncome())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getApplicantOtherIncome())));
 
         variables.put("spouseAnnualIncome",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getSpouseAnnualIncome())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getSpouseAnnualIncome())));
         variables.put("spouseOperatingIncome",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getSpouseOperatingIncome())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getSpouseOperatingIncome())));
         variables.put("spouseOtherIncome",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getSpouseOtherIncome())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getSpouseOtherIncome())));
 
 
         // 申请人家庭收支情况--家庭总支出  household_income
         variables.put("totalAnnualExpenditure",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getTotalAnnualExpenditure())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getTotalAnnualExpenditure())));
         variables.put("lifeTotalExpenditure",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getLifeTotalExpenditure())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getLifeTotalExpenditure())));
         variables.put("basicLifeTotalExpenditure",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getBasicLifeTotalExpenditure())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getBasicLifeTotalExpenditure())));
         variables.put("educationExpenditure",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getEducationExpenditure())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getEducationExpenditure())));
         variables.put("temporaryExpenditure",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getTemporaryExpenditure())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getTemporaryExpenditure())));
         variables.put("debtTotalExpenditure",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getDebtTotalExpenditure())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getDebtTotalExpenditure())));
         variables.put("annualLoanExpenditure",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getAnnualLoanExpenditure())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getAnnualLoanExpenditure())));
         variables.put("spouseTemporaryExpenditure",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getSpouseTemporaryExpenditure())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getSpouseTemporaryExpenditure())));
         variables.put("supportPopulation",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getSupportPopulation())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getSupportPopulation())));
         variables.put("foreignGuaranteeLumpSum",
-                RmbUtil.number2CNMontrayUnit(new BigDecimal(householdIncome.getForeignGuaranteeLumpSum())));
+                RmbUtil.rmb(new BigDecimal(householdIncome.getForeignGuaranteeLumpSum())));
 
     }
 

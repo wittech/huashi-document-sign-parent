@@ -1,8 +1,8 @@
 package com.louis.kitty.admin.dao;
 
-import java.util.List;
-
 import com.louis.kitty.admin.model.AssetTypeCar;
+
+import java.util.List;
 
 /**
  * ---------------------------
@@ -49,5 +49,7 @@ public interface AssetTypeCarMapper {
      * @return
      */    
     List<AssetTypeCar> findPage();
+
+    List<AssetTypeCar> findByRpiId(Long rpiId);
     
 }

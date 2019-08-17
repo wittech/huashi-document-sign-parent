@@ -49,5 +49,7 @@ public interface PersonalLoanSurveyReportMapper {
      * @return
      */    
     List<PersonalLoanSurveyReport> findPage();
+
+    PersonalLoanSurveyReport findByBasisId(Long loanBasisId);
     
 }

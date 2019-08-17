@@ -133,5 +133,10 @@
   <select id="findPage" resultMap="BaseResultMap">
     select * from asset_type_other
   </select>
-  
+
+  <select id="findByRpiId" resultMap="BaseResultMap">
+    select * from asset_type_other where rpi_id = #{rpiId,jdbcType=BIGINT}
+  </select>
+
+
 </mapper>

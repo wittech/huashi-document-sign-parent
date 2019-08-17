@@ -2,506 +2,519 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.louis.kitty.admin.dao.PersonalLoanSurveyReportMapper">
 
-  <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.PersonalLoanSurveyReport">
-	<id column="id" jdbcType="BIGINT" property="id" />
-	<result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId" />
-	<result column="borrower_name" jdbcType="VARCHAR" property="borrowerName" />
-	<result column="marital_status" jdbcType="INTEGER" property="maritalStatus" />
-	<result column="spouse_name" jdbcType="VARCHAR" property="spouseName" />
-	<result column="whether_local_household_registration" jdbcType="INTEGER" property="whetherLocalHouseholdRegistration" />
-	<result column="total_property" jdbcType="VARCHAR" property="totalProperty" />
-	<result column="total_area" jdbcType="VARCHAR" property="totalArea" />
-	<result column="total_value" jdbcType="VARCHAR" property="totalValue" />
-	<result column="total_property_remark" jdbcType="VARCHAR" property="totalPropertyRemark" />
-	<result column="family_assets" jdbcType="VARCHAR" property="familyAssets" />
-	<result column="household_debt" jdbcType="VARCHAR" property="householdDebt" />
-	<result column="annual_household_income" jdbcType="VARCHAR" property="annualHouseholdIncome" />
-	<result column="family_expense" jdbcType="VARCHAR" property="familyExpense" />
-	<result column="borrower_health_status" jdbcType="INTEGER" property="borrowerHealthStatus" />
-	<result column="other_survey_happening" jdbcType="VARCHAR" property="otherSurveyHappening" />
-	<result column="borrower_whether_have_civil_action" jdbcType="INTEGER" property="borrowerWhetherHaveCivilAction" />
-	<result column="amount_loan" jdbcType="VARCHAR" property="amountLoan" />
-	<result column="self_funding" jdbcType="VARCHAR" property="selfFunding" />
-	<result column="borrowing_period" jdbcType="VARCHAR" property="borrowingPeriod" />
-	<result column="loan_amount_whether_reasonable" jdbcType="INTEGER" property="loanAmountWhetherReasonable" />
-	<result column="loan_term_whether_reasonable" jdbcType="INTEGER" property="loanTermWhetherReasonable" />
-	<result column="use_loan" jdbcType="VARCHAR" property="useLoan" />
-	<result column="repayment_source_whether_sufficient" jdbcType="INTEGER" property="repaymentSourceWhetherSufficient" />
-	<result column="borrower_repay_ability_estimate" jdbcType="VARCHAR" property="borrowerRepayAbilityEstimate" />
-	<result column="whether_amount_match" jdbcType="INTEGER" property="whetherAmountMatch" />
-	<result column="without_debt_litigation" jdbcType="INTEGER" property="withoutDebtLitigation" />
-	<result column="borrower_conduct" jdbcType="INTEGER" property="borrowerConduct" />
-	<result column="borrower_credit" jdbcType="INTEGER" property="borrowerCredit" />
-	<result column="continuous_overdue" jdbcType="VARCHAR" property="continuousOverdue" />
-	<result column="cumulative_overdue" jdbcType="VARCHAR" property="cumulativeOverdue" />
-	<result column="current_overdue_amount" jdbcType="VARCHAR" property="currentOverdueAmount" />
-	<result column="financial_mechanism_loan_balance" jdbcType="VARCHAR" property="financialMechanismLoanBalance" />
-	<result column="credit_card_lump_sum" jdbcType="VARCHAR" property="creditCardLumpSum" />
-	<result column="used_quota" jdbcType="VARCHAR" property="usedQuota" />
-	<result column="external_guarantee_balance" jdbcType="VARCHAR" property="externalGuaranteeBalance" />
-	<result column="bad_loan_balance" jdbcType="VARCHAR" property="badLoanBalance" />
-	<result column="loan_method_guarantee" jdbcType="INTEGER" property="loanMethodGuarantee" />
-	<result column="loan_method_guarantee_remark" jdbcType="LONGVARCHAR" property="loanMethodGuaranteeRemark" />
-	<result column="calculated" jdbcType="INTEGER" property="calculated" />
-	<result column="loan_method_pledge_guarantee" jdbcType="INTEGER" property="loanMethodPledgeGuarantee" />
-	<result column="loan_method_pledge_guarantee_remark" jdbcType="LONGVARCHAR" property="loanMethodPledgeGuaranteeRemark" />
-	<result column="create_by" jdbcType="VARCHAR" property="createBy" />
-	<result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-	<result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
-	<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
-	<result column="del_flag" jdbcType="TINYINT" property="delFlag" />
-  </resultMap>
-  
-  <insert id="add" parameterType="com.louis.kitty.admin.model.PersonalLoanSurveyReport">
-    insert into personal_loan_survey_report
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="loanBasisId != null">
-        loan_basis_id,
-      </if>
-      <if test="borrowerName != null">
-        borrower_name,
-      </if>
-      <if test="maritalStatus != null">
-        marital_status,
-      </if>
-      <if test="spouseName != null">
-        spouse_name,
-      </if>
-      <if test="whetherLocalHouseholdRegistration != null">
-        whether_local_household_registration,
-      </if>
-      <if test="totalProperty != null">
-        total_property,
-      </if>
-      <if test="totalArea != null">
-        total_area,
-      </if>
-      <if test="totalValue != null">
-        total_value,
-      </if>
-      <if test="totalPropertyRemark != null">
-        total_property_remark,
-      </if>
-      <if test="familyAssets != null">
-        family_assets,
-      </if>
-      <if test="householdDebt != null">
-        household_debt,
-      </if>
-      <if test="annualHouseholdIncome != null">
-        annual_household_income,
-      </if>
-      <if test="familyExpense != null">
-        family_expense,
-      </if>
-      <if test="borrowerHealthStatus != null">
-        borrower_health_status,
-      </if>
-      <if test="otherSurveyHappening != null">
-        other_survey_happening,
-      </if>
-      <if test="borrowerWhetherHaveCivilAction != null">
-        borrower_whether_have_civil_action,
-      </if>
-      <if test="amountLoan != null">
-        amount_loan,
-      </if>
-      <if test="selfFunding != null">
-        self_funding,
-      </if>
-      <if test="borrowingPeriod != null">
-        borrowing_period,
-      </if>
-      <if test="loanAmountWhetherReasonable != null">
-        loan_amount_whether_reasonable,
-      </if>
-      <if test="loanTermWhetherReasonable != null">
-        loan_term_whether_reasonable,
-      </if>
-      <if test="useLoan != null">
-        use_loan,
-      </if>
-      <if test="repaymentSourceWhetherSufficient != null">
-        repayment_source_whether_sufficient,
-      </if>
-      <if test="borrowerRepayAbilityEstimate != null">
-        borrower_repay_ability_estimate,
-      </if>
-      <if test="whetherAmountMatch != null">
-        whether_amount_match,
-      </if>
-      <if test="withoutDebtLitigation != null">
-        without_debt_litigation,
-      </if>
-      <if test="borrowerConduct != null">
-        borrower_conduct,
-      </if>
-      <if test="borrowerCredit != null">
-        borrower_credit,
-      </if>
-      <if test="continuousOverdue != null">
-        continuous_overdue,
-      </if>
-      <if test="cumulativeOverdue != null">
-        cumulative_overdue,
-      </if>
-      <if test="currentOverdueAmount != null">
-        current_overdue_amount,
-      </if>
-      <if test="financialMechanismLoanBalance != null">
-        financial_mechanism_loan_balance,
-      </if>
-      <if test="creditCardLumpSum != null">
-        credit_card_lump_sum,
-      </if>
-      <if test="usedQuota != null">
-        used_quota,
-      </if>
-      <if test="externalGuaranteeBalance != null">
-        external_guarantee_balance,
-      </if>
-      <if test="badLoanBalance != null">
-        bad_loan_balance,
-      </if>
-      <if test="loanMethodGuarantee != null">
-        loan_method_guarantee,
-      </if>
-      <if test="loanMethodGuaranteeRemark != null">
-        loan_method_guarantee_remark,
-      </if>
-      <if test="calculated != null">
-        calculated,
-      </if>
-      <if test="loanMethodPledgeGuarantee != null">
-        loan_method_pledge_guarantee,
-      </if>
-      <if test="loanMethodPledgeGuaranteeRemark != null">
-        loan_method_pledge_guarantee_remark,
-      </if>
-      <if test="createBy != null">
-        create_by,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="lastUpdateBy != null">
-        last_update_by,
-      </if>
-      <if test="lastUpdateTime != null">
-        last_update_time,
-      </if>
-      <if test="delFlag != null">
-        del_flag,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=BIGINT},
-      </if>
-      <if test="loanBasisId != null">
-        #{loanBasisId,jdbcType=BIGINT},
-      </if>
-      <if test="borrowerName != null">
-        #{borrowerName,jdbcType=VARCHAR},
-      </if>
-      <if test="maritalStatus != null">
-        #{maritalStatus,jdbcType=INTEGER},
-      </if>
-      <if test="spouseName != null">
-        #{spouseName,jdbcType=VARCHAR},
-      </if>
-      <if test="whetherLocalHouseholdRegistration != null">
-        #{whetherLocalHouseholdRegistration,jdbcType=INTEGER},
-      </if>
-      <if test="totalProperty != null">
-        #{totalProperty,jdbcType=VARCHAR},
-      </if>
-      <if test="totalArea != null">
-        #{totalArea,jdbcType=VARCHAR},
-      </if>
-      <if test="totalValue != null">
-        #{totalValue,jdbcType=VARCHAR},
-      </if>
-      <if test="totalPropertyRemark != null">
-        #{totalPropertyRemark,jdbcType=VARCHAR},
-      </if>
-      <if test="familyAssets != null">
-        #{familyAssets,jdbcType=VARCHAR},
-      </if>
-      <if test="householdDebt != null">
-        #{householdDebt,jdbcType=VARCHAR},
-      </if>
-      <if test="annualHouseholdIncome != null">
-        #{annualHouseholdIncome,jdbcType=VARCHAR},
-      </if>
-      <if test="familyExpense != null">
-        #{familyExpense,jdbcType=VARCHAR},
-      </if>
-      <if test="borrowerHealthStatus != null">
-        #{borrowerHealthStatus,jdbcType=INTEGER},
-      </if>
-      <if test="otherSurveyHappening != null">
-        #{otherSurveyHappening,jdbcType=VARCHAR},
-      </if>
-      <if test="borrowerWhetherHaveCivilAction != null">
-        #{borrowerWhetherHaveCivilAction,jdbcType=INTEGER},
-      </if>
-      <if test="amountLoan != null">
-        #{amountLoan,jdbcType=VARCHAR},
-      </if>
-      <if test="selfFunding != null">
-        #{selfFunding,jdbcType=VARCHAR},
-      </if>
-      <if test="borrowingPeriod != null">
-        #{borrowingPeriod,jdbcType=VARCHAR},
-      </if>
-      <if test="loanAmountWhetherReasonable != null">
-        #{loanAmountWhetherReasonable,jdbcType=INTEGER},
-      </if>
-      <if test="loanTermWhetherReasonable != null">
-        #{loanTermWhetherReasonable,jdbcType=INTEGER},
-      </if>
-      <if test="useLoan != null">
-        #{useLoan,jdbcType=VARCHAR},
-      </if>
-      <if test="repaymentSourceWhetherSufficient != null">
-        #{repaymentSourceWhetherSufficient,jdbcType=INTEGER},
-      </if>
-      <if test="borrowerRepayAbilityEstimate != null">
-        #{borrowerRepayAbilityEstimate,jdbcType=VARCHAR},
-      </if>
-      <if test="whetherAmountMatch != null">
-        #{whetherAmountMatch,jdbcType=INTEGER},
-      </if>
-      <if test="withoutDebtLitigation != null">
-        #{withoutDebtLitigation,jdbcType=INTEGER},
-      </if>
-      <if test="borrowerConduct != null">
-        #{borrowerConduct,jdbcType=INTEGER},
-      </if>
-      <if test="borrowerCredit != null">
-        #{borrowerCredit,jdbcType=INTEGER},
-      </if>
-      <if test="continuousOverdue != null">
-        #{continuousOverdue,jdbcType=VARCHAR},
-      </if>
-      <if test="cumulativeOverdue != null">
-        #{cumulativeOverdue,jdbcType=VARCHAR},
-      </if>
-      <if test="currentOverdueAmount != null">
-        #{currentOverdueAmount,jdbcType=VARCHAR},
-      </if>
-      <if test="financialMechanismLoanBalance != null">
-        #{financialMechanismLoanBalance,jdbcType=VARCHAR},
-      </if>
-      <if test="creditCardLumpSum != null">
-        #{creditCardLumpSum,jdbcType=VARCHAR},
-      </if>
-      <if test="usedQuota != null">
-        #{usedQuota,jdbcType=VARCHAR},
-      </if>
-      <if test="externalGuaranteeBalance != null">
-        #{externalGuaranteeBalance,jdbcType=VARCHAR},
-      </if>
-      <if test="badLoanBalance != null">
-        #{badLoanBalance,jdbcType=VARCHAR},
-      </if>
-      <if test="loanMethodGuarantee != null">
-        #{loanMethodGuarantee,jdbcType=INTEGER},
-      </if>
-      <if test="loanMethodGuaranteeRemark != null">
-        #{loanMethodGuaranteeRemark,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="calculated != null">
-        #{calculated,jdbcType=INTEGER},
-      </if>
-      <if test="loanMethodPledgeGuarantee != null">
-        #{loanMethodPledgeGuarantee,jdbcType=INTEGER},
-      </if>
-      <if test="loanMethodPledgeGuaranteeRemark != null">
-        #{loanMethodPledgeGuaranteeRemark,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="createBy != null">
-        #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdateBy != null">
-        #{lastUpdateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="lastUpdateTime != null">
-        #{lastUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="delFlag != null">
-        #{delFlag,jdbcType=TINYINT},
-      </if>
-    </trim>
-  </insert>
+    <resultMap id="BaseResultMap" type="com.louis.kitty.admin.model.PersonalLoanSurveyReport">
+        <id column="id" jdbcType="BIGINT" property="id"/>
+        <result column="loan_basis_id" jdbcType="BIGINT" property="loanBasisId"/>
+        <result column="borrower_name" jdbcType="VARCHAR" property="borrowerName"/>
+        <result column="marital_status" jdbcType="INTEGER" property="maritalStatus"/>
+        <result column="spouse_name" jdbcType="VARCHAR" property="spouseName"/>
+        <result column="whether_local_household_registration" jdbcType="INTEGER"
+                property="whetherLocalHouseholdRegistration"/>
+        <result column="total_property" jdbcType="VARCHAR" property="totalProperty"/>
+        <result column="total_area" jdbcType="VARCHAR" property="totalArea"/>
+        <result column="total_value" jdbcType="VARCHAR" property="totalValue"/>
+        <result column="total_property_remark" jdbcType="VARCHAR" property="totalPropertyRemark"/>
+        <result column="family_assets" jdbcType="VARCHAR" property="familyAssets"/>
+        <result column="household_debt" jdbcType="VARCHAR" property="householdDebt"/>
+        <result column="annual_household_income" jdbcType="VARCHAR" property="annualHouseholdIncome"/>
+        <result column="family_expense" jdbcType="VARCHAR" property="familyExpense"/>
+        <result column="borrower_health_status" jdbcType="INTEGER" property="borrowerHealthStatus"/>
+        <result column="other_survey_happening" jdbcType="VARCHAR" property="otherSurveyHappening"/>
+        <result column="borrower_whether_have_civil_action" jdbcType="INTEGER"
+                property="borrowerWhetherHaveCivilAction"/>
+        <result column="amount_loan" jdbcType="VARCHAR" property="amountLoan"/>
+        <result column="self_funding" jdbcType="VARCHAR" property="selfFunding"/>
+        <result column="borrowing_period" jdbcType="VARCHAR" property="borrowingPeriod"/>
+        <result column="loan_amount_whether_reasonable" jdbcType="INTEGER" property="loanAmountWhetherReasonable"/>
+        <result column="loan_term_whether_reasonable" jdbcType="INTEGER" property="loanTermWhetherReasonable"/>
+        <result column="use_loan" jdbcType="VARCHAR" property="useLoan"/>
+        <result column="repayment_source_whether_sufficient" jdbcType="INTEGER"
+                property="repaymentSourceWhetherSufficient"/>
+        <result column="borrower_repay_ability_estimate" jdbcType="VARCHAR" property="borrowerRepayAbilityEstimate"/>
+        <result column="whether_amount_match" jdbcType="INTEGER" property="whetherAmountMatch"/>
+        <result column="without_debt_litigation" jdbcType="INTEGER" property="withoutDebtLitigation"/>
+        <result column="borrower_conduct" jdbcType="INTEGER" property="borrowerConduct"/>
+        <result column="borrower_credit" jdbcType="INTEGER" property="borrowerCredit"/>
+        <result column="continuous_overdue" jdbcType="VARCHAR" property="continuousOverdue"/>
+        <result column="cumulative_overdue" jdbcType="VARCHAR" property="cumulativeOverdue"/>
+        <result column="current_overdue_amount" jdbcType="VARCHAR" property="currentOverdueAmount"/>
+        <result column="financial_mechanism_loan_balance" jdbcType="VARCHAR" property="financialMechanismLoanBalance"/>
+        <result column="credit_card_lump_sum" jdbcType="VARCHAR" property="creditCardLumpSum"/>
+        <result column="used_quota" jdbcType="VARCHAR" property="usedQuota"/>
+        <result column="external_guarantee_balance" jdbcType="VARCHAR" property="externalGuaranteeBalance"/>
+        <result column="bad_loan_balance" jdbcType="VARCHAR" property="badLoanBalance"/>
+        <result column="loan_method_guarantee" jdbcType="INTEGER" property="loanMethodGuarantee"/>
+        <result column="loan_method_guarantee_remark" jdbcType="LONGVARCHAR" property="loanMethodGuaranteeRemark"/>
+        <result column="calculated" jdbcType="INTEGER" property="calculated"/>
+        <result column="loan_method_pledge_guarantee" jdbcType="INTEGER" property="loanMethodPledgeGuarantee"/>
+        <result column="loan_method_pledge_guarantee_remark" jdbcType="LONGVARCHAR"
+                property="loanMethodPledgeGuaranteeRemark"/>
+        <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy"/>
+        <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
+        <result column="del_flag" jdbcType="TINYINT" property="delFlag"/>
+    </resultMap>
 
-  <delete id="delete" parameterType="java.lang.Long">
-    delete from personal_loan_survey_report
-    where id = #{id,jdbcType=BIGINT}
-  </delete>
-  
-  <update id="update" parameterType="com.louis.kitty.admin.model.PersonalLoanSurveyReport">
-    update personal_loan_survey_report
-    <set>
-      <if test="id != null">
-        id = #{id,jdbcType=BIGINT},
-      </if>
-      <if test="loanBasisId != null">
-        loan_basis_id = #{loanBasisId,jdbcType=BIGINT},
-      </if>
-      <if test="borrowerName != null">
-        borrower_name = #{borrowerName,jdbcType=VARCHAR},
-      </if>
-      <if test="maritalStatus != null">
-        marital_status = #{maritalStatus,jdbcType=INTEGER},
-      </if>
-      <if test="spouseName != null">
-        spouse_name = #{spouseName,jdbcType=VARCHAR},
-      </if>
-      <if test="whetherLocalHouseholdRegistration != null">
-        whether_local_household_registration = #{whetherLocalHouseholdRegistration,jdbcType=INTEGER},
-      </if>
-      <if test="totalProperty != null">
-        total_property = #{totalProperty,jdbcType=VARCHAR},
-      </if>
-      <if test="totalArea != null">
-        total_area = #{totalArea,jdbcType=VARCHAR},
-      </if>
-      <if test="totalValue != null">
-        total_value = #{totalValue,jdbcType=VARCHAR},
-      </if>
-      <if test="totalPropertyRemark != null">
-        total_property_remark = #{totalPropertyRemark,jdbcType=VARCHAR},
-      </if>
-      <if test="familyAssets != null">
-        family_assets = #{familyAssets,jdbcType=VARCHAR},
-      </if>
-      <if test="householdDebt != null">
-        household_debt = #{householdDebt,jdbcType=VARCHAR},
-      </if>
-      <if test="annualHouseholdIncome != null">
-        annual_household_income = #{annualHouseholdIncome,jdbcType=VARCHAR},
-      </if>
-      <if test="familyExpense != null">
-        family_expense = #{familyExpense,jdbcType=VARCHAR},
-      </if>
-      <if test="borrowerHealthStatus != null">
-        borrower_health_status = #{borrowerHealthStatus,jdbcType=INTEGER},
-      </if>
-      <if test="otherSurveyHappening != null">
-        other_survey_happening = #{otherSurveyHappening,jdbcType=VARCHAR},
-      </if>
-      <if test="borrowerWhetherHaveCivilAction != null">
-        borrower_whether_have_civil_action = #{borrowerWhetherHaveCivilAction,jdbcType=INTEGER},
-      </if>
-      <if test="amountLoan != null">
-        amount_loan = #{amountLoan,jdbcType=VARCHAR},
-      </if>
-      <if test="selfFunding != null">
-        self_funding = #{selfFunding,jdbcType=VARCHAR},
-      </if>
-      <if test="borrowingPeriod != null">
-        borrowing_period = #{borrowingPeriod,jdbcType=VARCHAR},
-      </if>
-      <if test="loanAmountWhetherReasonable != null">
-        loan_amount_whether_reasonable = #{loanAmountWhetherReasonable,jdbcType=INTEGER},
-      </if>
-      <if test="loanTermWhetherReasonable != null">
-        loan_term_whether_reasonable = #{loanTermWhetherReasonable,jdbcType=INTEGER},
-      </if>
-      <if test="useLoan != null">
-        use_loan = #{useLoan,jdbcType=VARCHAR},
-      </if>
-      <if test="repaymentSourceWhetherSufficient != null">
-        repayment_source_whether_sufficient = #{repaymentSourceWhetherSufficient,jdbcType=INTEGER},
-      </if>
-      <if test="borrowerRepayAbilityEstimate != null">
-        borrower_repay_ability_estimate = #{borrowerRepayAbilityEstimate,jdbcType=VARCHAR},
-      </if>
-      <if test="whetherAmountMatch != null">
-        whether_amount_match = #{whetherAmountMatch,jdbcType=INTEGER},
-      </if>
-      <if test="withoutDebtLitigation != null">
-        without_debt_litigation = #{withoutDebtLitigation,jdbcType=INTEGER},
-      </if>
-      <if test="borrowerConduct != null">
-        borrower_conduct = #{borrowerConduct,jdbcType=INTEGER},
-      </if>
-      <if test="borrowerCredit != null">
-        borrower_credit = #{borrowerCredit,jdbcType=INTEGER},
-      </if>
-      <if test="continuousOverdue != null">
-        continuous_overdue = #{continuousOverdue,jdbcType=VARCHAR},
-      </if>
-      <if test="cumulativeOverdue != null">
-        cumulative_overdue = #{cumulativeOverdue,jdbcType=VARCHAR},
-      </if>
-      <if test="currentOverdueAmount != null">
-        current_overdue_amount = #{currentOverdueAmount,jdbcType=VARCHAR},
-      </if>
-      <if test="financialMechanismLoanBalance != null">
-        financial_mechanism_loan_balance = #{financialMechanismLoanBalance,jdbcType=VARCHAR},
-      </if>
-      <if test="creditCardLumpSum != null">
-        credit_card_lump_sum = #{creditCardLumpSum,jdbcType=VARCHAR},
-      </if>
-      <if test="usedQuota != null">
-        used_quota = #{usedQuota,jdbcType=VARCHAR},
-      </if>
-      <if test="externalGuaranteeBalance != null">
-        external_guarantee_balance = #{externalGuaranteeBalance,jdbcType=VARCHAR},
-      </if>
-      <if test="badLoanBalance != null">
-        bad_loan_balance = #{badLoanBalance,jdbcType=VARCHAR},
-      </if>
-      <if test="loanMethodGuarantee != null">
-        loan_method_guarantee = #{loanMethodGuarantee,jdbcType=INTEGER},
-      </if>
-      <if test="loanMethodGuaranteeRemark != null">
-        loan_method_guarantee_remark = #{loanMethodGuaranteeRemark,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="calculated != null">
-        calculated = #{calculated,jdbcType=INTEGER},
-      </if>
-      <if test="loanMethodPledgeGuarantee != null">
-        loan_method_pledge_guarantee = #{loanMethodPledgeGuarantee,jdbcType=INTEGER},
-      </if>
-      <if test="loanMethodPledgeGuaranteeRemark != null">
-        loan_method_pledge_guarantee_remark = #{loanMethodPledgeGuaranteeRemark,jdbcType=LONGVARCHAR},
-      </if>
-      <if test="createBy != null">
-        create_by = #{createBy,jdbcType=VARCHAR},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="lastUpdateBy != null">
-        last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
-      </if>
-      <if test="lastUpdateTime != null">
-        last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="delFlag != null">
-        del_flag = #{delFlag,jdbcType=TINYINT},
-      </if>
-    </set>
-    where id = #{id,jdbcType=BIGINT}
-  </update>
+    <insert id="add" parameterType="com.louis.kitty.admin.model.PersonalLoanSurveyReport">
+        insert into personal_loan_survey_report
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="loanBasisId != null">
+                loan_basis_id,
+            </if>
+            <if test="borrowerName != null">
+                borrower_name,
+            </if>
+            <if test="maritalStatus != null">
+                marital_status,
+            </if>
+            <if test="spouseName != null">
+                spouse_name,
+            </if>
+            <if test="whetherLocalHouseholdRegistration != null">
+                whether_local_household_registration,
+            </if>
+            <if test="totalProperty != null">
+                total_property,
+            </if>
+            <if test="totalArea != null">
+                total_area,
+            </if>
+            <if test="totalValue != null">
+                total_value,
+            </if>
+            <if test="totalPropertyRemark != null">
+                total_property_remark,
+            </if>
+            <if test="familyAssets != null">
+                family_assets,
+            </if>
+            <if test="householdDebt != null">
+                household_debt,
+            </if>
+            <if test="annualHouseholdIncome != null">
+                annual_household_income,
+            </if>
+            <if test="familyExpense != null">
+                family_expense,
+            </if>
+            <if test="borrowerHealthStatus != null">
+                borrower_health_status,
+            </if>
+            <if test="otherSurveyHappening != null">
+                other_survey_happening,
+            </if>
+            <if test="borrowerWhetherHaveCivilAction != null">
+                borrower_whether_have_civil_action,
+            </if>
+            <if test="amountLoan != null">
+                amount_loan,
+            </if>
+            <if test="selfFunding != null">
+                self_funding,
+            </if>
+            <if test="borrowingPeriod != null">
+                borrowing_period,
+            </if>
+            <if test="loanAmountWhetherReasonable != null">
+                loan_amount_whether_reasonable,
+            </if>
+            <if test="loanTermWhetherReasonable != null">
+                loan_term_whether_reasonable,
+            </if>
+            <if test="useLoan != null">
+                use_loan,
+            </if>
+            <if test="repaymentSourceWhetherSufficient != null">
+                repayment_source_whether_sufficient,
+            </if>
+            <if test="borrowerRepayAbilityEstimate != null">
+                borrower_repay_ability_estimate,
+            </if>
+            <if test="whetherAmountMatch != null">
+                whether_amount_match,
+            </if>
+            <if test="withoutDebtLitigation != null">
+                without_debt_litigation,
+            </if>
+            <if test="borrowerConduct != null">
+                borrower_conduct,
+            </if>
+            <if test="borrowerCredit != null">
+                borrower_credit,
+            </if>
+            <if test="continuousOverdue != null">
+                continuous_overdue,
+            </if>
+            <if test="cumulativeOverdue != null">
+                cumulative_overdue,
+            </if>
+            <if test="currentOverdueAmount != null">
+                current_overdue_amount,
+            </if>
+            <if test="financialMechanismLoanBalance != null">
+                financial_mechanism_loan_balance,
+            </if>
+            <if test="creditCardLumpSum != null">
+                credit_card_lump_sum,
+            </if>
+            <if test="usedQuota != null">
+                used_quota,
+            </if>
+            <if test="externalGuaranteeBalance != null">
+                external_guarantee_balance,
+            </if>
+            <if test="badLoanBalance != null">
+                bad_loan_balance,
+            </if>
+            <if test="loanMethodGuarantee != null">
+                loan_method_guarantee,
+            </if>
+            <if test="loanMethodGuaranteeRemark != null">
+                loan_method_guarantee_remark,
+            </if>
+            <if test="calculated != null">
+                calculated,
+            </if>
+            <if test="loanMethodPledgeGuarantee != null">
+                loan_method_pledge_guarantee,
+            </if>
+            <if test="loanMethodPledgeGuaranteeRemark != null">
+                loan_method_pledge_guarantee_remark,
+            </if>
+            <if test="createBy != null">
+                create_by,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="lastUpdateBy != null">
+                last_update_by,
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time,
+            </if>
+            <if test="delFlag != null">
+                del_flag,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="loanBasisId != null">
+                #{loanBasisId,jdbcType=BIGINT},
+            </if>
+            <if test="borrowerName != null">
+                #{borrowerName,jdbcType=VARCHAR},
+            </if>
+            <if test="maritalStatus != null">
+                #{maritalStatus,jdbcType=INTEGER},
+            </if>
+            <if test="spouseName != null">
+                #{spouseName,jdbcType=VARCHAR},
+            </if>
+            <if test="whetherLocalHouseholdRegistration != null">
+                #{whetherLocalHouseholdRegistration,jdbcType=INTEGER},
+            </if>
+            <if test="totalProperty != null">
+                #{totalProperty,jdbcType=VARCHAR},
+            </if>
+            <if test="totalArea != null">
+                #{totalArea,jdbcType=VARCHAR},
+            </if>
+            <if test="totalValue != null">
+                #{totalValue,jdbcType=VARCHAR},
+            </if>
+            <if test="totalPropertyRemark != null">
+                #{totalPropertyRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="familyAssets != null">
+                #{familyAssets,jdbcType=VARCHAR},
+            </if>
+            <if test="householdDebt != null">
+                #{householdDebt,jdbcType=VARCHAR},
+            </if>
+            <if test="annualHouseholdIncome != null">
+                #{annualHouseholdIncome,jdbcType=VARCHAR},
+            </if>
+            <if test="familyExpense != null">
+                #{familyExpense,jdbcType=VARCHAR},
+            </if>
+            <if test="borrowerHealthStatus != null">
+                #{borrowerHealthStatus,jdbcType=INTEGER},
+            </if>
+            <if test="otherSurveyHappening != null">
+                #{otherSurveyHappening,jdbcType=VARCHAR},
+            </if>
+            <if test="borrowerWhetherHaveCivilAction != null">
+                #{borrowerWhetherHaveCivilAction,jdbcType=INTEGER},
+            </if>
+            <if test="amountLoan != null">
+                #{amountLoan,jdbcType=VARCHAR},
+            </if>
+            <if test="selfFunding != null">
+                #{selfFunding,jdbcType=VARCHAR},
+            </if>
+            <if test="borrowingPeriod != null">
+                #{borrowingPeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="loanAmountWhetherReasonable != null">
+                #{loanAmountWhetherReasonable,jdbcType=INTEGER},
+            </if>
+            <if test="loanTermWhetherReasonable != null">
+                #{loanTermWhetherReasonable,jdbcType=INTEGER},
+            </if>
+            <if test="useLoan != null">
+                #{useLoan,jdbcType=VARCHAR},
+            </if>
+            <if test="repaymentSourceWhetherSufficient != null">
+                #{repaymentSourceWhetherSufficient,jdbcType=INTEGER},
+            </if>
+            <if test="borrowerRepayAbilityEstimate != null">
+                #{borrowerRepayAbilityEstimate,jdbcType=VARCHAR},
+            </if>
+            <if test="whetherAmountMatch != null">
+                #{whetherAmountMatch,jdbcType=INTEGER},
+            </if>
+            <if test="withoutDebtLitigation != null">
+                #{withoutDebtLitigation,jdbcType=INTEGER},
+            </if>
+            <if test="borrowerConduct != null">
+                #{borrowerConduct,jdbcType=INTEGER},
+            </if>
+            <if test="borrowerCredit != null">
+                #{borrowerCredit,jdbcType=INTEGER},
+            </if>
+            <if test="continuousOverdue != null">
+                #{continuousOverdue,jdbcType=VARCHAR},
+            </if>
+            <if test="cumulativeOverdue != null">
+                #{cumulativeOverdue,jdbcType=VARCHAR},
+            </if>
+            <if test="currentOverdueAmount != null">
+                #{currentOverdueAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="financialMechanismLoanBalance != null">
+                #{financialMechanismLoanBalance,jdbcType=VARCHAR},
+            </if>
+            <if test="creditCardLumpSum != null">
+                #{creditCardLumpSum,jdbcType=VARCHAR},
+            </if>
+            <if test="usedQuota != null">
+                #{usedQuota,jdbcType=VARCHAR},
+            </if>
+            <if test="externalGuaranteeBalance != null">
+                #{externalGuaranteeBalance,jdbcType=VARCHAR},
+            </if>
+            <if test="badLoanBalance != null">
+                #{badLoanBalance,jdbcType=VARCHAR},
+            </if>
+            <if test="loanMethodGuarantee != null">
+                #{loanMethodGuarantee,jdbcType=INTEGER},
+            </if>
+            <if test="loanMethodGuaranteeRemark != null">
+                #{loanMethodGuaranteeRemark,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="calculated != null">
+                #{calculated,jdbcType=INTEGER},
+            </if>
+            <if test="loanMethodPledgeGuarantee != null">
+                #{loanMethodPledgeGuarantee,jdbcType=INTEGER},
+            </if>
+            <if test="loanMethodPledgeGuaranteeRemark != null">
+                #{loanMethodPledgeGuaranteeRemark,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="createBy != null">
+                #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateBy != null">
+                #{lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                #{delFlag,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
 
-  <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
-    select * from personal_loan_survey_report
-    where id = #{id,jdbcType=BIGINT}
-  </select>
-  
-  <select id="findPage" resultMap="BaseResultMap">
-    select * from personal_loan_survey_report
-  </select>
-  
+    <delete id="delete" parameterType="java.lang.Long">
+        delete
+        from personal_loan_survey_report
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <update id="update" parameterType="com.louis.kitty.admin.model.PersonalLoanSurveyReport">
+        update personal_loan_survey_report
+        <set>
+            <if test="id != null">
+                id = #{id,jdbcType=BIGINT},
+            </if>
+            <if test="loanBasisId != null">
+                loan_basis_id = #{loanBasisId,jdbcType=BIGINT},
+            </if>
+            <if test="borrowerName != null">
+                borrower_name = #{borrowerName,jdbcType=VARCHAR},
+            </if>
+            <if test="maritalStatus != null">
+                marital_status = #{maritalStatus,jdbcType=INTEGER},
+            </if>
+            <if test="spouseName != null">
+                spouse_name = #{spouseName,jdbcType=VARCHAR},
+            </if>
+            <if test="whetherLocalHouseholdRegistration != null">
+                whether_local_household_registration = #{whetherLocalHouseholdRegistration,jdbcType=INTEGER},
+            </if>
+            <if test="totalProperty != null">
+                total_property = #{totalProperty,jdbcType=VARCHAR},
+            </if>
+            <if test="totalArea != null">
+                total_area = #{totalArea,jdbcType=VARCHAR},
+            </if>
+            <if test="totalValue != null">
+                total_value = #{totalValue,jdbcType=VARCHAR},
+            </if>
+            <if test="totalPropertyRemark != null">
+                total_property_remark = #{totalPropertyRemark,jdbcType=VARCHAR},
+            </if>
+            <if test="familyAssets != null">
+                family_assets = #{familyAssets,jdbcType=VARCHAR},
+            </if>
+            <if test="householdDebt != null">
+                household_debt = #{householdDebt,jdbcType=VARCHAR},
+            </if>
+            <if test="annualHouseholdIncome != null">
+                annual_household_income = #{annualHouseholdIncome,jdbcType=VARCHAR},
+            </if>
+            <if test="familyExpense != null">
+                family_expense = #{familyExpense,jdbcType=VARCHAR},
+            </if>
+            <if test="borrowerHealthStatus != null">
+                borrower_health_status = #{borrowerHealthStatus,jdbcType=INTEGER},
+            </if>
+            <if test="otherSurveyHappening != null">
+                other_survey_happening = #{otherSurveyHappening,jdbcType=VARCHAR},
+            </if>
+            <if test="borrowerWhetherHaveCivilAction != null">
+                borrower_whether_have_civil_action = #{borrowerWhetherHaveCivilAction,jdbcType=INTEGER},
+            </if>
+            <if test="amountLoan != null">
+                amount_loan = #{amountLoan,jdbcType=VARCHAR},
+            </if>
+            <if test="selfFunding != null">
+                self_funding = #{selfFunding,jdbcType=VARCHAR},
+            </if>
+            <if test="borrowingPeriod != null">
+                borrowing_period = #{borrowingPeriod,jdbcType=VARCHAR},
+            </if>
+            <if test="loanAmountWhetherReasonable != null">
+                loan_amount_whether_reasonable = #{loanAmountWhetherReasonable,jdbcType=INTEGER},
+            </if>
+            <if test="loanTermWhetherReasonable != null">
+                loan_term_whether_reasonable = #{loanTermWhetherReasonable,jdbcType=INTEGER},
+            </if>
+            <if test="useLoan != null">
+                use_loan = #{useLoan,jdbcType=VARCHAR},
+            </if>
+            <if test="repaymentSourceWhetherSufficient != null">
+                repayment_source_whether_sufficient = #{repaymentSourceWhetherSufficient,jdbcType=INTEGER},
+            </if>
+            <if test="borrowerRepayAbilityEstimate != null">
+                borrower_repay_ability_estimate = #{borrowerRepayAbilityEstimate,jdbcType=VARCHAR},
+            </if>
+            <if test="whetherAmountMatch != null">
+                whether_amount_match = #{whetherAmountMatch,jdbcType=INTEGER},
+            </if>
+            <if test="withoutDebtLitigation != null">
+                without_debt_litigation = #{withoutDebtLitigation,jdbcType=INTEGER},
+            </if>
+            <if test="borrowerConduct != null">
+                borrower_conduct = #{borrowerConduct,jdbcType=INTEGER},
+            </if>
+            <if test="borrowerCredit != null">
+                borrower_credit = #{borrowerCredit,jdbcType=INTEGER},
+            </if>
+            <if test="continuousOverdue != null">
+                continuous_overdue = #{continuousOverdue,jdbcType=VARCHAR},
+            </if>
+            <if test="cumulativeOverdue != null">
+                cumulative_overdue = #{cumulativeOverdue,jdbcType=VARCHAR},
+            </if>
+            <if test="currentOverdueAmount != null">
+                current_overdue_amount = #{currentOverdueAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="financialMechanismLoanBalance != null">
+                financial_mechanism_loan_balance = #{financialMechanismLoanBalance,jdbcType=VARCHAR},
+            </if>
+            <if test="creditCardLumpSum != null">
+                credit_card_lump_sum = #{creditCardLumpSum,jdbcType=VARCHAR},
+            </if>
+            <if test="usedQuota != null">
+                used_quota = #{usedQuota,jdbcType=VARCHAR},
+            </if>
+            <if test="externalGuaranteeBalance != null">
+                external_guarantee_balance = #{externalGuaranteeBalance,jdbcType=VARCHAR},
+            </if>
+            <if test="badLoanBalance != null">
+                bad_loan_balance = #{badLoanBalance,jdbcType=VARCHAR},
+            </if>
+            <if test="loanMethodGuarantee != null">
+                loan_method_guarantee = #{loanMethodGuarantee,jdbcType=INTEGER},
+            </if>
+            <if test="loanMethodGuaranteeRemark != null">
+                loan_method_guarantee_remark = #{loanMethodGuaranteeRemark,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="calculated != null">
+                calculated = #{calculated,jdbcType=INTEGER},
+            </if>
+            <if test="loanMethodPledgeGuarantee != null">
+                loan_method_pledge_guarantee = #{loanMethodPledgeGuarantee,jdbcType=INTEGER},
+            </if>
+            <if test="loanMethodPledgeGuaranteeRemark != null">
+                loan_method_pledge_guarantee_remark = #{loanMethodPledgeGuaranteeRemark,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="createBy != null">
+                create_by = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="lastUpdateBy != null">
+                last_update_by = #{lastUpdateBy,jdbcType=VARCHAR},
+            </if>
+            <if test="lastUpdateTime != null">
+                last_update_time = #{lastUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null">
+                del_flag = #{delFlag,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select *
+        from personal_loan_survey_report
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findPage" resultMap="BaseResultMap">
+        select *
+        from personal_loan_survey_report
+    </select>
+
+    <select id="findByBasisId" resultMap="BaseResultMap">
+        select *
+        from personal_loan_survey_report where loan_basis_id = #{loanBasisId,jdbcType=BIGINT} limit 1
+    </select>
+
+
 </mapper>

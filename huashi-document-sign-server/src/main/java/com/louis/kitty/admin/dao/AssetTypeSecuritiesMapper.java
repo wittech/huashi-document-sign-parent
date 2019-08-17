@@ -49,5 +49,7 @@ public interface AssetTypeSecuritiesMapper {
      * @return
      */    
     List<AssetTypeSecurities> findPage();
+
+    List<AssetTypeSecurities> findByRpiId(Long rpiId);
     
 }

@@ -1,10 +1,12 @@
 package com.louis.kitty.admin.office;
 
 import com.alibaba.druid.util.StringUtils;
+import com.louis.kitty.admin.constants.BankConstants;
 import com.louis.kitty.admin.constants.DocConstants;
 import com.louis.kitty.admin.dao.LoanDocMapper;
 import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.LoanDoc;
+import com.louis.kitty.admin.model.Pawn;
 import com.louis.kitty.admin.util.FileDirectoryUtil;
 import com.louis.kitty.admin.util.OfficeUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -273,6 +275,9 @@ public abstract class AbstractOfficeTool {
             return content;
         }
 
+        // 替换文档中的 null 为空值
+        content = content.replace("null", "  ");
+
         // 8个空格是为了文档中有下划线样式的需要留空值填充进行拉伸
         return content.replaceAll("\\{\\{[a-z]*[0-9]*[A-Z]*}}", "        ");
     }
@@ -371,5 +376,35 @@ public abstract class AbstractOfficeTool {
         calandarMap.put(Calendar.MONTH, ca.get(Calendar.MONTH) + "");
         calandarMap.put(Calendar.DAY_OF_MONTH, ca.get(Calendar.DAY_OF_MONTH) + "");
         return calandarMap;
+    }
+
+    /**
+     * 是否为本地户口
+     *
+     * @param household 户籍地
+     * @return 本地户口结果
+     */
+    protected Integer isLocalHousehold(String household) {
+        if (StringUtils.isEmpty(household)) {
+            return null;
+        }
+
+        return household.contains(BankConstants.CITY) ? 1 : 0;
+    }
+
+    protected String getPawnNumberInfo(Pawn pawn) {
+        if (pawn == null) {
+            return "";
+        }
+
+        if (pawn.getMortgageType() == 0) {
+            if (pawn.getWhetherOwnershipCertificates() == 0) {
+                return "不动产权证号：" + pawn.getPropertyCertificateNumber();
+            } else {
+                return "房产证号：" + pawn.getPropertyCertificateNumber() + "、" + "土地证号：" + pawn.getLandCertificateNumber();
+            }
+        } else {
+            return "土地证号：" + pawn.getLandCertificateNumber();
+        }
     }
 }

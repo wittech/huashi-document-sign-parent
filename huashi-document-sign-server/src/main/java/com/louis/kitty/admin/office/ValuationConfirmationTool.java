@@ -496,8 +496,8 @@ public class ValuationConfirmationTool extends AbstractOfficeTool {
             // pawn
             setNoLeaseInfo(pawn.getMortgageType() == 0 ? "房屋" : "土地", pawn.getEvaluationCorporation(),
                     pawn.getOwners(), pawn.getCollateralDeposit(),
-                    RmbUtil.number2CNMontrayUnit(new BigDecimal(pawn.getValue())), pawn.getValue(),
-                    RmbUtil.number2CNMontrayUnit(new BigDecimal(pawn.getValue())), "        年    月    日", variables);
+                    RmbUtil.rmb(new BigDecimal(pawn.getValue())), pawn.getValue(),
+                    RmbUtil.rmb(new BigDecimal(pawn.getValue())), "        年    月    日", variables);
 
         }
 

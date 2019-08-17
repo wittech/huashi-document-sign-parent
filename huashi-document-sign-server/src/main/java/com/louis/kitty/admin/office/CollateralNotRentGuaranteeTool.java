@@ -70,7 +70,7 @@ public class CollateralNotRentGuaranteeTool extends AbstractOfficeTool {
 
             // 1.11. loan_business_information贷款业务信息表
             variables.put("applyMoney", docCommonModel.getLoanBusinessInformation().getApplicationAmount());
-            variables.put("applyMoneyRMB", RmbUtil.number2CNMontrayUnit(new BigDecimal(variables.get("applyMoney").toString())));
+            variables.put("applyMoneyRMB", RmbUtil.rmb(new BigDecimal(variables.get("applyMoney").toString())));
 
             setNoLeaseInfo(pawn.getRelatedPersonnelInformationList(), pawn.getCollateralDeposit(),
                     pawn.getMortgageType() == 0 ? "房屋" : "土地",

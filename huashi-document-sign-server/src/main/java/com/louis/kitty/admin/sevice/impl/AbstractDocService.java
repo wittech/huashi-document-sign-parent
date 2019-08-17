@@ -138,11 +138,20 @@ public abstract class AbstractDocService {
         model.setCounterpartyInformationList(counterpartyInformationList);
     }
 
+    private void rest() {
+        try {
+            Thread.sleep(100);
+        } catch (InterruptedException e) {
+            log.warn("ignored by '{}'", e.getMessage());
+        }
+    }
+
     protected int getResult(List<Future<Boolean>> futureList) {
         if (CollectionUtils.isEmpty(futureList)) {
             return 0;
         }
 
+        long startTime = System.currentTimeMillis();
         int result;
         while (true) {
             result = 0;
@@ -152,6 +161,7 @@ public abstract class AbstractDocService {
                     break;
                 }
 
+                doneCount++;
                 try {
                     if (future.get()) {
                         result += 1;
@@ -159,21 +169,18 @@ public abstract class AbstractDocService {
                 } catch (InterruptedException | ExecutionException e) {
                     log.warn("ignored by msg [{}]", e.getMessage());
                 }
-
-                doneCount++;
             }
+
+            log.info("total count is '{}', finish count is '{}'", futureList.size(), doneCount);
 
             if (doneCount == futureList.size()) {
                 break;
             }
 
-            log.info("total count is '{}', finish count is '{}'", futureList.size(), doneCount);
-
-            try {
-                Thread.sleep(300);
-            } catch (InterruptedException e) {
-            }
+            rest();
         }
+
+        log.info("Getting async result cost {} ms", (System.currentTimeMillis() - startTime));
 
         return result;
     }

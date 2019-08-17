@@ -49,5 +49,7 @@ public interface AssetTypeHousesMapper {
      * @return
      */    
     List<AssetTypeHouses> findPage();
+
+    List<AssetTypeHouses> findByRpiId(Long rpiId);
     
 }

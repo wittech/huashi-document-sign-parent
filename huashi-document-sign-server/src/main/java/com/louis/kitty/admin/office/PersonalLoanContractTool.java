@@ -565,7 +565,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
                     "\t\t<w:u w:val=\"single\"/>\n" +
                     "\t\t<w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\"/>\n" +
                     "\t  </w:rPr>\n" +
-                    "\t  <w:t xml:space=\"preserve\">" + RmbUtil.number2CNMontrayUnit(new BigDecimal(repaymentPlan.getAmount())) + "</w:t>\n" +
+                    "\t  <w:t xml:space=\"preserve\">" + RmbUtil.rmb(new BigDecimal(repaymentPlan.getAmount())) + "</w:t>\n" +
                     "\t</w:r>\n" +
                     "\t<w:r>\n" +
                     "\t  <w:rPr>\n" +
