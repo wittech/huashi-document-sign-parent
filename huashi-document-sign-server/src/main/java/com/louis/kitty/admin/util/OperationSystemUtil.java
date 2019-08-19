@@ -3,15 +3,19 @@ package com.louis.kitty.admin.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-
 public class OperationSystemUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(OperationSystemUtil.class);
 
     private static final String WINDOWS_FLAG = "Windows";
 
-    public static boolean isWindows() {
+    public static boolean isWindows = true;
+
+    static {
+        isWindows = isWindows();
+    }
+
+    private static boolean isWindows() {
         try {
             String osName = System.getProperty("os.name");
             logger.info("Operation system is '{}'", osName);
