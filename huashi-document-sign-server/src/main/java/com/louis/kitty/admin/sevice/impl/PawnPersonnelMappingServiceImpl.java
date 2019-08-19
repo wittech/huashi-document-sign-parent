@@ -1,23 +1,23 @@
 package com.louis.kitty.admin.sevice.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import com.louis.kitty.admin.dao.PawnPersonnelMappingMapper;
 import com.louis.kitty.admin.model.Pawn;
+import com.louis.kitty.admin.model.PawnPersonnelMapping;
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
+import com.louis.kitty.admin.sevice.PawnPersonnelMappingService;
 import com.louis.kitty.admin.sevice.PawnService;
 import com.louis.kitty.admin.sevice.RelatedPersonnelInformationService;
+import com.louis.kitty.core.page.MybatisPageHelper;
+import com.louis.kitty.core.page.PageRequest;
+import com.louis.kitty.core.page.PageResult;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.louis.kitty.core.page.MybatisPageHelper;
-import com.louis.kitty.core.page.PageRequest;
-import com.louis.kitty.core.page.PageResult;
-
-import com.louis.kitty.admin.model.PawnPersonnelMapping;
-import com.louis.kitty.admin.dao.PawnPersonnelMappingMapper;
-import com.louis.kitty.admin.sevice.PawnPersonnelMappingService;
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ---------------------------
@@ -28,10 +28,11 @@ import com.louis.kitty.admin.sevice.PawnPersonnelMappingService;
  * 说明：  我是由代码生成器生生成的
  * ---------------------------
  */
+@Slf4j
 @Service
 public class PawnPersonnelMappingServiceImpl implements PawnPersonnelMappingService {
 
-	@Autowired
+	@Resource
 	private PawnPersonnelMappingMapper pawnPersonnelMappingMapper;
 	@Autowired
 	private RelatedPersonnelInformationService relatedPersonnelInformationService;
@@ -71,41 +72,51 @@ public class PawnPersonnelMappingServiceImpl implements PawnPersonnelMappingServ
 
 	@Override
 	public List<RelatedPersonnelInformation> findByPawnId(Long pawnId) {
-		List<PawnPersonnelMapping> mappings = pawnPersonnelMappingMapper.findByPawnList(pawnId);
-		if(CollectionUtils.isEmpty(mappings)) {
-			return null;
-		}
-
-		List<RelatedPersonnelInformation> list = new ArrayList<>();
-		for(PawnPersonnelMapping mapping : mappings) {
-			RelatedPersonnelInformation relatedPersonnelInformation = relatedPersonnelInformationService.findById(mapping.getRpiId());
-			if(relatedPersonnelInformation == null) {
-				continue;
+		try {
+			List<PawnPersonnelMapping> mappings = pawnPersonnelMappingMapper.findByPawnList(pawnId);
+			if(CollectionUtils.isEmpty(mappings)) {
+				return null;
 			}
 
-			list.add(relatedPersonnelInformation);
-		}
+			List<RelatedPersonnelInformation> list = new ArrayList<>();
+			for(PawnPersonnelMapping mapping : mappings) {
+				RelatedPersonnelInformation relatedPersonnelInformation = relatedPersonnelInformationService.findById(mapping.getRpiId());
+				if(relatedPersonnelInformation == null) {
+					continue;
+				}
 
-		return list;
+				list.add(relatedPersonnelInformation);
+			}
+
+			return list;
+		} catch (Exception e) {
+			log.error("findByRpiId by pawnId[{}] failed", pawnId, e);
+			return null;
+		}
 	}
 
 	@Override
 	public List<Pawn> findByRpiId(Long rpiId) {
-		List<PawnPersonnelMapping> mappings = pawnPersonnelMappingMapper.findByRpiId(rpiId);
-		if(CollectionUtils.isEmpty(mappings)) {
-			return null;
-		}
-
-		List<Pawn> list = new ArrayList<>();
-		for(PawnPersonnelMapping mapping : mappings) {
-			Pawn pawn = pawnService.findById(mapping.getPawnId());
-			if(pawn == null) {
-				continue;
+		try {
+			List<PawnPersonnelMapping> mappings = pawnPersonnelMappingMapper.findByRpiId(rpiId);
+			if(CollectionUtils.isEmpty(mappings)) {
+				return null;
 			}
 
-			list.add(pawn);
-		}
+			List<Pawn> list = new ArrayList<>();
+			for(PawnPersonnelMapping mapping : mappings) {
+				Pawn pawn = pawnService.findById(mapping.getPawnId());
+				if(pawn == null) {
+					continue;
+				}
 
-		return list;
+				list.add(pawn);
+			}
+
+			return list;
+		} catch (Exception e) {
+			log.error("findByRpiId by rpiId[{}] failed", rpiId, e);
+			return null;
+		}
 	}
 }
