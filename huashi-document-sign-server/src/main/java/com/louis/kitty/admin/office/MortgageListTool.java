@@ -717,7 +717,7 @@ public class MortgageListTool extends AbstractOfficeTool {
             // 抵押物 所有抵押人信息
             variables.put("mortgageCoownerName", name);
 
-            Double evasluation = 0d;
+            double evaluation = 0d;
             List<Map<String, Object>> pawnList = new ArrayList<>();
             for (Pawn pawn : entry.getValue()) {
                 if (pawn.getMortgageType() == 0) {
@@ -761,12 +761,12 @@ public class MortgageListTool extends AbstractOfficeTool {
                     pawnList.add(tempMap);
                 }
 
-                evasluation = addOneByOne(evasluation, pawn.getValue());
+                evaluation = addOneByOne(evaluation, pawn.getValue());
             }
 
             // 设置第一条记录 总价值（累加）
             if (CollectionUtils.isNotEmpty(pawnList)) {
-                pawnList.get(0).put("evasluation", evasluation);
+                pawnList.get(0).put("evaluation", evaluation);
             }
 
             setPawnList(pawnList, variables);
@@ -783,9 +783,6 @@ public class MortgageListTool extends AbstractOfficeTool {
                 list.add(pawn);
                 pawnInOwners.put(pawn.getOwnerIds(), list);
             }
-
-            pawnInOwners.get(pawn.getOwnerIds()).add(pawn);
-
         }
 
         return pawnInOwners;

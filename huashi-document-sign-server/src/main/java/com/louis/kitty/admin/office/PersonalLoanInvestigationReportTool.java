@@ -1508,8 +1508,8 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
                 }
 
                 totalCount += 1;
-                totalArea += getDoubleValue(assetTypeHouses.getValue());
-                totalMoney += getDoubleValue(assetTypeHouses.getConstructionArea());
+                totalArea += getDoubleValue(assetTypeHouses.getConstructionArea());
+                totalMoney += getDoubleValue(assetTypeHouses.getValue());
 
                 detailListText.append(setHouseText(index, assetTypeHouses));
 

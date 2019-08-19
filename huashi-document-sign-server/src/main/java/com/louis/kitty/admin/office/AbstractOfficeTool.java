@@ -219,13 +219,13 @@ public abstract class AbstractOfficeTool {
 
     private Future<Boolean> generate(DocCommonModel docCommonModel) {
         try {
-            String xmlContent = readXml();
-
             // 组装替换变量
             fillVariable(docCommonModel);
 
             int index = 1;
             for (Map<String, Object> variables : VARIABLES_IN_MODEL) {
+                String xmlContent = readXml();
+
                 // 替换参数生成新的XML内容
                 xmlContent = translate(xmlContent, variables);
 
@@ -366,22 +366,22 @@ public abstract class AbstractOfficeTool {
     }
 
     protected Map<Integer, String> getCalendar(Date date) {
-        Map<Integer, String> calandarMap = new HashMap<>();
+        Map<Integer, String> calendarMap = new HashMap<>();
         if (date == null) {
-            calandarMap.put(Calendar.YEAR, "    ");
-            calandarMap.put(Calendar.MONTH, "  ");
-            calandarMap.put(Calendar.DAY_OF_MONTH, "  ");
-            return calandarMap;
+            calendarMap.put(Calendar.YEAR, "    ");
+            calendarMap.put(Calendar.MONTH, "  ");
+            calendarMap.put(Calendar.DAY_OF_MONTH, "  ");
+            return calendarMap;
         }
 
         // 转换年月日
         Calendar ca = Calendar.getInstance();
         ca.setTime(date);
 
-        calandarMap.put(Calendar.YEAR, ca.get(Calendar.YEAR) + "");
-        calandarMap.put(Calendar.MONTH, ca.get(Calendar.MONTH) + "");
-        calandarMap.put(Calendar.DAY_OF_MONTH, ca.get(Calendar.DAY_OF_MONTH) + "");
-        return calandarMap;
+        calendarMap.put(Calendar.YEAR, ca.get(Calendar.YEAR) + "");
+        calendarMap.put(Calendar.MONTH, ca.get(Calendar.MONTH) + "");
+        calendarMap.put(Calendar.DAY_OF_MONTH, ca.get(Calendar.DAY_OF_MONTH) + "");
+        return calendarMap;
     }
 
     /**
