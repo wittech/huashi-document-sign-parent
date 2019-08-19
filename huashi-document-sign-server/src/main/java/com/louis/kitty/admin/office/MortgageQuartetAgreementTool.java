@@ -508,7 +508,7 @@ public class MortgageQuartetAgreementTool extends AbstractOfficeTool {
     @Override
     protected void fillVariable(DocCommonModel docCommonModel) {
         for (Pawn pawn : docCommonModel.getPawnList()) {
-            if (pawn.getWhetherCoowner() != 1) {
+            if (pawn.getWhetherCoowner() == null || pawn.getWhetherCoowner() != 1) {
                 continue;
             }
 

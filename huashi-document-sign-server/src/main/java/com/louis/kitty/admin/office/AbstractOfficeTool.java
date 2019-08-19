@@ -9,6 +9,7 @@ import com.louis.kitty.admin.model.LoanDoc;
 import com.louis.kitty.admin.model.Pawn;
 import com.louis.kitty.admin.util.FileDirectoryUtil;
 import com.louis.kitty.admin.util.OfficeUtil;
+import com.louis.kitty.admin.util.OperationSystemUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -95,6 +96,11 @@ public abstract class AbstractOfficeTool {
      * @param targetPath 拷贝后文件路径
      */
     private String transformPdf(String sourcePath, String targetPath) {
+        if (!OperationSystemUtil.isWindows()) {
+            log.warn("Can't transform pdf cause by 'operation system is not windows'");
+            return targetPath;
+        }
+
         try {
             if (docType() == DocConstants.DocType.WORD || docType() == DocConstants.DocType.WORD_07) {
                 OfficeUtil.word2Pdf(sourcePath, targetPath);

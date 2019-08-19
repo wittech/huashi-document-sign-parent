@@ -19,7 +19,7 @@ public class DocGenerateTest {
 
     @Test
     public void test() throws Exception{
-        loanDocService.born(59L);
+        loanDocService.born(104L);
     }
 
 }
