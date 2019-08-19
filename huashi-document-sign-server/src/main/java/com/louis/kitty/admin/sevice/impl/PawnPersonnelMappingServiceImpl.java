@@ -1,6 +1,8 @@
 package com.louis.kitty.admin.sevice.impl;
 
+import com.louis.kitty.admin.dao.PawnMapper;
 import com.louis.kitty.admin.dao.PawnPersonnelMappingMapper;
+import com.louis.kitty.admin.dao.RelatedPersonnelInformationMapper;
 import com.louis.kitty.admin.model.Pawn;
 import com.louis.kitty.admin.model.PawnPersonnelMapping;
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
@@ -34,10 +36,10 @@ public class PawnPersonnelMappingServiceImpl implements PawnPersonnelMappingServ
 
 	@Resource
 	private PawnPersonnelMappingMapper pawnPersonnelMappingMapper;
-	@Autowired
-	private RelatedPersonnelInformationService relatedPersonnelInformationService;
-	@Autowired
-	private PawnService pawnService;
+	@Resource
+	private RelatedPersonnelInformationMapper relatedPersonnelInformationMapper;
+	@Resource
+	private PawnMapper pawnMapper;
 
 	@Override
 	public int save(PawnPersonnelMapping record) {
@@ -80,7 +82,7 @@ public class PawnPersonnelMappingServiceImpl implements PawnPersonnelMappingServ
 
 			List<RelatedPersonnelInformation> list = new ArrayList<>();
 			for(PawnPersonnelMapping mapping : mappings) {
-				RelatedPersonnelInformation relatedPersonnelInformation = relatedPersonnelInformationService.findById(mapping.getRpiId());
+				RelatedPersonnelInformation relatedPersonnelInformation = relatedPersonnelInformationMapper.findById(mapping.getRpiId());
 				if(relatedPersonnelInformation == null) {
 					continue;
 				}
@@ -105,7 +107,7 @@ public class PawnPersonnelMappingServiceImpl implements PawnPersonnelMappingServ
 
 			List<Pawn> list = new ArrayList<>();
 			for(PawnPersonnelMapping mapping : mappings) {
-				Pawn pawn = pawnService.findById(mapping.getPawnId());
+				Pawn pawn = pawnMapper.findById(mapping.getPawnId());
 				if(pawn == null) {
 					continue;
 				}
