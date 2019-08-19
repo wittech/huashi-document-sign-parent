@@ -469,7 +469,7 @@
   <Names>
    <NamedRange ss:Name="Print_Area" ss:RefersTo="=县级权限呈报表!R1C1:R21C17"/>
   </Names>
-  <Table ss:ExpandedColumnCount="18" ss:ExpandedRowCount="21" x:FullColumns="1"
+  <Table ss:ExpandedColumnCount="18" ss:ExpandedRowCount="40" x:FullColumns="1"
    x:FullRows="1" ss:DefaultColumnWidth="54" ss:DefaultRowHeight="14.25">
    <Column ss:AutoFitWidth="0" ss:Width="21.75"/>
    <Column ss:AutoFitWidth="0" ss:Width="18.75"/>
