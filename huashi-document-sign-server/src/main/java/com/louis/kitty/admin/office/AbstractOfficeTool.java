@@ -279,7 +279,7 @@ public abstract class AbstractOfficeTool {
         content = content.replace("null", "  ");
 
         // 8个空格是为了文档中有下划线样式的需要留空值填充进行拉伸
-        return content.replaceAll("\\{\\{[a-z]*[0-9]*[A-Z]*}}", "        ");
+        return content.replaceAll("\\{\\{[a-zA-Z0-9]*}}", "        ");
     }
 
     private String getModelFullPath() {

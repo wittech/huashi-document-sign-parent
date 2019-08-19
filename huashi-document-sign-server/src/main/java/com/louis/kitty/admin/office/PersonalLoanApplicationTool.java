@@ -330,7 +330,7 @@ public class PersonalLoanApplicationTool extends AbstractOfficeTool {
             variables.put("applyPersonPosition", docCommonModel.getBorrower().getPosition());
             variables.put("applyPersonUnitWorkingYears", docCommonModel.getBorrower().getUnitWorkingYears());
             variables.put("applyPersonCompanyName", docCommonModel.getBorrower().getCompanyName());
-            variables.put("applyPersonShareholdingRatio", docCommonModel.getBorrower().getLocalResidenceTime());
+            variables.put("applyPersonShareholdingRatio", docCommonModel.getBorrower().getShareholdingRatio());
             variables.put("applyPersonYearsOperation", docCommonModel.getBorrower().getYearsOperation());
         }
 
@@ -371,10 +371,14 @@ public class PersonalLoanApplicationTool extends AbstractOfficeTool {
             variables.put("isRound", setYesOption(docCommonModel.getLoanBusinessInformation().getCycleQuota()));
 
             variables.put("usage", setUsage(docCommonModel.getLoanBusinessInformation().getUseInfo()));
-            variables.put("usageOther", docCommonModel.getLoanBusinessInformation().getDescription());
+            if(10 == docCommonModel.getLoanBusinessInformation().getUseInfo()) {
+                variables.put("usageOther", docCommonModel.getLoanBusinessInformation().getDescription());
+            }
 
             variables.put("paymentMethod", setPaymentMethod(docCommonModel.getLoanBusinessInformation().getRepayment()));
-            variables.put("paymentMethodOther", docCommonModel.getLoanBusinessInformation().getValue());
+            if(7 == docCommonModel.getLoanBusinessInformation().getRepayment()) {
+                variables.put("paymentMethodOther", docCommonModel.getLoanBusinessInformation().getValue());
+            }
 
             variables.put("isCombinedLoans",
                     setYesOption(docCommonModel.getLoanBusinessInformation().getWhetherProvidentFundCombinationLoan()));

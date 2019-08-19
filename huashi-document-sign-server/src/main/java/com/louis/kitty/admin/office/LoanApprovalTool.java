@@ -71,25 +71,24 @@ public class LoanApprovalTool extends AbstractOfficeTool {
 
     }
 
-    private Map<String, Object> guarantor(String name) {
-        Map<String, Object> tempMap = new HashMap<>();
-        tempMap.put("personName", name);
-        return tempMap;
-    }
 
     private void setGuarantorList(DocCommonModel model, Map<String, Object> variables) {
         // related_personnel_information  type 3和4,5
-        List<Map<String, Object>> guarantorList = new ArrayList<>();
+        List<String> guarantorList = new ArrayList<>();
         if (CollectionUtils.isEmpty(model.getMortgageGuarantorList()) &&
                 CollectionUtils.isEmpty(model.getGuarantorList())) {
-            guarantorList.add(guarantor(""));
+            guarantorList.add("");
         } else {
             for (RelatedPersonnelInformation relatedPersonnelInformation : model.getMortgageGuarantorList()) {
-                guarantorList.add(guarantor(relatedPersonnelInformation.getName()));
+                if(!guarantorList.contains(relatedPersonnelInformation.getName())) {
+                    guarantorList.add(relatedPersonnelInformation.getName());
+                }
             }
 
             for (RelatedPersonnelInformation relatedPersonnelInformation : model.getGuarantorList()) {
-                guarantorList.add(guarantor(relatedPersonnelInformation.getName()));
+                if(!guarantorList.contains(relatedPersonnelInformation.getName())) {
+                    guarantorList.add(relatedPersonnelInformation.getName());
+                }
             }
         }
 
@@ -209,7 +208,7 @@ public class LoanApprovalTool extends AbstractOfficeTool {
         variables.put("collateralList", data.toString());
     }
 
-    private void setGuarantorListText(List<Map<String, Object>> guarantorList, Map<String, Object> variables) {
+    private void setGuarantorListText(List<String> guarantorList, Map<String, Object> variables) {
         if (CollectionUtils.isEmpty(guarantorList)) {
             variables.put("guarantorList", "");
             return;
@@ -217,7 +216,7 @@ public class LoanApprovalTool extends AbstractOfficeTool {
 
         StringBuilder data = new StringBuilder();
         int index = 0;
-        for (Map<String, Object> map : guarantorList) {
+        for (String name : guarantorList) {
             index++;
 
             data.append("<Row ss:AutoFitHeight=\"0\" ss:Height=\"15.9375\">\n" +
@@ -225,7 +224,7 @@ public class LoanApprovalTool extends AbstractOfficeTool {
                     "    <Cell ss:StyleID=\"s69\"><NamedCell ss:Name=\"Print_Area\"/></Cell>\n" +
                     "    <Cell ss:StyleID=\"s96\"><Data ss:Type=\"Number\">" + index + "</Data><NamedCell\n" +
                     "      ss:Name=\"Print_Area\"/></Cell>\n" +
-                    "    <Cell ss:MergeAcross=\"6\" ss:StyleID=\"s126\"><Data ss:Type=\"String\">" + map.get("personName") + "</Data><NamedCell\n" +
+                    "    <Cell ss:MergeAcross=\"6\" ss:StyleID=\"s126\"><Data ss:Type=\"String\">" + name + "</Data><NamedCell\n" +
                     "      ss:Name=\"Print_Area\"/></Cell>\n" +
                     "    <Cell ss:MergeAcross=\"6\" ss:StyleID=\"s127\"><Data ss:Type=\"String\"></Data><NamedCell\n" +
                     "      ss:Name=\"Print_Area\"/></Cell>\n" +

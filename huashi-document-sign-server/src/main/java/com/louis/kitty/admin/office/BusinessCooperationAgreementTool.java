@@ -36,15 +36,15 @@ public class BusinessCooperationAgreementTool extends AbstractOfficeTool {
 
             // whether_exclusive_credit_client  借款人是否为我行独家信贷客户 0否 1是, 是 则为基本， 否 为一般
             variables.put("whetherExclusiveCreditClient1", "'基本");
-            variables.put("depositAccountYear2", "");
-            variables.put("depositAccountMonth2", "");
-            variables.put("depositAccountDay2", "'");
+            variables.put("depositAccountYear2", "        ");
+            variables.put("depositAccountMonth2", "    ");
+            variables.put("depositAccountDay2", "    ");
             variables.put("whetherExclusiveCreditClient2", "");
         } else {
             // 1.11. loan_business_information贷款业务信息表  deposit_account  前在我行开立一般存款账户
-            variables.put("depositAccountYear1", "");
-            variables.put("depositAccountMonth1", "");
-            variables.put("depositAccountDay1", "");
+            variables.put("depositAccountYear1", "        ");
+            variables.put("depositAccountMonth1", "    ");
+            variables.put("depositAccountDay1", "    ");
 
             // whether_exclusive_credit_client  借款人是否为我行独家信贷客户 0否 1是, 是 则为基本， 否 为一般
             variables.put("whetherExclusiveCreditClient1", "");

@@ -50,7 +50,7 @@ public class CollateralNotRentGuaranteeTool extends AbstractOfficeTool {
                 "\t<w:u w:val=\"none\"/>\n" +
                 "\t<w:lang w:val=\"en-US\" w:eastAsia=\"zh-CN\"/>\n" +
                 "  </w:rPr>\n" +
-                "  <w:t>" + collateralType + "作抵押（" + collateralNo + "）</w:t>\n" +
+                "  <w:t>" + collateralType + "名下位于：" + collateralAddress + "作抵押（" + collateralNo + "）</w:t>\n" +
                 "</w:r>");
 
         variables.put("noLeaseInfo", data.toString());

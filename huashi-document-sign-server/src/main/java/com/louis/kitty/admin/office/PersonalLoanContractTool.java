@@ -993,7 +993,7 @@ public class PersonalLoanContractTool extends AbstractOfficeTool {
 
         // 1.11. loan_business_information贷款业务信息表
         variables.put("deductionAccountName", docCommonModel.getLoanBusinessInformation().getDebitAccountName());
-        variables.put("deductionAccount", docCommonModel.getLoanBusinessInformation().getDepositAccount());
+        variables.put("deductionAccount", docCommonModel.getLoanBusinessInformation().getAccountNumber());
 
 
         // 1.1. loan_basis借口人基础信息表 guarantee_method

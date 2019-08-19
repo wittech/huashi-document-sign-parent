@@ -6,10 +6,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ListMapTest {
 
-    List<Map<String, Object>> list = new ArrayList<>();
+    List<Map<String, Object>> list = new CopyOnWriteArrayList<>();
 
     private Map<String, Object> newRound() {
         Map<String, Object> variables = new HashMap<>();

@@ -2341,7 +2341,7 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
                     "\t  <w:b/>\n" +
                     "\t  <w:sz w:val=\"24\"/>\n" +
                     "\t</w:rPr>\n" +
-                    "\t<w:t xml:space=\"preserve\"" + setRightOption(pawn.getWhetherLease()) + "</w:t>\n" +
+                    "\t<w:t xml:space=\"preserve\">" + setRightOption(pawn.getWhetherLease()) + "</w:t>\n" +
                     "  </w:r>\n" +
                     "  \n" +
                     "  <w:r>\n" +
