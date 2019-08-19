@@ -4189,8 +4189,9 @@
               </w:rPr>
               <w:t>）：</w:t>
             </w:r>
-			</w:p>
             {{guaranteePersonList1}}
+			</w:p>
+            
           <w:p>
             <w:pPr>
               <w:spacing w:line="400" w:lineRule="exact"/>
