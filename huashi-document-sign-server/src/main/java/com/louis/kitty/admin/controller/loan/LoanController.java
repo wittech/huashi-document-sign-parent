@@ -64,7 +64,6 @@ public class LoanController {
 	@PreAuthorize("hasAuthority('loan:add') AND hasAuthority('loan:edit')")
 	@PostMapping(value = "/saveBasis")
 	public HttpResult saveBasis(@RequestBody LoanBasis record) {
-		record.setCreateTime(new Date());
 		loanBasisService.save(record);
 		return HttpResult.ok(record.getId());
 	}
@@ -76,7 +75,14 @@ public class LoanController {
 	 */
 	@PostMapping(value="/saveBorrower")
 	public HttpResult saveBorrower(@RequestBody RelatedPersonnelInformation record) {
-		return HttpResult.ok(relatedPersonnelInformationService.save(record));
+		int i = relatedPersonnelInformationService.save(record);
+		if(i>0){
+			LoanBasis l = new LoanBasis();
+			l.setId(record.getLoanBasisId());
+			l.setStatus(1);
+			loanBasisService.update(l);
+		}
+		return HttpResult.ok(i);
 	}
 	
 	/**
@@ -92,6 +98,10 @@ public class LoanController {
 				relatedPersonnelInformationService.save(red);
 			}
 		}
+		LoanBasis l = new LoanBasis();
+		l.setId(Long.valueOf(record.getLoanBasisId()));
+		l.setStatus(2);
+		loanBasisService.update(l);
 		return HttpResult.ok(1);
 	}
 	
@@ -102,7 +112,14 @@ public class LoanController {
 	 */
 	@PostMapping(value="/savePawn")
 	public HttpResult savePawn(@RequestBody Pawn record) {
-		return HttpResult.ok(pawnService.save(record));
+		int i = pawnService.save(record);
+		if(i>0){
+			LoanBasis l = new LoanBasis();
+			l.setId(Long.valueOf(record.getLoanBasisId()));
+			l.setStatus(3);
+			loanBasisService.update(l);
+		}
+		return HttpResult.ok(i);
 	}
 	
 	/**
@@ -122,6 +139,13 @@ public class LoanController {
 	 */
 	@PostMapping(value="/saveLoanBusiness")
 	public HttpResult saveLoanBusiness(@RequestBody LoanBusinessInformation record) {
+		int i = loanBusinessInformationService.save(record);
+		if(i>0){
+			LoanBasis l = new LoanBasis();
+			l.setId(Long.valueOf(record.getLoanBasisId()));
+			l.setStatus(4);
+			loanBasisService.update(l);
+		}
 		return HttpResult.ok(loanBusinessInformationService.save(record));
 	}
 	
@@ -133,7 +157,14 @@ public class LoanController {
 	@PostMapping(value="/savePersonalLoanSurvey")
 	public HttpResult savePersonalLoanSurvey(@RequestBody PersonalLoanSurveyReport record) {
 		record.setCreateTime(new Date());
-		return HttpResult.ok(personalLoanSurveyReportService.save(record));
+		int i = personalLoanSurveyReportService.save(record);
+		if(i>0){
+			LoanBasis l = new LoanBasis();
+			l.setId(Long.valueOf(record.getLoanBasisId()));
+			l.setStatus(6);
+			loanBasisService.update(l);
+		}
+		return HttpResult.ok();
 	}
 	
 	/**
@@ -143,8 +174,14 @@ public class LoanController {
 	 */
 	@PostMapping(value="/saveContractInformation")
 	public HttpResult saveContractInformation(@RequestBody ContractInformation record) {
-		record.setCreateTime(new Date());
-		return HttpResult.ok(contractInformationService.save(record));
+		int i =contractInformationService.save(record);
+		if(i>0){
+			LoanBasis l = new LoanBasis();
+			l.setId(Long.valueOf(record.getLoanBasisId()));
+			l.setStatus(7);
+			loanBasisService.update(l);
+		}
+		return HttpResult.ok();
 	}
 	
 	 /**
@@ -201,5 +238,15 @@ public class LoanController {
     public HttpResult findByLoanBasisIdList(@RequestParam Long loanBasisId) {
 		return HttpResult.ok(loanBasisService.findByLoanBasisIdList(loanBasisId));
     }
+	
+	/**
+	 * 根据id查询对象信息
+	 * @param loanBasisId
+	 * @return
+	 */
+	@GetMapping(value="/getByKeyId")
+	public HttpResult getByKeyId(@RequestParam Long id) {
+		return HttpResult.ok(loanBasisService.findById(id));
+	}
 	
 }

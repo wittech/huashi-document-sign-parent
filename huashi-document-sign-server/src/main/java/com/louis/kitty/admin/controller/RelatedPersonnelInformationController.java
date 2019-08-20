@@ -71,4 +71,27 @@ public class RelatedPersonnelInformationController {
 	public HttpResult findById(@RequestParam Long id) {
 		return HttpResult.ok(relatedPersonnelInformationService.findById(id));
 	}
+	
+	 /**
+     * 根据loanBasisId查询
+     * @param loanBasisId
+     * @return
+     */ 	
+	@GetMapping(value="/findByBaseIdList")
+	public HttpResult findByBaseIdList(@RequestParam Long loanBasisId) {
+		return HttpResult.ok(relatedPersonnelInformationService.findByBaseIdList(loanBasisId));
+	}
+	
+	 /**
+     * 根据loanBasisId查询
+     * @param loanBasisId
+     * @return
+     */ 	
+	@GetMapping(value="/findByBaseIdAndType")
+	public HttpResult findByBaseIdAndType(@RequestParam Long loanBasisId,int type) {
+		RelatedPersonnelInformation r = new RelatedPersonnelInformation();
+		r.setType(type);
+		r.setLoanBasisId(loanBasisId);
+		return HttpResult.ok(relatedPersonnelInformationService.findByBaseIdAndType(r));
+	}
 }

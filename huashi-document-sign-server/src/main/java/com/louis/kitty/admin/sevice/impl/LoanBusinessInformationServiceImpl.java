@@ -60,6 +60,29 @@ public class LoanBusinessInformationServiceImpl implements LoanBusinessInformati
 			}
 			return i;
 		}
+		record.setLastUpdateTime(new Date());
+		Long id = record.getId();
+		if(id>0){
+			//根据id删除交易对手表信息 在保存
+			List<CounterpartyInformation> list = counterpartyInformationMapper.findByIoanBusinessInformationId(record.getId());
+			if(list !=null){
+				for(CounterpartyInformation c :list){
+					c.setDelFlag(-1);
+					counterpartyInformationMapper.update(c);
+				}
+			}
+			//保存
+			if(record.getCounterpartyInformation() !=null){
+				for(CounterpartyInformation c : record.getCounterpartyInformation()){
+					c.setCreateBy(record.getLastUpdateBy());
+					c.setLastUpdateBy(record.getLastUpdateBy());
+					c.setCreateTime(new Date());
+					c.setLastUpdateTime(new Date());
+					c.setLoanBusinessInformationId(id);
+					counterpartyInformationMapper.add(c);
+				}
+			}
+		}
 		return loanBusinessInformationMapper.update(record);
 	}
 

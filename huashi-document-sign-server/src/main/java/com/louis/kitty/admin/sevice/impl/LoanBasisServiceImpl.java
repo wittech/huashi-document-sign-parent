@@ -1,19 +1,14 @@
 package com.louis.kitty.admin.sevice.impl;
 
-import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.louis.kitty.admin.dao.AssetTypeHousesMapper;
-import com.louis.kitty.admin.dao.AssetTypeLandMapper;
 import com.louis.kitty.admin.dao.LoanBasisMapper;
-import com.louis.kitty.admin.dao.RelatedPersonnelInformationMapper;
 import com.louis.kitty.admin.dto.HousingLandDto;
-import com.louis.kitty.admin.model.AssetTypeLand;
 import com.louis.kitty.admin.model.LoanBasis;
-import com.louis.kitty.admin.model.RelatedPersonnelInformation;
 import com.louis.kitty.admin.sevice.LoanBasisService;
 import com.louis.kitty.core.page.ColumnFilter;
 import com.louis.kitty.core.page.MybatisPageHelper;
@@ -34,18 +29,14 @@ public class LoanBasisServiceImpl implements LoanBasisService {
 
 	@Autowired
 	private LoanBasisMapper loanBasisMapper;
-	@Autowired
-	private RelatedPersonnelInformationMapper relatedPersonnelInformationMapper;
-	@Autowired
-	private AssetTypeLandMapper assetTypeLandMapper;
-	@Autowired
-	private AssetTypeHousesMapper assetTypeHousesMapper;
 	
 	@Override
 	public int save(LoanBasis record) {
 		if(record.getId() == null || record.getId() == 0) {
+			record.setCreateTime(new Date());
 			return loanBasisMapper.add(record);
 		}
+		record.setLastUpdateTime(new Date());
 		return loanBasisMapper.update(record);
 	}
 
@@ -106,6 +97,11 @@ public class LoanBasisServiceImpl implements LoanBasisService {
 			}
 		}*/
 		return loanBasisMapper.findByLoanBasisIdList(loanBasisId);
+	}
+
+	@Override
+	public int update(LoanBasis record) {
+		return loanBasisMapper.update(record);
 	}
 	
 }

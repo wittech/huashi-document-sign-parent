@@ -13,5 +13,10 @@ import com.louis.kitty.core.service.CurdService;
  * ---------------------------
  */
 public interface PersonalLoanSurveyReportService extends CurdService<PersonalLoanSurveyReport> {
-
+	/**
+	 * 根据baseid获取对象信息
+	 * @param loanBasicId
+	 * @return
+	 */
+	PersonalLoanSurveyReport findByBasisId(Long loanBasicId);
 }

@@ -71,4 +71,14 @@ public class CounterpartyInformationController {
 	public HttpResult findById(@RequestParam Long id) {
 		return HttpResult.ok(counterpartyInformationService.findById(id));
 	}
+	
+    /**
+     * 根据loanBusinessInformationId查询
+     * @param loanBusinessInformationId
+     * @return
+     */ 	
+	@GetMapping(value="/findByIoanBusinessInformationId")
+	public HttpResult findByIoanBusinessInformationId(@RequestParam Long loanBusinessInformationId) {
+		return HttpResult.ok(counterpartyInformationService.findByIoanBusinessInformationId(loanBusinessInformationId));
+	}
 }

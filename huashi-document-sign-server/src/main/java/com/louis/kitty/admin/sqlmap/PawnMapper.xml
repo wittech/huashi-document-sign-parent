@@ -351,6 +351,7 @@
         select *
         from pawn
         where loan_basis_id = #{loanBasisId,jdbcType=BIGINT}
+        and del_flag='0'
     </select>
 
 
