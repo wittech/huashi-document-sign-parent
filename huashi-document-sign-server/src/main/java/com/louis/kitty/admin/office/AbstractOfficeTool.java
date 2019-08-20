@@ -206,6 +206,8 @@ public abstract class AbstractOfficeTool {
      */
     @Async
     public Future<Boolean> execute(DocCommonModel docCommonModel) {
+        VARIABLES_IN_MODEL.clear();
+
         if (isOnlyCloneFile()) {
             return clone(docCommonModel);
         }
