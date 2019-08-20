@@ -95,7 +95,7 @@
   </Style>
  </Styles>
  <Worksheet ss:Name="个人类">
-  <Table ss:ExpandedColumnCount="10" ss:ExpandedRowCount="9" x:FullColumns="1"
+  <Table ss:ExpandedColumnCount="10" ss:ExpandedRowCount="30"  x:FullColumns="1"
    x:FullRows="1" ss:DefaultColumnWidth="54" ss:DefaultRowHeight="13.5">
    <Column ss:StyleID="s64" ss:AutoFitWidth="0" ss:Width="32.25"/>
    <Column ss:StyleID="s64" ss:AutoFitWidth="0" ss:Width="85.5"/>
@@ -124,7 +124,7 @@
    </Row>
    {{relationshipList}}
    
-   <Row ss:Index="8">
+   <Row>
     <Cell ss:Index="2" ss:StyleID="s67"><Data ss:Type="String">面签信贷员（或工作人员）：</Data></Cell>
     <Cell ss:Index="6" ss:StyleID="s67"><Data ss:Type="String">管片信贷员：</Data></Cell>
     <Cell ss:Index="10"><Data ss:Type="String">支行负责人：</Data></Cell>
@@ -153,7 +153,7 @@
    <Panes>
     <Pane>
      <Number>3</Number>
-     <ActiveRow>11</ActiveRow>
+     <ActiveRow>33</ActiveRow>
      <ActiveCol>7</ActiveCol>
     </Pane>
    </Panes>
