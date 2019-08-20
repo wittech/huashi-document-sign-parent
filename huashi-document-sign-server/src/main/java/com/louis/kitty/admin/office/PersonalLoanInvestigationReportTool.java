@@ -201,7 +201,7 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
                 "\t  <w:sz w:val=\"24\"/>\n" +
                 "\t  <w:u w:val=\"single\"/>\n" +
                 "\t</w:rPr>\n" +
-                "\t<w:t>{{" + totalCount + "}}</w:t>\n" +
+                "\t<w:t>" + totalCount + "</w:t>\n" +
                 "  </w:r>\n" +
                 "  <w:r>\n" +
                 "\t<w:rPr>\n" +
@@ -300,7 +300,7 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
                 "\t  <w:sz w:val=\"24\"/>\n" +
                 "\t  <w:u w:val=\"single\"/>\n" +
                 "\t</w:rPr>\n" +
-                "\t<w:t>{{" + totalCount + "}}</w:t>\n" +
+                "\t<w:t>" + totalCount + "</w:t>\n" +
                 "  </w:r>\n" +
                 "  <w:r>\n" +
                 "\t<w:rPr>\n" +
@@ -1734,8 +1734,8 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
 
         // 借款人家庭资产信息
         variables.put("applyFamilyAssetsInfo", setAssetsInfo(true, borrowerList));
-
-        variables.put("applyPersonMaritalStatusCheck", setMaritalStatusCheck(personalLoanSurveyReport.getMaritalStatus()));
+        // 婚姻状况
+        variables.put("applyPersonMaritalStatusCheck", setMaritalStatusCheck(docCommonModel.getBorrower().getMaritalStatus()));
 
         // 设置借贷人家庭资产统计信息
         setApplyFamilyAssetReport(docCommonModel, variables);
@@ -1901,7 +1901,7 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
                     "\t  <w:sz w:val=\"24\"/>\n" +
                     "\t  <w:u w:val=\"single\"/>\n" +
                     "\t</w:rPr>\n" +
-                    "\t<w:t xml:space=\"preserve\"> " + pawn.getMortgageType() + " </w:t>\n" +
+                    "\t<w:t xml:space=\"preserve\"> " + pawn.getPawnName() + " </w:t>\n" +
                     "  </w:r>\n" +
                     "  <w:r>\n" +
                     "\t<w:rPr>\n" +
@@ -2584,7 +2584,7 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
 
         Double guaranteeAssets = 0d;
         Double guaranteeDebt = 0d;
-        Double guaranteeAnnualHouseholdIncome = 0d;
+        Double totalRevenue = 0d;
         Double guaranteeExpense = 0d;
         Double guaranteeDebtTotalExpenditure = 0d;
         Double foreignGuaranteeLumpSum = 0d;
@@ -2595,7 +2595,7 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
 
             guaranteeAssets = add(guaranteeAssets, householdIncome.getTotalAssets());
             guaranteeDebt = add(guaranteeDebt, householdIncome.getTotalLiability());
-            guaranteeAnnualHouseholdIncome = add(guaranteeAnnualHouseholdIncome, householdIncome.getApplicantAnnualIncome());
+            totalRevenue = add(totalRevenue, householdIncome.getTotalRevenue());
             guaranteeExpense = add(guaranteeExpense, householdIncome.getTotalAnnualExpenditure());
             guaranteeDebtTotalExpenditure = add(guaranteeDebtTotalExpenditure, householdIncome.getDebtTotalExpenditure());
             foreignGuaranteeLumpSum = add(foreignGuaranteeLumpSum, householdIncome.getForeignGuaranteeLumpSum());
@@ -2606,7 +2606,7 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
         // 家庭总负债
         variables.put("guaranteeDebt", guaranteeDebt);
         // 家庭总收入
-        variables.put("guaranteeAnnualHouseholdIncome", guaranteeAnnualHouseholdIncome);
+        variables.put("guaranteeAnnualHouseholdIncome", totalRevenue);
         // 家庭总支出
         variables.put("guaranteeExpense", guaranteeExpense);
         // 家庭年债务性支出
@@ -2617,12 +2617,12 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
 
         // 自然人保证担保额度=3＊（年正常税后收入-年债务性支出-年生活保障支出）-已为他人提供的各类担保余额
         // result = 3*（allGuaranteeTotalRevenue - allGuaranteeTotalAnnualExpenditure  - allGuaranteeExpense）- allForeignGuaranteeLumpSum
-        variables.put("allGuaranteeTotalRevenue", guaranteeAnnualHouseholdIncome);
+        variables.put("allGuaranteeTotalRevenue", totalRevenue);
         variables.put("allGuaranteeTotalAnnualExpenditure", guaranteeDebtTotalExpenditure);
         variables.put("allGuaranteeExpense", guaranteeExpense);
         variables.put("allForeignGuaranteeLumpSum", foreignGuaranteeLumpSum);
 
-        double result = 3 * (guaranteeAnnualHouseholdIncome - guaranteeDebtTotalExpenditure - guaranteeExpense)
+        double result = 3 * (totalRevenue - guaranteeDebtTotalExpenditure - guaranteeExpense)
                 - foreignGuaranteeLumpSum;
         variables.put("result", result);
 

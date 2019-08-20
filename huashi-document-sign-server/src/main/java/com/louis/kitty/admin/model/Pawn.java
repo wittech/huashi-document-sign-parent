@@ -411,4 +411,12 @@ public class Pawn {
 
 		return StringUtils.join(ownersIds, ",");
 	}
+
+	public String getPawnName() {
+		if(mortgageType != null && mortgageType == 1) {
+			return "土地";
+		} else {
+			return "房屋";
+		}
+	}
 }

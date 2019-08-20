@@ -12,7 +12,7 @@ spring:
     type: com.alibaba.druid.pool.DruidDataSource
     druid:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://db.hspaas.cn:3306/dbs?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8
+      url: jdbc:mysql://db.hspaas.cn:3306/dbs?useUnicode=true&zeroDateTimeBehavior=convertToNull&autoReconnect=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=Asia/Shanghai
       username: hspaas
       password: Hangzhou_Huashi_0088664422@
       filters: stat,wall,log4j,config

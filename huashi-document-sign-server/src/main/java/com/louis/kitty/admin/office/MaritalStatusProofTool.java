@@ -2,11 +2,13 @@ package com.louis.kitty.admin.office;
 
 import com.louis.kitty.admin.constants.DocConstants;
 import com.louis.kitty.admin.model.DocCommonModel;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
 import java.util.Map;
 
+@Slf4j
 @Component
 public class MaritalStatusProofTool extends AbstractOfficeTool {
 
@@ -31,21 +33,34 @@ public class MaritalStatusProofTool extends AbstractOfficeTool {
             return "";
         } else if(maritalStatus == 0) {
             return "未婚";
-        } else if(maritalStatus == 1) {
-            return "已婚";
-        } else if(maritalStatus == 2) {
-            return "离异未婚";
+        }else if(maritalStatus == 2) {
+            return "离异未再婚";
         } else if(maritalStatus == 3) {
-            return "丧偶未婚";
-        } else if(maritalStatus == 4) {
-            return "其他";
+            return "丧偶未再婚";
         }
 
         return "";
     }
 
+    /**
+     * 已婚或其他状态则不需要 本文档生成
+     * @param maritalStatus 婚姻状况
+     */
+    private boolean isNeed(Integer maritalStatus) {
+        if(maritalStatus == null || (maritalStatus == 1 || maritalStatus == 4)) {
+            return false;
+        }
+
+        return true;
+    }
+
     @Override
     protected void fillVariable(DocCommonModel docCommonModel) {
+        if(!isNeed(docCommonModel.getBorrower().getMaritalStatus())) {
+            log.info("婚姻状态为已婚或未知，不需要生成此文档");
+            return;
+        }
+
         Map<String, Object> variables = newRound();
 
         // 如果婚姻状况为 已婚或其他 则变量全部替换空
