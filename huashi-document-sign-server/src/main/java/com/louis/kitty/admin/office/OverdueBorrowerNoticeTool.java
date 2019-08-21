@@ -1,18 +1,25 @@
 package com.louis.kitty.admin.office;
 
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.dao.LoanNoticeDocMapper;
 import com.louis.kitty.admin.model.CollectionNotice;
 import com.louis.kitty.admin.model.DocCommonModel;
+import com.louis.kitty.admin.model.LoanNoticeDoc;
 import com.louis.kitty.admin.util.RmbUtil;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Map;
 
 @Component
 public class OverdueBorrowerNoticeTool extends AbstractOfficeTool {
+
+    @Resource
+    private LoanNoticeDocMapper loanNoticeDocMapper;
 
     @Override
     protected void fillVariable(DocCommonModel docCommonModel) {
@@ -70,5 +77,26 @@ public class OverdueBorrowerNoticeTool extends AbstractOfficeTool {
     @Override
     protected DocConstants.DocType docType() {
         return DocConstants.DocType.WORD;
+    }
+
+    @Override
+    protected Long getObjectId(DocCommonModel docCommonModel) {
+        return docCommonModel.getCollectionNotice().getId();
+    }
+
+    @Override
+    protected boolean save(Long objectId, Long docSize, String targetDocFullName, String targetPdfFullName, int secondSort) {
+        LoanNoticeDoc loanNoticeDoc = new LoanNoticeDoc();
+        loanNoticeDoc.setLoanNoticeId(objectId);
+        loanNoticeDoc.setDocName(modelFileName());
+        loanNoticeDoc.setDocPath(targetDocFullName);
+        loanNoticeDoc.setPdfPath(targetPdfFullName);
+        loanNoticeDoc.setDocSize(docSize);
+        loanNoticeDoc.setDownloadTimes(0);
+        loanNoticeDoc.setPrintTimes(0);
+        loanNoticeDoc.setSort(sort() + secondSort);
+        loanNoticeDoc.setCreateTime(new Date());
+
+        return loanNoticeDocMapper.add(loanNoticeDoc) > 0;
     }
 }

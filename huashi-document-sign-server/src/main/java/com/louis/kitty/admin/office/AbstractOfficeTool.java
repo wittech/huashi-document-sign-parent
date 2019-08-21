@@ -145,6 +145,15 @@ public abstract class AbstractOfficeTool {
         return false;
     }
 
+    /**
+     * 根据不同的情况获取文档外键ID
+     * @param docCommonModel 数据
+     * @return ID
+     */
+    protected Long getObjectId(DocCommonModel docCommonModel) {
+        return docCommonModel.getLoanBasicId();
+    }
+
     protected Map<String, Object> newRound() {
         Map<String, Object> variables = new HashMap<>();
         VARIABLES_IN_MODEL.add(variables);
@@ -154,13 +163,13 @@ public abstract class AbstractOfficeTool {
     /**
      * 保存记录至库表
      *
-     * @param basisLoanId 基础借贷ID
+     * @param objectId 业务外键ID
      * @return 处理结果
      */
 
-    private boolean save(Long basisLoanId, Long docSize, String targetDocFullName, String targetPdfFullName, int secondSort) {
+    protected boolean save(Long objectId, Long docSize, String targetDocFullName, String targetPdfFullName, int secondSort) {
         LoanDoc loanDoc = new LoanDoc();
-        loanDoc.setLoanBasisId(basisLoanId);
+        loanDoc.setLoanBasisId(objectId);
         loanDoc.setDocName(modelFileName());
         loanDoc.setDocPath(targetDocFullName);
         loanDoc.setPdfPath(targetPdfFullName);
@@ -190,7 +199,7 @@ public abstract class AbstractOfficeTool {
 
             targetPdfFullName = transformPdf(targetDocFullName, targetPdfFullName);
 
-            return new AsyncResult<>(save(docCommonModel.getLoanBasis().getId(), docSize,
+            return new AsyncResult<>(save(getObjectId(docCommonModel), docSize,
                     targetDocFullName, targetPdfFullName, 0));
         } catch (Exception e) {
             log.error("clone failed by basisLoanId[{}]", docCommonModel.getLoanBasis().getId(), e);
@@ -241,8 +250,7 @@ public abstract class AbstractOfficeTool {
 
                 targetPdfFullName = transformPdf(targetDocFullName, targetPdfFullName);
 
-                save(docCommonModel.getLoanBasis().getId(), docSize, targetDocFullName, targetPdfFullName,
-                        index);
+                save(getObjectId(docCommonModel), docSize, targetDocFullName, targetPdfFullName, index);
 
                 index++;
             }

@@ -2,8 +2,10 @@ package com.louis.kitty.admin.office;
 
 import com.alibaba.druid.util.StringUtils;
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.dao.LoanCheckDocMapper;
 import com.louis.kitty.admin.dao.PostLoanNotImplementedMapper;
 import com.louis.kitty.admin.model.DocCommonModel;
+import com.louis.kitty.admin.model.LoanCheckDoc;
 import com.louis.kitty.admin.model.PostLoanCheck;
 import com.louis.kitty.admin.model.PostLoanNotImplemented;
 import org.apache.commons.collections4.CollectionUtils;
@@ -11,12 +13,15 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 @Component
 public class PersonalLoansChecklistTool extends AbstractOfficeTool {
 
+    @Resource
+    private LoanCheckDocMapper loanCheckDocMapper;
     @Resource
     private PostLoanNotImplementedMapper postLoanNotImplementedMapper;
 
@@ -212,5 +217,26 @@ public class PersonalLoansChecklistTool extends AbstractOfficeTool {
     @Override
     protected DocConstants.DocType docType() {
         return DocConstants.DocType.WORD;
+    }
+
+    @Override
+    protected Long getObjectId(DocCommonModel docCommonModel) {
+        return docCommonModel.getPostLoanCheck().getId();
+    }
+
+    @Override
+    protected boolean save(Long objectId, Long docSize, String targetDocFullName, String targetPdfFullName, int secondSort) {
+        LoanCheckDoc loanCheckDoc = new LoanCheckDoc();
+        loanCheckDoc.setLoanCheckId(objectId);
+        loanCheckDoc.setDocName(modelFileName());
+        loanCheckDoc.setDocPath(targetDocFullName);
+        loanCheckDoc.setPdfPath(targetPdfFullName);
+        loanCheckDoc.setDocSize(docSize);
+        loanCheckDoc.setDownloadTimes(0);
+        loanCheckDoc.setPrintTimes(0);
+        loanCheckDoc.setSort(sort() + secondSort);
+        loanCheckDoc.setCreateTime(new Date());
+
+        return loanCheckDocMapper.add(loanCheckDoc) > 0;
     }
 }
