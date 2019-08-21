@@ -1501,6 +1501,10 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
         StringBuilder detailListText = new StringBuilder();
         int index = 0;
         for (RelatedPersonnelInformation relatedPersonnelInformation : relatedPersonnelInformationList) {
+            if(relatedPersonnelInformation == null) {
+                continue;
+            }
+
             List<AssetTypeHouses> assetTypeHousesList = assetTypeHousesMapper.findByRpiId(relatedPersonnelInformation.getId());
             for (AssetTypeHouses assetTypeHouses : assetTypeHousesList) {
                 if (assetTypeHouses == null) {
@@ -1538,6 +1542,10 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
         StringBuilder detailListText = new StringBuilder();
         int index = 0;
         for (RelatedPersonnelInformation relatedPersonnelInformation : relatedPersonnelInformationList) {
+            if(relatedPersonnelInformation == null) {
+                continue;
+            }
+
             List<AssetTypeLand> assetTypeLandList = assetTypeLandMapper.findByRpiId(relatedPersonnelInformation.getId());
             for (AssetTypeLand assetTypeLand : assetTypeLandList) {
                 if (assetTypeLand == null) {
@@ -1573,6 +1581,10 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
         StringBuilder detailListText = new StringBuilder();
         int index = 0;
         for (RelatedPersonnelInformation relatedPersonnelInformation : relatedPersonnelInformationList) {
+            if(relatedPersonnelInformation == null) {
+                continue;
+            }
+
             List<AssetTypeCar> assetTypeCarList = assetTypeCarMapper.findByRpiId(relatedPersonnelInformation.getId());
             for (AssetTypeCar assetTypeCar : assetTypeCarList) {
                 if (assetTypeCar == null) {
@@ -1607,6 +1619,10 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
         StringBuilder detailListText = new StringBuilder();
         int index = 0;
         for (RelatedPersonnelInformation relatedPersonnelInformation : relatedPersonnelInformationList) {
+            if(relatedPersonnelInformation == null) {
+                continue;
+            }
+
             List<AssetTypeSecurities> assetTypeSecuritiesList = assetTypeSecuritiesMapper.findByRpiId(relatedPersonnelInformation.getId());
             for (AssetTypeSecurities assetTypeSecurities : assetTypeSecuritiesList) {
                 if (assetTypeSecurities == null) {
@@ -1641,6 +1657,10 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
         StringBuilder detailListText = new StringBuilder();
         int index = 0;
         for (RelatedPersonnelInformation relatedPersonnelInformation : relatedPersonnelInformationList) {
+            if(relatedPersonnelInformation == null) {
+                continue;
+            }
+
             List<AssetTypeOther> assetTypeOtherList = assetTypeOtherMapper.findByRpiId(relatedPersonnelInformation.getId());
             for (AssetTypeOther assetTypeOther : assetTypeOtherList) {
                 if (assetTypeOther == null) {
