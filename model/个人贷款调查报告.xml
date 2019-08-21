@@ -896,7 +896,7 @@
                       <w:b/>
                       <w:sz w:val="24"/>
                     </w:rPr>
-                    <w:t>元，自筹资金</w:t>
+                    <w:t>，自筹资金</w:t>
                   </w:r>
                   <w:r>
                     <w:rPr>
@@ -1742,7 +1742,7 @@
                       <w:sz w:val="24"/>
                       <w:u w:val="single"/>
                     </w:rPr>
-                    <w:t xml:space="preserve">     </w:t>
+                    <w:t xml:space="preserve">  {{guaranteeAssets}}   </w:t>
                   </w:r>
                   <w:r>
                     <w:rPr>
@@ -1750,7 +1750,7 @@
                       <w:b/>
                       <w:sz w:val="24"/>
                     </w:rPr>
-                    <w:t>{{guaranteeAssets}}元，家庭负债:</w:t>
+                    <w:t>元，家庭负债:</w:t>
                   </w:r>
                   <w:r>
                     <w:rPr>

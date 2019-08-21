@@ -1,5 +1,6 @@
 package com.louis.kitty.admin.sevice.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,10 @@ public class PersonalLoanSurveyReportServiceImpl implements PersonalLoanSurveyRe
 	@Override
 	public int save(PersonalLoanSurveyReport record) {
 		if(record.getId() == null || record.getId() == 0) {
+			record.setCreateTime(new Date());
 			return personalLoanSurveyReportMapper.add(record);
 		}
+		record.setLastUpdateTime(new Date());
 		return personalLoanSurveyReportMapper.update(record);
 	}
 
@@ -57,6 +60,11 @@ public class PersonalLoanSurveyReportServiceImpl implements PersonalLoanSurveyRe
 	@Override
 	public PageResult findPage(PageRequest pageRequest) {
 		return MybatisPageHelper.findPage(pageRequest, personalLoanSurveyReportMapper);
+	}
+
+	@Override
+	public PersonalLoanSurveyReport findByBasisId(Long loanBasicId) {
+		return personalLoanSurveyReportMapper.findByBasisId(loanBasicId);
 	}
 	
 }

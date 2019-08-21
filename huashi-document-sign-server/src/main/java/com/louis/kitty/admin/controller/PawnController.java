@@ -71,4 +71,16 @@ public class PawnController {
 	public HttpResult findById(@RequestParam Long id) {
 		return HttpResult.ok(pawnService.findById(id));
 	}
+	
+	 /**
+     * 根据loanBasisId查询
+     * @param loanBasisId
+     * @return
+     */ 	
+	@GetMapping(value="/findByLoanBasisId")
+	public HttpResult findByLoanBasisId(@RequestParam Long loanBasisId) {
+		return HttpResult.ok(pawnService.findByLoanBasisId(loanBasisId));
+	}
+	
+	
 }

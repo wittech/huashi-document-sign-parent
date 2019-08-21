@@ -418,6 +418,17 @@
     	select * from related_personnel_information where loan_basis_id = #{loanBasisId,jdbcType=BIGINT}
   </select>
   
+   <select id="findByBaseIdAndType" parameterType="com.louis.kitty.admin.model.RelatedPersonnelInformation"  resultMap="BaseResultMap">
+    	select * from related_personnel_information where loan_basis_id = #{loanBasisId,jdbcType=BIGINT}
+    	<if test="type != null">
+	       and  type = #{type,jdbcType=INTEGER}
+	     </if>
+	     <if test="coupleId != null">
+	        and couple_id = #{coupleId,jdbcType=BIGINT}
+	     </if>
+    
+  </select>
+  
   
   
 </mapper>

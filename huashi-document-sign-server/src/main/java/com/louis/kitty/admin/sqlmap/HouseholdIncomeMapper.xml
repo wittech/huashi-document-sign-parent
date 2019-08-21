@@ -334,6 +334,12 @@
         limit 1
     </select>
 
+    <select id="findByLoanBasisId" resultMap="BaseResultMap">
+        select *
+        from household_income
+        where loan_basis_id = #{loanBasisId,jdbcType=BIGINT}
+    </select>
+
     <select id="findByRpiIds" resultMap="BaseResultMap">
         select * from household_income
         WHERE rpi_id IN

@@ -56,5 +56,15 @@ public interface RelatedPersonnelInformationMapper {
      * @return
      */
     List<RelatedPersonnelInformation> findByBaseIdList(Long loanBasisId);
+    
+    /**
+     * 根据主键查询
+     * @param id
+     * @return
+     */    
+    RelatedPersonnelInformation findByBaseIdAndType(RelatedPersonnelInformation record);
+
+    
+    
 
 }

@@ -25,6 +25,7 @@
         <result column="lease_term_start_time" jdbcType="TIMESTAMP" property="leaseTermStartTime"/>
         <result column="lease_term_end_time" jdbcType="TIMESTAMP" property="leaseTermEndTime"/>
         <result column="rent_payment_method" jdbcType="INTEGER" property="rentPaymentMethod"/>
+        <result column="rent" jdbcType="VARCHAR" property="rent"/>
         <result column="contract_signing_time" jdbcType="TIMESTAMP" property="contractSigningTime"/>
         <result column="name_assets_id" jdbcType="BIGINT" property="nameAssetsId"/>
         <result column="create_by" jdbcType="VARCHAR" property="createBy"/>
@@ -103,6 +104,9 @@
             </if>
             <if test="rentPaymentMethod != null">
                 rent_payment_method,
+            </if>
+            <if test="rent != null">
+                rent,
             </if>
             <if test="contractSigningTime != null">
                 contract_signing_time,
@@ -195,6 +199,9 @@
             </if>
             <if test="rentPaymentMethod != null">
                 #{rentPaymentMethod,jdbcType=INTEGER},
+            </if>
+            <if test="rent != null">
+                #{rent,jdbcType=VARCHAR},
             </if>
             <if test="contractSigningTime != null">
                 #{contractSigningTime,jdbcType=TIMESTAMP},
@@ -298,6 +305,9 @@
             <if test="rentPaymentMethod != null">
                 rent_payment_method = #{rentPaymentMethod,jdbcType=INTEGER},
             </if>
+            <if test="rent != null">
+                rent = #{rent,jdbcType=VARCHAR},
+            </if>
             <if test="contractSigningTime != null">
                 contract_signing_time = #{contractSigningTime,jdbcType=TIMESTAMP},
             </if>
@@ -341,6 +351,7 @@
         select *
         from pawn
         where loan_basis_id = #{loanBasisId,jdbcType=BIGINT}
+        and del_flag='0'
     </select>
 
 

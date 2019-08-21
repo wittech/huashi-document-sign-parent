@@ -1,5 +1,6 @@
 package com.louis.kitty.admin.sevice.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,8 +32,10 @@ public class ContractInformationServiceImpl implements ContractInformationServic
 	@Override
 	public int save(ContractInformation record) {
 		if(record.getId() == null || record.getId() == 0) {
+			record.setCreateTime(new Date());
 			return contractInformationMapper.add(record);
 		}
+		record.setLastUpdateTime(new Date());
 		return contractInformationMapper.update(record);
 	}
 

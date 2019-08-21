@@ -53,4 +53,7 @@ public interface HouseholdIncomeMapper {
 
     List<HouseholdIncome> findByRpiIds(List<Long> ids);
     
+
+    HouseholdIncome findByLoanBasisId(Long loanBasisId);
+    
 }

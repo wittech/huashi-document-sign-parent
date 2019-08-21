@@ -151,6 +151,7 @@
         select *
         from counterparty_information
         where loan_business_information_id = #{loanBusinessInformationId,jdbcType=BIGINT}
+        and del_flag = '0'
     </select>
 
 </mapper>

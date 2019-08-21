@@ -23,5 +23,8 @@ public interface RelatedPersonnelInformationService extends CurdService<RelatedP
      * @return
      */
     List<RelatedPersonnelInformation> findByBaseIdList(Long loanBasisId);
+    
+    
+    RelatedPersonnelInformation findByBaseIdAndType(RelatedPersonnelInformation record);
 
 }

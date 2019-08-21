@@ -206,6 +206,8 @@ public abstract class AbstractOfficeTool {
      */
     @Async
     public Future<Boolean> execute(DocCommonModel docCommonModel) {
+        VARIABLES_IN_MODEL.clear();
+
         if (isOnlyCloneFile()) {
             return clone(docCommonModel);
         }
@@ -368,7 +370,7 @@ public abstract class AbstractOfficeTool {
     protected Map<Integer, String> getCalendar(Date date) {
         Map<Integer, String> calendarMap = new HashMap<>();
         if (date == null) {
-            calendarMap.put(Calendar.YEAR, "    ");
+            calendarMap.put(Calendar.YEAR, "       ");
             calendarMap.put(Calendar.MONTH, "  ");
             calendarMap.put(Calendar.DAY_OF_MONTH, "  ");
             return calendarMap;
@@ -379,7 +381,7 @@ public abstract class AbstractOfficeTool {
         ca.setTime(date);
 
         calendarMap.put(Calendar.YEAR, ca.get(Calendar.YEAR) + "");
-        calendarMap.put(Calendar.MONTH, ca.get(Calendar.MONTH) + "");
+        calendarMap.put(Calendar.MONTH, (ca.get(Calendar.MONTH) + 1) + "");
         calendarMap.put(Calendar.DAY_OF_MONTH, ca.get(Calendar.DAY_OF_MONTH) + "");
         return calendarMap;
     }

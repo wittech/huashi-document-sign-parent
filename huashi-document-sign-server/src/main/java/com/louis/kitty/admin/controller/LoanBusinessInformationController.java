@@ -71,4 +71,14 @@ public class LoanBusinessInformationController {
 	public HttpResult findById(@RequestParam Long id) {
 		return HttpResult.ok(loanBusinessInformationService.findById(id));
 	}
+	
+	 /**
+     * 根据loanBasicId查询
+     * @param loanBasicId
+     * @return
+     */ 	
+	@GetMapping(value="/findByBasisId")
+	public HttpResult findByBasisId(@RequestParam Long loanBasicId) {
+		return HttpResult.ok(loanBusinessInformationService.findByBasisId(loanBasicId));
+	}
 }

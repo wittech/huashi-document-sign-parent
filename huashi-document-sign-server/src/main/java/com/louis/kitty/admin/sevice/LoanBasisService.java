@@ -24,4 +24,12 @@ public interface LoanBasisService extends CurdService<LoanBasis> {
 	 * @return
 	 */
 	List<HousingLandDto> findByLoanBasisIdList(Long loanBasisId);
+	
+	/**
+	 * 修改借口人基础信息表
+	 * 
+	 * @param record
+	 * @return
+	 */
+	int update(LoanBasis record);
 }

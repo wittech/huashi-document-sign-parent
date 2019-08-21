@@ -71,4 +71,14 @@ public class PersonalLoanSurveyReportController {
 	public HttpResult findById(@RequestParam Long id) {
 		return HttpResult.ok(personalLoanSurveyReportService.findById(id));
 	}
+	
+	/**
+     * 根据根据loanBasisId查询个人报告
+     * @param id
+     * @return
+     */ 	
+	@GetMapping(value="/findByBaseId")
+	public HttpResult findByBaseId(@RequestParam Long loanBasisId) {
+		return HttpResult.ok(personalLoanSurveyReportService.findByBasisId(loanBasisId));
+	}
 }
