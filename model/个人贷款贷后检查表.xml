@@ -881,7 +881,7 @@
                       <w:szCs w:val="20"/>
                       <w:lang w:val="en-US" w:eastAsia="zh-CN" w:bidi="ar"/>
                     </w:rPr>
-                    <w:t>{{guaranteeMethodMark1}}√</w:t>
+                    <w:t>{{guaranteeMethodMark1}}</w:t>
                   </w:r>
                 </w:p>
               </w:tc>

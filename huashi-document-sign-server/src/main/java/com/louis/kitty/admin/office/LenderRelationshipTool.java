@@ -1,10 +1,12 @@
 package com.louis.kitty.admin.office;
 
 import com.louis.kitty.admin.constants.DocConstants;
+import com.louis.kitty.admin.constants.LoanConstants;
 import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.Pawn;
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
 import com.louis.kitty.admin.sevice.PawnPersonnelMappingService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.*;
 
+@Slf4j
 @Component
 public class LenderRelationshipTool extends AbstractOfficeTool {
 
@@ -81,21 +84,30 @@ public class LenderRelationshipTool extends AbstractOfficeTool {
                     docCommonModel.getBorrowerCouple().getCurrentHomeAddress(), ""));
         }
 
+        Set<Long> existsIds = new HashSet<>();
         if (CollectionUtils.isNotEmpty(docCommonModel.getGuarantorList())) {
             for (RelatedPersonnelInformation relatedPersonnelInformation : docCommonModel.getGuarantorList()) {
 
                 relationshipList.add(relationship(relatedPersonnelInformation.getName(),
-                        "保证担保人", relatedPersonnelInformation.getIdentityNumber(),
+                        LoanConstants.PersonnelType.getTitle(relatedPersonnelInformation.getType()),
+                        relatedPersonnelInformation.getIdentityNumber(),
                         relatedPersonnelInformation.getContactNumber(),
                         relatedPersonnelInformation.getCurrentHomeAddress(), ""));
+
+                existsIds.add(relatedPersonnelInformation.getId());
             }
         }
 
         if (CollectionUtils.isNotEmpty(docCommonModel.getMortgageGuarantorList())) {
             for (RelatedPersonnelInformation relatedPersonnelInformation : docCommonModel.getMortgageGuarantorList()) {
+                if(existsIds.contains(relatedPersonnelInformation.getId())) {
+                    log.info("relatedPersonnelInformation id [{}] has joined queue", relatedPersonnelInformation.getId());
+                    continue;
+                }
 
                 relationshipList.add(relationship(relatedPersonnelInformation.getName(),
-                        "抵押担保人", relatedPersonnelInformation.getIdentityNumber(),
+                        LoanConstants.PersonnelType.getTitle(relatedPersonnelInformation.getType()),
+                        relatedPersonnelInformation.getIdentityNumber(),
                         relatedPersonnelInformation.getContactNumber(),
                         relatedPersonnelInformation.getCurrentHomeAddress(),
                         getMortgageGoodsName(relatedPersonnelInformation.getId())));

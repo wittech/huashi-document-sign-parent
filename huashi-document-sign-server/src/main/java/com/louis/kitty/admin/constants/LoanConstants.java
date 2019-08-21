@@ -71,11 +71,21 @@ public class LoanConstants {
      */
     public enum PersonnelType {
         BORROWER(1, "借款人本人"), BORROWER_COUPLE(2, "借款人配偶"), MORTGAGE_GUARANTOR(3, "抵押担保人"),
-        GUARANTOR(4, "保证担保人"), GUARANTOR_BOTH(5, "抵押担保人、保证担保人");
+        GUARANTOR(4, "保证担保人"), GUARANTOR_BOTH(5, "保证担保人、抵押担保人");
 
         PersonnelType(int code, String title) {
             this.code = code;
             this.title = title;
+        }
+
+        public static String getTitle(int code) {
+            for(PersonnelType pt : PersonnelType.values()) {
+                if(pt.getCode() == pt.getCode()) {
+                    return pt.getTitle();
+                }
+            }
+
+            return BORROWER.getTitle();
         }
 
         private int code;
