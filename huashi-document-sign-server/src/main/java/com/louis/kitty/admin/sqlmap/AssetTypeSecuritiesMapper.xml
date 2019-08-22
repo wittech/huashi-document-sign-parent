@@ -135,7 +135,7 @@
   </select>
 
   <select id="findByRpiId" resultMap="BaseResultMap">
-    select * from asset_type_securities where rpi_id = #{rpiId,jdbcType=BIGINT}
+    select * from asset_type_securities where rpi_id = #{rpiId,jdbcType=BIGINT} and del_flag ='0'
   </select>
   
 </mapper>
