@@ -74,6 +74,7 @@ public class LoanBusinessInformationServiceImpl implements LoanBusinessInformati
 			//保存
 			if(record.getCounterpartyInformation() !=null){
 				for(CounterpartyInformation c : record.getCounterpartyInformation()){
+					c.setId(null);
 					c.setCreateBy(record.getLastUpdateBy());
 					c.setLastUpdateBy(record.getLastUpdateBy());
 					c.setCreateTime(new Date());
