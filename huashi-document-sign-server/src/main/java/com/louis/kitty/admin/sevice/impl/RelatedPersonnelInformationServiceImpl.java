@@ -219,14 +219,11 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 		List<AssetTypeHouses> housesList =assetTypeHousesMapper.findByRpiId(id);
 		if(housesList !=null){
 			for(AssetTypeHouses house : housesList){
-				house.setLastUpdateBy(record.getLastUpdateBy());
-				house.setLastUpdateTime(new Date());
-				house.setDelFlag(-1);
-				assetTypeHousesMapper.update(house);
+				assetTypeHousesMapper.delete(house.getId());
 			}
 		}
 		//存储房屋
-		if(record.getAssetTypeHouses() !=null){
+		if(record.getAssetTypeHouses() !=null && record.getAssetTypeHouses().size()>0){
 			for(AssetTypeHouses house : record.getAssetTypeHouses()){
 				house.setId(null);
 				house.setCreateBy(record.getCreateBy());
@@ -241,14 +238,11 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 		List<AssetTypeLand>  landList =assetTypeLandMapper.findByRpiId(id);
 		if(landList !=null){
 			for(AssetTypeLand land : landList){
-				land.setLastUpdateBy(record.getLastUpdateBy());
-				land.setLastUpdateTime(new Date());
-				land.setDelFlag(-1);
-				assetTypeLandMapper.update(land);
+				assetTypeLandMapper.delete(land.getId());
 			}
 		}
 		//存储土地
-		if(record.getAssetTypeLand() !=null){
+		if(record.getAssetTypeLand() !=null &&record.getAssetTypeLand().size()>0 ){
 			for(AssetTypeLand land : record.getAssetTypeLand()){
 				land.setId(null);
 				land.setCreateBy(record.getCreateBy());
@@ -263,14 +257,11 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 		List<AssetTypeCar> carList =assetTypeCarMapper.findByRpiId(id);
 		if(carList !=null){
 			for(AssetTypeCar card : carList){
-				card.setLastUpdateBy(record.getLastUpdateBy());
-				card.setLastUpdateTime(new Date());
-				card.setDelFlag(-1);
-				assetTypeCarMapper.update(card);
+				assetTypeCarMapper.delete(card.getId());
 			}
 		}
 		//存储汽车
-		if(record.getAssetTypeCar() !=null){
+		if(record.getAssetTypeCar() !=null && record.getAssetTypeCar().size()>0){
 			for(AssetTypeCar car : record.getAssetTypeCar()){
 				car.setId(null);
 				car.setCreateBy(record.getCreateBy());
@@ -285,14 +276,11 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 		List<AssetTypeSecurities> aecuritiesList =assetTypeSecuritiesMapper.findByRpiId(id);
 		if(aecuritiesList !=null){
 			for(AssetTypeSecurities aecurities : aecuritiesList){
-				aecurities.setLastUpdateBy(record.getLastUpdateBy());
-				aecurities.setLastUpdateTime(new Date());
-				aecurities.setDelFlag(-1);
-				assetTypeSecuritiesMapper.update(aecurities);
+				assetTypeSecuritiesMapper.delete(aecurities.getId());
 			}
 		}
 		//存储证券
-		if(record.getAssetTypeSecurities() !=null){
+		if(record.getAssetTypeSecurities() !=null && record.getAssetTypeSecurities().size()>0){
 			for(AssetTypeSecurities aecurities : record.getAssetTypeSecurities()){
 				aecurities.setId(null);
 				aecurities.setCreateBy(record.getCreateBy());
@@ -307,14 +295,11 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 		List<AssetTypeOther> otherList =assetTypeOtherMapper.findByRpiId(id);
 		if(otherList !=null){
 			for(AssetTypeOther other : otherList){
-				other.setLastUpdateBy(record.getLastUpdateBy());
-				other.setLastUpdateTime(new Date());
-				other.setDelFlag(-1);
-				assetTypeOtherMapper.update(other);
+				assetTypeOtherMapper.delete(other.getId());
 			}
 		}
 		//存储其他
-		if(record.getAssetTypeOther() !=null){
+		if(record.getAssetTypeOther() !=null && record.getAssetTypeOther().size()>0){
 			for(AssetTypeOther other : record.getAssetTypeOther()){
 				other.setId(null);
 				other.setCreateBy(record.getCreateBy());
@@ -350,11 +335,11 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 							house.setLastUpdateBy(record.getLastUpdateBy());
 							house.setLastUpdateTime(new Date());
 							house.setDelFlag(-1);
-							assetTypeHousesMapper.update(house);
+							assetTypeHousesMapper.delete(house.getId());
 						}
 					}
 					//存储房屋
-					if(record.getAssetTypeHouses() !=null){
+					if(record.getAssetTypeHouses() !=null && record.getAssetTypeHouses().size()>0){
 						for(AssetTypeHouses house : record.getAssetTypeHouses()){
 							house.setId(null);
 							house.setCreateBy(record.getCreateBy());
@@ -369,14 +354,11 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 					List<AssetTypeLand>  landList =assetTypeLandMapper.findByRpiId(id);
 					if(landList !=null){
 						for(AssetTypeLand land : landList){
-							land.setLastUpdateBy(record.getLastUpdateBy());
-							land.setLastUpdateTime(new Date());
-							land.setDelFlag(-1);
-							assetTypeLandMapper.update(land);
+							assetTypeLandMapper.delete(land.getId());
 						}
 					}
 					//存储土地
-					if(record.getAssetTypeLand() !=null){
+					if(record.getAssetTypeLand() !=null && record.getAssetTypeLand().size()>0){
 						for(AssetTypeLand land : record.getAssetTypeLand()){
 							land.setId(null);
 							land.setCreateBy(record.getCreateBy());
@@ -391,14 +373,11 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 					List<AssetTypeCar> carList =assetTypeCarMapper.findByRpiId(id);
 					if(carList !=null){
 						for(AssetTypeCar card : carList){
-							card.setLastUpdateBy(record.getLastUpdateBy());
-							card.setLastUpdateTime(new Date());
-							card.setDelFlag(-1);
-							assetTypeCarMapper.update(card);
+							assetTypeCarMapper.delete(card.getId());
 						}
 					}
 					//存储汽车
-					if(record.getAssetTypeCar() !=null){
+					if(record.getAssetTypeCar() !=null && record.getAssetTypeCar().size()>0){
 						for(AssetTypeCar car : record.getAssetTypeCar()){
 							car.setId(null);
 							car.setCreateBy(record.getCreateBy());
@@ -413,14 +392,11 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 					List<AssetTypeSecurities> aecuritiesList =assetTypeSecuritiesMapper.findByRpiId(id);
 					if(aecuritiesList !=null){
 						for(AssetTypeSecurities aecurities : aecuritiesList){
-							aecurities.setLastUpdateBy(record.getLastUpdateBy());
-							aecurities.setLastUpdateTime(new Date());
-							aecurities.setDelFlag(-1);
-							assetTypeSecuritiesMapper.update(aecurities);
+							assetTypeSecuritiesMapper.delete(aecurities.getId());
 						}
 					}
 					//存储证券
-					if(record.getAssetTypeSecurities() !=null){
+					if(record.getAssetTypeSecurities() !=null && record.getAssetTypeSecurities().size()>0){
 						for(AssetTypeSecurities aecurities : record.getAssetTypeSecurities()){
 							aecurities.setId(null);
 							aecurities.setCreateBy(record.getCreateBy());
@@ -435,14 +411,11 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 					List<AssetTypeOther> otherList =assetTypeOtherMapper.findByRpiId(id);
 					if(otherList !=null){
 						for(AssetTypeOther other : otherList){
-							other.setLastUpdateBy(record.getLastUpdateBy());
-							other.setLastUpdateTime(new Date());
-							other.setDelFlag(-1);
-							assetTypeOtherMapper.update(other);
+							assetTypeOtherMapper.delete(other.getId());
 						}
 					}
 					//存储其他
-					if(record.getAssetTypeOther() !=null){
+					if(record.getAssetTypeOther() !=null && record.getAssetTypeOther().size()>0){
 						for(AssetTypeOther other : record.getAssetTypeOther()){
 							other.setId(null);
 							other.setCreateBy(record.getCreateBy());
