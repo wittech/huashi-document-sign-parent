@@ -27,7 +27,7 @@ public class DocPrintTest {
 
     @Test
     public void test() throws Exception{
-        loanDocService.print(loadDocIds);
+        loanDocService.print(loadDocIds, "");
     }
 
 }

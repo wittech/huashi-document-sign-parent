@@ -5,14 +5,10 @@ package com.louis.kitty.admin.controller.loan;
 
 import java.util.Date;
 
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.louis.kitty.admin.model.ContractInformation;
 import com.louis.kitty.admin.model.LoanBasis;
@@ -241,12 +237,25 @@ public class LoanController {
 	
 	/**
 	 * 根据id查询对象信息
-	 * @param loanBasisId
+	 * @param id
 	 * @return
 	 */
 	@GetMapping(value="/getByKeyId")
 	public HttpResult getByKeyId(@RequestParam Long id) {
 		return HttpResult.ok(loanBasisService.findById(id));
+	}
+
+
+	@RequestMapping(value = "/download", method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+	@ApiOperation(value = "下载借贷文件", httpMethod = "GET", produces = "application/json;charset=UTF-8")
+	public Object download(@RequestParam String loanDocIds) {
+		return loanDocService.download(loanDocIds);
+	}
+
+	@RequestMapping(value = "/print")
+	@ApiOperation(value = "打印借贷文件")
+	public String print(@RequestParam String loanDocIds, String watermark) {
+		return loanDocService.print(loanDocIds, watermark);
 	}
 	
 }

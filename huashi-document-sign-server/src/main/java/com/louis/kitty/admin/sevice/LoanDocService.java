@@ -29,9 +29,10 @@ public interface LoanDocService extends CurdService<LoanDoc> {
      * 打印
      *
      * @param loanDocIds 借贷文档IDS
+     * @param watermark 水印文本信息
      * @return 打印PDF的URL信息
      */
-    String print(String loanDocIds);
+    String print(String loanDocIds, String watermark);
 
     /**
      * 查询所有 借贷文档信息

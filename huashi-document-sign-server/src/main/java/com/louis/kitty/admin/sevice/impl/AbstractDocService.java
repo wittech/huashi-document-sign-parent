@@ -7,6 +7,7 @@ import com.louis.kitty.admin.model.*;
 import com.louis.kitty.admin.sevice.*;
 import com.louis.kitty.admin.util.*;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,11 +53,11 @@ public abstract class AbstractDocService {
     @Autowired
     private RepaymentPlanService repaymentPlanService;
 
-    protected LoanBasis getLoanBais(Long loanBasisId) {
+    LoanBasis getLoanBais(Long loanBasisId) {
         return loanBasisService.findById(loanBasisId);
     }
 
-    protected void setRelatedPersonnelInformations(DocCommonModel model) {
+    void setRelatedPersonnelInformations(DocCommonModel model) {
         List<RelatedPersonnelInformation> list = relatedPersonnelInformationService.findByBaseIdList(model.getLoanBasicId());
         if (CollectionUtils.isEmpty(list)) {
             return;
@@ -84,7 +85,7 @@ public abstract class AbstractDocService {
         }
     }
 
-    protected void setLoanBusinessInformation(DocCommonModel model) {
+    void setLoanBusinessInformation(DocCommonModel model) {
         LoanBusinessInformation loanBusinessInformation = loanBusinessInformationService.findByBasisId(model.getLoanBasicId());
         if (loanBusinessInformation == null) {
             return;
@@ -93,7 +94,7 @@ public abstract class AbstractDocService {
         model.setLoanBusinessInformation(loanBusinessInformation);
     }
 
-    protected void setContractInformation(DocCommonModel model) {
+    void setContractInformation(DocCommonModel model) {
         ContractInformation contractInformation = contractInformationService.findByLoanBasisId(model.getLoanBasicId());
         if (contractInformation == null) {
             return;
@@ -102,7 +103,7 @@ public abstract class AbstractDocService {
         model.setContractInformation(contractInformation);
     }
 
-    protected void setPawnList(DocCommonModel model) {
+    void setPawnList(DocCommonModel model) {
         if (!model.isContainsMortgage()) {
             log.info("ignored cause by loanBasisId[{}] is not belong to mortgage");
             return;
@@ -120,7 +121,7 @@ public abstract class AbstractDocService {
         model.setPawnList(pawnList);
     }
 
-    protected void setRepaymentPlanList(DocCommonModel model) {
+    void setRepaymentPlanList(DocCommonModel model) {
         List<RepaymentPlan> repaymentPlanList = repaymentPlanService.findByIoanBusinessInformationId(model.getLoanBusinessInformationId());
         if (CollectionUtils.isEmpty(repaymentPlanList)) {
             return;
@@ -129,7 +130,7 @@ public abstract class AbstractDocService {
         model.setRepaymentPlanList(repaymentPlanList);
     }
 
-    protected void setCounterpartyInformationList(DocCommonModel model) {
+    void setCounterpartyInformationList(DocCommonModel model) {
         List<CounterpartyInformation> counterpartyInformationList = counterpartyInformationService.findByIoanBusinessInformationId(model.getLoanBusinessInformationId());
         if (CollectionUtils.isEmpty(counterpartyInformationList)) {
             return;
@@ -146,7 +147,7 @@ public abstract class AbstractDocService {
         }
     }
 
-    protected int getResult(List<Future<Boolean>> futureList) {
+    int getResult(List<Future<Boolean>> futureList) {
         if (CollectionUtils.isEmpty(futureList)) {
             return 0;
         }
@@ -187,7 +188,7 @@ public abstract class AbstractDocService {
 
     protected abstract List<Future<Boolean>> asyncExecute(DocCommonModel model);
 
-    protected String getDateTimeFileName(int size) {
+    private String getDateTimeFileName(int size) {
         return new SimpleDateFormat("yyyyMMddHHmmSS").format(new Date()) + "-" + size
                 + "-" + RandomUtil.randomCode();
     }
@@ -198,7 +199,7 @@ public abstract class AbstractDocService {
      * @param dir 原路径
      * @return 原路径追加日期后的路径
      */
-    protected FileDirectoryUtil.DirMeta getDirWithDate(String dir) {
+    private FileDirectoryUtil.DirMeta getDirWithDate(String dir) {
         return FileDirectoryUtil.createDir(dir);
     }
 
@@ -208,7 +209,7 @@ public abstract class AbstractDocService {
      * @param docFileNames 需要压缩的文件名称数组
      * @return ZIP数据流
      */
-    protected ResponseEntity<InputStreamResource> getZipFile(List<String> docFileNames) {
+    ResponseEntity<InputStreamResource> getZipFile(List<String> docFileNames) {
         if (CollectionUtils.isEmpty(docFileNames)) {
             log.warn("Can not find any zip files");
             return null;
@@ -231,26 +232,54 @@ public abstract class AbstractDocService {
      * 获取最终合并多个PDF文件后的 PDF URL路径
      *
      * @param pdfFileNames 需要合并的PDF文件集合
+     * @param watermark    pdf水印文字
      * @return PDF URL路径： 如果为NULL则前端不处理
      */
-    protected String getPrintPdf(List<String> pdfFileNames) {
+    String getPrintPdf(List<String> pdfFileNames, String watermark) {
         if (CollectionUtils.isEmpty(pdfFileNames)) {
             log.warn("Can not find any pdf files");
             return null;
         }
 
         FileDirectoryUtil.DirMeta dirMeta = getDirWithDate(docPrintFileTarget);
+
         String targetPdfFileName = getDateTimeFileName(pdfFileNames.size()) + DocConstants.DocType.PDF.getSuffixName();
-
         try {
-            PdfUtil.mergeFiles(pdfFileNames.toArray(new String[]{}),
-                    dirMeta.getPath() + File.separator + targetPdfFileName);
+            // 合并pdf后的新PDF全路径（系统盘符绝对路径）
+            String targetPdfFullFileName = dirMeta.getPath() + File.separator + targetPdfFileName;
 
+            PdfUtil.mergeFiles(pdfFileNames.toArray(new String[]{}), targetPdfFullFileName);
+
+            // 添加水印
+            targetPdfFileName = addPdfWatermark(dirMeta.getPath() + File.separator, targetPdfFileName,
+                    watermark);
+
+            // 返回网络路径地址
             return docDomain + dirMeta.getDate() + "/" + targetPdfFileName;
 
         } catch (IOException | DocumentException e) {
             log.error("pdfFileNames[{}] doc print pdf merge failed", pdfFileNames, e);
             return null;
+        }
+    }
+
+    private String addPdfWatermark(String directory, String pdfFileName, String watermark) {
+        if (StringUtils.isBlank(watermark)) {
+            return pdfFileName;
+        }
+
+        try {
+            // 水印PDF名称
+            String watermarkPdfFileName = "WM-" + pdfFileName;
+            PdfUtil.waterMark(directory + pdfFileName, directory + watermarkPdfFileName, watermark);
+
+            log.info("pdfFileName[{}] add watermark[{}] successfully, target file name is '{}'",
+                    pdfFileName);
+
+            return watermarkPdfFileName;
+        } catch (Exception e) {
+            log.error("pdfFileName[{}] add watermark[{}] failed", pdfFileName, watermark, e);
+            return pdfFileName;
         }
     }
 

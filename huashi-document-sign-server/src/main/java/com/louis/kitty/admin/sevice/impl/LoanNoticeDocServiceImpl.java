@@ -178,7 +178,7 @@ public class LoanNoticeDocServiceImpl extends AbstractDocService implements Loan
 			return null;
 		}
 
-		String pdfUrl = getPrintPdf(fileNames);
+		String pdfUrl = getPrintPdf(fileNames, "");
 		if(StringUtils.isNotEmpty(pdfUrl)) {
 			addOneIfPrint(loanNoticeDocIds);
 		}

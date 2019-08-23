@@ -163,7 +163,7 @@ public class LoanCheckDocServiceImpl extends AbstractDocService implements LoanC
 			return null;
 		}
 
-		String pdfUrl = getPrintPdf(fileNames);
+		String pdfUrl = getPrintPdf(fileNames, "");
 		if(StringUtils.isNotEmpty(pdfUrl)) {
 			addOneIfPrint(loanCheckDocIds);
 		}

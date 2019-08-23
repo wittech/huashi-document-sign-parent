@@ -325,7 +325,7 @@ public abstract class AbstractOfficeTool {
      * @param yes 是否选中
      * @return 最终标签
      */
-    protected String setYesOption(Integer yes) {
+    String setYesOption(Integer yes) {
         String yesDes;
         if (yes == null) {
             yesDes = "□是  □否";
@@ -400,7 +400,7 @@ public abstract class AbstractOfficeTool {
      * @param household 户籍地
      * @return 本地户口结果
      */
-    protected Integer isLocalHousehold(String household) {
+    Integer isLocalHousehold(String household) {
         if (StringUtils.isEmpty(household)) {
             return null;
         }
@@ -408,7 +408,7 @@ public abstract class AbstractOfficeTool {
         return household.contains(BankConstants.CITY) ? 1 : 0;
     }
 
-    protected String getPawnNumberInfo(Pawn pawn) {
+    String getPawnNumberInfo(Pawn pawn) {
         if (pawn == null) {
             return "";
         }
