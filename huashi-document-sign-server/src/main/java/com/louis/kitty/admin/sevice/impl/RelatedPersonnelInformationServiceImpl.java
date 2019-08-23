@@ -132,6 +132,7 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 				householdIncomeMapper.update(record.getHouseholdIncomeForm());
 			}
 		}
+		updateBase(record);
 		updateSpouseInfo(record,id);
 		return relatedPersonnelInformationMapper.update(record);
 	}
@@ -202,6 +203,125 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 						}
 					}
 				}
+			}
+		}
+	}
+	
+	/**
+	 * 修改借款人数据
+	 * @param record
+	 */
+	private void updateBase(RelatedPersonnelInformation record){
+		//获取相关人id
+		Long id = record.getId();
+		//删除房屋记录
+		List<AssetTypeHouses> housesList =assetTypeHousesMapper.findByRpiId(id);
+		if(housesList !=null){
+			for(AssetTypeHouses house : housesList){
+				house.setLastUpdateBy(record.getLastUpdateBy());
+				house.setLastUpdateTime(new Date());
+				house.setDelFlag(-1);
+				assetTypeHousesMapper.update(house);
+			}
+		}
+		//存储房屋
+		if(record.getAssetTypeHouses() !=null){
+			for(AssetTypeHouses house : record.getAssetTypeHouses()){
+				house.setId(null);
+				house.setCreateBy(record.getCreateBy());
+				house.setCreateTime(new Date());
+				house.setLastUpdateBy(record.getLastUpdateBy());
+				house.setLastUpdateTime(new Date());
+				house.setRpiId(id);
+				assetTypeHousesMapper.add(house);
+			}
+		}
+		//删除土地记录
+		List<AssetTypeLand>  landList =assetTypeLandMapper.findByRpiId(id);
+		if(landList !=null){
+			for(AssetTypeLand land : landList){
+				land.setLastUpdateBy(record.getLastUpdateBy());
+				land.setLastUpdateTime(new Date());
+				land.setDelFlag(-1);
+				assetTypeLandMapper.update(land);
+			}
+		}
+		//存储土地
+		if(record.getAssetTypeLand() !=null){
+			for(AssetTypeLand land : record.getAssetTypeLand()){
+				land.setId(null);
+				land.setCreateBy(record.getCreateBy());
+				land.setCreateTime(new Date());
+				land.setLastUpdateBy(record.getLastUpdateBy());
+				land.setLastUpdateTime(new Date());
+				land.setRpiId(id);
+				assetTypeLandMapper.add(land);
+			}
+		}
+		//删除汽车
+		List<AssetTypeCar> carList =assetTypeCarMapper.findByRpiId(id);
+		if(carList !=null){
+			for(AssetTypeCar card : carList){
+				card.setLastUpdateBy(record.getLastUpdateBy());
+				card.setLastUpdateTime(new Date());
+				card.setDelFlag(-1);
+				assetTypeCarMapper.update(card);
+			}
+		}
+		//存储汽车
+		if(record.getAssetTypeCar() !=null){
+			for(AssetTypeCar car : record.getAssetTypeCar()){
+				car.setId(null);
+				car.setCreateBy(record.getCreateBy());
+				car.setCreateTime(new Date());
+				car.setLastUpdateBy(record.getLastUpdateBy());
+				car.setLastUpdateTime(new Date());
+				car.setRpiId(id);
+				assetTypeCarMapper.add(car);
+			}
+		}
+		//删除证券
+		List<AssetTypeSecurities> aecuritiesList =assetTypeSecuritiesMapper.findByRpiId(id);
+		if(aecuritiesList !=null){
+			for(AssetTypeSecurities aecurities : aecuritiesList){
+				aecurities.setLastUpdateBy(record.getLastUpdateBy());
+				aecurities.setLastUpdateTime(new Date());
+				aecurities.setDelFlag(-1);
+				assetTypeSecuritiesMapper.update(aecurities);
+			}
+		}
+		//存储证券
+		if(record.getAssetTypeSecurities() !=null){
+			for(AssetTypeSecurities aecurities : record.getAssetTypeSecurities()){
+				aecurities.setId(null);
+				aecurities.setCreateBy(record.getCreateBy());
+				aecurities.setCreateTime(new Date());
+				aecurities.setLastUpdateBy(record.getLastUpdateBy());
+				aecurities.setLastUpdateTime(new Date());
+				aecurities.setRpiId(id);
+				assetTypeSecuritiesMapper.add(aecurities);
+			}
+		}
+		//删除其他
+		List<AssetTypeOther> otherList =assetTypeOtherMapper.findByRpiId(id);
+		if(otherList !=null){
+			for(AssetTypeOther other : otherList){
+				other.setLastUpdateBy(record.getLastUpdateBy());
+				other.setLastUpdateTime(new Date());
+				other.setDelFlag(-1);
+				assetTypeOtherMapper.update(other);
+			}
+		}
+		//存储其他
+		if(record.getAssetTypeOther() !=null){
+			for(AssetTypeOther other : record.getAssetTypeOther()){
+				other.setId(null);
+				other.setCreateBy(record.getCreateBy());
+				other.setCreateTime(new Date());
+				other.setLastUpdateBy(record.getLastUpdateBy());
+				other.setLastUpdateTime(new Date());
+				other.setRpiId(id);
+				assetTypeOtherMapper.add(other);
 			}
 		}
 	}
