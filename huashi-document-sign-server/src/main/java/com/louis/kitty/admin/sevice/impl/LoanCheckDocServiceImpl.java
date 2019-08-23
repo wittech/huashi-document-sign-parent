@@ -156,14 +156,14 @@ public class LoanCheckDocServiceImpl extends AbstractDocService implements LoanC
 	}
 
 	@Override
-	public String print(String loanCheckDocIds) {
+	public String print(String loanCheckDocIds, String watermark) {
 		List<String> fileNames = findFileNamesByIds(loanCheckDocIds, true);
 		if (CollectionUtils.isEmpty(fileNames)) {
 			log.warn("Can not find any data by loanCheckDocIds[{}]", loanCheckDocIds);
 			return null;
 		}
 
-		String pdfUrl = getPrintPdf(fileNames, "");
+		String pdfUrl = getPrintPdf(fileNames, watermark);
 		if(StringUtils.isNotEmpty(pdfUrl)) {
 			addOneIfPrint(loanCheckDocIds);
 		}

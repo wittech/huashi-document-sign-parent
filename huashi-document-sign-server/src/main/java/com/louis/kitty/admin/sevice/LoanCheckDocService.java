@@ -40,7 +40,7 @@ public interface LoanCheckDocService extends CurdService<LoanCheckDoc> {
      * @param loanCheckDocIds 借贷检查Ids
      * @return 打印PDF的URL信息
      */
-    String print(String loanCheckDocIds);
+    String print(String loanCheckDocIds, String watermark);
 
     /**
      * 查询所有 借贷文档信息

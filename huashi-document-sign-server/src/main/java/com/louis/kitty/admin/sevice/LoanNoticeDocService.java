@@ -42,7 +42,7 @@ public interface LoanNoticeDocService extends CurdService<LoanNoticeDoc> {
      * @param loanNoticeDocIds 催缴通知文件ID集合
      * @return 打印PDF的URL信息
      */
-    String print(String loanNoticeDocIds);
+    String print(String loanNoticeDocIds, String watermark);
 
     /**
      * 查询所有 借贷文档信息
