@@ -214,7 +214,7 @@
 	'' AS affiliationLand,'' AS addressLand,'' AS constructionAreaLand,
 	'' AS valueLand,'' AS financingSituationLand,'' AS whetherCoownerLand,
 	'' AS coownerNameLand,ath.whether_lease AS whether_lease,'' AS whetherLeaseLand,'' AS nameLand,'' AS landTypeCertificate
-	 FROM asset_type_houses ath LEFT JOIN related_personnel_information rpi ON ath.`rpi_id`=rpi.`id` where rpi.`loan_basis_id`=80) 
+	 FROM asset_type_houses ath LEFT JOIN related_personnel_information rpi ON ath.`rpi_id`=rpi.`id` where rpi.`loan_basis_id`=#{loanBasisId,jdbcType=BIGINT}) 
 	UNION ALL 
 	(SELECT '2' AS TYPE,rpi.name,'' AS typeHous,atl.id as typeLand,'' AS property_certificate_number ,'' AS whether_ownership_certificates,'' AS deed,
 	'' AS land_certificate,'' AS namehouses,'' AS affiliation,'' AS address,'' AS construction_area,'' AS VALUE,
