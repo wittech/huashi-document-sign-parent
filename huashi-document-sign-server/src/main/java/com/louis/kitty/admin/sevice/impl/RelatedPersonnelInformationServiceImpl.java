@@ -18,6 +18,7 @@ import com.louis.kitty.admin.model.AssetTypeHouses;
 import com.louis.kitty.admin.model.AssetTypeLand;
 import com.louis.kitty.admin.model.AssetTypeOther;
 import com.louis.kitty.admin.model.AssetTypeSecurities;
+import com.louis.kitty.admin.model.HouseholdIncome;
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
 import com.louis.kitty.admin.sevice.RelatedPersonnelInformationService;
 import com.louis.kitty.core.page.MybatisPageHelper;
@@ -547,6 +548,52 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 			r.setAssetTypeSecurities(assetTypeSecuritiesMapper.findByRpiId(id));
 		}
 		return r;
+	}
+
+	@Override
+	public void remove(Long loanBasisId) {
+		List<RelatedPersonnelInformation> list = relatedPersonnelInformationMapper.findByBaseIdList(loanBasisId);
+		for(RelatedPersonnelInformation red : list){
+			Long id = red.getId();
+			HouseholdIncome h = householdIncomeMapper.findByLoanBasisId(id);
+			if(h !=null){
+				householdIncomeMapper.delete(h.getId());
+			}
+			List<AssetTypeHouses> housesList = assetTypeHousesMapper.findByRpiId(id);
+			if(housesList !=null && housesList.size()>0){
+				for(AssetTypeHouses a : housesList){
+					assetTypeHousesMapper.delete(a.getId());
+				}
+			}
+			List<AssetTypeCar> carList = assetTypeCarMapper.findByRpiId(id);
+			if(carList !=null && carList.size()>0){
+				for(AssetTypeCar a : carList){
+					assetTypeCarMapper.delete(a.getId());
+				}
+			}
+			List<AssetTypeLand> landList =  assetTypeLandMapper.findByRpiId(id);
+			if(landList !=null && landList.size()>0){
+				for(AssetTypeLand a : landList){
+					a.setDelFlag(-1);
+					assetTypeLandMapper.delete(a.getId());
+				}
+			}
+			List<AssetTypeOther> otherList =   assetTypeOtherMapper.findByRpiId(id);
+			if(otherList !=null && otherList.size()>0){
+				for(AssetTypeOther a : otherList){
+					a.setDelFlag(-1);
+					assetTypeOtherMapper.delete(a.getId());
+				}
+			}
+			List<AssetTypeSecurities> securitiesList = assetTypeSecuritiesMapper.findByRpiId(id);
+			if(securitiesList !=null && securitiesList.size()>0){
+				for(AssetTypeSecurities a : securitiesList){
+					a.setDelFlag(-1);
+					assetTypeSecuritiesMapper.delete(a.getId());
+				}
+			}
+			relatedPersonnelInformationMapper.delete(id);
+		}
 	}
 
 }

@@ -44,10 +44,10 @@ public class PawnServiceImpl implements PawnService {
 		if(pawnList !=null){
 			flag=true;
 			for(Pawn p : pawnList){
-				p.setLastUpdateBy(record.getLastUpdateBy());
+			/*	p.setLastUpdateBy(record.getLastUpdateBy());
 				p.setLastUpdateTime(new Date());
-				p.setDelFlag(-1);
-				pawnMapper.update(p);
+				p.setDelFlag(-1);*/
+				pawnMapper.delete(p.getId());
 				List<PawnPersonnelMapping> mappingList = pawnPersonnelMappingMapper.findByPawnList(p.getId());
 				if(mappingList.size()>0){
 					for(PawnPersonnelMapping m : mappingList){

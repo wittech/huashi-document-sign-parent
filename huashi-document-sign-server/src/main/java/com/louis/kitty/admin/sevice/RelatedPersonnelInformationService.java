@@ -26,5 +26,11 @@ public interface RelatedPersonnelInformationService extends CurdService<RelatedP
     
     
     RelatedPersonnelInformation findByBaseIdAndType(RelatedPersonnelInformation record);
+    
+    /**
+     * 根据loanBasisId删除
+     * @param loanBasisId
+     */
+    void remove(Long loanBasisId);
 
 }

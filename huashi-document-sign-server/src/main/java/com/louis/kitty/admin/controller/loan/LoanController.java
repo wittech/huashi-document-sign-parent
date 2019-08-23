@@ -88,11 +88,13 @@ public class LoanController {
 	 */
 	@PostMapping(value="/saveOterBorrower")
 	public HttpResult saveOterBorrower(@RequestBody OterPersonnel record) {
-		if(record.getRelatedPersonnelInformation() !=null){
+		if(record.getRelatedPersonnelInformation() !=null && record.getRelatedPersonnelInformation().size()>0){
 			for(RelatedPersonnelInformation red : record.getRelatedPersonnelInformation()){
 				red.setLoanBasisId(Long.valueOf(record.getLoanBasisId()));
 				relatedPersonnelInformationService.save(red);
 			}
+		}else{
+			relatedPersonnelInformationService.remove(Long.valueOf(record.getLoanBasisId()));
 		}
 		LoanBasis l = new LoanBasis();
 		l.setId(Long.valueOf(record.getLoanBasisId()));
