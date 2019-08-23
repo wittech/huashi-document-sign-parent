@@ -75,7 +75,7 @@ public class LoanController {
 		if(i>0){
 			LoanBasis l = new LoanBasis();
 			l.setId(record.getLoanBasisId());
-			l.setStatus(1);
+			l.setStatus(2);
 			loanBasisService.update(l);
 		}
 		return HttpResult.ok(i);
@@ -96,7 +96,7 @@ public class LoanController {
 		}
 		LoanBasis l = new LoanBasis();
 		l.setId(Long.valueOf(record.getLoanBasisId()));
-		l.setStatus(2);
+		l.setStatus(3);
 		loanBasisService.update(l);
 		return HttpResult.ok(1);
 	}
@@ -112,7 +112,7 @@ public class LoanController {
 		if(i>0){
 			LoanBasis l = new LoanBasis();
 			l.setId(Long.valueOf(record.getLoanBasisId()));
-			l.setStatus(3);
+			l.setStatus(4);
 			loanBasisService.update(l);
 		}
 		return HttpResult.ok(i);
@@ -139,7 +139,7 @@ public class LoanController {
 		if(i>0){
 			LoanBasis l = new LoanBasis();
 			l.setId(Long.valueOf(record.getLoanBasisId()));
-			l.setStatus(4);
+			l.setStatus(5);
 			loanBasisService.update(l);
 		}
 		return HttpResult.ok(loanBusinessInformationService.save(record));
@@ -157,7 +157,7 @@ public class LoanController {
 		if(i>0){
 			LoanBasis l = new LoanBasis();
 			l.setId(Long.valueOf(record.getLoanBasisId()));
-			l.setStatus(6);
+			l.setStatus(7);
 			loanBasisService.update(l);
 		}
 		return HttpResult.ok();

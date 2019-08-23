@@ -101,6 +101,9 @@
       <if test="delFlag != null">
         del_flag,
       </if>
+       <if test="status != null">
+        status,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -135,6 +138,9 @@
       </if>
       <if test="delFlag != null">
         #{delFlag,jdbcType=TINYINT},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
       </if>
     </trim>
   </insert>
