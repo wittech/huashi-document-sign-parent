@@ -331,6 +331,7 @@
         select *
         from household_income
         where rpi_id = #{rpiId,jdbcType=BIGINT}
+        and del_flag='0'
         limit 1
     </select>
 

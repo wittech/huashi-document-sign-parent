@@ -482,7 +482,39 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 
 	@Override
 	public List<RelatedPersonnelInformation> findByBaseIdList(Long loanBasisId) {
-		return relatedPersonnelInformationMapper.findByBaseIdList(loanBasisId);
+		List<RelatedPersonnelInformation> list =relatedPersonnelInformationMapper.findByBaseIdList(loanBasisId);
+		if(list !=null){
+			if(list.size()>0){
+				for(RelatedPersonnelInformation rs : list){
+					Long id = rs.getId();
+					rs.setCoupleId(id);
+					rs.setLoanBasisId(rs.getLoanBasisId());
+					//配偶数据
+					RelatedPersonnelInformation rf = relatedPersonnelInformationMapper.findByBaseIdAndType(rs);
+					if(rf !=null){
+						rs.setSpouseInfo(rf);
+						Long rid = rf.getId();
+						rs.getSpouseInfo().setSpouseInfo(relatedPersonnelInformationMapper.findByBaseIdAndType(rs));
+						rs.getSpouseInfo().setHouseholdIncomeForm(householdIncomeMapper.findByRpiId(rid));
+						rs.getSpouseInfo().setAssetTypeHouses(assetTypeHousesMapper.findByRpiId(rid));
+						rs.getSpouseInfo().setAssetTypeCar(assetTypeCarMapper.findByRpiId(rid));
+						rs.getSpouseInfo().setAssetTypeLand(assetTypeLandMapper.findByRpiId(rid));
+						rs.getSpouseInfo().setAssetTypeOther(assetTypeOtherMapper.findByRpiId(rid));
+						rs.getSpouseInfo().setAssetTypeSecurities(assetTypeSecuritiesMapper.findByRpiId(rid));
+					}
+					/*r.setSpouseInfo(relatedPersonnelInformationMapper.findByBaseIdAndType(rs));*/
+					rs.setHouseholdIncomeForm(householdIncomeMapper.findByRpiId(id));
+					rs.setAssetTypeHouses(assetTypeHousesMapper.findByRpiId(id));
+					rs.setAssetTypeCar(assetTypeCarMapper.findByRpiId(id));
+					rs.setAssetTypeLand(assetTypeLandMapper.findByRpiId(id));
+					rs.setAssetTypeOther(assetTypeOtherMapper.findByRpiId(id));
+					rs.setAssetTypeSecurities(assetTypeSecuritiesMapper.findByRpiId(id));
+					//查询家庭收入信息表
+					rs.setHouseholdIncomeForm(householdIncomeMapper.findByRpiId(id));
+				}
+			}
+		}
+		return list;
 	}
 
 	@Override

@@ -33,6 +33,7 @@ public class LoanBasisServiceImpl implements LoanBasisService {
 	@Override
 	public int save(LoanBasis record) {
 		if(record.getId() == null || record.getId() == 0) {
+			record.setStatus(1);
 			record.setCreateTime(new Date());
 			return loanBasisMapper.add(record);
 		}
