@@ -208,7 +208,7 @@
     <if test="borrower != null and borrower != ''">
     	and lb.borrower  = #{borrower,jdbcType=VARCHAR}
      </if>
-     order by lb.create_time 
+     order by lb.create_time desc
   </select>
   
   <!-- 根据基础id获取 引用房产 和土地信息 -->
