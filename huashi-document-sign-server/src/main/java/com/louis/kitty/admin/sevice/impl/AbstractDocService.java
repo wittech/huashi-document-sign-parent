@@ -115,7 +115,16 @@ public abstract class AbstractDocService {
         }
 
         for (Pawn pawn : pawnList) {
-            pawn.getRelatedPersonnelInformationList().addAll(pawnPersonnelMappingService.findByPawnId(pawn.getId()));
+            if(pawn == null) {
+                continue;
+            }
+
+            List<RelatedPersonnelInformation> list = pawnPersonnelMappingService.findByPawnId(pawn.getId());
+            if(CollectionUtils.isEmpty(list)) {
+                continue;
+            }
+
+            pawn.getRelatedPersonnelInformationList().addAll(list);
         }
 
         model.setPawnList(pawnList);
