@@ -220,7 +220,7 @@
 	'' AS affiliationLand,'' AS addressLand,'' AS constructionAreaLand,
 	'' AS valueLand,'' AS financingSituationLand,'' AS whetherCoownerLand,
 	'' AS coownerNameLand,ath.whether_lease AS whether_lease,'' AS whetherLeaseLand,'' AS nameLand,'' AS landTypeCertificate
-	 FROM asset_type_houses ath LEFT JOIN related_personnel_information rpi ON ath.`rpi_id`=rpi.`id` where rpi.`loan_basis_id`=#{loanBasisId,jdbcType=BIGINT}) 
+	 FROM asset_type_houses ath LEFT JOIN related_personnel_information rpi ON ath.`rpi_id`=rpi.`id` where rpi.`loan_basis_id`=#{loanBasisId,jdbcType=BIGINT} and ath.del_flag='0') 
 	UNION ALL 
 	(SELECT '2' AS TYPE,rpi.name,'' AS typeHous,atl.id as typeLand,'' AS property_certificate_number ,'' AS whether_ownership_certificates,'' AS deed,
 	'' AS land_certificate,'' AS namehouses,'' AS affiliation,'' AS address,'' AS construction_area,'' AS VALUE,
@@ -228,7 +228,7 @@
 	atl.affiliation affiliationLand,atl.address addressLand,atl.construction_area constructionAreaLand,
 	atl.value valueLand,atl.financing_situation financingSituationLand,atl.whether_co_owner whetherCoownerLand,
 	atl.co_owner_name coownerNameLand,atl.whether_lease,atl.whether_lease AS whetherLeaseLand,atl.name nameLand,atl.land_certificate landTypeCertificate
-	 FROM asset_type_land atl LEFT JOIN related_personnel_information rpi ON atl.`rpi_id`=rpi.`id` where rpi.`loan_basis_id`=#{loanBasisId,jdbcType=BIGINT}) 
+	 FROM asset_type_land atl LEFT JOIN related_personnel_information rpi ON atl.`rpi_id`=rpi.`id` where rpi.`loan_basis_id`=#{loanBasisId,jdbcType=BIGINT} and atl.del_flag='0') 
 	) AS a
   </select>
   
