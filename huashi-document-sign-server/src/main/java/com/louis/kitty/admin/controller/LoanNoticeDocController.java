@@ -30,8 +30,8 @@ public class LoanNoticeDocController {
 
     @RequestMapping(value = "/print")
     @ApiOperation(value = "打印催缴通知文件")
-    public String print(@RequestParam String loanNoticeDocIds) {
-        return loanNoticeDocService.print(loanNoticeDocIds);
+    public String print(@RequestParam String loanNoticeDocIds, String watermark) {
+        return loanNoticeDocService.print(loanNoticeDocIds, watermark);
     }
 
     /**

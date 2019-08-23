@@ -36,8 +36,8 @@ public class LoanCheckDocController {
 
 	@RequestMapping(value = "/print")
 	@ApiOperation(value = "打印借贷检查文件")
-	public String print(@RequestParam String loanCheckDocIds) {
-		return loanCheckDocService.print(loanCheckDocIds);
+	public String print(@RequestParam String loanCheckDocIds, String watermark) {
+		return loanCheckDocService.print(loanCheckDocIds, watermark);
 	}
 
 	/**

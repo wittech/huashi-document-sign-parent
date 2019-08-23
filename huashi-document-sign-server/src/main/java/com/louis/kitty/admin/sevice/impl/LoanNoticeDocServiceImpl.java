@@ -171,14 +171,14 @@ public class LoanNoticeDocServiceImpl extends AbstractDocService implements Loan
 	}
 
 	@Override
-	public String print(String loanNoticeDocIds) {
+	public String print(String loanNoticeDocIds, String watermark) {
 		List<String> fileNames = findFileNamesByIds(loanNoticeDocIds, true);
 		if (CollectionUtils.isEmpty(fileNames)) {
 			log.warn("Can not find any data by loanNoticeDocIds[{}]", loanNoticeDocIds);
 			return null;
 		}
 
-		String pdfUrl = getPrintPdf(fileNames, "");
+		String pdfUrl = getPrintPdf(fileNames, watermark);
 		if(StringUtils.isNotEmpty(pdfUrl)) {
 			addOneIfPrint(loanNoticeDocIds);
 		}
