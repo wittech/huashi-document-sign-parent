@@ -1,5 +1,6 @@
 package com.louis.kitty.admin.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.louis.kitty.core.http.HttpResult;
 import com.louis.kitty.core.page.PageRequest;
-
+import com.louis.kitty.admin.constants.LoanConstants.PersonnelType;
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
 import com.louis.kitty.admin.sevice.RelatedPersonnelInformationService;
 
@@ -79,7 +80,18 @@ public class RelatedPersonnelInformationController {
      */ 	
 	@GetMapping(value="/findByBaseIdList")
 	public HttpResult findByBaseIdList(@RequestParam Long loanBasisId) {
-		return HttpResult.ok(relatedPersonnelInformationService.findByBaseIdList(loanBasisId));
+		List<RelatedPersonnelInformation>  list = relatedPersonnelInformationService.findByBaseIdList(loanBasisId);
+		List<RelatedPersonnelInformation>  listNew = new ArrayList<RelatedPersonnelInformation>();
+		if(list !=null){
+			for(RelatedPersonnelInformation r : list){
+				Integer type = r.getType();
+				if(type==PersonnelType.BORROWER.getCode() || type==PersonnelType.BORROWER_COUPLE.getCode()){
+					continue;
+				}
+				listNew.add(r);
+			}
+		}
+		return HttpResult.ok(listNew);
 	}
 	
 	 /**
