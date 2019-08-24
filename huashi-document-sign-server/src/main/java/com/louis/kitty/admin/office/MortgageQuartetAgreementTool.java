@@ -508,7 +508,8 @@ public class MortgageQuartetAgreementTool extends AbstractOfficeTool {
     @Override
     protected void fillVariable(DocCommonModel docCommonModel) {
         for (Pawn pawn : docCommonModel.getPawnList()) {
-            if (pawn.getWhetherCoowner() == null || pawn.getWhetherCoowner() != 1) {
+            // 判断是否已租赁，如果为空或者 状态为 未出租，则 不需要本次的 租赁四方协议
+            if (pawn.getWhetherLease() == null || pawn.getWhetherLease() == 0) {
                 continue;
             }
 
