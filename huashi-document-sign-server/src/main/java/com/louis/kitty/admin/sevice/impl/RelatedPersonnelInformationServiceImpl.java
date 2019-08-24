@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.louis.kitty.admin.constants.LoanConstants.PersonnelType;
 import com.louis.kitty.admin.dao.AssetTypeCarMapper;
 import com.louis.kitty.admin.dao.AssetTypeHousesMapper;
 import com.louis.kitty.admin.dao.AssetTypeLandMapper;
@@ -322,10 +323,17 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 			if(r.getMaritalStatus()>0 && r.getMaritalStatus() !=null){
 				if(r.getMaritalStatus()==1){
 					RelatedPersonnelInformation record = r.getSpouseInfo();
-					record.setCoupleId(parentId);
-					record.setLastUpdateTime(new Date());
-					record.setLastUpdateBy(r.getCreateBy());
-					relatedPersonnelInformationMapper.update(record);
+					if(record.getId()==null){
+						record.setCoupleId(parentId);
+						record.setCreateTime(new Date());
+						record.setCreateBy(r.getCreateBy());
+						relatedPersonnelInformationMapper.add(record);
+					}else{
+						record.setCoupleId(parentId);
+						record.setLastUpdateTime(new Date());
+						record.setLastUpdateBy(r.getCreateBy());
+						relatedPersonnelInformationMapper.update(record);
+					}
 					//获取相关人id
 					Long id = record.getId();
 					//删除房屋记录
@@ -527,6 +535,11 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 	public void remove(Long loanBasisId) {
 		List<RelatedPersonnelInformation> list = relatedPersonnelInformationMapper.findByBaseIdList(loanBasisId);
 		for(RelatedPersonnelInformation red : list){
+			//如果为借款人和配偶则跳过 直接下一条
+			Integer type =red.getType();
+			if(type==PersonnelType.BORROWER.getCode() || type==PersonnelType.BORROWER_COUPLE.getCode()){
+				continue;
+			}
 			Long id = red.getId();
 			HouseholdIncome h = householdIncomeMapper.findByLoanBasisId(id);
 			if(h !=null){
