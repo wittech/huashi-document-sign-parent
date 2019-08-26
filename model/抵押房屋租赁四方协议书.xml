@@ -165,19 +165,19 @@
               <w:t>{{bankBranchName}}</w:t>
             </w:r>
           </w:p>
-		  {{leaseInfo}}
-          <w:p w:rsidR="007058CE" w:rsidRDefault="00816161">
+          <w:p>
             <w:pPr>
               <w:widowControl/>
               <w:snapToGrid w:val="0"/>
               <w:spacing w:line="500" w:lineRule="exact"/>
               <w:jc w:val="left"/>
               <w:rPr>
-                <w:rFonts w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
+                <w:rFonts w:hint="eastAsia" w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体"/>
                 <w:kern w:val="0"/>
                 <w:sz w:val="24"/>
               </w:rPr>
             </w:pPr>
+		  {{leaseInfo}}
             <w:r>
               <w:rPr>
                 <w:rFonts w:ascii="宋体" w:hAnsi="宋体" w:cs="宋体" w:hint="eastAsia"/>

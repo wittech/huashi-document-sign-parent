@@ -616,7 +616,7 @@
         html:Color="#000000"> {{deadlineMonth}}</Font></U><Font html:Color="#000000">月,用于</Font><U><Font
         html:Color="#000000">{{moneyUsage}}</Font></U><Font
        html:Color="#000000">，执行同期同档次基准利率</Font><U><Font html:Color="#000000">上浮 {{floatingRate}}% </Font></U><Font
-       html:Color="#000000">，按{{payBackMethod}}还款,呈报领导审核批准。</Font></ss:Data><NamedCell
+       html:Color="#000000">，{{payBackMethod}}还款,呈报领导审核批准。</Font></ss:Data><NamedCell
       ss:Name="Print_Area"/></Cell>
    </Row>
    <Row ss:AutoFitHeight="0" ss:Height="24">
