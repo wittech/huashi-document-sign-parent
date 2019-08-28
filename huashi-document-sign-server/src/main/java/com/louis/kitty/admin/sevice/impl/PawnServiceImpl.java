@@ -105,7 +105,14 @@ public class PawnServiceImpl implements PawnService {
 
 	@Override
 	public List<Pawn> findByLoanBasisId(Long loanBasisId) {
-		return pawnMapper.findByLoanBasisId(loanBasisId);
+		List<Pawn> pawnList = pawnMapper.findByLoanBasisId(loanBasisId);
+		if(pawnList !=null){
+			for(Pawn p : pawnList){
+				List<PawnPersonnelMapping> list = pawnPersonnelMappingMapper.findByPawnList(p.getId());
+				p.setPawnPersonnelMapping(list);
+			}
+		}
+		return pawnList;
 	}
 
 	@Override
