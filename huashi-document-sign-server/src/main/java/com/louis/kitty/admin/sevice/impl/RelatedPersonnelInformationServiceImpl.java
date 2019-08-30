@@ -110,6 +110,7 @@ public class RelatedPersonnelInformationServiceImpl implements RelatedPersonnelI
 				}
 				//保存家庭收支情况
 				if(record.getHouseholdIncomeForm() !=null){
+					record.getHouseholdIncomeForm().setId(null);
 					record.getHouseholdIncomeForm().setCreateBy(record.getCreateBy());
 					record.getHouseholdIncomeForm().setCreateTime(new Date());
 					record.getHouseholdIncomeForm().setLoanBasisId(record.getLoanBasisId());
