@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -67,4 +68,9 @@ public class DocMetaServiceImpl implements DocMetaService {
 
         return docMeta.getId();
     }
+
+	@Override
+	public List<DocMeta> findByBasisId(Long loanBasicId) {
+		return docMetaMapper.findByBasisId(loanBasicId);
+	}
 }

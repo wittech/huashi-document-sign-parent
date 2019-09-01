@@ -124,4 +124,15 @@
     select * from doc_meta
   </select>
   
+   <select id="findByBasisId" resultMap="BaseResultMap">
+        select dm.id,dm.origin_name,dm.new_name,dm.type,dm.size,dm.path,dm.url,dm.create_time,dm.last_update_time
+        from doc_meta dm
+        inner join group_photo gp 
+        on dm.id = gp.doc_meta_id
+        where gp.loan_basis_id =  #{loanBasisId,jdbcType=BIGINT}
+        order by dm.create_time desc
+    </select>
+  
+  
+  
 </mapper>

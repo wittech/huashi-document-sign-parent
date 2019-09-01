@@ -49,4 +49,12 @@ public interface DocMetaMapper {
      */    
     List<DocMeta> findPage();
     
+	/**
+	 * 根据基础信息id查询合影列表
+	 * 
+	 * @param loanBasicId
+	 * @return
+	 */
+	List<DocMeta> findByBasisId(Long loanBasicId);
+    
 }
