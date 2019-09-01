@@ -14,7 +14,7 @@
 	<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
   </resultMap>
   
-  <insert id="add" parameterType="com.louis.kitty.admin.model.DocMeta">
+  <insert id="add" parameterType="com.louis.kitty.admin.model.DocMeta" useGeneratedKeys="true" keyProperty="id">
     insert into doc_meta
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

@@ -38,8 +38,14 @@ public class GroupPhotoController {
 	 * @return
 	 */	
 	@PostMapping(value="/save")
-	public HttpResult save(@RequestBody GroupPhoto record) {
-		return HttpResult.ok(groupPhotoService.save(record));
+	public HttpResult save(@RequestBody List<GroupPhoto> record) {
+		if(record !=null){
+			for(GroupPhoto photo : record){
+				groupPhotoService.save(photo);
+			}
+			return HttpResult.ok("成功");
+		}
+		 return HttpResult.error("失败");
 	}
 
     /**
