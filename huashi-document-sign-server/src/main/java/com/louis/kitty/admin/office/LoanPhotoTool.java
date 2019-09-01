@@ -34,7 +34,7 @@ public class LoanPhotoTool extends AbstractOfficeTool {
 
     private void mock(Map<String, Object> variables, String variablePrefix, int hasSize) {
         for (int i = hasSize; i < TOTAL_IMAGE_SIZE; i++) {
-            variables.put(variablePrefix + i, "");
+            variables.put(variablePrefix + i, " ");
         }
     }
 
@@ -60,9 +60,7 @@ public class LoanPhotoTool extends AbstractOfficeTool {
             if (DocConstants.DocMetaType.GROUP_IMAGE.getType().equals(docMeta.getType())) {
                 variables.put(GROUP_IMAGE_VARIABLE_PREFIX + groupImageSize, getWordImage(docMeta.getPath()));
                 groupImageSize++;
-            }
-
-            if (DocConstants.DocMetaType.SIGN_IMAGE.getType().equals(docMeta.getType())) {
+            }else if (DocConstants.DocMetaType.SIGN_IMAGE.getType().equals(docMeta.getType())) {
                 variables.put(SIGN_IMAGE_VARIABLE_PREFIX + signImageSize, getWordImage(docMeta.getPath()));
                 signImageSize++;
             }

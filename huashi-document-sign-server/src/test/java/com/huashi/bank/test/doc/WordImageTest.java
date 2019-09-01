@@ -27,7 +27,7 @@ public class WordImageTest {
     @Before
     public void init() {
         sourceDoc = "/贷款合影.docx";
-        targetDoc = "/贷款合影_20.docx";
+        targetDoc = "/贷款合影_10.docx";
     }
 
 
