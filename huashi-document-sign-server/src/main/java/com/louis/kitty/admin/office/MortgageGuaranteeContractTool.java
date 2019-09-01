@@ -6,8 +6,6 @@ import com.louis.kitty.admin.dao.RelatedPersonnelInformationMapper;
 import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.Pawn;
 import com.louis.kitty.admin.model.RelatedPersonnelInformation;
-import com.louis.kitty.admin.sevice.RelatedPersonnelInformationService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;

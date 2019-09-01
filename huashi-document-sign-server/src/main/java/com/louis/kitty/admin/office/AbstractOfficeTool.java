@@ -209,6 +209,9 @@ public abstract class AbstractOfficeTool {
             if (isOnlyCloneFile()) {
                 docSize = copyFile(sourceFilePath, targetDocFullName);
             } else {
+                // 组装替换变量
+                fillVariable(docCommonModel);
+
                 docSize = exportWord(sourceFilePath, targetDocFullName);
             }
 

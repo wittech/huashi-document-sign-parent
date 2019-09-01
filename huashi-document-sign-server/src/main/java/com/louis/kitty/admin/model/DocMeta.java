@@ -1,6 +1,7 @@
 package com.louis.kitty.admin.model;
 
 import lombok.Builder;
+import lombok.experimental.Tolerate;
 
 /**
  * ---------------------------
@@ -13,6 +14,10 @@ import lombok.Builder;
  */
 @Builder
 public class DocMeta {
+
+	@Tolerate
+	public DocMeta() {
+	}
 
 	/**  */
 	private Long id;

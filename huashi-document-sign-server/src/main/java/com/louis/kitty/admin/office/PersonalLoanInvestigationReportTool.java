@@ -123,11 +123,6 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
         return existsDes;
     }
 
-    private void setApplyFamilyHousesAndLandList(List<PostLoanNotImplemented> postLoanNotImplementedList, Map<String, Object> variables) {
-
-        variables.put("applyFamilyHousesAndLandList", "");
-    }
-
     private String getCircleNumber(int index) {
         index = index + 1;
         if (index == 1) {
@@ -1681,7 +1676,7 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
             return "";
         }
 
-        String totalText = setTotalCarText(isBorrower, isNeedSeq, totalCount, totalMoney);
+        String totalText = setTotalOtherText(isBorrower, isNeedSeq, totalCount, totalMoney);
 
         return totalText + detailListText;
 

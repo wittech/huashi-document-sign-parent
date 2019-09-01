@@ -4,7 +4,6 @@ import com.louis.kitty.admin.constants.DocConstants;
 import com.louis.kitty.admin.dao.DocMetaMapper;
 import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.DocMeta;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +11,6 @@ import javax.annotation.Resource;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 @Component
 public class LoanPhotoTool extends AbstractOfficeTool {
 
@@ -92,7 +90,7 @@ public class LoanPhotoTool extends AbstractOfficeTool {
 
     @Override
     protected DocConstants.DocType docType() {
-        return DocConstants.DocType.WORD;
+        return DocConstants.DocType.WORD_07;
     }
 
     @Override
