@@ -24,4 +24,21 @@ public class DocConstants {
             return suffixName;
         }
     }
+
+    /**
+     * 图片文件资源类型
+     */
+    public enum DocMetaType {
+        GROUP_IMAGE("1"), SIGN_IMAGE("2");
+
+        DocMetaType(String type) {
+            this.type = type;
+        }
+
+        private String type;
+
+        public String getType() {
+            return type;
+        }
+    }
 }

@@ -485,7 +485,6 @@ public class MortgageGuaranteeContractTool extends AbstractOfficeTool {
 
     private Set<String> calculateCount(DocCommonModel docCommonModel) {
         Set<String> distinctOwners = new HashSet<>();
-        Map<String, List<Pawn>> pawnInOwners = new HashMap<>();
         for (Pawn pawn : docCommonModel.getPawnList()) {
             distinctOwners.add(pawn.getOwnerIds());
         }

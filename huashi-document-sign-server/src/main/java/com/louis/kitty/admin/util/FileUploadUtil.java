@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -13,6 +14,8 @@ import java.util.Date;
 import java.util.Random;
 
 public final class FileUploadUtil {
+
+    private static final String DEFAULT_IMAGE_EXT_NAME = "jpg";
 
     private static final char[] N36_CHARS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e',
             'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'};
@@ -50,6 +53,14 @@ public final class FileUploadUtil {
         return upload(file, filename, uploadPath, "");
     }
 
+    private static String getFileExtName(String filename) {
+        if(StringUtils.isBlank(filename)) {
+            return DEFAULT_IMAGE_EXT_NAME;
+        }
+
+        return filename.substring(filename.lastIndexOf(".")).toLowerCase();
+    }
+
     /**
      * 文件上传
      * @param file 二进制字节数据
@@ -60,8 +71,7 @@ public final class FileUploadUtil {
      */
     private static FileUploadResult upload(byte[] file, String filename, String uploadPath, String prefix) {
         try {
-            String ext = filename.substring(filename.lastIndexOf("."));
-            String newNameWithExt = getRandFileName() + ext;
+            String newNameWithExt = getRandFileName() + getFileExtName(filename);
 
             FileDirectoryUtil.DirMeta dirMeta = FileDirectoryUtil.createDir(uploadPath);
             if (!dirMeta.isResult()) {
@@ -77,7 +87,7 @@ public final class FileUploadUtil {
             Files.write(Paths.get(diskPath), file);
 
             // This value is not use in this moment
-            String urlPathName = dirMeta.getPath() + WEB_URL_SPLIT_CHAR + newNameWithExt;
+            String urlPathName = dirMeta.getDate() + WEB_URL_SPLIT_CHAR + newNameWithExt;
 
             return FileUploadResult.builder().filename(newNameWithExt).fileFullName(diskPath).urlPathName(urlPathName)
                     .fileSize(file.length).result(true).msg("处理成功").build();

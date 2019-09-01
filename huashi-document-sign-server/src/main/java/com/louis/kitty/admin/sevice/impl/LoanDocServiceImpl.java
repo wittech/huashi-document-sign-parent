@@ -78,6 +78,8 @@ public class LoanDocServiceImpl extends AbstractDocService implements LoanDocSer
     private WithdrawalCertificateTool withdrawalCertificateTool;
     @Autowired
     private PersonalLoanInvestigationReportTool personalLoanInvestigationReportTool;
+    @Autowired
+    private LoanPhotoTool loanPhotoTool;
 
     private DocCommonModel pickupModel(Long loanBasisId) {
         LoanBasis loanBasis = getLoanBais(loanBasisId);
@@ -165,6 +167,7 @@ public class LoanDocServiceImpl extends AbstractDocService implements LoanDocSer
             futureList.add(valuationConfirmationTool.execute(model));
             futureList.add(withdrawalCertificateTool.execute(model));
             futureList.add(personalLoanInvestigationReportTool.execute(model));
+            futureList.add(loanPhotoTool.execute(model));
         } catch (Exception e) {
             log.error("async execute doc build failed by model[{}]", JSON.toJSONString(model), e);
         }
@@ -207,7 +210,7 @@ public class LoanDocServiceImpl extends AbstractDocService implements LoanDocSer
         }
 
         ResponseEntity<InputStreamResource> resourceResponseEntity = getZipFile(fileNames);
-        if(resourceResponseEntity != null) {
+        if (resourceResponseEntity != null) {
             addOneIfDownload(loanDocIds);
         }
 
@@ -223,7 +226,7 @@ public class LoanDocServiceImpl extends AbstractDocService implements LoanDocSer
         }
 
         String pdfUrl = getPrintPdf(fileNames, watermark);
-        if(StringUtils.isNotEmpty(pdfUrl)) {
+        if (StringUtils.isNotEmpty(pdfUrl)) {
             addOneIfPrint(loanDocIds);
         }
 

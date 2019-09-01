@@ -1,40 +1,39 @@
 package com.huashi.bank.test.doc;
 
 import cn.afterturn.easypoi.entity.ImageEntity;
-import cn.afterturn.easypoi.excel.ExcelExportUtil;
-import cn.afterturn.easypoi.excel.ExcelXorHtmlUtil;
-import cn.afterturn.easypoi.excel.entity.TemplateExportParams;
 import cn.afterturn.easypoi.word.WordExportUtil;
-import org.apache.poi.ss.usermodel.Workbook;
+import com.alibaba.fastjson.JSON;
+import com.louis.kitty.admin.util.ImageUtil;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class WordImageTest {
 
-    private static final String DIR = "/Users/tenx/Documents/test/model";
-
+    private static final String DIR = "/Users/tenx/git/huashi-document-sign-parent/model";
+    private static final String TARGET_DIR = "/Users/tenx/Downloads";
     String sourceDoc;
     String targetDoc;
 
+    private final List<Map<String, Object>> variablesList = new ArrayList<>();
     private final Map<String, Object> variables = new HashMap<>();
 
     @Before
     public void init() {
-        sourceDoc = "/test_pic_model.docx";
-        targetDoc = "/test_pic_model_5.docx";
+        sourceDoc = "/贷款合影.docx";
+        targetDoc = "/贷款合影_20.docx";
     }
 
 
     private void export() throws Exception {
-        XWPFDocument document = WordExportUtil.exportWord07(DIR + sourceDoc, variables);
-        FileOutputStream fos = new FileOutputStream(DIR + targetDoc);
+        XWPFDocument document = WordExportUtil.exportWord07(DIR + sourceDoc, variablesList);
+        FileOutputStream fos = new FileOutputStream(TARGET_DIR + targetDoc);
         document.write(fos);
         fos.close();
 
@@ -43,24 +42,37 @@ public class WordImageTest {
 
     private ImageEntity getImage(String name) throws Exception {
         ImageEntity image = new ImageEntity();
-//        image.setHeight(300);
-//        image.setWidth(300);
-        image.setUrl(DIR + "/pic/" + name);
+
+        ImageUtil.ImageSize imageSize = ImageUtil.getImageSize("/Users/tenx/Documents/zy/home/" + name);
+        image.setHeight(imageSize.getHeight());
+        image.setWidth(imageSize.getWidth());
+        image.setUrl("/Users/tenx/Documents/zy/home/" + name);
         image.setType(ImageEntity.URL);
         return image;
     }
 
     private void setVariables() throws Exception {
-        variables.put("name", "陆毅");
-        variables.put("date", "2019-07-15");
-        variables.put("phone", "0571-88787761");
 
-        variables.put("image_a", getImage("101.png"));
-        variables.put("image_b", getImage("102.png"));
-        variables.put("image_c", getImage("103.png"));
-        variables.put("image_d", getImage("104.png"));
-        variables.put("image_23", getImage("105.png"));
+        variables.put("signImage0", getImage("171525iip4jgmmw5qwylv5.png"));
+        variables.put("signImage1", getImage("175240k7bfd3eqt331k773.jpg"));
+        variables.put("signImage2", getImage("180037vdtq2zk11d39g1r3.jpg"));
 
+        for(int i=0;i< 7;i++) {
+            variables.put("signImage" +(i+3), " ");
+        }
+
+        variables.put("groupImage0", getImage("180038gw2yjyeygs5wwd2z.jpg"));
+        variables.put("groupImage1", getImage("165444k0gtuvugm0awulwi.jpg"));
+        variables.put("groupImage2", getImage("164541hecnmmlbwul8nmtz.jpg"));
+        variables.put("groupImage3", getImage("164252haall7s1bax7zylg.jpg"));
+
+        for(int i=0;i< 6;i++) {
+            variables.put("groupImage" +(i+4), " ");
+        }
+
+        variablesList.add(variables);
+
+        System.out.println(JSON.toJSONString(variablesList));
     }
 
     @Test

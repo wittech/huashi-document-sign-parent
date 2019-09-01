@@ -1,5 +1,7 @@
 package com.louis.kitty.admin.office;
 
+import cn.afterturn.easypoi.entity.ImageEntity;
+import cn.afterturn.easypoi.word.WordExportUtil;
 import com.alibaba.druid.util.StringUtils;
 import com.louis.kitty.admin.constants.BankConstants;
 import com.louis.kitty.admin.constants.DocConstants;
@@ -8,16 +10,19 @@ import com.louis.kitty.admin.model.DocCommonModel;
 import com.louis.kitty.admin.model.LoanDoc;
 import com.louis.kitty.admin.model.Pawn;
 import com.louis.kitty.admin.util.FileDirectoryUtil;
+import com.louis.kitty.admin.util.ImageUtil;
 import com.louis.kitty.admin.util.OfficeUtil;
 import com.louis.kitty.admin.util.OperationSystemUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 
 import javax.annotation.Resource;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -79,14 +84,7 @@ public abstract class AbstractOfficeTool {
      */
     private long copyFile(String sourcePath, String targetPath) throws Exception {
         Files.copy(Paths.get(sourcePath), Paths.get(targetPath));
-
-        byte[] data = Files.readAllBytes(Paths.get(targetPath));
-        if (data.length == 0) {
-            throw new IOException("Path[" + sourcePath + "] data can not be '0'");
-        }
-
-
-        return data.length;
+        return getFileSize(targetPath);
     }
 
     /**
@@ -146,7 +144,17 @@ public abstract class AbstractOfficeTool {
     }
 
     /**
+     * 是否仅用Esaypoi输出WORD文件
+     *
+     * @return true/false（一般默认false, 提供子类重写）
+     */
+    protected boolean isExportFile() {
+        return false;
+    }
+
+    /**
      * 根据不同的情况获取文档外键ID
+     *
      * @param docCommonModel 数据
      * @return ID
      */
@@ -183,11 +191,11 @@ public abstract class AbstractOfficeTool {
     }
 
     /**
-     * 文件拷贝流程
+     * 文件单独处理流程（如拷贝，转义）
      *
      * @return 处理结果
      */
-    private Future<Boolean> clone(DocCommonModel docCommonModel) {
+    private Future<Boolean> operateFileDirectly(DocCommonModel docCommonModel) {
         try {
             String targetDocName = targetDocFullNameWithoutTail("");
             String targetDocFullName = targetDocName + docType().getSuffixName();
@@ -195,7 +203,14 @@ public abstract class AbstractOfficeTool {
             // pdf 全路径
             String targetPdfFullName = targetDocName + DocConstants.DocType.PDF.getSuffixName();
 
-            long docSize = copyFile(getModelFullPath(docType().getSuffixName()), targetDocFullName);
+            String sourceFilePath = getModelFullPath(docType().getSuffixName());
+
+            long docSize;
+            if (isOnlyCloneFile()) {
+                docSize = copyFile(sourceFilePath, targetDocFullName);
+            } else {
+                docSize = exportWord(sourceFilePath, targetDocFullName);
+            }
 
             targetPdfFullName = transformPdf(targetDocFullName, targetPdfFullName);
 
@@ -208,6 +223,15 @@ public abstract class AbstractOfficeTool {
     }
 
     /**
+     * 是否属于直接操作文件范畴
+     *
+     * @return true/false
+     */
+    private boolean isBelongToFileOperateDirectly() {
+        return isOnlyCloneFile() || isExportFile();
+    }
+
+    /**
      * 处理
      *
      * @param docCommonModel 借贷基础信息表
@@ -217,8 +241,8 @@ public abstract class AbstractOfficeTool {
     public Future<Boolean> execute(DocCommonModel docCommonModel) {
         VARIABLES_IN_MODEL.clear();
 
-        if (isOnlyCloneFile()) {
-            return clone(docCommonModel);
+        if (isBelongToFileOperateDirectly()) {
+            return operateFileDirectly(docCommonModel);
         }
 
         return generate(docCommonModel);
@@ -423,4 +447,56 @@ public abstract class AbstractOfficeTool {
             return "土地证号：" + pawn.getLandCertificateNumber();
         }
     }
+
+    /**
+     * 组装WORD图片对象
+     *
+     * @param filePath 文件路径
+     * @return 图片对象
+     */
+    ImageEntity getWordImage(String filePath) {
+        ImageEntity image = new ImageEntity();
+        ImageUtil.ImageSize imageSize = ImageUtil.getImageSize(filePath);
+        image.setHeight(imageSize.getHeight());
+        image.setWidth(imageSize.getWidth());
+        image.setUrl(filePath);
+        image.setType(ImageEntity.URL);
+        return image;
+    }
+
+    /**
+     * 采用 easypoi 将模板文件转义为最终WORD
+     *
+     * @param sourcePath 原文件路径
+     * @param targetPath 最终文件
+     * @throws Exception 处理异常
+     */
+    private long exportWord(String sourcePath, String targetPath) throws Exception {
+        XWPFDocument document = WordExportUtil.exportWord07(sourcePath, VARIABLES_IN_MODEL);
+        FileOutputStream fos = new FileOutputStream(targetPath);
+        document.write(fos);
+        fos.close();
+
+        document.close();
+
+        return getFileSize(targetPath);
+    }
+
+    /**
+     * 获取文件大小
+     *
+     * @param path 文件路径
+     * @return 文件大小（字节）
+     * @throws IOException IO异常
+     */
+    private long getFileSize(String path) throws IOException {
+        byte[] data = Files.readAllBytes(Paths.get(path));
+        if (data.length == 0) {
+            throw new IOException("Path[" + path + "] data can not be '0'");
+        }
+
+
+        return data.length;
+    }
+
 }
