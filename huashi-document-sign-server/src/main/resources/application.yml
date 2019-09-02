@@ -5,6 +5,9 @@ server:
     min-spare-threads: 30
   port: 8001
     #context-path: /huashi-document-sign-server
+  servlet:
+    session:
+      timeout: 300m
 # DataSource
 spring:
   datasource:
@@ -43,14 +46,14 @@ spring:
   boot:
 # 开放健康检查接口
 #management:
- # endpoints:
+ # endpoints:s
   #  web:
  #     exposure:
   #      include: "*"
  # endpoint:
   #  health:
   #    show-details: ALWAYS
-# pagehelper   
+# pagehelper
 pagehelper:
     helperDialect: mysql
     reasonable: true
@@ -59,11 +62,11 @@ pagehelper:
 
 storage:
   model:
-    home: /Users/tenx/Documents/test/model/xml/
+    home: /Users/tenx/git/huashi-document-sign-parent/model/
     target: /Users/tenx/Documents/test/model/xml/target/
     download: /Users/tenx/Documents/test/model/xml/download/
     print: /Users/tenx/Documents/test/model/xml/print/
     domain: http://localhost:8999/pdf/
   resource:
-    path: /Users/tenx/Documents/test/pic/
+    path: F:/Users/tenx/Documents/test/pic/
     domain: http://localhost/resource/
