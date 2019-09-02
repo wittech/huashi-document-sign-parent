@@ -83,11 +83,11 @@ public class GroupPhotoController {
 					if(docList.size()>0){
 						List<DocMeta> docListNew = new ArrayList<DocMeta>();
 						for(DocMeta d :list){
-							boolean flag = false;
+							boolean flag = true;
 							for(GroupPhoto photo : filePhotoList){
 								//如果不相等 加标记 代表需要删除
 								if(photo.getDocMetaId() !=d.getId()){
-									flag=true;
+									flag=false;
 								}
 							}
 							if(flag){
