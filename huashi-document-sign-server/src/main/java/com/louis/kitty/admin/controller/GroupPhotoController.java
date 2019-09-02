@@ -75,10 +75,7 @@ public class GroupPhotoController {
 					}
 				}
 				for(GroupPhoto photo : filePhotoList){
-					if(photo.getId()>0){
-					}else{
-						groupPhotoService.save(photo);
-					}
+					groupPhotoService.save(photo);
 				}
 				//2、在根据基础信息id查询合影数据  判断是否存在 不存在则删除
 				List<DocMeta> docList = docMetaService.findByBasisId(loanBasisId);
@@ -86,10 +83,15 @@ public class GroupPhotoController {
 					if(docList.size()>0){
 						List<DocMeta> docListNew = new ArrayList<DocMeta>();
 						for(DocMeta d :list){
+							boolean flag = false;
 							for(GroupPhoto photo : filePhotoList){
+								//如果不相等 加标记 代表需要删除
 								if(photo.getDocMetaId() !=d.getId()){
-									docListNew.add(d);
+									flag=true;
 								}
+							}
+							if(flag){
+								docListNew.add(d);
 							}
 						}
 						//删除图片信息
