@@ -58,5 +58,10 @@ public class GroupPhotoServiceImpl implements GroupPhotoService {
 	public PageResult findPage(PageRequest pageRequest) {
 		return MybatisPageHelper.findPage(pageRequest, groupPhotoMapper);
 	}
+
+	@Override
+	public int deleteByLoanBasicId(Long loanBasicId) {
+		return groupPhotoMapper.deleteByLoanBasicId(loanBasicId);
+	}
 	
 }

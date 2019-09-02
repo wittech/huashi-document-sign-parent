@@ -13,5 +13,11 @@ import com.louis.kitty.core.service.CurdService;
  * ---------------------------
  */
 public interface GroupPhotoService extends CurdService<GroupPhoto> {
-
+	
+	/**
+	 * 
+	 * @param loanBasicId
+	 * @return
+	 */
+	int deleteByLoanBasicId(Long loanBasicId);
 }

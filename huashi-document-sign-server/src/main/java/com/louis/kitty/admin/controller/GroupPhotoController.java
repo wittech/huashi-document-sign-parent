@@ -1,5 +1,6 @@
 package com.louis.kitty.admin.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.louis.kitty.core.http.HttpResult;
 import com.louis.kitty.core.page.PageRequest;
-
+import com.louis.kitty.admin.model.DocMeta;
 import com.louis.kitty.admin.model.GroupPhoto;
+import com.louis.kitty.admin.sevice.DocMetaService;
 import com.louis.kitty.admin.sevice.GroupPhotoService;
+import com.louis.kitty.admin.vo.GroupPhotoVo;
 
 /**
  * ---------------------------
@@ -31,6 +34,8 @@ public class GroupPhotoController {
 
 	@Autowired
 	private GroupPhotoService groupPhotoService;
+	@Autowired
+	private DocMetaService docMetaService;
 
 	/**
 	 * 保存合影信息表
@@ -38,14 +43,65 @@ public class GroupPhotoController {
 	 * @return
 	 */	
 	@PostMapping(value="/save")
-	public HttpResult save(@RequestBody List<GroupPhoto> record) {
-		if(record !=null){
-			for(GroupPhoto photo : record){
+	public HttpResult save(@RequestBody List<GroupPhoto> filePhotoList) {
+		if(filePhotoList !=null){
+			for(GroupPhoto photo : filePhotoList){
 				groupPhotoService.save(photo);
 			}
 			return HttpResult.ok("成功");
 		}
 		 return HttpResult.error("失败");
+	}
+	
+	/**
+	 * 保存合影信息表
+	 * @param record
+	 * @return
+	 */	
+	@PostMapping(value="/update")
+	public HttpResult update(@RequestBody GroupPhotoVo vo) {
+		if(vo !=null){
+			List<GroupPhoto> filePhotoList = vo.getFilePhotoList();
+			Long loanBasisId = vo.getLoanBasisId();
+			if(filePhotoList !=null){
+				//1、先根据基础信息id删除合影数据 在保存
+				List<DocMeta> list = docMetaService.findByBasisId(loanBasisId);
+				if(list !=null){
+					if(list.size()>0){
+						/*for(DocMeta d :list){
+							docMetaService.delete(d.getId());
+						}*/
+						groupPhotoService.deleteByLoanBasicId(loanBasisId);
+					}
+				}
+				for(GroupPhoto photo : filePhotoList){
+					if(photo.getId()>0){
+					}else{
+						groupPhotoService.save(photo);
+					}
+				}
+				//2、在根据基础信息id查询合影数据  判断是否存在 不存在则删除
+				List<DocMeta> docList = docMetaService.findByBasisId(loanBasisId);
+				if(docList !=null){
+					if(docList.size()>0){
+						List<DocMeta> docListNew = new ArrayList<DocMeta>();
+						for(DocMeta d :list){
+							for(GroupPhoto photo : filePhotoList){
+								if(photo.getDocMetaId() !=d.getId()){
+									docListNew.add(d);
+								}
+							}
+						}
+						//删除图片信息
+						for(DocMeta d :docListNew){
+							docMetaService.delete(d.getId());
+						}
+					}
+				}
+				return HttpResult.ok("成功");
+			}
+		}
+		return HttpResult.error("失败");
 	}
 
     /**
@@ -76,5 +132,15 @@ public class GroupPhotoController {
 	@GetMapping(value="/findById")
 	public HttpResult findById(@RequestParam Long id) {
 		return HttpResult.ok(groupPhotoService.findById(id));
+	}
+	
+	/**
+	 * 根据基础id获取合影信息
+	 * @param loanBasisId
+	 * @return
+	 */
+	@GetMapping(value="/findByBasisIdList")
+	public HttpResult findByBasisId(@RequestParam Long loanBasisId) {
+		return HttpResult.ok(docMetaService.findByBasisId(loanBasisId));
 	}
 }

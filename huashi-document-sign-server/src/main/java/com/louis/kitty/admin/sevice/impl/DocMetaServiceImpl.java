@@ -22,8 +22,8 @@ public class DocMetaServiceImpl implements DocMetaService {
     @Resource
     private DocMetaMapper docMetaMapper;
 
-    @Value("${storage.resource.path}")
-    private String storageResourcePath;
+//    @Value("${storage.resource.path}")
+    private String storageResourcePath="F:\\bankWeb\\";
     @Value("${storage.resource.domain}")
     private String storageResourceDomain;
 
@@ -72,5 +72,10 @@ public class DocMetaServiceImpl implements DocMetaService {
 	@Override
 	public List<DocMeta> findByBasisId(Long loanBasicId) {
 		return docMetaMapper.findByBasisId(loanBasicId);
+	}
+
+	@Override
+	public int delete(Long id) {
+		return docMetaMapper.delete(id);
 	}
 }

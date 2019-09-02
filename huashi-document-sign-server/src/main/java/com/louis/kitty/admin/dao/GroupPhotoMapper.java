@@ -50,4 +50,11 @@ public interface GroupPhotoMapper {
      */    
     List<GroupPhoto> findPage();
     
+    /**
+	 * 
+	 * @param loanBasicId
+	 * @return
+	 */
+	int deleteByLoanBasicId(Long loanBasicId);
+    
 }

@@ -39,6 +39,11 @@
     where id = #{id,jdbcType=BIGINT}
   </delete>
   
+    <delete id="deleteByLoanBasicId" parameterType="java.lang.Long">
+    delete from group_photo
+    where loan_basis_id = #{loanBasisId,jdbcType=BIGINT}
+  </delete>
+  
   <update id="update" parameterType="com.louis.kitty.admin.model.GroupPhoto">
     update group_photo
     <set>

@@ -27,5 +27,6 @@ public interface DocMetaService {
 	 * @return
 	 */
 	List<DocMeta> findByBasisId(Long loanBasicId);
-
+	
+	int delete(Long id);
 }
