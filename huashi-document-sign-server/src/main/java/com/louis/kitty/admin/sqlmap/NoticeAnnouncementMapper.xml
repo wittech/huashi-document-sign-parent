@@ -108,4 +108,11 @@
     from notice_announcement
     where title = #{title,jdbcType=VARCHAR}
   </select>
+
+  <select id="selectLastestOne" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from notice_announcement order by id desc limit 1
+  </select>
+
 </mapper>

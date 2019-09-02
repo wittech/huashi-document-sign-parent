@@ -55,4 +55,10 @@ public class NoticeAnnouncementController {
 	public HttpResult findByLable(@RequestParam String title) {
 		return HttpResult.ok(noticeAnnouncementService.findByTitle(title));
 	}
+
+	@PreAuthorize("hasAuthority('noticeAnnouncement:view')")
+	@GetMapping(value = "/getTopNotice")
+	public HttpResult getTopNotice() {
+		return HttpResult.ok(noticeAnnouncementService.getLastest());
+	}
 }

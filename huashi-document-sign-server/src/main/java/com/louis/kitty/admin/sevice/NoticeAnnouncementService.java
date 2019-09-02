@@ -19,4 +19,10 @@ public interface NoticeAnnouncementService extends CurdService<NoticeAnnouncemen
 	 * @return
 	 */
 	List<NoticeAnnouncementModel> findByTitle(String title);
+
+	/**
+	 * 获取最新公告信息
+	 * @return 公告信息
+	 */
+	NoticeAnnouncementModel getLastest();
 }

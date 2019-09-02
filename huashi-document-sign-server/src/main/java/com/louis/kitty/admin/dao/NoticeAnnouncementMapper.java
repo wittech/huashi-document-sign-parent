@@ -30,4 +30,6 @@ public interface NoticeAnnouncementMapper {
 	List<NoticeAnnouncementModel> findPageByTitle(@Param(value = "title") String title);
 
 	List<NoticeAnnouncementModel> findByTitle(@Param(value = "title") String title);
+
+	NoticeAnnouncementModel selectLastestOne();
 }

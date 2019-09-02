@@ -13,10 +13,12 @@ import com.louis.kitty.core.page.MybatisPageHelper;
 import com.louis.kitty.core.page.PageRequest;
 import com.louis.kitty.core.page.PageResult;
 
+import javax.annotation.Resource;
+
 @Service
 public class NoticeAnnouncementServiceImpl implements NoticeAnnouncementService {
 
-	@Autowired
+	@Resource
 	private NoticeAnnouncementMapper noticeAnnouncementMapper;
 	
 	@Override
@@ -59,4 +61,8 @@ public class NoticeAnnouncementServiceImpl implements NoticeAnnouncementService 
 		return noticeAnnouncementMapper.findByTitle(title);
 	}
 
+	@Override
+	public NoticeAnnouncementModel getLastest() {
+		return noticeAnnouncementMapper.selectLastestOne();
+	}
 }
