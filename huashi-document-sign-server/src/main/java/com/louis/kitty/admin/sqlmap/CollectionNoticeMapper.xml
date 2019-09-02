@@ -228,4 +228,12 @@
   	</select>
 
 
+    <select id="findLasest" resultMap="BasePageResultMap">
+        select cn.id,cn.loan_basis_id,cn.borrower,cn.status,cn.loan_start_and_stop_date,lb.loan_type,lb.application_matters,lbi.application_amount from collection_notice cn
+        inner join loan_basis lb on cn.loan_basis_id=lb.id left join loan_business_information lbi on cn.loan_basis_id=lbi.loan_basis_id
+        where cn.del_flag=0
+        order by cn.create_time desc limit 5
+    </select>
+
+
 </mapper>

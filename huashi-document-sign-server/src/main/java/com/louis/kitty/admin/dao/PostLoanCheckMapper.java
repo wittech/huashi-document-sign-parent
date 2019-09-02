@@ -57,5 +57,7 @@ public interface PostLoanCheckMapper {
      * @return
      */
      List<PostLoanCheckDto> findPageByBorrowerAndStatus(PostLoanCheck record);
+
+    List<PostLoanCheckDto> findLasest();
     
 }

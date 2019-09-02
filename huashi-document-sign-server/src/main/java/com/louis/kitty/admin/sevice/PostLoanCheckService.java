@@ -1,7 +1,10 @@
 package com.louis.kitty.admin.sevice;
 
+import com.louis.kitty.admin.dto.PostLoanCheckDto;
 import com.louis.kitty.admin.model.PostLoanCheck;
 import com.louis.kitty.core.service.CurdService;
+
+import java.util.List;
 
 /**
  * ---------------------------
@@ -14,4 +17,5 @@ import com.louis.kitty.core.service.CurdService;
  */
 public interface PostLoanCheckService extends CurdService<PostLoanCheck> {
 
+    List<PostLoanCheckDto> findLastest();
 }

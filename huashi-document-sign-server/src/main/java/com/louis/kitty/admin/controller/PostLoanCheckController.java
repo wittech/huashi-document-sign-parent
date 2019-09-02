@@ -71,4 +71,9 @@ public class PostLoanCheckController {
 	public HttpResult findById(@RequestParam Long id) {
 		return HttpResult.ok(postLoanCheckService.findById(id));
 	}
+
+	@GetMapping(value="/findLastest")
+	public HttpResult findLastest() {
+		return HttpResult.ok(postLoanCheckService.findLastest());
+	}
 }

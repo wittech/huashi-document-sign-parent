@@ -1,20 +1,13 @@
 package com.louis.kitty.admin.controller;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.louis.kitty.core.http.HttpResult;
-import com.louis.kitty.core.page.PageRequest;
-
 import com.louis.kitty.admin.model.CollectionNotice;
 import com.louis.kitty.admin.sevice.CollectionNoticeService;
+import com.louis.kitty.core.http.HttpResult;
+import com.louis.kitty.core.page.PageRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * ---------------------------
@@ -70,5 +63,10 @@ public class CollectionNoticeController {
 	@GetMapping(value="/findById")
 	public HttpResult findById(@RequestParam Long id) {
 		return HttpResult.ok(collectionNoticeService.findById(id));
+	}
+
+	@GetMapping(value="/findLastest")
+	public HttpResult findLastest() {
+		return HttpResult.ok(collectionNoticeService.findLastest());
 	}
 }

@@ -1,7 +1,10 @@
 package com.louis.kitty.admin.sevice;
 
+import com.louis.kitty.admin.dto.CollectionNoticeDto;
 import com.louis.kitty.admin.model.CollectionNotice;
 import com.louis.kitty.core.service.CurdService;
+
+import java.util.List;
 
 /**
  * ---------------------------
@@ -15,4 +18,6 @@ import com.louis.kitty.core.service.CurdService;
 public interface CollectionNoticeService extends CurdService<CollectionNotice> {
 
     CollectionNotice findByLoanBasisId(Long loanBasisId);
+
+    List<CollectionNoticeDto> findLastest();
 }

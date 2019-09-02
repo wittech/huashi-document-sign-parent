@@ -2,6 +2,7 @@ package com.louis.kitty.admin.sevice.impl;
 
 import java.util.List;
 
+import com.louis.kitty.admin.dto.CollectionNoticeDto;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,8 @@ import com.louis.kitty.core.page.ColumnFilter;
 import com.louis.kitty.core.page.MybatisPageHelper;
 import com.louis.kitty.core.page.PageRequest;
 import com.louis.kitty.core.page.PageResult;
+
+import javax.annotation.Resource;
 
 /**
  * ---------------------------
@@ -26,7 +29,7 @@ import com.louis.kitty.core.page.PageResult;
 @Service
 public class CollectionNoticeServiceImpl implements CollectionNoticeService {
 
-	@Autowired
+	@Resource
 	private CollectionNoticeMapper collectionNoticeMapper;
 
 	@Override
@@ -88,5 +91,8 @@ public class CollectionNoticeServiceImpl implements CollectionNoticeService {
 		return collectionNoticeMapper.findByLoanBasisId(loanBasisId);
     }
 
-
+	@Override
+	public List<CollectionNoticeDto> findLastest() {
+		return collectionNoticeMapper.findLasest();
+	}
 }

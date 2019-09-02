@@ -59,4 +59,5 @@ public interface CollectionNoticeMapper {
      */
      List<CollectionNoticeDto> findPageByBorrowerAndStatus(CollectionNotice record);
 
+     List<CollectionNoticeDto> findLasest();
 }

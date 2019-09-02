@@ -1,18 +1,18 @@
 package com.louis.kitty.admin.sevice.impl;
 
-import java.util.List;
-
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.louis.kitty.admin.dao.PostLoanCheckMapper;
+import com.louis.kitty.admin.dto.PostLoanCheckDto;
 import com.louis.kitty.admin.model.PostLoanCheck;
 import com.louis.kitty.admin.sevice.PostLoanCheckService;
 import com.louis.kitty.core.page.ColumnFilter;
 import com.louis.kitty.core.page.MybatisPageHelper;
 import com.louis.kitty.core.page.PageRequest;
 import com.louis.kitty.core.page.PageResult;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * ---------------------------
@@ -26,7 +26,7 @@ import com.louis.kitty.core.page.PageResult;
 @Service
 public class PostLoanCheckServiceImpl implements PostLoanCheckService {
 
-	@Autowired
+	@Resource
 	private PostLoanCheckMapper postLoanCheckMapper;
 
 	@Override
@@ -81,5 +81,10 @@ public class PostLoanCheckServiceImpl implements PostLoanCheckService {
 			value = columnFilter.getValue();
 		}
 		return value;
+	}
+
+	@Override
+	public List<PostLoanCheckDto> findLastest() {
+		return postLoanCheckMapper.findLasest();
 	}
 }
