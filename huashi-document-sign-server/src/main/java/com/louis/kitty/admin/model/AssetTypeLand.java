@@ -45,7 +45,8 @@ public class AssetTypeLand {
 	private java.util.Date lastUpdateTime;
 	/** 是否删除  -1：已删除  0：正常 */
 	private Integer delFlag;
-
+//名称
+	private String name;
 	public Long getId() {
 		return id;
 	}
@@ -180,6 +181,14 @@ public class AssetTypeLand {
 
 	public void setDelFlag(Integer delFlag) {
 		this.delFlag = delFlag;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

@@ -206,7 +206,7 @@
     select lb.id,lb.create_time,lb.guarantee_method,lb.create_by,lb.status,lb.loan_type,lb.application_matters,lb.borrower
     from loan_basis lb  where 1=1
     <if test="borrower != null and borrower != ''">
-    	and lb.borrower  = #{borrower,jdbcType=VARCHAR}
+    	and lb.borrower  LIKE CONCAT('%',#{borrower},'%')
      </if>
      order by lb.create_time desc
   </select>

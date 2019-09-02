@@ -219,7 +219,7 @@
 	    inner join loan_basis lb on cn.loan_basis_id=lb.id left join loan_business_information lbi on cn.loan_basis_id=lbi.loan_basis_id
 	    where cn.del_flag=0
 	    <if test="borrower != null and borrower != ''">
-	    	and cn.borrower  = #{borrower,jdbcType=VARCHAR}
+	    	and cn.borrower  LIKE CONCAT('%',#{borrower},'%')
 	     </if>
 	      <if test="status >-1">
 	    	and cn.status  = #{status,jdbcType=BIGINT}

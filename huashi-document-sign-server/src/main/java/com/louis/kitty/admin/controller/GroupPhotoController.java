@@ -68,9 +68,6 @@ public class GroupPhotoController {
 				List<DocMeta> list = docMetaService.findByBasisId(loanBasisId);
 				if(list !=null){
 					if(list.size()>0){
-						/*for(DocMeta d :list){
-							docMetaService.delete(d.getId());
-						}*/
 						groupPhotoService.deleteByLoanBasicId(loanBasisId);
 					}
 				}
@@ -81,6 +78,27 @@ public class GroupPhotoController {
 				List<DocMeta> docList = docMetaService.findByBasisId(loanBasisId);
 				if(docList !=null){
 					if(docList.size()>0){
+						List<DocMeta> docListNew = new ArrayList<DocMeta>();
+						for(DocMeta d :list){
+							boolean flag = true;
+							for(GroupPhoto photo : filePhotoList){
+								//如果不相等 加标记 代表需要删除
+								if(photo.getDocMetaId() !=d.getId()){
+									flag=false;
+								}
+							}
+							if(flag){
+								docListNew.add(d);
+							}
+						}
+						//删除图片信息
+						for(DocMeta d :docListNew){
+							docMetaService.delete(d.getId());
+						}
+					}
+				}
+				if(list !=null){
+					if(list.size()>0){
 						List<DocMeta> docListNew = new ArrayList<DocMeta>();
 						for(DocMeta d :list){
 							boolean flag = true;
