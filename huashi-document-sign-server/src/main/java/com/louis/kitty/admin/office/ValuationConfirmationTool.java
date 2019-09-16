@@ -518,4 +518,9 @@ public class ValuationConfirmationTool extends AbstractOfficeTool {
     protected DocConstants.DocType docType() {
         return DocConstants.DocType.WORD;
     }
+
+    @Override
+    protected DocConstants.DocCategory category() {
+        return DocConstants.DocCategory.FORM_APPROVE;
+    }
 }

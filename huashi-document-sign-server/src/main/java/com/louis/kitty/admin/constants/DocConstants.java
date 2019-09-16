@@ -41,4 +41,27 @@ public class DocConstants {
             return type;
         }
     }
+
+    /**
+     * 文档归属类型
+     */
+    public enum DocCategory {
+        SIGNATURE_MARK(1, "客户签字材料"), FORM_APPROVE(2, "内部审批材料"), CONTRACT(3, "合同");
+
+        DocCategory(int value, String title) {
+            this.value = value;
+            this.title = title;
+        }
+
+        private int value;
+        private String title;
+
+        public int getValue() {
+            return value;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+    }
 }

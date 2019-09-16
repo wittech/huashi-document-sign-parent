@@ -30,4 +30,9 @@ public class HonestyNotificationTool extends AbstractOfficeTool {
     protected boolean isOnlyCloneFile() {
         return true;
     }
+
+    @Override
+    protected DocConstants.DocCategory category() {
+        return DocConstants.DocCategory.SIGNATURE_MARK;
+    }
 }

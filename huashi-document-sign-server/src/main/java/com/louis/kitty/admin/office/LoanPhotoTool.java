@@ -89,4 +89,9 @@ public class LoanPhotoTool extends AbstractOfficeTool {
     protected boolean isExportFile() {
         return true;
     }
+
+    @Override
+    protected DocConstants.DocCategory category() {
+        return DocConstants.DocCategory.CONTRACT;
+    }
 }

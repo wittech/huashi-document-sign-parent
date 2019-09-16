@@ -145,4 +145,9 @@ public class LenderRelationshipTool extends AbstractOfficeTool {
     protected DocConstants.DocType docType() {
         return DocConstants.DocType.EXCEL;
     }
+
+    @Override
+    protected DocConstants.DocCategory category() {
+        return DocConstants.DocCategory.FORM_APPROVE;
+    }
 }

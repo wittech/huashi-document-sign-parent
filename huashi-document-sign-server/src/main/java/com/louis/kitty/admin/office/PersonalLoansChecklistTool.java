@@ -239,4 +239,9 @@ public class PersonalLoansChecklistTool extends AbstractOfficeTool {
 
         return loanCheckDocMapper.add(loanCheckDoc) > 0;
     }
+
+    @Override
+    protected DocConstants.DocCategory category() {
+        return DocConstants.DocCategory.SIGNATURE_MARK;
+    }
 }

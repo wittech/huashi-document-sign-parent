@@ -29,7 +29,7 @@ public interface LoanDocService extends CurdService<LoanDoc> {
      * 打印
      *
      * @param loanDocIds 借贷文档IDS
-     * @param watermark 水印文本信息
+     * @param watermark  水印文本信息
      * @return 打印PDF的URL信息
      */
     String print(String loanDocIds, String watermark);
@@ -38,8 +38,9 @@ public interface LoanDocService extends CurdService<LoanDoc> {
      * 查询所有 借贷文档信息
      *
      * @param loanBasisId 借贷基础ID
+     * @param category    类型集合
      * @return 借贷文档集合信息
      */
-    List<LoanDoc> queryByLoanBasisId(Long loanBasisId);
+    List<LoanDoc> queryByLoanBasisId(Long loanBasisId, String category);
 
 }
