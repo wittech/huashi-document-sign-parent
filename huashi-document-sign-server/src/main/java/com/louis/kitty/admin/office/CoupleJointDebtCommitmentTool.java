@@ -45,4 +45,9 @@ public class CoupleJointDebtCommitmentTool extends AbstractOfficeTool {
     protected DocConstants.DocType docType() {
         return DocConstants.DocType.WORD;
     }
+
+    @Override
+    protected DocConstants.DocCategory category() {
+        return DocConstants.DocCategory.SIGNATURE_MARK;
+    }
 }

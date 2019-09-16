@@ -52,6 +52,11 @@ public class LoanDoc {
      * 显示顺序
      */
     private Integer sort;
+
+    /**
+     * 归属范畴
+     */
+    private Integer category;
     /**
      * 备注
      */
@@ -167,5 +172,13 @@ public class LoanDoc {
 
     public void setPdfPath(String pdfPath) {
         this.pdfPath = pdfPath;
+    }
+
+    public Integer getCategory() {
+        return category;
+    }
+
+    public void setCategory(Integer category) {
+        this.category = category;
     }
 }

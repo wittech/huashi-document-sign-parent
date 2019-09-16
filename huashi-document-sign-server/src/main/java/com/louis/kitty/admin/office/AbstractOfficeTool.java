@@ -135,6 +135,12 @@ public abstract class AbstractOfficeTool {
     protected abstract DocConstants.DocType docType();
 
     /**
+     * 文件归属范畴
+     * @return 归属范畴
+     */
+    protected abstract DocConstants.DocCategory category();
+
+    /**
      * 是否仅拷贝文件（指有些文件指从模板地址拷贝到目标地址，不做任何参数转义情况）
      *
      * @return true/false（一般默认false, 提供子类重写）
@@ -185,6 +191,7 @@ public abstract class AbstractOfficeTool {
         loanDoc.setDownloadTimes(0);
         loanDoc.setPrintTimes(0);
         loanDoc.setSort(sort() + secondSort);
+
         loanDoc.setCreateTime(new Date());
 
         return loanDocMapper.add(loanDoc) > 0;

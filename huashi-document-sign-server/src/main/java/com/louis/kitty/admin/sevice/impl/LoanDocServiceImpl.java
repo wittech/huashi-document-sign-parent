@@ -234,8 +234,13 @@ public class LoanDocServiceImpl extends AbstractDocService implements LoanDocSer
     }
 
     @Override
-    public List<LoanDoc> queryByLoanBasisId(Long loanBasisId) {
-        return loanDocMapper.findByLoanBasisId(loanBasisId);
+    public List<LoanDoc> queryByLoanBasisId(Long loanBasisId, String category) {
+        List<String> categories = null;
+        if (StringUtils.isNotEmpty(category)) {
+            categories = Arrays.asList(category.split(","));
+        }
+
+        return loanDocMapper.findByLoanBasisId(loanBasisId, categories);
     }
 
     private void addOneIfDownload(String loanDocIds) {

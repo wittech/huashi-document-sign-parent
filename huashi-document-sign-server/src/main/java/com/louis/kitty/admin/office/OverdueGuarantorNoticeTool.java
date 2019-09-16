@@ -116,4 +116,9 @@ public class OverdueGuarantorNoticeTool extends AbstractOfficeTool {
 
         return loanNoticeDocMapper.add(loanNoticeDoc) > 0;
     }
+
+    @Override
+    protected DocConstants.DocCategory category() {
+        return DocConstants.DocCategory.SIGNATURE_MARK;
+    }
 }

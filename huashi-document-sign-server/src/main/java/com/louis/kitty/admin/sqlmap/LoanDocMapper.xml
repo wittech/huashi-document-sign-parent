@@ -13,6 +13,7 @@
         <result column="download_times" jdbcType="INTEGER" property="downloadTimes"/>
         <result column="print_times" jdbcType="INTEGER" property="printTimes"/>
         <result column="sort" jdbcType="INTEGER" property="sort"/>
+        <result column="category" jdbcType="INTEGER" property="category"/>
         <result column="remark" jdbcType="VARCHAR" property="remark"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime"/>
@@ -50,6 +51,9 @@
             </if>
             <if test="sort != null">
                 sort,
+            </if>
+            <if test="category != null">
+                category,
             </if>
             <if test="remark != null">
                 remark,
@@ -91,6 +95,9 @@
             </if>
             <if test="sort != null">
                 #{sort,jdbcType=INTEGER},
+            </if>
+            <if test="category != null">
+                #{category,jdbcType=INTEGER},
             </if>
             <if test="remark != null">
                 #{remark,jdbcType=VARCHAR},
@@ -143,6 +150,9 @@
             <if test="sort != null">
                 sort = #{sort,jdbcType=INTEGER},
             </if>
+            <if test="category != null">
+                sort = #{category,jdbcType=INTEGER},
+            </if>
             <if test="remark != null">
                 remark = #{remark,jdbcType=VARCHAR},
             </if>
@@ -167,10 +177,16 @@
         from loan_doc
     </select>
 
-    <select id="findByLoanBasisId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    <select id="findByLoanBasisId" resultMap="BaseResultMap">
         select *
         from loan_doc
         where loan_basis_id = #{loanBasisId,jdbcType=BIGINT}
+        <if test="list != null and list.size() > 0">
+           and category in
+            <foreach collection="list" item="category" index="index" open="(" close=")" separator=",">
+                #{category}
+            </foreach>
+        </if>
         order by sort asc
     </select>
 

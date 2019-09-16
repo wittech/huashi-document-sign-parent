@@ -222,11 +222,12 @@ public class LoanController {
 	/**
 	 * 根据基础信息表id 查询所有 借贷文档信息
 	 * @param loanBasisId
+	 * @param category
 	 * @return
 	 */
 	@GetMapping(value="/queryByLoanBasisId")
-    public HttpResult queryByLoanBasisId(@RequestParam Long loanBasisId) {
-		return HttpResult.ok(loanDocService.queryByLoanBasisId(loanBasisId));
+    public HttpResult queryByLoanBasisId(@RequestParam Long loanBasisId, String category) {
+		return HttpResult.ok(loanDocService.queryByLoanBasisId(loanBasisId, category));
     }
 	
 	/**

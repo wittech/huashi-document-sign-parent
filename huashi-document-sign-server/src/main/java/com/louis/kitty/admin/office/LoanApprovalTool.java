@@ -248,4 +248,9 @@ public class LoanApprovalTool extends AbstractOfficeTool {
     protected int sort() {
         return 1_2_00;
     }
+
+    @Override
+    protected DocConstants.DocCategory category() {
+        return DocConstants.DocCategory.FORM_APPROVE;
+    }
 }

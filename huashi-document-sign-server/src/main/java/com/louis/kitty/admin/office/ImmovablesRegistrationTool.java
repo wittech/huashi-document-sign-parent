@@ -30,4 +30,9 @@ public class ImmovablesRegistrationTool extends AbstractOfficeTool {
     protected boolean isOnlyCloneFile() {
         return true;
     }
+
+    @Override
+    protected DocConstants.DocCategory category() {
+        return DocConstants.DocCategory.FORM_APPROVE;
+    }
 }

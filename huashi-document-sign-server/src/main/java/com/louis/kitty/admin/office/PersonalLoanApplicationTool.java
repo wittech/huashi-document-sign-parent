@@ -495,4 +495,9 @@ public class PersonalLoanApplicationTool extends AbstractOfficeTool {
         return 1_1_00;
     }
 
+    @Override
+    protected DocConstants.DocCategory category() {
+        return DocConstants.DocCategory.FORM_APPROVE;
+    }
+
 }
