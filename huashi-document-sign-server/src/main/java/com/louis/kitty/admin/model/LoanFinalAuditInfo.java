@@ -1,54 +1,100 @@
 package com.louis.kitty.admin.model;
 
-
+import java.math.BigDecimal;
+import java.util.Date;
 
 public class LoanFinalAuditInfo {
+    /**
+	* 主键编号
+	*/
+    private Long id;
 
+    /**
+	* 借款人编号
+	*/
+    private Long loanBasisId;
 
-    private Integer id;
+    /**
+	* 借款金额
+	*/
+    private BigDecimal loanAmount;
 
-    private Integer loanBasisId;
-
-    private Double loanAmount;
-
+    /**
+	* 借款期限
+	*/
     private String loanLimit;
 
+    /**
+	* 利率标准
+	*/
     private String interestRateType;
 
-    private Double interestRate;
+    /**
+	* 利率
+	*/
+    private BigDecimal interestRate;
 
+    /**
+	* 浮动方式
+	*/
     private String floatedType;
 
-    private Double floatedRate;
+    /**
+	* 浮动利率
+	*/
+    private BigDecimal floatedRate;
 
-    private Double yearInterestRate;
+    /**
+	* 年利率
+	*/
+    private BigDecimal yearInterestRate;
 
+    /**
+	* 结息方式 按月/按月/按年
+	*/
     private String interestType;
 
+    /**
+	* 还款方式 利随本清 到期一次性还本 分期还本 等额本金 等额本息  其他
+	*/
     private String repaymentType;
 
+    /**
+	* 其他还款方式
+	*/
+    private String otherRepayment;
 
-    public Integer getId() {
+    /**
+	* 创建时间
+	*/
+    private Date createTime;
+
+    /**
+     * 创建人
+     */
+    private String createBy;
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Integer getLoanBasisId() {
+    public Long getLoanBasisId() {
         return loanBasisId;
     }
 
-    public void setLoanBasisId(Integer loanBasisId) {
+    public void setLoanBasisId(Long loanBasisId) {
         this.loanBasisId = loanBasisId;
     }
 
-    public Double getLoanAmount() {
+    public BigDecimal getLoanAmount() {
         return loanAmount;
     }
 
-    public void setLoanAmount(Double loanAmount) {
+    public void setLoanAmount(BigDecimal loanAmount) {
         this.loanAmount = loanAmount;
     }
 
@@ -68,11 +114,11 @@ public class LoanFinalAuditInfo {
         this.interestRateType = interestRateType;
     }
 
-    public Double getInterestRate() {
+    public BigDecimal getInterestRate() {
         return interestRate;
     }
 
-    public void setInterestRate(Double interestRate) {
+    public void setInterestRate(BigDecimal interestRate) {
         this.interestRate = interestRate;
     }
 
@@ -84,19 +130,19 @@ public class LoanFinalAuditInfo {
         this.floatedType = floatedType;
     }
 
-    public Double getFloatedRate() {
+    public BigDecimal getFloatedRate() {
         return floatedRate;
     }
 
-    public void setFloatedRate(Double floatedRate) {
+    public void setFloatedRate(BigDecimal floatedRate) {
         this.floatedRate = floatedRate;
     }
 
-    public Double getYearInterestRate() {
+    public BigDecimal getYearInterestRate() {
         return yearInterestRate;
     }
 
-    public void setYearInterestRate(Double yearInterestRate) {
+    public void setYearInterestRate(BigDecimal yearInterestRate) {
         this.yearInterestRate = yearInterestRate;
     }
 
@@ -114,5 +160,29 @@ public class LoanFinalAuditInfo {
 
     public void setRepaymentType(String repaymentType) {
         this.repaymentType = repaymentType;
+    }
+
+    public String getOtherRepayment() {
+        return otherRepayment;
+    }
+
+    public void setOtherRepayment(String otherRepayment) {
+        this.otherRepayment = otherRepayment;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
     }
 }

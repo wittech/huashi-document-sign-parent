@@ -5,6 +5,8 @@ package com.louis.kitty.admin.controller.loan;
 
 import java.util.Date;
 
+import com.louis.kitty.admin.model.LoanFinalAuditInfo;
+import com.louis.kitty.admin.sevice.impl.LoanFinalAuditInfoService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -51,6 +53,8 @@ public class LoanController {
 	private ContractInformationService contractInformationService;
 	@Autowired
 	private LoanDocService loanDocService;
+    @Autowired
+    private LoanFinalAuditInfoService loanFinalAuditInfoService;
 	
 	/**
 	 *1、保存基础信息 
@@ -146,7 +150,7 @@ public class LoanController {
 		}
 		return HttpResult.ok(loanBusinessInformationService.save(record));
 	}
-	
+
 	/**
 	 * 7、保存个人报告信息
 	 * @param record
@@ -181,6 +185,19 @@ public class LoanController {
 		}
 		return HttpResult.ok();
 	}
+
+    /**
+     * 8、保存最终审批
+     * @param record
+     * @return
+     */
+    @PostMapping(value="/saveFinalAudit")
+    public HttpResult saveFinalAudit(@RequestBody LoanFinalAuditInfo record) {
+        loanFinalAuditInfoService.save(record);
+        return HttpResult.ok();
+    }
+
+
 	
 	 /**
      * 基础分页查询
