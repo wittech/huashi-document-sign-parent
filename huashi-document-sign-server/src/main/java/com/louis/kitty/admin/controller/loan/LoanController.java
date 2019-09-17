@@ -229,7 +229,11 @@ public class LoanController {
     public HttpResult queryByLoanBasisId(@RequestParam Long loanBasisId, String category) {
 		return HttpResult.ok(loanDocService.queryByLoanBasisId(loanBasisId, category));
     }
-	
+
+    @GetMapping(value = "/getFinalAuditByLoanBasisId")
+	public HttpResult getFinalAuditByLoanBasisId(@RequestParam Long loanBasisId) {
+        return HttpResult.ok(loanFinalAuditInfoService.findByBasisId(loanBasisId));
+    }
 	/**
 	 * 根据基础信息id 生成文档
 	 * @param loanBasisId

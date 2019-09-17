@@ -40,4 +40,9 @@ public class LoanFinalAuditInfoService{
         return loanFinalAuditInfoMapper.updateByPrimaryKey(record);
     }
 
+    public LoanFinalAuditInfo findByBasisId(Long loanBasisId) {
+        return loanFinalAuditInfoMapper.findByBasisId(loanBasisId);
+    }
+
+
 }
