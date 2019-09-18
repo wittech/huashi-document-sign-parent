@@ -153,7 +153,6 @@ public class LoanDocServiceImpl extends AbstractDocService implements LoanDocSer
             futureList.add(debtGuaranteeTool.execute(model));
             futureList.add(faceToFaceConversationTool.execute(model));
             futureList.add(honestyNotificationTool.execute(model));
-            futureList.add(immovablesRegistrationTool.execute(model));
             futureList.add(lenderRelationshipTool.execute(model));
             futureList.add(loanApprovalTool.execute(model));
             futureList.add(loanMortgagePledgeTool.execute(model));
@@ -165,9 +164,14 @@ public class LoanDocServiceImpl extends AbstractDocService implements LoanDocSer
             futureList.add(personalLoanContractTool.execute(model));
             futureList.add(suretyBondsContractTool.execute(model));
             futureList.add(valuationConfirmationTool.execute(model));
-            futureList.add(withdrawalCertificateTool.execute(model));
             futureList.add(personalLoanInvestigationReportTool.execute(model));
             futureList.add(loanPhotoTool.execute(model));
+
+
+            // edit by 20190918 下面两个归属于撤押模块，以后用，暂时不需要生成
+//            futureList.add(immovablesRegistrationTool.execute(model));
+//            futureList.add(withdrawalCertificateTool.execute(model));
+
         } catch (Exception e) {
             log.error("async execute doc build failed by model[{}]", JSON.toJSONString(model), e);
         }

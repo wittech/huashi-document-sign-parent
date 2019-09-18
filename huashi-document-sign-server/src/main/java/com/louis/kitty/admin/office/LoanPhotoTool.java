@@ -92,6 +92,6 @@ public class LoanPhotoTool extends AbstractOfficeTool {
 
     @Override
     protected DocConstants.DocCategory category() {
-        return DocConstants.DocCategory.CONTRACT;
+        return DocConstants.DocCategory.SIGNATURE_MARK;
     }
 }
