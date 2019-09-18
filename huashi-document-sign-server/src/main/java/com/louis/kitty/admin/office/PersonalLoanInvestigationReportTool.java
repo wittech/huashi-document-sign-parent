@@ -2663,6 +2663,6 @@ public class PersonalLoanInvestigationReportTool extends AbstractOfficeTool {
 
     @Override
     protected DocConstants.DocCategory category() {
-        return DocConstants.DocCategory.CONTRACT;
+        return DocConstants.DocCategory.FORM_APPROVE;
     }
 }

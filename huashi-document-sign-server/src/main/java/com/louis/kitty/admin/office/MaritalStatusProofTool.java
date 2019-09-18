@@ -136,6 +136,6 @@ public class MaritalStatusProofTool extends AbstractOfficeTool {
 
     @Override
     protected DocConstants.DocCategory category() {
-        return DocConstants.DocCategory.FORM_APPROVE;
+        return DocConstants.DocCategory.SIGNATURE_MARK;
     }
 }
