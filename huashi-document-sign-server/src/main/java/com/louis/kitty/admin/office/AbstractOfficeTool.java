@@ -191,7 +191,7 @@ public abstract class AbstractOfficeTool {
         loanDoc.setDownloadTimes(0);
         loanDoc.setPrintTimes(0);
         loanDoc.setSort(sort() + secondSort);
-
+        loanDoc.setCategory(category().getValue());
         loanDoc.setCreateTime(new Date());
 
         return loanDocMapper.add(loanDoc) > 0;
