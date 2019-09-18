@@ -15,6 +15,10 @@
 	<result column="last_update_by" jdbcType="VARCHAR" property="lastUpdateBy" />
 	<result column="last_update_time" jdbcType="TIMESTAMP" property="lastUpdateTime" />
 	<result column="del_flag" jdbcType="TINYINT" property="delFlag" />
+
+      <result column="customer_type" jdbcType="INTEGER" property="customerType" />
+      <result column="private_apply_type" jdbcType="INTEGER" property="privateApplyType" />
+      <result column="top_quota_repeat_credit_flag" jdbcType="INTEGER" property="topQuotaRepeatCreditFlag" />
   </resultMap>
   
  <resultMap id="BasePageResultMap" type="com.louis.kitty.admin.dto.LoanPageDto">
@@ -104,6 +108,15 @@
        <if test="status != null">
         status,
       </if>
+        <if test="customerType != null">
+            customer_type,
+        </if>
+        <if test="privateApplyType != null">
+            private_apply_type,
+        </if>
+        <if test="topQuotaRepeatCreditFlag != null">
+            top_quota_repeat_credit_flag,
+        </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -142,6 +155,15 @@
       <if test="status != null">
         #{status,jdbcType=TINYINT},
       </if>
+        <if test="customerType != null">
+            #{customerType,jdbcType=INTEGER},
+        </if>
+        <if test="privateApplyType != null">
+            #{privateApplyType,jdbcType=INTEGER},
+        </if>
+        <if test="topQuotaRepeatCreditFlag != null">
+            #{topQuotaRepeatCreditFlag,jdbcType=INTEGER},
+        </if>
     </trim>
   </insert>
 
@@ -189,6 +211,15 @@
       <if test="delFlag != null">
         del_flag = #{delFlag,jdbcType=TINYINT},
       </if>
+        <if test="customerType != null">
+            customer_type = #{customerType,jdbcType=INTEGER},
+        </if>
+        <if test="privateApplyType != null">
+            private_apply_type = #{privateApplyType,jdbcType=INTEGER},
+        </if>
+        <if test="topQuotaRepeatCreditFlag != null">
+            top_quota_repeat_credit_flag = #{topQuotaRepeatCreditFlag,jdbcType=INTEGER},
+        </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -203,7 +234,7 @@
   </select>
   
   <select id="findPageByBorrowerAndStatus"  parameterType="com.louis.kitty.admin.model.LoanBasis" resultMap="BasePageResultMap">
-    select lb.id,lb.create_time,lb.guarantee_method,lb.create_by,lb.status,lb.loan_type,lb.application_matters,lb.borrower
+    select lb.id,lb.create_time,lb.guarantee_method,lb.create_by,lb.status,lb.loan_type,lb.application_matters,lb.borrower,lb.customer_type,lb.private_apply_type,lb.top_quota_repeat_credit_flag
     from loan_basis lb  where 1=1
     <if test="borrower != null and borrower != ''">
     	and lb.borrower  LIKE CONCAT('%',#{borrower},'%')
