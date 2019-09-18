@@ -36,6 +36,11 @@ public class LoanBasis{
 	//审核
 	private int status;
 
+
+	private Integer customerType;   //贷款客户类型
+	private Integer privateApplyType; //对私类型
+	private Integer topQuotaRepeatCreditFlag;   //是否最高额循环授信
+
 	public Long getId() {
 		return id;
 	}
@@ -132,4 +137,28 @@ public class LoanBasis{
 		this.status = status;
 	}
 
+
+	public Integer getCustomerType() {
+		return customerType;
+	}
+
+	public void setCustomerType(Integer customerType) {
+		this.customerType = customerType;
+	}
+
+	public Integer getPrivateApplyType() {
+		return privateApplyType;
+	}
+
+	public void setPrivateApplyType(Integer privateApplyType) {
+		this.privateApplyType = privateApplyType;
+	}
+
+	public Integer getTopQuotaRepeatCreditFlag() {
+		return topQuotaRepeatCreditFlag;
+	}
+
+	public void setTopQuotaRepeatCreditFlag(Integer topQuotaRepeatCreditFlag) {
+		this.topQuotaRepeatCreditFlag = topQuotaRepeatCreditFlag;
+	}
 }
