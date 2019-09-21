@@ -69,7 +69,7 @@
 	
   </resultMap>
   
-  <insert id="add" parameterType="com.louis.kitty.admin.model.LoanBasis" useGeneratedKeys="true" keyProperty="id">
+  <insert id="insert" parameterType="com.louis.kitty.admin.model.LoanBasis" useGeneratedKeys="true" keyProperty="id">
     insert into loan_basis
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

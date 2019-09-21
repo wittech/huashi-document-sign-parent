@@ -35,7 +35,7 @@ public class LoanBasisServiceImpl implements LoanBasisService {
 		if(record.getId() == null || record.getId() == 0) {
 			record.setStatus(1);
 			record.setCreateTime(new Date());
-			return loanBasisMapper.add(record);
+			return loanBasisMapper.insert(record);
 		}
 		record.setLastUpdateTime(new Date());
 		return loanBasisMapper.update(record);

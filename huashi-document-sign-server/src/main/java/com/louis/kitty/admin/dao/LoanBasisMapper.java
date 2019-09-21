@@ -19,7 +19,7 @@ public interface LoanBasisMapper {
 	 * @param record
 	 * @return
 	 */
-	int add(LoanBasis record);
+	int insert(LoanBasis record);
 
 	/**
 	 * 删除借口人基础信息表
