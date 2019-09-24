@@ -745,7 +745,7 @@ public class MortgageListTool extends AbstractOfficeTool {
                         tempMap.put("pawnOwner", name);
                         tempMap.put("storageAddress", pawn.getCollateralDeposit());
                         tempMap.put("pawnType", "土地证");
-                        tempMap.put("amountWithUnit", pawn.getLandOccupationArea() + "㎡");
+                        tempMap.put("amountWithUnit", pawn.getBuildingArea() + "㎡");
                         tempMap.put("pawnNo", pawn.getLandCertificateNumber());
                         tempMap.put("issueOrg", "                ");
                         pawnList.add(tempMap);
